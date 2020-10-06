@@ -1,5 +1,58 @@
-Kierkegaard's Tower
+Vagrant's Tower (nombre temporal)
 ======
+
+[1. Introducción 3](#introducción)
+
+[1.1. Elevator Pitch. 3](#elevator-pitch.)
+
+[1.2. Concepto de juego. 3](#concepto-de-juego.)
+
+[2. Género 3](#género)
+
+[3. Plataformas 3](#plataformas)
+
+[4. Alcance del proyecto 4](#alcance-del-proyecto)
+
+[5. Narrativa y personajes 4](#narrativa-y-personajes)
+
+[5.1. Sinopsis 4](#sinopsis)
+
+[5.2. Trasfondo general 4](#trasfondo-general)
+
+[5.3. Personajes 4](#personajes)
+
+[6. Controles e Interfaz 5](#controles-e-interfaz)
+
+[6.1. Interfaz 5](#interfaz)
+
+[6.1.1. Intro Cutscene 6](#intro-cutscene)
+
+[6.1.2. Menú principal (Pantalla de Título)
+6](#menú-principal-pantalla-de-título)
+
+[6.1.3. Menú de opciones 6](#menú-de-opciones)
+
+[6.1.4. In Game HUD 6](#in-game-hud)
+
+[6.1.5. Menú de pausa 6](#menú-de-pausa)
+
+[6.1.6. Pantalla de Game Over 6](#pantalla-de-game-over)
+
+[6.1.7. Pantalla de puntuaciones 6](#pantalla-de-puntuaciones)
+
+[6.1.8. Pantalla de créditos 6](#pantalla-de-créditos)
+
+[6.2. Controles 6](#controles)
+
+[6.2.1. Controles en PC 6](#controles-en-pc)
+
+[6.2.2. Controles en móvil 6](#controles-en-móvil)
+
+[7. Gameplay 7](#gameplay)
+
+[8. Estilo visual. 7](#estilo-visual.)
+
+[9. Referencias y anexos 7](#referencias-y-anexos)
 
 Introducción
 ============
@@ -8,16 +61,18 @@ Introducción
 para el juego desarrollado por *Kilonova Studios* para el proyecto de
 juego W3C de la asignatura de 'Juegos para Web y Redes Sociales' del
 cuarto año de la carrera de Diseño y Desarrollo de Videojuegos, cuyo
-nombre temporal es '*Kierkegaard's Tower'*[^1]. A continuación, se
+nombre temporal es '*Vagrant's Tower'*[^1]. A continuación, se
 describirán todos los aspectos del juego, desde su concepto hasta sus
 detalles de implementación. Téngase en mente que este es un documento en
 constante evolución, y, por lo tanto, [todo lo aquí escrito está sujeto
 a cambios]{.ul}:
 
+ {#section .list-paragraph}
+
 Elevator Pitch.
 ---------------
 
-*Kierkegaard's Tower* es un shooter sidescroller 2D de acción dinámica
+*Vagrant's Tower* es un shooter sidescroller 2D de acción dinámica
 similar a la de 'My Friend Pedro' y de estética pixel art, donde el
 jugador debe subir hasta la cima de una torre antes de que se le acabe
 el tiempo, y decidir si quiere y puede ayudar a otros durante el camino.
@@ -25,11 +80,11 @@ el tiempo, y decidir si quiere y puede ayudar a otros durante el camino.
 Concepto de juego.
 ------------------
 
-*Kierkegaard's Tower* es un shooter sidescroller 2D donde el jugador
-tiene como objetivo subir hasta lo alto de una torre antes de que 'se le
-acabe el tiempo'. Por el camino, el jugador tendrá que pelear contra
-distintos enemigos para sobrevivir y obtener los recursos necesarios
-para continuar su ascenso, durante el cual se le presentará en varias
+*Vagrant's Tower* es un shooter sidescroller 2D donde el jugador tiene
+como objetivo subir hasta lo alto de una torre antes de que 'se le acabe
+el tiempo'. Por el camino, el jugador tendrá que pelear contra distintos
+enemigos para sobrevivir y obtener los recursos necesarios para
+continuar su ascenso, durante el cual se le presentará en varias
 ocasiones la oportunidad de ayudar a otros personajes que, a cambio de
 la ayuda del jugador, otorgarán mejoras o "power ups" a éste.
 
@@ -44,14 +99,14 @@ historia.
 Género
 ======
 
-*Kierkegaard's Tower* es un shooter sidescroller 2D de acción de
-estética pixel art con un fuerte componente de gestión de recursos y
-resolución de puzles a gran escala.
+*Vagrant's Tower* es un shooter sidescroller 2D de acción de estética
+pixel art con un fuerte componente de gestión de recursos y resolución
+de puzles a gran escala.
 
 Plataformas
 ===========
 
-*Kierkegaard's Tower* es un juego web, disponible en:
+*Vagrant's Tower* es un juego web, disponible en:
 
 -   Chrome.
 
@@ -84,13 +139,13 @@ su vida inmortal'.*
 Trasfondo general
 -----------------
 
-El mundo de Kierkegaard's Tower se establece en un futuro lejano, donde
-la humanidad ha sido reemplazada por máquinas y androides. Algunos de
-estos androides despiertan al uso de la razón, preguntándose de esta
-manera cuál es el sentido de la vida, y sintiendo la misma angustia que
-sus antecesores, los humanos, sentían al preguntarse cuál era su
-cometido en esta vida. Los androides, dotados de cuerpos inmortales,
-entienden este tipo de comportamiento como un virus informático.
+El mundo de Vagrant's Tower se establece en un futuro lejano, donde la
+humanidad ha sido reemplazada por máquinas y androides. Algunos de estos
+androides despiertan al uso de la razón, preguntándose de esta manera
+cuál es el sentido de la vida, y sintiendo la misma angustia que sus
+antecesores, los humanos, sentían al preguntarse cuál era su cometido en
+esta vida. Los androides, dotados de cuerpos inmortales, entienden este
+tipo de comportamiento como un virus informático.
 
 Precisamente, la androide protagonista y su compañero sufren de este
 'virus'. El primero en partir en busca de la torre de Kierkegaard es
@@ -144,6 +199,131 @@ deben ser eliminados. Conforman el grueso de los enemigos del juego.
 
 Controles e Interfaz
 ====================
+
+La idea fundamental de la interfaz y controles de Vagrant's Tower es
+ofrecer un set de controles reducido y adaptable a las distintas
+plataformas en las que se presenta, manteniendo toda la profundidad de
+la jugabilidad. A continuación, se detallan los controles y la interfaz
+en cada plataforma:
+
+Interfaz
+--------
+
+![](media/image1.png){width="7.883333333333334in"
+height="1.2680555555555555in"}En este apartado se definirá el aspecto
+esquemático de las distintas interfaces del juego, comenzando por el
+diagrama de flujo, que será común a ambas plataformas:
+
+Se recomienda **encarecidamente** consultar visualizar este esquema en
+su versión
+[online](https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=flowchart.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1aeL-hrU-MbZA63SvlsCBrGhGhFWdBx7c%26export%3Ddownload).
+
+Tal y como se puede ver, el desarrollo de la experiencia de juego
+consiste en superar tres niveles antes de que el tiempo del jugador se
+acabe, tras lo cual les espera una 'batalla final' contra un jefe. Al
+superarla, obtendrá un final 'bueno' o un final 'malo' en función de si
+ha realizado una serie de tareas especiales por el camino.
+
+Tras todo esto, al jugador se le presenta una pantalla de 'resultados'
+donde puede ver su puntuación, que estará medida en el tiempo que ha
+tardado, las tareas que ha realizado, los enemigos derrotados, etc.
+
+A continuación, se define el 'layout' y funcionamiento de cada pantalla
+de juego:
+
+### Intro Cutscene
+
+### Menú principal (Pantalla de Título)
+
+### Menú de opciones
+
+### In Game HUD
+
+### Menú de pausa
+
+### Pantalla de Game Over
+
+### Pantalla de puntuaciones
+
+### Pantalla de créditos
+
+Controles
+---------
+
+> Los controles, según plataforma, son los siguientes:
+
+### Controles en PC
+
+**Durante el juego:**
+
+-   **Moverse:** Teclas direccionales/WASD
+
+-   **Entrar en modo 'volar':** Espacio
+
+-   **Volar:** Teclas direccionales/WASD
+
+-   **Apuntar:** El ratón tomará la forma de una cruceta en la pantalla;
+    entre la cruceta y el arma del jugador se dibujará una línea roja
+    para mejor visualización del disparo.
+
+-   **Disparar:** Click izquierdo del ratón
+
+-   **Interaccionar:** Tecla E
+
+-   **Cambiar tipo de munición:** Utilizando la rueda, los números o
+    haciendo click en el icono visual del tipo de munición deseada.
+
+-   **Abrir menú de pausa:** Tecla ESCAPE.
+
+**En menús:**
+
+-   **Pulsar/confirmar:** Click izquierdo del ratón o ENTER.
+
+-   **Navegación/selección:** Movimiento del ratón, o teclas
+    direccionales.
+
+Nótese que, si el tiempo lo permite, sería conveniente incluir la
+posibilidad de remapear los controles del juego.
+
+### Controles en móvil
+
+**Durante el juego:**
+
+-   **Moverse:** Joystick virtual
+
+-   **Entrar en modo 'volar':** Mover el joystick virtual hacia arriba
+    (Tap).
+
+-   **Volar:** Joystick virtual:
+
+-   **Apuntar:** La cruceta aparecerá cuando el jugador arrastre el dedo
+    sobre la pantalla, dibujándose una línea entre ella y el arma del
+    sprite del jugador.
+
+-   **Disparar:** En esta plataforma, esta acción sucede al mismo tiempo
+    que el apuntado (no se pueden realizar por separado). Siempre que el
+    jugador toque en cualquier lugar de la pantalla que no sea un botón
+    o un interaccionable, se disparará en esa dirección. Si se mantiene
+    pulsado, se seguirá disparando.
+
+-   **Cambiar tipo de munición:** Tapeando sobre el icono de tipo de
+    munición que se desee utilizar.
+
+-   **Abrir menú de pausa:** Tapeando sobre el botón de PAUSE.
+
+**En menús:**
+
+-   **Pulsar/confirmar:** Tapear sobre el botón. **Sólo se confirmará la
+    acción al TAPEAR el botón, de manera que si se arrastra el dedo
+    sobre él no se activará.**
+
+-   **Navegación/selección:** Dadas las características de la
+    plataforma, esta acción no es necesaria. Un botón se pondrá en modo
+    'seleccionado' mientras se mantenga el dedo sobre él. Al libera el
+    dedo, se confirmará la acción.
+
+Dadas las características de esta plataforma, no se puede ofrecer la
+opción de remapear los controles.
 
 Gameplay
 ========
