@@ -76,6 +76,7 @@ export default class SuperiorQuery{
   }
 
   //metodo para ver que cuerpos se collisiona con un semisegmento que empieza en x y
+  //esta optimizado al maximo ya que se invoca 1000-2000 veces por disparo, según el numero de cuerpos collisionables del nivel
   static superiorCircleSector(x, y, vec, vecSquareSum, vecCombSum, vecCombDif, cx, cy, cRad){
     //var d1 = (cx - vec.y*cRad - x)*vec.y - (cy + vec.x*cRad - y)*vec.x ;
     //var d2 = (cx + vec.y*cRad - x)*vec.y - (cy - vec.x*cRad - y)*vec.x ;

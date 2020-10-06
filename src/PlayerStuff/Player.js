@@ -11,10 +11,16 @@ export default class Player {
     this.mouse = this.scene.input.activePointer;
     this.fireCounter = 0;
 
+    //jet
+    this.activatedJet = false;
+
     //variables para el movimiento
     this.leftMultiply = 1;
     this.rightMultiply = 1;
-    this.velInfluence = 0;
+
+    this.braceVelocity = 0.08;
+    this.falseGravity = this.scene.game.config.physics.matter.gravity.y/(this.scene.matter.world.getDelta() * 30);
+    this.falseVelocityY = 0;
 
     //generacion del cuerpo del personaje (cuerpo compuesto de 4 partes: una parte principal, 2 a cada lado y uno por debajo)
     //los 3 cuerpos que rodean al principal son sensores que detectan con que collisiona el personaje
@@ -28,7 +34,7 @@ export default class Player {
     };
     const compoundBody = Body.create({
       parts: [this.mainBody, this.sensors.bottom, this.sensors.left, this.sensors.right],
-      frictionAir: 0.01
+      frictionAir: 0.02
     });
     this.sprite
       .setExistingBody(compoundBody)
@@ -42,23 +48,6 @@ export default class Player {
     this.scene.events.on("update", this.update, this);  //para que el update funcione
 
     this.isTouching = { left: false, right: false, ground: false };
-
-    this.canJump = true;
-    this.jumpCooldownTimer = null;
-
-    this.aditionalJumpVelocity = -0.25;
-    this.cursors.up.on('down', function (event) {
-      if (this.canJump && this.isTouching.ground) {
-        this.aditionalJumpVelocity = -0.25;
-        this.sprite.setVelocityY(-this.scene.game.jumpVelocity);
-        //var jumpSound = this.scene.sound.add('jump', {volume: this.scene.game.soundVolume});
-        //jumpSound.play();
-      }
-    }, this);
-    this.canJump = false;
-    this.cursors.up.on('up', function (event) {
-      this.canJump = true
-    }, this);
 
     //DISPARO
     this.cursors.fire.on('down', function(event){
@@ -92,14 +81,17 @@ export default class Player {
     this.invulnerable = false;
     this.alive = true;
 
+    /*
     scene.matterCollision.addOnCollideStart({
       objectA: this.sensors.bottom,
       callback: this.soundFall,
       context: this
-    });
+    });*/
 
     //FIREARM
     this.fireArm = new PlayerFireArm(this.scene, x, y);
+
+    console.log(this);
   }
   soundFall(bodyB){
     /*if (bodyB.isSensor) return;
@@ -108,8 +100,14 @@ export default class Player {
   }
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
-    if (bodyA === this.sensors.bottom && !this.cursors.jet.isDown) {
+    if (bodyA === this.sensors.bottom) {
       this.isTouching.ground = true;
+      if(this.activatedJet && this.cursors.down.isDown){
+          this.sprite.body.frictionAir = 0.01;
+          this.sprite.setVelocityY(this.scene.game.jetVelocity * this.scene.matter.world.getDelta());
+          this.sprite.setIgnoreGravity(false);
+          this.activatedJet = false;
+      }
     }
     //if (bodyB.name == "interactableBody") return;     //ejemplo para cuerpo NO chocables
     if (bodyB.label == "Body" && bodyB.parent.gameObject.tile.properties.lethal) return;
@@ -131,48 +129,27 @@ export default class Player {
     this.isTouching.ground = false;
   }
   update(time, delta) {
-    const isInAir = !this.isTouching.ground;
-
     if (this.scene.game.lives <= 0) { return; } //CAMBIAR ESPERA ACTIVA
 
     if (this.alive) {
       if (this.cursors.right.isDown) {
-        if (!(isInAir && this.isTouching.right)) {
+        if (!(this.isTouching.ground && this.isTouching.right)) {
           this.sprite.setVelocityX(this.scene.game.moveVelocity * delta * this.rightMultiply);
         }
       }
       else if (this.cursors.left.isDown) {
-        if (!(isInAir && this.isTouching.left)) {
+        if (!(this.isTouching.ground && this.isTouching.left)) {
           this.sprite.setVelocityX(-this.scene.game.moveVelocity * delta * this.leftMultiply);
         }
-      } else if (this.cursors.right.isUp && this.cursors.left.isUp){
+      } /*else if (this.cursors.right.isUp && this.cursors.left.isUp){
     	  this.sprite.setVelocityX(0);
-      }
+      }*/
       //document.getElementById('info').innerHTML = this.sprite;
-      this.sprite.x += this.velInfluence;
-      this.playAnimation();
-
-      if (this.cursors.up.isDown && !this.isTouching.ground && this.sprite.body.velocity.y < 0) {
-        this.sprite.setVelocityY(this.sprite.body.velocity.y + this.aditionalJumpVelocity);
-        if (this.aditionalJumpVelocity < 0) {
-          this.aditionalJumpVelocity += 0.01;
-        } else {
-          this.aditionalJumpVelocity = 0;
-        }
-      }
+      this.playAnimation(this.fireArm.armDir.x >= 0);
 
       //CAMBIAR ESPERA ACTIVA
       if (this.sprite.y > 640) {
         this.damaged(new Phaser.Math.Vector2(0, -1), 40);
-      }
-
-      //BUGFIX
-      if (isInAir && !this.cursors.left.isDown && !this.cursors.right.isDown) {
-        if (this.sprite.body.velocity.y <= -this.scene.game.jumpVelocity * 0.90) {
-          this.sprite.setVelocityX(0);
-        } else {
-          this.sprite.setVelocityX((this.scene.game.moveVelocity * this.scene.game.airVelocityFraction) * delta * Math.sign(this.sprite.body.velocity.x));
-        }
       }
       this.leftMultiply = 1;
       this.rightMultiply = 1;
@@ -186,19 +163,42 @@ export default class Player {
             this.fireArm.fireBullet();
         }
       }
+      //DISPARAR
 
-      //jet
-      if(this.cursors.jet.isDown){
-        if(this.sprite.body.velocity.y > -3){
-          this.sprite.setVelocityY(this.sprite.body.velocity.y - 0.6);
+      //JET
+      if(Phaser.Input.Keyboard.JustDown(this.cursors.upJet)){
+            this.sprite.body.frictionAir = 0.06;
+            this.activatedJet = true;
+            //this.falseVelocityY = -1/this.scene.matter.world.getDelta();
+            this.sprite.setIgnoreGravity(true);
+      }
+
+      if(this.cursors.upJet.isDown){
+        if(this.sprite.body.velocity.y >= this.braceVelocity){
+          this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * delta);
+        }else {
+          this.sprite.setVelocityY(-this.scene.game.jetVelocity * delta);
         }
       }
-      //this.graphics.fillCircle(400, 400, 45);
-      //graphics.strokeLineShape(chLine);
+      if(this.cursors.down.isDown && this.activatedJet){
+        this.sprite.setVelocityY(this.scene.game.jetVelocity * delta);
+      }
+
+      //gravedad falsa para el trhust inicial
+      if(this.falseVelocityY < 0){
+        this.sprite.y += (this.falseVelocityY * delta);
+        this.falseVelocityY += (this.falseGravity * delta);
+      }
+      else
+        this.falseVelocityY = 0;
+      //JET
+
     }
   }
-  playAnimation(){
-    if(this.isTouching.ground){
+  playAnimation(dirAnimation){
+    if(this.activatedJet){
+      this.sprite.anims.play('idle', true);
+    }else{
       if(this.cursors.right.isDown){
         this.sprite.anims.play('wRight', true);
       }else if(this.cursors.left.isDown){
@@ -206,18 +206,12 @@ export default class Player {
       }else{
         this.sprite.anims.play('idle', true);
       }
-    }else{
-      if(this.sprite.body.velocity.y < 0){
-        this.sprite.anims.play('jumpUp', true);
-      }else if(this.sprite.body.velocity.y > 0){
-        this.sprite.anims.play('jumpDown', true);
-      }
     }
 
 
-    if(this.cursors.right.isDown){
+    if(dirAnimation){
       this.sprite.setFlipX(false);
-    }else if(this.cursors.left.isDown){
+    }else if(!dirAnimation){
       this.sprite.setFlipX(true);
     }
   }

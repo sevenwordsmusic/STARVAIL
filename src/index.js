@@ -47,8 +47,8 @@ var game = new Phaser.Game(config);
 //Declaramos variables globales del juego.
 game.musicVolume = 0.3;
 game.soundVolume = 0.2;
-game.jumpVelocity = 5.05;
 game.moveVelocity = 0.215;
+game.jetVelocity = 0.215;
 game.airVelocityFraction = 0.3;
 
 game.bulletInteracBodies = [];

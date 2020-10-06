@@ -30,28 +30,28 @@ export default class SceneTest_1 extends Phaser.Scene {
     */
 
     //Backgrounds.
-    this.add.image(480, 270, 'bg_e').setScrollFactor(0).setDepth(-503);
-    this.add.image(1300, 290, 'bg1_e').setScale(2).setScrollFactor(0.25).setDepth(-502);
-    this.add.image(1100, 320, 'bg2_e').setScale(2).setScrollFactor(0.5).setDepth(-501);
-    this.add.image(1200, 400, 'bg3_e').setScale(2).setScrollFactor(0.75).setDepth(-500);
+    //this.add.image(480, 270, 'bg_e').setScrollFactor(0).setDepth(-503);
+    //this.add.image(1300, 290, 'bg1_e').setScale(2).setScrollFactor(0.25).setDepth(-502);
+    //this.add.image(1100, 320, 'bg2_e').setScale(2).setScrollFactor(0.5).setDepth(-501);
+    //this.add.image(1200, 400, 'bg3_e').setScale(2).setScrollFactor(0.75).setDepth(-500);
 
     //Inicializacion y creacion de mapa de tiles.
     const map2 = this.make.tilemap({ key: "map2" });
     const tileset2 = map2.addTilesetImage("electrical_tileset", "tiles2");
 
     //Capas de tiles.
-    const layerminus2 = map2.createStaticLayer("background_layer_-2depth", tileset2, 0, 0);
-    layerminus2.depth = -20;
-    const layerminus1 = map2.createStaticLayer("deco_layer_-1depth", tileset2, 0, 0);
-    layerminus1.depth = -10;
+    //const layerminus2 = map2.createStaticLayer("background_layer_-2depth", tileset2, 0, 0);
+    //layerminus2.depth = -20;
+    //const layerminus1 = map2.createStaticLayer("deco_layer_-1depth", tileset2, 0, 0);
+    //layerminus1.depth = -10;
     const baselayer = map2.createStaticLayer("base_layer_0depth", tileset2, 0, 0);
     baselayer.depth = -5;
     const lethallayer = map2.createStaticLayer("lethal_layer_0depth", tileset2, 0, 0);
     lethallayer.depth = -5;
 
     //Colisiones de las capas.
-    layerminus1.setCollisionByProperty({ Collides: true });
-    this.matter.world.convertTilemapLayer(layerminus1);
+    //layerminus1.setCollisionByProperty({ Collides: true });
+    //this.matter.world.convertTilemapLayer(layerminus1);
     baselayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(baselayer);
     lethallayer.setCollisionByProperty({ Collides: true });
@@ -67,8 +67,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     }, this);
 
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
-    var cursors = this.input.keyboard.addKeys({ 'up': Phaser.Input.Keyboard.KeyCodes.W, 'left': Phaser.Input.Keyboard.KeyCodes.A, 'right': Phaser.Input.Keyboard.KeyCodes.D,
-     'fire': Phaser.Input.Keyboard.KeyCodes.Z, 'jet': Phaser.Input.Keyboard.KeyCodes.SPACE });
+    var cursors = this.input.keyboard.addKeys({ 'upJet': Phaser.Input.Keyboard.KeyCodes.W, 'left': Phaser.Input.Keyboard.KeyCodes.A, 'right': Phaser.Input.Keyboard.KeyCodes.D,
+    'down': Phaser.Input.Keyboard.KeyCodes.S, 'fire': Phaser.Input.Keyboard.KeyCodes.SPACE});
     //this.game.player = new PlayerDummy(this);
     new Player(this, 300, 455, cursors);
     var en1 = new Dummy(this, 500, 300);
@@ -111,8 +111,9 @@ export default class SceneTest_1 extends Phaser.Scene {
     //Camara.
     cam = this.cameras.main;
     this.matter.world.setBounds(0, -500, 10000, 10000);
-    cam.setBounds(0, -500, 10000, 1000);
+    cam.setBounds(0, -500, 10000, 1100);
     cam.startFollow(this.game.player.sprite, false, 0.05, 0.05, 0, 0);
+    cam.setBackgroundColor('rgba(132, 167, 219, 1)');
 
     this.input.setDefaultCursor('none');
   }

@@ -65,8 +65,9 @@ export default class PlayerFireArm {
       this.chSize = this.chSize + (this.chChangeSpeed * this.chMultip);
       this.crosshairSpr.setScale(this.chSize);
 
-      this.chLine.x1 = this.sprite.x;
-      this.chLine.y1 = this.sprite.y;
+      this.armDir.normalize();
+      this.chLine.x1 = this.sprite.x + this.armDir.x * 30;
+      this.chLine.y1 = this.sprite.y + this.armDir.y * 30;
       this.chLine.x2 = this.crosshairSpr.x;
       this.chLine.y2 = this.crosshairSpr.y;
 
