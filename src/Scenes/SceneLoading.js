@@ -9,7 +9,7 @@ export default class SceneLoading extends Phaser.Scene {
     //IMAGES, SPRITES, SPRITESHEETS
     this.load.image('square', 'assets/square.jpg');
     this.load.image('hexa', 'assets/hexa.png');
-    this.load.image('crosshair', 'assets/crosshair.png');
+    this.load.spritesheet('crosshair', 'assets/crosshair.png', { frameWidth: 64, frameHeight: 64 });
 
     this.load.spritesheet('androidRun', 'assets/Sprites/Player/male_android_running.png', { frameWidth: 32, frameHeight: 64 });
     this.load.spritesheet('androidIdle', 'assets/Sprites/Player/male_android_idle.png', { frameWidth: 32, frameHeight: 64 });

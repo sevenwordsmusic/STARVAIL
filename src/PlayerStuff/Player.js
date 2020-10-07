@@ -9,10 +9,12 @@ export default class Player {
     this.scene.game.player = this;
 
     this.mouse = this.scene.input.activePointer;
-    this.fireCounter = 0;
+    this.prevSceneMouse = new Phaser.Math.Vector2(0,0);
 
-    //jet
-    this.activatedJet = false;
+    scene.matter.world.on("beforeupdate", this.resetTouching, this);
+    this.scene.events.on("update", this.update, this);  //para que el update funcione
+
+    this.crossCounter = 0;
 
     //variables para el movimiento
     this.leftMultiply = 1;
@@ -45,26 +47,43 @@ export default class Player {
 
     this.cursors = cursors;
 
-    this.scene.events.on("update", this.update, this);  //para que el update funcione
 
     this.isTouching = { left: false, right: false, ground: false };
 
-    //DISPARO
-    this.cursors.fire.on('down', function(event){
-      this.fireArm.fireBomb();
+    //jet
+    this.activatedJet = false;
+
+    this.fireArm = new PlayerFireArm(this.scene, x, y);
+    this.fireCounterTap = 0;
+    this.fireCounterHold = 0;
+    this.weapons = [];
+    this.weapons[0] = {name: "MachineGun", fireRate: 4 * this.scene.matter.world.getDelta() , chFrame: 0};
+    this.weapons[1] = {name: "BombLauncher", fireRate: 30 * this.scene.matter.world.getDelta() , chFrame: 1};
+    this.weaponCounter = 0;
+
+    this.cursors.changeWeapon.on('down', function(event){
+      this.fireCounterHold = 0;
+      this.weaponCounter = (this.weaponCounter+1)%this.weapons.length;
+      this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame)
+      console.log(this.weapons[this.weaponCounter].name);
     }, this);
 
+    //DISPARO
     this.scene.input.on('pointerdown', function(pointer){
-      this.fireArm.fireBullet();
-      this.fireCounter = 0;
+      this.fireArm.setFireArmState(2);
+      this.fireArm.update();
+      if (this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate){
+        this.fireCounterTap = 0;
+        this.fireArm.fireWeaponProjectile(this.weaponCounter);
+      }
+      this.fireCounterHold = 0;
+      this.crossCounter = 0;
     }, this);
 
     this.scene.input.on('pointerup', function(pointer){
-      this.fireCounter = 0;
-    });
+      this.fireCounterHold = 0;
+    }, this);
     //DISPARO
-
-    scene.matter.world.on("beforeupdate", this.resetTouching, this);
 
     scene.matterCollision.addOnCollideStart({
       objectA: [this.sensors.bottom, this.sensors.left, this.sensors.right],
@@ -89,7 +108,6 @@ export default class Player {
     });*/
 
     //FIREARM
-    this.fireArm = new PlayerFireArm(this.scene, x, y);
 
     console.log(this);
   }
@@ -130,8 +148,8 @@ export default class Player {
   }
   update(time, delta) {
     if (this.scene.game.lives <= 0) { return; } //CAMBIAR ESPERA ACTIVA
-
     if (this.alive) {
+
       if (this.cursors.right.isDown) {
         if (!(this.isTouching.ground && this.isTouching.right)) {
           this.sprite.setVelocityX(this.scene.game.moveVelocity * delta * this.rightMultiply);
@@ -145,7 +163,7 @@ export default class Player {
     	  this.sprite.setVelocityX(0);
       }*/
       //document.getElementById('info').innerHTML = this.sprite;
-      this.playAnimation(this.fireArm.armDir.x >= 0);
+      this.playAnimation((this.fireArm.fireArmState>1));
 
       //CAMBIAR ESPERA ACTIVA
       if (this.sprite.y > 640) {
@@ -157,12 +175,20 @@ export default class Player {
 
       //DISPARAR
       if(this.mouse.isDown){
-        this.fireCounter++
-        if (this.fireCounter >= 4){
-            this.fireCounter = 0;
-            this.fireArm.fireBullet();
+        this.fireCounterHold += delta;
+        if (this.fireCounterHold >= this.weapons[this.weaponCounter].fireRate){
+          this.fireCounterHold = 0;
+          this.fireCounterTap = 0;
+          this.fireArm.fireWeaponProjectile(this.weaponCounter);
         }
       }
+      else{
+        if(this.crossCounter > 100 * this.scene.matter.world.getDelta() && this.fireArm.fireArmState != 1)
+          this.fireArm.setFireArmState(1);
+        else
+          this.crossCounter += delta;
+      }
+      this.fireCounterTap += delta;
       //DISPARAR
 
       //JET
@@ -195,7 +221,7 @@ export default class Player {
 
     }
   }
-  playAnimation(dirAnimation){
+  playAnimation(isFireing){
     if(this.activatedJet){
       this.sprite.anims.play('idle', true);
     }else{
@@ -208,11 +234,14 @@ export default class Player {
       }
     }
 
-
-    if(dirAnimation){
-      this.sprite.setFlipX(false);
-    }else if(!dirAnimation){
-      this.sprite.setFlipX(true);
+    if(isFireing){
+      this.sprite.setFlipX(this.fireArm.armDir.x < 0);
+    }else{
+      if(this.cursors.right.isDown){
+        this.sprite.setFlipX(false);
+      }else if(this.cursors.left.isDown){
+        this.sprite.setFlipX(true);
+      }
     }
   }
 

@@ -60,7 +60,7 @@ export default class Bullet extends Projectile {
       this.timer.reset({
             delay: this.expTime,
             callback: () => (this.itemExpire(this))
-          })
+          });
     },this);
     //mejorar esto si las balas hacen mucho daño
   }

@@ -68,7 +68,7 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
     var cursors = this.input.keyboard.addKeys({ 'upJet': Phaser.Input.Keyboard.KeyCodes.W, 'left': Phaser.Input.Keyboard.KeyCodes.A, 'right': Phaser.Input.Keyboard.KeyCodes.D,
-    'down': Phaser.Input.Keyboard.KeyCodes.S, 'fire': Phaser.Input.Keyboard.KeyCodes.SPACE});
+    'down': Phaser.Input.Keyboard.KeyCodes.S, 'changeWeapon': Phaser.Input.Keyboard.KeyCodes.SPACE});
     //this.game.player = new PlayerDummy(this);
     new Player(this, 300, 455, cursors);
     var en1 = new Dummy(this, 500, 300);
