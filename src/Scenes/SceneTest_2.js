@@ -156,6 +156,5 @@ export default class SceneTest_2 extends Phaser.Scene {
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
     //humanInteractableItems.update(time, delta);
-    document.getElementById('mouse').innerHTML = "X: " + Math.round(mouse.x + cam.scrollX) + " | Y: " + Math.round(mouse.y + cam.scrollY);
   }
 }

@@ -11,10 +11,10 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('hexa', 'assets/hexa.png');
     this.load.spritesheet('crosshair', 'assets/crosshair.png', { frameWidth: 64, frameHeight: 64 });
 
-    this.load.spritesheet('androidRun', 'assets/Sprites/Player/male_android_running.png', { frameWidth: 32, frameHeight: 64 });
-    this.load.spritesheet('androidIdle', 'assets/Sprites/Player/male_android_idle.png', { frameWidth: 32, frameHeight: 64 });
-    this.load.spritesheet('androidJumpUp', 'assets/Sprites/Player/male_android_jumping_up.png', { frameWidth: 32, frameHeight: 64 });
-    this.load.spritesheet('androidJumpDown', 'assets/Sprites/Player/male_android_jumping_down.png', { frameWidth: 32, frameHeight: 64 });
+    this.load.spritesheet('playerRun', 'assets/Sprites/Player/player_run.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('playerIdle', 'assets/Sprites/Player/player_idle.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('playerJumpUp', 'assets/Sprites/Player/player_jump.png', { frameWidth: 64, frameHeight: 64 });
+    //this.load.spritesheet('androidJumpDown', 'assets/Sprites/Player/male_android_jumping_down.png', { frameWidth: 32, frameHeight: 64 });
 
     this.load.image('playerFireArm', 'assets/Sprites/Player/player_FireArm.png', { frameWidth: 32, frameHeight: 64 });
 
@@ -32,7 +32,6 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('bullet', 'assets/Sprites/Bullet/bullet.png');
     this.load.spritesheet('explodingBomb', 'assets/Sprites/Bomb/bomb_ss.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
-
   }
 
   create(){
@@ -40,28 +39,28 @@ export default class SceneLoading extends Phaser.Scene {
     //ANIMS
     this.anims.create({
         key: 'wRight',
-        frames: this.anims.generateFrameNumbers('androidRun', { start: 0, end: 3 }),
-        frameRate: 10,
+        frames: this.anims.generateFrameNumbers('playerRun', { start: 0, end: 7 }),
+        frameRate: 14,
         repeat: -1
     });
     this.anims.create({
         key: 'idle',
-        frames: this.anims.generateFrameNumbers('androidIdle', { start: 0, end: 1 }),
-        frameRate: 2,
+        frames: this.anims.generateFrameNumbers('playerIdle', { start: 0, end: 6 }),
+        frameRate: 5,
         repeat: -1
     });
     this.anims.create({
         key: 'jumpUp',
-        frames: this.anims.generateFrameNumbers('androidJumpUp', { start: 0, end: 1 }),
-        frameRate: 6,
-        repeat: -1
+        frames: this.anims.generateFrameNumbers('playerJumpUp', { start: 0, end: 2 }),
+        frameRate: 10,
+        repeat: 0
     });
-    this.anims.create({
+    /*this.anims.create({
         key: 'jumpDown',
         frames: this.anims.generateFrameNumbers('androidJumpDown', { start: 0, end: 1 }),
         frameRate: 6,
         repeat: -1
-    });
+    });*/
 
     this.anims.create({
                 key: 'eBomb',

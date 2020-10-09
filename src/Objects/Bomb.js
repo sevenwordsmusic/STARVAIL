@@ -27,7 +27,7 @@ export default class Bomb extends Projectile {
       const bombExprosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "exprosion");
       bombExprosion.setDepth(10).setScale(3) //42
 
-      var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, 40, this.scene.game.enemyBodies);
+      var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, 40, this.scene.enemyBodies);
       for(var i in damagedEnemies){
         if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
           damagedEnemies[i].gameObject.parent.damage(100);

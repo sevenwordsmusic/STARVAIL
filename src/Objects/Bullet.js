@@ -53,7 +53,7 @@ export default class Bullet extends Projectile {
     this.scene.events.once('noEnemy' + index, function(){
       var auxDir = new Phaser.Math.Vector2(this.pVelocity.x, this.pVelocity.y);
       auxDir.normalize();
-      this.target = SuperiorQuery.superiorRayCast(x, y, auxDir, 14 ,this.scene.game.bulletInteracBodies);
+      this.target = SuperiorQuery.superiorRayCast(x, y, auxDir, 14 ,this.scene.bulletInteracBodies);
       const bulletDistance = Math.sqrt(Math.pow(this.target.colX - this.sprite.x,2) + Math.pow(this.target.colY - this.sprite.y,2));
       this.expTime = Math.min(1000,(bulletDistance * this.scene.matter.world.getDelta())/speed);
 

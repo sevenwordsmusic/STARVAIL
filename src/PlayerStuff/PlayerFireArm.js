@@ -97,9 +97,9 @@ export default class PlayerFireArm {
       //this.armDir.y = Math.sin((2*Math.random() - 1) * this.spread);
       //console.time("a");
       //for(var i=0; i<1000; i++){
-        //bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.game.bulletInteracBodies);
+        //bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
       //}
-      var bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.game.bulletInteracBodies);
+      var bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
       //console.timeEnd("a");
       if(bulletCollision.collided){
         var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
@@ -137,7 +137,6 @@ export default class PlayerFireArm {
         this.graphics.clear();
       break;
       case 1:
-      console.log("a");
         this.crosshairSpr.tint = 0x666666
         this.graphics.setDefaultStyles({ fillStyle: { color: 0x666666}});
         this.sprite.setActive(false).setVisible(false);

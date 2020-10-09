@@ -19,6 +19,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
+    //game.matter.world.pause();
     mouse = this.input.activePointer;
     //fadeOut = false;
 
@@ -57,24 +58,63 @@ export default class SceneTest_1 extends Phaser.Scene {
     lethallayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(lethallayer);
 
-    this.game.bulletInteracBodies = [];
+    this.tileBodyMatrix = [];
+    for(var i=0; i<240; i++){
+      this.tileBodyMatrix[i] = [];
+      for(var j=0; j<20; j++){
+        this.tileBodyMatrix[i][j] = null;
+      }
+    }
+    this.bulletInteracBodies = [];
     var counerAux = 0;
     baselayer.forEachTile(function (tile){
       if(tile.physics.matterBody != undefined){
-        this.game.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
+        const tileBody = tile.physics.matterBody.body;
+        this.tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, false);
+        Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
+        this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
         counerAux++;
       }
     }, this);
+    counerAux = 0;
+    lethallayer.forEachTile(function (tile){
+      if(tile.physics.matterBody != undefined){
+        const tileBody = tile.physics.matterBody.body;
+        this.tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, false);
+        Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
+        this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
+        counerAux++;
+      }
+    }, this);
+    /*console.time("plsWork");
+    for(var i=0; i<100; i++){
 
+      baselayer.forEachTile(function (tile){
+        if(tile.physics.matterBody != undefined){
+          //tile.physics.matterBody.removeBody()
+          var aux1 = tile.physics.matterBody.body;
+          Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tile.physics.matterBody.body);
+          Phaser.Physics.Matter.Matter.Composite.addBody(tile.physics.matterBody.world.localWorld, tile.physics.matterBody.body);
+          counerAux++;
+        }
+      }, this);
+    }
+    console.timeEnd("plsWork");*/
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
     var cursors = this.input.keyboard.addKeys({ 'upJet': Phaser.Input.Keyboard.KeyCodes.W, 'left': Phaser.Input.Keyboard.KeyCodes.A, 'right': Phaser.Input.Keyboard.KeyCodes.D,
     'down': Phaser.Input.Keyboard.KeyCodes.S, 'changeWeapon': Phaser.Input.Keyboard.KeyCodes.SPACE});
     //this.game.player = new PlayerDummy(this);
-    new Player(this, 300, 455, cursors);
-    var en1 = new Dummy(this, 500, 300);
-    var en2 = new Dummy(this, 700, 300);
-    var en3 = new Dummy(this, 900, 300);
-
+    new Player(this, 320, 448, cursors);
+    //var en1 = new Dummy(this, 500, 300);
+    /*console.time("ddddd");
+    for(var i=0; i< 1000; i++){
+      Phaser.Physics.Matter.Matter.Sleeping.set(en1.sprite.body, true);
+      //en1.sprite.setToSleep();
+      en1.sprite.setActive(false);
+    }
+    console.timeEnd("ddddd");*/ //importante!!!
+    //var en2 = new Dummy(this, 700, 300);
+    //var en3 = new Dummy(this, 900, 300);
     //Colisiones del escneario con el jugador
     this.matterCollision.addOnCollideStart({
       objectA: this.game.player.mainBody,
@@ -117,14 +157,16 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     this.input.setDefaultCursor('none');
   }
-
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
     document.getElementById('mouse').innerHTML = "X: " + Math.round(mouse.x + cam.scrollX) + " | Y: " + Math.round(mouse.y + cam.scrollY);
 
   }
+}
 
-  render(){
-
+class BodyWrapper{
+  constructor(body, active){
+    this.body = body;
+    this.active = active;
   }
 }

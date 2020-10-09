@@ -11,10 +11,10 @@ export default class Enemy {
     this.sprite.body.collisionFilter.group = -1;
 
     //cada vez que se crea un enemigo se añade su "body" al arrya de cuerpos que interaccionan con las balas y al array de cuerpos de enemigos
-    this.currentBodyIndex = this.scene.game.bulletInteracBodies.length;
-    this.scene.game.bulletInteracBodies[this.currentBodyIndex] = this.sprite.body;
-    this.currentEnemyIndex = this.scene.game.enemyBodies.length;
-    this.scene.game.enemyBodies[this.currentEnemyIndex] = this.sprite.body;
+    this.currentBodyIndex = this.scene.bulletInteracBodies.length;
+    this.scene.bulletInteracBodies[this.currentBodyIndex] = this.sprite.body;
+    this.currentEnemyIndex = this.scene.enemyBodies.length;
+    this.scene.enemyBodies[this.currentEnemyIndex] = this.sprite.body;
 
   }
 
@@ -34,8 +34,8 @@ export default class Enemy {
 
   enemyDead(){
     //el "body" del enemigo se quita del array de cuerpos que interaccionan con balas
-    this.scene.game.bulletInteracBodies[this.currentBodyIndex] = null;
-    this.scene.game.enemyBodies[this.currentEnemyIndex] = null;
+    this.scene.bulletInteracBodies[this.currentBodyIndex] = null;
+    this.scene.enemyBodies[this.currentEnemyIndex] = null;
     this.sprite.destroy();
     //se emite un evento avisando a las balas que tienen a este enemigo como "target" para que cambien a un target nuevo
     this.scene.events.emit('noEnemy' + this.currentBodyIndex);

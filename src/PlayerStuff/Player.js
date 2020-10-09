@@ -5,7 +5,7 @@ export default class Player {
   constructor(scene, x, y, cursors) {
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.matter.add.sprite(x, y, 'androidIdle', 0);
+    this.sprite = scene.matter.add.sprite(x, y, 'playerIdle', 0);
     this.scene.game.player = this;
 
     this.mouse = this.scene.input.activePointer;
@@ -38,15 +38,19 @@ export default class Player {
       parts: [this.mainBody, this.sensors.bottom, this.sensors.left, this.sensors.right],
       frictionAir: 0.02
     });
+    this.sprite.setScale(1.5);
     this.sprite
       .setExistingBody(compoundBody)
       .setFixedRotation()
       .setPosition(x, y)
-      .setOrigin(0.5, 0.55)
+      .setOrigin(0.5, 0.75)     //0.5, 0.55
       .body.collisionFilter.group = -1;
 
     this.cursors = cursors;
 
+    this.earlyPos = new Phaser.Math.Vector2(this.sprite.body.position.x, this.sprite.body.position.y);
+    this.advance32X = 0;
+    this.advance32Y = 0;
 
     this.isTouching = { left: false, right: false, ground: false };
 
@@ -145,11 +149,35 @@ export default class Player {
     this.isTouching.left = false;
     this.isTouching.right = false;
     this.isTouching.ground = false;
+    this.earlyPos.x = this.sprite.body.position.x;
+    this.earlyPos.y = this.sprite.body.position.y;
   }
+
   update(time, delta) {
+    this.advance32X += (this.sprite.body.position.x - this.earlyPos.x);
+    if(this.advance32X >= 32){
+      const layersX = Math.floor(this.advance32X/32);
+      this.xFrontiers(1, layersX);
+      this.advance32X = this.advance32X - 32*layersX;
+    }else if (this.advance32X <= -32) {
+      const layersX = Math.floor(Math.abs(this.advance32X/32));
+      this.xFrontiers(-1, layersX);
+      this.advance32X = this.advance32X + 32*layersX;
+    }
+    this.advance32Y += (this.sprite.body.position.y - this.earlyPos.y);
+    if(this.advance32Y >= 32){
+      const layersY = Math.floor(this.advance32Y/32);
+      this.yFrontiers(1, layersY);
+      this.advance32Y = this.advance32Y - 32*layersY;
+    }else if (this.advance32Y <= -32) {
+      const layersY = Math.floor(Math.abs(this.advance32Y/32));
+      this.yFrontiers(-1, layersY);
+      this.advance32Y = this.advance32Y + 32*layersY;
+    }
+    this.earlyPos.x = this.sprite.body.position.x;
+    this.earlyPos.y = this.sprite.body.position.y;
     if (this.scene.game.lives <= 0) { return; } //CAMBIAR ESPERA ACTIVA
     if (this.alive) {
-
       if (this.cursors.right.isDown) {
         if (!(this.isTouching.ground && this.isTouching.right)) {
           this.sprite.setVelocityX(this.scene.game.moveVelocity * delta * this.rightMultiply);
@@ -183,8 +211,8 @@ export default class Player {
         }
       }
       else{
-        if(this.crossCounter > 100 * this.scene.matter.world.getDelta() && this.fireArm.fireArmState != 1)
-          this.fireArm.setFireArmState(1);
+        if(this.crossCounter > 100 * this.scene.matter.world.getDelta() && this.fireArm.fireArmState != 0)
+          this.fireArm.setFireArmState(0);
         else
           this.crossCounter += delta;
       }
@@ -193,6 +221,8 @@ export default class Player {
 
       //JET
       if(Phaser.Input.Keyboard.JustDown(this.cursors.upJet)){
+            if(!this.activatedJet)
+              this.sprite.anims.play('jumpUp', false);
             this.sprite.body.frictionAir = 0.06;
             this.activatedJet = true;
             //this.falseVelocityY = -1/this.scene.matter.world.getDelta();
@@ -218,12 +248,11 @@ export default class Player {
       else
         this.falseVelocityY = 0;
       //JET
-
     }
   }
   playAnimation(isFireing){
     if(this.activatedJet){
-      this.sprite.anims.play('idle', true);
+      //this.sprite.anims.play('jumpUp', false);
     }else{
       if(this.cursors.right.isDown){
         this.sprite.anims.play('wRight', true);
@@ -245,8 +274,48 @@ export default class Player {
     }
   }
 
+  xFrontiers(dir, layers = 1){
+    const xBoundry = 7*dir;
+    const yBoundry = 7;
+    const xNormalized = Math.floor(this.sprite.x/32);
+    const yNormalized = Math.floor(this.sprite.y/32);
+
+    for(var i=0; i<layers; i++){
+      for(var j=-yBoundry; j<yBoundry+1; j++){
+        if(this.scene.tileBodyMatrix[xNormalized + xBoundry + i][yNormalized +j] != null && !this.scene.tileBodyMatrix[xNormalized + xBoundry + i][yNormalized +j].active){
+          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, this.scene.tileBodyMatrix[xNormalized + xBoundry + i][yNormalized +j].body);
+          this.scene.tileBodyMatrix[xNormalized + xBoundry + i][yNormalized +j].active = true;
+        }
+        if(this.scene.tileBodyMatrix[xNormalized - xBoundry - 2*dir - i][yNormalized +j] != null && this.scene.tileBodyMatrix[xNormalized - xBoundry - 2*dir - i][yNormalized +j].active){
+          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, this.scene.tileBodyMatrix[xNormalized - xBoundry - 2*dir - i][yNormalized +j].body);
+          this.scene.tileBodyMatrix[xNormalized - xBoundry - 2*dir - i][yNormalized +j].active = false;
+        }
+        console.log(j);
+      }
+    }
+  }
+  yFrontiers(dir, layers = 1){
+    const xBoundry = 7;
+    const yBoundry = 7*dir;
+    const xNormalized = Math.floor(this.sprite.x/32);
+    const yNormalized = Math.floor(this.sprite.y/32);
+
+    for(var i=-xBoundry; i<xBoundry+1; i++){
+      for(var j=0; j<layers; j++){
+        if(this.scene.tileBodyMatrix[xNormalized + i][yNormalized + yBoundry + j] != null && !this.scene.tileBodyMatrix[xNormalized + i][yNormalized + yBoundry + j].active){
+          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, this.scene.tileBodyMatrix[xNormalized + i][yNormalized + yBoundry + j].body);
+          this.scene.tileBodyMatrix[xNormalized + i][yNormalized + yBoundry + j].active = true;
+        }
+        if(this.scene.tileBodyMatrix[xNormalized + i][yNormalized - yBoundry - 2*dir - j] != null && this.scene.tileBodyMatrix[xNormalized + i][yNormalized - yBoundry - 2*dir - j].active){
+          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, this.scene.tileBodyMatrix[xNormalized + i][yNormalized - yBoundry - 2*dir - j].body);
+          this.scene.tileBodyMatrix[xNormalized + i][yNormalized - yBoundry - 2*dir - j].active = false;
+        }
+      }
+    }
+  }
+
   damaged(deathVector, deathSpread) {
-    if (!this.invulnerable) {
+    /*if (!this.invulnerable) {
       //var dieSound = this.scene.sound.add('die', {volume: this.scene.game.soundVolume});  SONIDO MUERTE
       //dieSound.play();
       this.sprite.visible = false;
@@ -254,7 +323,7 @@ export default class Player {
       this.deathSpawn(deathVector, deathSpread);
       this.sprite.y = 900;
 
-    }
+    }*/
   }
   respawn() {
     /* POR SI QUEREMOS PARPADEO
