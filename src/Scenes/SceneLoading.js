@@ -20,6 +20,8 @@ export default class SceneLoading extends Phaser.Scene {
 
     this.load.image('dummy', 'assets/Sprites/Enemies/dummy.png');
 
+    this.load.plugin('rexvirtualjoystickplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js', true);
+
     this.load.image('bg_e', 'assets/Backgrounds/Sky/SkyBG.png');
     this.load.image('bg1_e', 'assets/Backgrounds/Sky/CloudsFar.png');
     this.load.image('bg2_e', 'assets/Backgrounds/Sky/CloudsMid.png');

@@ -16,12 +16,33 @@ export default class SceneTest_1 extends Phaser.Scene {
   constructor() {
     super("test1");
   }
+
+  preload() {
+    var url;
+
+    url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
+    this.load.plugin('rexvirtualjoystickplugin', url, true);
+}
+  
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
     //game.matter.world.pause();
     mouse = this.input.activePointer;
     //fadeOut = false;
+
+    //JOYSTICK
+    var joystick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
+      x: 120,
+      y: 420,
+      radius: 100,
+      base: this.add.circle(0, 0, 100, 0x888888),
+      thumb: this.add.circle(0, 0, 50, 0xcccccc),
+      // dir: '8dir',
+      forceMin: 15,
+      // fixed: true,
+      // enable: true
+  });
 
     //Música. POR SI QUEREMOS MÚSICA
     /*
