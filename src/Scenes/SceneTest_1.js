@@ -22,6 +22,12 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
     this.load.plugin('rexvirtualjoystickplugin', url, true);
+
+    url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexdragplugin.min.js';
+    this.load.plugin('rexdragplugin', url, true);
+  
+    url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow.png';      
+    this.load.image('arrow', url);
 }
 
   //Función create, que crea los elementos del propio juego.
@@ -30,6 +36,19 @@ export default class SceneTest_1 extends Phaser.Scene {
     //game.matter.world.pause();
     mouse = this.input.activePointer;
     //fadeOut = false;
+
+    //JOYSTICK
+    var joystick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
+      x: 120,
+      y: 420,
+      radius: 100,
+      base: this.add.circle(0, 0, 100, 0x888888),
+      thumb: this.add.circle(0, 0, 50, 0xcccccc),
+      // dir: '8dir',
+      forceMin: 15,
+      // fixed: true,
+      // enable: true
+  });
 
     //Música. POR SI QUEREMOS MÚSICA
     /*
@@ -168,8 +187,26 @@ export default class SceneTest_1 extends Phaser.Scene {
   update(time, delta) {
     //document.getElementById('mouse').innerHTML = "X: " + Math.round(mouse.x + cam.scrollX) + " | Y: " + Math.round(mouse.y + cam.scrollY);
 
+    //PRUEBAS CON CONTROLES DRAG
+    // this.input.addPointer(3);
+    //     this.input.on('pointerdown', this.createImg, this);
+    //     this.add.text(10,10, 'Pointer down: create object and drag it\nPointer up: destroy object', {fontSize: '20px'})
+
+    this.input.on('pointerdown',function(){cam.setBackgroundColor('rgba(132, 245, 219, 1)'); }, this)
+    this.input.on('pointerup',function(){cam.setBackgroundColor('rgba(233, 167, 4, 1)'); }, this)
+
   }
+
+  createImg(pointer) {
+    var img = this.add.image(pointer.x, pointer.y, 'arrow');
+    img.drag = this.plugins.get('rexdragplugin').add(img);
+    img.drag.drag();
+
+    img.on('dragend', img.destroy, img);
 }
+}
+
+
 
 class BodyWrapper{
   constructor(body, active){
