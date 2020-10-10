@@ -1,4 +1,5 @@
 
+var cursorKeys
 export default class Joystick_test extends Phaser.Scene {
   constructor() {
     super("Joystick");
@@ -21,16 +22,16 @@ export default class Joystick_test extends Phaser.Scene {
       // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
       // forceMin: 16,
       // enable: true
-    })
-      .on('update', this.dumpJoyStickState, this);
+    });
+      //.on('update', this.dumpJoyStickState, this);
 
     this.text = this.add.text(0, 0);
-    this.dumpJoyStickState();
-  }
 
-  dumpJoyStickState() {
-    var cursorKeys = this.joyStick.createCursorKeys();
-    var s = 'Key down: ';
+    cursorKeys = this.joyStick.createCursorKeys();
+    console.log(cursorKeys);
+  }
+  update(){
+    /*var s = 'Key down: ';
     for (var name in cursorKeys) {
         if (cursorKeys[name].isDown) {
             s += name + ' ';
@@ -39,21 +40,17 @@ export default class Joystick_test extends Phaser.Scene {
     s += '\n';
     s += ('Force: ' + Math.floor(this.joyStick.force * 100) / 100 + '\n');
     s += ('Angle: ' + Math.floor(this.joyStick.angle * 100) / 100 + '\n');
-    this.text.setText(s);
-}
-
-  update() {
-
+    this.text.setText(s);*/
+    var auxtext = "";
+    if(cursorKeys.up.isDown)
+      auxtext += "up  ";
+    if(cursorKeys.down.isDown)
+      auxtext += "down  ";
+    if(cursorKeys.right.isDown)
+      auxtext += "right  ";
+    if(cursorKeys.left.isDown)
+      auxtext += "left  ";
+    console.log(auxtext);
   }
+
 }
-
-var config = {
-  type: Phaser.AUTO,
-  parent: 'phaser-example',
-  width: 800,
-  height: 600,
-  scene: Joystick_test,
-  backgroundColor: 0x333333
-};
-
-var game = new Phaser.Game(config);

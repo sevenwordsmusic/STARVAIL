@@ -34,6 +34,9 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('bullet', 'assets/Sprites/Bullet/bullet.png');
     this.load.spritesheet('explodingBomb', 'assets/Sprites/Bomb/bomb_ss.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
+
+    //preload del joystick
+    this.load.plugin('rexvirtualjoystickplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js', true);
   }
 
   create(){

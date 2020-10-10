@@ -89,6 +89,7 @@ export default class SuperiorQuery{
 
   static superiorRegion(x, y , radius, bodies){
       var touchedBodies = [];
+      if(bodies == undefined) return touchedBodies;
       for(var i=0; i<bodies.length; i++){
           if(bodies[i] != null){
             bodyLoop:

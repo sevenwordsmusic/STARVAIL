@@ -47,6 +47,17 @@ export default class Player {
       .body.collisionFilter.group = -1;
 
     this.cursors = cursors;
+    this.joyStick = this.scene.plugins.get('rexvirtualjoystickplugin').add(this, {
+      x: 120,
+      y: 420,
+      radius: 100,
+      base: this.scene.add.circle(0, 0, 100, 0x888888),
+      thumb: this.scene.add.circle(0, 0, 50, 0xcccccc),
+      // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
+      // forceMin: 16,
+      // enable: true
+    });
+    this.joyStickKeys = this.joyStick.createCursorKeys();
 
     this.earlyPos = new Phaser.Math.Vector2(this.sprite.body.position.x, this.sprite.body.position.y);
     this.advance32X = 0;
@@ -124,7 +135,7 @@ export default class Player {
     if (bodyB.isSensor) return;
     if (bodyA === this.sensors.bottom) {
       this.isTouching.ground = true;
-      if(this.activatedJet && this.cursors.down.isDown){
+      if(this.activatedJet && this.playerDown()){
           this.sprite.body.frictionAir = 0.01;
           this.sprite.setVelocityY(this.scene.game.jetVelocity * this.scene.matter.world.getDelta());
           this.sprite.setIgnoreGravity(false);
@@ -153,7 +164,25 @@ export default class Player {
     this.earlyPos.y = this.sprite.body.position.y;
   }
 
+  playerUp(){
+    return this.cursors.upJet.isDown || this.joyStickKeys.up.isDown;
+  }
+  playerRight(){
+    return this.cursors.right.isDown || this.joyStickKeys.right.isDown;
+  }
+  playerLeft(){
+    return this.cursors.left.isDown || this.joyStickKeys.left.isDown;
+  }
+  playerDown(){
+    return this.cursors.down.isDown || this.joyStickKeys.down.isDown;
+  }
+  playerMoveForce(){
+    if(this.game.onPc) return 1;
+    else return 1;
+  }
+
   update(time, delta) {
+    //BAJO CONSTRUCCIÓN
     this.advance32X += (this.sprite.body.position.x - this.earlyPos.x);
     if(this.advance32X >= 32){
       const layersX = Math.floor(this.advance32X/32);
@@ -176,14 +205,16 @@ export default class Player {
     }
     this.earlyPos.x = this.sprite.body.position.x;
     this.earlyPos.y = this.sprite.body.position.y;
+    //BAJO CONSTRUCCIÓN
+
     if (this.scene.game.lives <= 0) { return; } //CAMBIAR ESPERA ACTIVA
     if (this.alive) {
-      if (this.cursors.right.isDown) {
+      if (this.playerRight()) {
         if (!(this.isTouching.ground && this.isTouching.right)) {
           this.sprite.setVelocityX(this.scene.game.moveVelocity * delta * this.rightMultiply);
         }
       }
-      else if (this.cursors.left.isDown) {
+      else if (this.playerLeft()) {
         if (!(this.isTouching.ground && this.isTouching.left)) {
           this.sprite.setVelocityX(-this.scene.game.moveVelocity * delta * this.leftMultiply);
         }
@@ -229,14 +260,14 @@ export default class Player {
             this.sprite.setIgnoreGravity(true);
       }
 
-      if(this.cursors.upJet.isDown){
+      if(this.playerUp()){
         if(this.sprite.body.velocity.y >= this.braceVelocity){
           this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * delta);
         }else {
           this.sprite.setVelocityY(-this.scene.game.jetVelocity * delta);
         }
       }
-      if(this.cursors.down.isDown && this.activatedJet){
+      if(this.playerDown() && this.activatedJet){
         this.sprite.setVelocityY(this.scene.game.jetVelocity * delta);
       }
 
@@ -254,9 +285,9 @@ export default class Player {
     if(this.activatedJet){
       //this.sprite.anims.play('jumpUp', false);
     }else{
-      if(this.cursors.right.isDown){
+      if(this.playerRight()){
         this.sprite.anims.play('wRight', true);
-      }else if(this.cursors.left.isDown){
+      }else if(this.playerLeft()){
         this.sprite.anims.play('wRight', true);
       }else{
         this.sprite.anims.play('idle', true);
@@ -266,9 +297,9 @@ export default class Player {
     if(isFireing){
       this.sprite.setFlipX(this.fireArm.armDir.x < 0);
     }else{
-      if(this.cursors.right.isDown){
+      if(this.playerRight()){
         this.sprite.setFlipX(false);
-      }else if(this.cursors.left.isDown){
+      }else if(this.playerLeft()){
         this.sprite.setFlipX(true);
       }
     }
@@ -290,7 +321,6 @@ export default class Player {
           Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, this.scene.tileBodyMatrix[xNormalized - xBoundry - 2*dir - i][yNormalized +j].body);
           this.scene.tileBodyMatrix[xNormalized - xBoundry - 2*dir - i][yNormalized +j].active = false;
         }
-        console.log(j);
       }
     }
   }

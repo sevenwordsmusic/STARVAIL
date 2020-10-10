@@ -5,6 +5,7 @@ import Player from "./PlayerStuff/Player.js";
 import SceneLoading from "./Scenes/SceneLoading.js";
 import SceneTest_1 from "./Scenes/SceneTest_1.js";
 import SceneTest_2 from "./Scenes/SceneTest_2.js";
+import Joystick_test from "./Scenes/Joystick_test.js";
 
 //Configuración de Phaser 3
 var config = {
