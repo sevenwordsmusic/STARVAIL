@@ -1,15 +1,13 @@
 
-import PlayerFireArm from "./PlayerFireArm.js";
+import PlayerFireArmPC from "./PlayerFireArmPC.js";
+import PlayerFireArmMobile from "./PlayerFireArmMobile.js";
 
 export default class Player {
-  constructor(scene, x, y, cursors) {
+  constructor(scene, x, y, cursorsMove, weaponChange) {
     //inicializacion
     this.scene = scene;
     this.sprite = scene.matter.add.sprite(x, y, 'playerIdle', 0);
     this.scene.game.player = this;
-
-    this.mouse = this.scene.input.activePointer;
-    this.prevSceneMouse = new Phaser.Math.Vector2(0,0);
 
     scene.matter.world.on("beforeupdate", this.resetTouching, this);
     this.scene.events.on("update", this.update, this);  //para que el update funcione
@@ -46,7 +44,8 @@ export default class Player {
       .setOrigin(0.5, 0.75)     //0.5, 0.55
       .body.collisionFilter.group = -1;
 
-    this.cursors = cursors;
+    this.weaponChange = weaponChange;
+    //this.cursors = cursors;
     this.joyStick = this.scene.plugins.get('rexvirtualjoystickplugin').add(this, {
       x: 120,
       y: 420,
@@ -57,7 +56,8 @@ export default class Player {
       // forceMin: 16,
       // enable: true
     });
-    this.joyStickKeys = this.joyStick.createCursorKeys();
+    //this.joyStickKeys = this.joyStick.createCursorKeys();
+    this.cursors = this.joyStick.createCursorKeys();
 
     this.earlyPos = new Phaser.Math.Vector2(this.sprite.body.position.x, this.sprite.body.position.y);
     this.advance32X = 0;
@@ -68,7 +68,11 @@ export default class Player {
     //jet
     this.activatedJet = false;
 
-    this.fireArm = new PlayerFireArm(this.scene, x, y);
+    if(this.scene.game.onPC)
+      this.fireArm = new PlayerFireArmPC(this.scene, x, y);
+    else
+      this.fireArm = new PlayerFireArmMobile(this.scene, x, y);
+
     this.fireCounterTap = 0;
     this.fireCounterHold = 0;
     this.weapons = [];
@@ -76,7 +80,7 @@ export default class Player {
     this.weapons[1] = {name: "BombLauncher", fireRate: 30 * this.scene.matter.world.getDelta() , chFrame: 1};
     this.weaponCounter = 0;
 
-    this.cursors.changeWeapon.on('down', function(event){
+    this.weaponChange.on('down', function(event){
       this.fireCounterHold = 0;
       this.weaponCounter = (this.weaponCounter+1)%this.weapons.length;
       this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame)
@@ -85,8 +89,7 @@ export default class Player {
 
     //DISPARO
     this.scene.input.on('pointerdown', function(pointer){
-      this.fireArm.setFireArmState(2);
-      this.fireArm.update();
+      this.fireArm.enableFireArm();
       if (this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate){
         this.fireCounterTap = 0;
         this.fireArm.fireWeaponProjectile(this.weaponCounter);
@@ -135,7 +138,7 @@ export default class Player {
     if (bodyB.isSensor) return;
     if (bodyA === this.sensors.bottom) {
       this.isTouching.ground = true;
-      if(this.activatedJet && this.playerDown()){
+      if(this.activatedJet && this.cursors.down.isDown){
           this.sprite.body.frictionAir = 0.01;
           this.sprite.setVelocityY(this.scene.game.jetVelocity * this.scene.matter.world.getDelta());
           this.sprite.setIgnoreGravity(false);
@@ -164,21 +167,13 @@ export default class Player {
     this.earlyPos.y = this.sprite.body.position.y;
   }
 
-  playerUp(){
-    return this.cursors.upJet.isDown || this.joyStickKeys.up.isDown;
+  playerMoveForceX(){
+    if(this.scene.game.onPC) return 1;
+    else return Math.abs(Math.min(Math.max(this.joyStick.forceX/100, -1), 1));
   }
-  playerRight(){
-    return this.cursors.right.isDown || this.joyStickKeys.right.isDown;
-  }
-  playerLeft(){
-    return this.cursors.left.isDown || this.joyStickKeys.left.isDown;
-  }
-  playerDown(){
-    return this.cursors.down.isDown || this.joyStickKeys.down.isDown;
-  }
-  playerMoveForce(){
-    if(this.game.onPc) return 1;
-    else return 1;
+  playerMoveForceY(){
+    if(this.scene.game.onPC) return 1;
+    else return Math.abs(Math.min(Math.max(this.joyStick.forceY/100, -1), 1));
   }
 
   update(time, delta) {
@@ -186,21 +181,21 @@ export default class Player {
     this.advance32X += (this.sprite.body.position.x - this.earlyPos.x);
     if(this.advance32X >= 32){
       const layersX = Math.floor(this.advance32X/32);
-      this.xFrontiers(1, layersX);
+      this.xFrontiers(1, 7, layersX);
       this.advance32X = this.advance32X - 32*layersX;
     }else if (this.advance32X <= -32) {
       const layersX = Math.floor(Math.abs(this.advance32X/32));
-      this.xFrontiers(-1, layersX);
+      this.xFrontiers(-1, 7, layersX);
       this.advance32X = this.advance32X + 32*layersX;
     }
     this.advance32Y += (this.sprite.body.position.y - this.earlyPos.y);
     if(this.advance32Y >= 32){
       const layersY = Math.floor(this.advance32Y/32);
-      this.yFrontiers(1, layersY);
+      this.yFrontiers(1, 7, layersY);
       this.advance32Y = this.advance32Y - 32*layersY;
     }else if (this.advance32Y <= -32) {
       const layersY = Math.floor(Math.abs(this.advance32Y/32));
-      this.yFrontiers(-1, layersY);
+      this.yFrontiers(-1, 7, layersY);
       this.advance32Y = this.advance32Y + 32*layersY;
     }
     this.earlyPos.x = this.sprite.body.position.x;
@@ -209,20 +204,20 @@ export default class Player {
 
     if (this.scene.game.lives <= 0) { return; } //CAMBIAR ESPERA ACTIVA
     if (this.alive) {
-      if (this.playerRight()) {
+      if (this.cursors.right.isDown) {
         if (!(this.isTouching.ground && this.isTouching.right)) {
-          this.sprite.setVelocityX(this.scene.game.moveVelocity * delta * this.rightMultiply);
+          this.sprite.setVelocityX(this.scene.game.moveVelocity * delta * this.rightMultiply * this.playerMoveForceX());
         }
       }
-      else if (this.playerLeft()) {
+      else if (this.cursors.left.isDown) {
         if (!(this.isTouching.ground && this.isTouching.left)) {
-          this.sprite.setVelocityX(-this.scene.game.moveVelocity * delta * this.leftMultiply);
+          this.sprite.setVelocityX(-this.scene.game.moveVelocity * delta * this.leftMultiply * this.playerMoveForceX());
         }
       } /*else if (this.cursors.right.isUp && this.cursors.left.isUp){
     	  this.sprite.setVelocityX(0);
       }*/
       //document.getElementById('info').innerHTML = this.sprite;
-      this.playAnimation((this.fireArm.fireArmState>1));
+      this.playAnimation(this.fireArm.fireArmActive);
 
       //CAMBIAR ESPERA ACTIVA
       if (this.sprite.y > 640) {
@@ -233,7 +228,7 @@ export default class Player {
 
 
       //DISPARAR
-      if(this.mouse.isDown){
+      if(this.scene.input.activePointer.isDown){
         this.fireCounterHold += delta;
         if (this.fireCounterHold >= this.weapons[this.weaponCounter].fireRate){
           this.fireCounterHold = 0;
@@ -242,8 +237,8 @@ export default class Player {
         }
       }
       else{
-        if(this.crossCounter > 100 * this.scene.matter.world.getDelta() && this.fireArm.fireArmState != 0)
-          this.fireArm.setFireArmState(0);
+        if(this.crossCounter > this.fireArm.afterActive && this.fireArm.fireArmActive)
+          this.fireArm.disableFireArm();
         else
           this.crossCounter += delta;
       }
@@ -251,24 +246,25 @@ export default class Player {
       //DISPARAR
 
       //JET
-      if(Phaser.Input.Keyboard.JustDown(this.cursors.upJet)){
-            if(!this.activatedJet)
+      if(Phaser.Input.Keyboard.JustDown(this.cursors.up)){
+            if(!this.activatedJet){
               this.sprite.anims.play('jumpUp', false);
-            this.sprite.body.frictionAir = 0.06;
-            this.activatedJet = true;
-            //this.falseVelocityY = -1/this.scene.matter.world.getDelta();
-            this.sprite.setIgnoreGravity(true);
+              this.sprite.body.frictionAir = 0.06;
+              this.activatedJet = true;
+              //this.falseVelocityY = -1/this.scene.matter.world.getDelta();
+              this.sprite.setIgnoreGravity(true);
+            }
       }
 
-      if(this.playerUp()){
+      if(this.cursors.up.isDown){
         if(this.sprite.body.velocity.y >= this.braceVelocity){
-          this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * delta);
+          this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * delta * this.playerMoveForceY());
         }else {
-          this.sprite.setVelocityY(-this.scene.game.jetVelocity * delta);
+          this.sprite.setVelocityY(-this.scene.game.jetVelocity * delta * this.playerMoveForceY());
         }
       }
-      if(this.playerDown() && this.activatedJet){
-        this.sprite.setVelocityY(this.scene.game.jetVelocity * delta);
+      if(this.cursors.down.isDown && this.activatedJet){
+        this.sprite.setVelocityY(this.scene.game.jetVelocity * delta * this.playerMoveForceY());
       }
 
       //gravedad falsa para el trhust inicial
@@ -283,13 +279,17 @@ export default class Player {
   }
   playAnimation(isFireing){
     if(this.activatedJet){
+      this.sprite.anims.setTimeScale(1);
       //this.sprite.anims.play('jumpUp', false);
     }else{
-      if(this.playerRight()){
+      if(this.cursors.right.isDown){
+        this.sprite.anims.setTimeScale(this.playerMoveForceX());
         this.sprite.anims.play('wRight', true);
-      }else if(this.playerLeft()){
+      }else if(this.cursors.left.isDown){
+        this.sprite.anims.setTimeScale(this.playerMoveForceX());
         this.sprite.anims.play('wRight', true);
       }else{
+        this.sprite.anims.setTimeScale(1);
         this.sprite.anims.play('idle', true);
       }
     }
@@ -297,49 +297,81 @@ export default class Player {
     if(isFireing){
       this.sprite.setFlipX(this.fireArm.armDir.x < 0);
     }else{
-      if(this.playerRight()){
+      if(this.cursors.right.isDown){
         this.sprite.setFlipX(false);
-      }else if(this.playerLeft()){
+      }else if(this.cursors.left.isDown){
         this.sprite.setFlipX(true);
       }
     }
   }
 
-  xFrontiers(dir, layers = 1){
-    const xBoundry = 7*dir;
-    const yBoundry = 7;
+  xFrontiers(dir, boundry, layers = 1){
+    const xBoundry = boundry*dir;
+    const yBoundry = boundry + 1; //7+2
     const xNormalized = Math.floor(this.sprite.x/32);
     const yNormalized = Math.floor(this.sprite.y/32);
+    var bodyWAdd;
+    var bodyWRemove;
 
     for(var i=0; i<layers; i++){
+      const xAdd = xNormalized + xBoundry + i*dir;
+      const xRemove = xNormalized - xBoundry - 2*dir - i*dir;
       for(var j=-yBoundry; j<yBoundry+1; j++){
-        if(this.scene.tileBodyMatrix[xNormalized + xBoundry + i][yNormalized +j] != null && !this.scene.tileBodyMatrix[xNormalized + xBoundry + i][yNormalized +j].active){
-          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, this.scene.tileBodyMatrix[xNormalized + xBoundry + i][yNormalized +j].body);
-          this.scene.tileBodyMatrix[xNormalized + xBoundry + i][yNormalized +j].active = true;
+        bodyWAdd = this.scene.tileBodyMatrix[xAdd][yNormalized +j];
+        bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized +j];
+        if(bodyWAdd != undefined && !bodyWAdd.active){ //9-1 bugfix ya que el bounding box que elimina tiles es 2 casillas mas grande
+          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
+          bodyWAdd.active = true;
         }
-        if(this.scene.tileBodyMatrix[xNormalized - xBoundry - 2*dir - i][yNormalized +j] != null && this.scene.tileBodyMatrix[xNormalized - xBoundry - 2*dir - i][yNormalized +j].active){
-          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, this.scene.tileBodyMatrix[xNormalized - xBoundry - 2*dir - i][yNormalized +j].body);
-          this.scene.tileBodyMatrix[xNormalized - xBoundry - 2*dir - i][yNormalized +j].active = false;
+        if(bodyWRemove != undefined && bodyWRemove.active){
+          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+          bodyWRemove.active = false;
         }
+      }
+      bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  - yBoundry - 1];
+      if(bodyWRemove != undefined && bodyWRemove.active){
+        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        bodyWRemove.active = false;
+      }
+      bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  + yBoundry + 1];
+      if(bodyWRemove != undefined && bodyWRemove.active){
+        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        bodyWRemove.active = false;
       }
     }
   }
-  yFrontiers(dir, layers = 1){
-    const xBoundry = 7;
-    const yBoundry = 7*dir;
+  yFrontiers(dir, boundry, layers = 1){
+    const xBoundry = boundry + 1; //7+2
+    const yBoundry = boundry*dir;
     const xNormalized = Math.floor(this.sprite.x/32);
     const yNormalized = Math.floor(this.sprite.y/32);
+    var bodyWAdd;
+    var bodyWRemove;
 
     for(var i=-xBoundry; i<xBoundry+1; i++){
+      const yAdd = yNormalized + yBoundry + j*dir;
+      const yRemove = yNormalized - yBoundry - 2*dir - j*dir;
       for(var j=0; j<layers; j++){
-        if(this.scene.tileBodyMatrix[xNormalized + i][yNormalized + yBoundry + j] != null && !this.scene.tileBodyMatrix[xNormalized + i][yNormalized + yBoundry + j].active){
-          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, this.scene.tileBodyMatrix[xNormalized + i][yNormalized + yBoundry + j].body);
-          this.scene.tileBodyMatrix[xNormalized + i][yNormalized + yBoundry + j].active = true;
+        bodyWAdd = this.scene.tileBodyMatrix[xNormalized + i][yAdd];
+        bodyWRemove = this.scene.tileBodyMatrix[xNormalized + i][yRemove];
+        if(bodyWAdd != null && !bodyWAdd.active){
+          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
+          bodyWAdd.active = true;
         }
-        if(this.scene.tileBodyMatrix[xNormalized + i][yNormalized - yBoundry - 2*dir - j] != null && this.scene.tileBodyMatrix[xNormalized + i][yNormalized - yBoundry - 2*dir - j].active){
-          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, this.scene.tileBodyMatrix[xNormalized + i][yNormalized - yBoundry - 2*dir - j].body);
-          this.scene.tileBodyMatrix[xNormalized + i][yNormalized - yBoundry - 2*dir - j].active = false;
+        if(bodyWRemove != null && bodyWRemove.active){
+          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+          bodyWRemove.active = false;
         }
+      }
+      bodyWRemove = this.scene.tileBodyMatrix[xNormalized - xBoundry - 1][yRemove];
+      if(bodyWRemove != null && bodyWRemove.active){
+        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        bodyWRemove.active = false;
+      }
+      bodyWRemove = this.scene.tileBodyMatrix[xNormalized + xBoundry + 1][yRemove];
+      if(bodyWRemove != null && bodyWRemove.active){
+        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        bodyWRemove.active = false;
       }
     }
   }

@@ -22,12 +22,6 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
     this.load.plugin('rexvirtualjoystickplugin', url, true);
-
-    url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexdragplugin.min.js';
-    this.load.plugin('rexdragplugin', url, true);
-  
-    url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow.png';      
-    this.load.image('arrow', url);
 }
 
   //Función create, que crea los elementos del propio juego.
@@ -36,19 +30,6 @@ export default class SceneTest_1 extends Phaser.Scene {
     //game.matter.world.pause();
     mouse = this.input.activePointer;
     //fadeOut = false;
-
-    //JOYSTICK
-    var joystick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-      x: 120,
-      y: 420,
-      radius: 100,
-      base: this.add.circle(0, 0, 100, 0x888888),
-      thumb: this.add.circle(0, 0, 50, 0xcccccc),
-      // dir: '8dir',
-      forceMin: 15,
-      // fixed: true,
-      // enable: true
-  });
 
     //Música. POR SI QUEREMOS MÚSICA
     /*
@@ -85,11 +66,11 @@ export default class SceneTest_1 extends Phaser.Scene {
     lethallayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(lethallayer);
 
-    this.tileBodyMatrix = [];
+    var tileBodyMatrix = [];
     for(var i=0; i<240; i++){
-      this.tileBodyMatrix[i] = [];
+      tileBodyMatrix[i] = [];
       for(var j=0; j<20; j++){
-        this.tileBodyMatrix[i][j] = null;
+        tileBodyMatrix[i][j] = undefined;
       }
     }
     this.bulletInteracBodies = [];
@@ -97,8 +78,13 @@ export default class SceneTest_1 extends Phaser.Scene {
     baselayer.forEachTile(function (tile){
       if(tile.physics.matterBody != undefined){
         const tileBody = tile.physics.matterBody.body;
-        this.tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, false);
-        Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
+        if(tileBody.position.x <= 1024 && tileBody.position.y <= 608){
+          tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, true);
+          //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
+        }else {
+          tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, false);
+          Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
+        }
         this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
         counerAux++;
       }
@@ -106,12 +92,23 @@ export default class SceneTest_1 extends Phaser.Scene {
     lethallayer.forEachTile(function (tile){
       if(tile.physics.matterBody != undefined){
         const tileBody = tile.physics.matterBody.body;
-        this.tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, false);
-        Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
+        if(tileBody.position.x <= 1024 && tileBody.position.y <= 608){
+          tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, true);
+          //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
+        }else {
+          tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, false);
+          Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
+        }
         this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
         counerAux++;
       }
     }, this);
+
+    this.tileBodyMatrix = new Proxy(tileBodyMatrix,{
+      get(target, prop){
+        return target[Math.max(0,prop)];
+      }
+    });
     /*console.time("plsWork");
     for(var i=0; i<100; i++){
 
@@ -127,10 +124,10 @@ export default class SceneTest_1 extends Phaser.Scene {
     }
     console.timeEnd("plsWork");*/
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
-    var cursors = this.input.keyboard.addKeys({ 'upJet': Phaser.Input.Keyboard.KeyCodes.W, 'left': Phaser.Input.Keyboard.KeyCodes.A, 'right': Phaser.Input.Keyboard.KeyCodes.D,
-    'down': Phaser.Input.Keyboard.KeyCodes.S, 'changeWeapon': Phaser.Input.Keyboard.KeyCodes.SPACE});
+    var cursors = this.input.keyboard.addKeys({ 'up': Phaser.Input.Keyboard.KeyCodes.W, 'left': Phaser.Input.Keyboard.KeyCodes.A, 'right': Phaser.Input.Keyboard.KeyCodes.D,
+    'down': Phaser.Input.Keyboard.KeyCodes.S});
     //this.game.player = new PlayerDummy(this);
-    new Player(this, 320, 448, cursors);
+    new Player(this, 320, 448, cursors, this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE));
     //var en1 = new Dummy(this, 500, 300);
     /*console.time("ddddd");
     for(var i=0; i< 1000; i++){
@@ -186,27 +183,8 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
     //document.getElementById('mouse').innerHTML = "X: " + Math.round(mouse.x + cam.scrollX) + " | Y: " + Math.round(mouse.y + cam.scrollY);
-
-    //PRUEBAS CON CONTROLES DRAG
-    // this.input.addPointer(3);
-    //     this.input.on('pointerdown', this.createImg, this);
-    //     this.add.text(10,10, 'Pointer down: create object and drag it\nPointer up: destroy object', {fontSize: '20px'})
-
-    this.input.on('pointerdown',function(){cam.setBackgroundColor('rgba(132, 245, 219, 1)'); }, this)
-    this.input.on('pointerup',function(){cam.setBackgroundColor('rgba(233, 167, 4, 1)'); }, this)
-
   }
-
-  createImg(pointer) {
-    var img = this.add.image(pointer.x, pointer.y, 'arrow');
-    img.drag = this.plugins.get('rexdragplugin').add(img);
-    img.drag.drag();
-
-    img.on('dragend', img.destroy, img);
 }
-}
-
-
 
 class BodyWrapper{
   constructor(body, active){

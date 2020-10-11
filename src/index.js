@@ -13,6 +13,7 @@ var config = {
   //Dimensiones de la ventana de juego (ancho y alto)
   width: 960,
   height: 540,
+  parent: 'phaserDOM',
   audio: {
     disableWebAudio: true
   },
@@ -64,4 +65,4 @@ function mobileTabletChek() {
 };
 game.onPC = !mobileTabletChek();
 document.getElementById('mouse').innerHTML = game.onPC + "   c";
-console.log(game.onPC);
+console.log("onPC:  " +game.onPC);

@@ -29,18 +29,20 @@ export default class Joystick_test extends Phaser.Scene {
 
     cursorKeys = this.joyStick.createCursorKeys();
     console.log(cursorKeys);
+    console.log(this.joyStick);
   }
   update(){
-    /*var s = 'Key down: ';
+    var s = 'Key down: ';
     for (var name in cursorKeys) {
         if (cursorKeys[name].isDown) {
             s += name + ' ';
         }
     }
     s += '\n';
-    s += ('Force: ' + Math.floor(this.joyStick.force * 100) / 100 + '\n');
-    s += ('Angle: ' + Math.floor(this.joyStick.angle * 100) / 100 + '\n');
-    this.text.setText(s);*/
+    s += ('Force: ' + Math.min(1,this.joyStick.force/100) + '\n');
+    s += ('ForceX: ' + Math.min(Math.max(this.joyStick.forceX/100, -1), 1) + '\n');
+    s += ('ForceY: ' + Math.min(Math.max(this.joyStick.forceY/100, -1), 1) + '\n');
+    this.text.setText(s);
     var auxtext = "";
     if(cursorKeys.up.isDown)
       auxtext += "up  ";
