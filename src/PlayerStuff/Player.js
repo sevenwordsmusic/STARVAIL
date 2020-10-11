@@ -45,19 +45,32 @@ export default class Player {
       .body.collisionFilter.group = -1;
 
     this.weaponChange = weaponChange;
-    //this.cursors = cursors;
-    this.joyStick = this.scene.plugins.get('rexvirtualjoystickplugin').add(this, {
-      x: 120,
-      y: 420,
-      radius: 100,
-      base: this.scene.add.circle(0, 0, 100, 0x888888),
-      thumb: this.scene.add.circle(0, 0, 50, 0xcccccc),
-      // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
-      // forceMin: 16,
-      // enable: true
-    });
-    //this.joyStickKeys = this.joyStick.createCursorKeys();
-    this.cursors = this.joyStick.createCursorKeys();
+
+    if(this.scene.game.onPC){
+      this.cursors = cursorsMove;
+      this.fireArm = new PlayerFireArmPC(this.scene, x, y);
+      this.firingPointer = this.scene.input.activePointer;
+      this.movingPointer = undefined;
+    }
+    else {
+      this.scene.input.addPointer(1);
+      this.joyStick = this.scene.plugins.get('rexvirtualjoystickplugin').add(this, {
+        x: 120,
+        y: 420,
+        radius: 100,
+        base: this.scene.add.circle(0, 0, 100, 0x888888),
+        thumb: this.scene.add.circle(0, 0, 50, 0xcccccc),
+        // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
+        // forceMin: 16,
+        // enable: true
+      });
+      this.joyStick.base.setDepth(100);
+      this.joyStick.thumb.setDepth(100);
+      this.cursors = this.joyStick.createCursorKeys();
+      this.fireArm = new PlayerFireArmMobile(this.scene, x, y);
+      this.firingPointer = undefined;
+      this.movingPointer = undefined;
+    }
 
     this.earlyPos = new Phaser.Math.Vector2(this.sprite.body.position.x, this.sprite.body.position.y);
     this.advance32X = 0;
@@ -67,11 +80,6 @@ export default class Player {
 
     //jet
     this.activatedJet = false;
-
-    if(this.scene.game.onPC)
-      this.fireArm = new PlayerFireArmPC(this.scene, x, y);
-    else
-      this.fireArm = new PlayerFireArmMobile(this.scene, x, y);
 
     this.fireCounterTap = 0;
     this.fireCounterHold = 0;
@@ -89,17 +97,29 @@ export default class Player {
 
     //DISPARO
     this.scene.input.on('pointerdown', function(pointer){
-      this.fireArm.enableFireArm();
-      if (this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate){
-        this.fireCounterTap = 0;
-        this.fireArm.fireWeaponProjectile(this.weaponCounter);
+      if(!this.scene.game.onPC){
+        if(Math.pow(pointer.x - this.joyStick.base.x,2) + Math.pow(pointer.y - this.joyStick.base.y,2) - Math.pow(this.joyStick.base.width/2, 2) > 0){
+          console.log("AA");
+          this.firingPointer = pointer;
+          this.initializeFire();
+        }
+        else{
+          this.movingPointer = pointer;
+        }
+      }else{
+        this.firingPointer = pointer;
+        this.initializeFire();
       }
-      this.fireCounterHold = 0;
-      this.crossCounter = 0;
     }, this);
 
     this.scene.input.on('pointerup', function(pointer){
-      this.fireCounterHold = 0;
+      if(pointer == this.firingPointer){
+        this.fireCounterHold = 0;
+
+        this.firingPointer = undefined;
+      }else {
+        this.movingPointer = undefined;
+      }
     }, this);
     //DISPARO
 
@@ -168,40 +188,27 @@ export default class Player {
   }
 
   playerMoveForceX(){
-    if(this.scene.game.onPC) return 1;
-    else return Math.abs(Math.min(Math.max(this.joyStick.forceX/100, -1), 1));
+    if(!this.scene.game.onPC) return Math.abs(Math.min(Math.max(this.joyStick.forceX/100, -1), 1));
+    else return 1;
   }
   playerMoveForceY(){
-    if(this.scene.game.onPC) return 1;
-    else return Math.abs(Math.min(Math.max(this.joyStick.forceY/100, -1), 1));
+    if(!this.scene.game.onPC) return Math.abs(Math.min(Math.max(this.joyStick.forceY/100, -1), 1));
+    else return 1;
+  }
+  initializeFire(){
+    //inicializacón de disparo
+    if(!this.fireArm.fireArmActive)
+      this.fireArm.enableFireArm();
+    if (this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate){
+      this.fireCounterTap = 0;
+      this.fireArm.fireWeaponProjectile(this.weaponCounter, (this.firingPointer.x < this.sprite.x)?-1:1);
+    }
+    this.fireCounterHold = 0;
+    this.crossCounter = 0;
   }
 
   update(time, delta) {
-    //BAJO CONSTRUCCIÓN
-    this.advance32X += (this.sprite.body.position.x - this.earlyPos.x);
-    if(this.advance32X >= 32){
-      const layersX = Math.floor(this.advance32X/32);
-      this.xFrontiers(1, 7, layersX);
-      this.advance32X = this.advance32X - 32*layersX;
-    }else if (this.advance32X <= -32) {
-      const layersX = Math.floor(Math.abs(this.advance32X/32));
-      this.xFrontiers(-1, 7, layersX);
-      this.advance32X = this.advance32X + 32*layersX;
-    }
-    this.advance32Y += (this.sprite.body.position.y - this.earlyPos.y);
-    if(this.advance32Y >= 32){
-      const layersY = Math.floor(this.advance32Y/32);
-      this.yFrontiers(1, 7, layersY);
-      this.advance32Y = this.advance32Y - 32*layersY;
-    }else if (this.advance32Y <= -32) {
-      const layersY = Math.floor(Math.abs(this.advance32Y/32));
-      this.yFrontiers(-1, 7, layersY);
-      this.advance32Y = this.advance32Y + 32*layersY;
-    }
-    this.earlyPos.x = this.sprite.body.position.x;
-    this.earlyPos.y = this.sprite.body.position.y;
-    //BAJO CONSTRUCCIÓN
-
+    this.updateBoundry();
     if (this.scene.game.lives <= 0) { return; } //CAMBIAR ESPERA ACTIVA
     if (this.alive) {
       if (this.cursors.right.isDown) {
@@ -213,27 +220,22 @@ export default class Player {
         if (!(this.isTouching.ground && this.isTouching.left)) {
           this.sprite.setVelocityX(-this.scene.game.moveVelocity * delta * this.leftMultiply * this.playerMoveForceX());
         }
-      } /*else if (this.cursors.right.isUp && this.cursors.left.isUp){
-    	  this.sprite.setVelocityX(0);
-      }*/
-      //document.getElementById('info').innerHTML = this.sprite;
+      }
       this.playAnimation(this.fireArm.fireArmActive);
 
-      //CAMBIAR ESPERA ACTIVA
       if (this.sprite.y > 640) {
         this.damaged(new Phaser.Math.Vector2(0, -1), 40);
       }
       this.leftMultiply = 1;
       this.rightMultiply = 1;
 
-
       //DISPARAR
-      if(this.scene.input.activePointer.isDown){
+      if(this.firingPointer != undefined && this.firingPointer.isDown){
         this.fireCounterHold += delta;
         if (this.fireCounterHold >= this.weapons[this.weaponCounter].fireRate){
           this.fireCounterHold = 0;
           this.fireCounterTap = 0;
-          this.fireArm.fireWeaponProjectile(this.weaponCounter);
+          this.fireArm.fireWeaponProjectile(this.weaponCounter, (this.firingPointer.x < this.sprite.x)?-1:1);
         }
       }
       else{
@@ -255,7 +257,6 @@ export default class Player {
               this.sprite.setIgnoreGravity(true);
             }
       }
-
       if(this.cursors.up.isDown){
         if(this.sprite.body.velocity.y >= this.braceVelocity){
           this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * delta * this.playerMoveForceY());
@@ -266,7 +267,6 @@ export default class Player {
       if(this.cursors.down.isDown && this.activatedJet){
         this.sprite.setVelocityY(this.scene.game.jetVelocity * delta * this.playerMoveForceY());
       }
-
       //gravedad falsa para el trhust inicial
       if(this.falseVelocityY < 0){
         this.sprite.y += (this.falseVelocityY * delta);
@@ -301,77 +301,6 @@ export default class Player {
         this.sprite.setFlipX(false);
       }else if(this.cursors.left.isDown){
         this.sprite.setFlipX(true);
-      }
-    }
-  }
-
-  xFrontiers(dir, boundry, layers = 1){
-    const xBoundry = boundry*dir;
-    const yBoundry = boundry + 1; //7+2
-    const xNormalized = Math.floor(this.sprite.x/32);
-    const yNormalized = Math.floor(this.sprite.y/32);
-    var bodyWAdd;
-    var bodyWRemove;
-
-    for(var i=0; i<layers; i++){
-      const xAdd = xNormalized + xBoundry + i*dir;
-      const xRemove = xNormalized - xBoundry - 2*dir - i*dir;
-      for(var j=-yBoundry; j<yBoundry+1; j++){
-        bodyWAdd = this.scene.tileBodyMatrix[xAdd][yNormalized +j];
-        bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized +j];
-        if(bodyWAdd != undefined && !bodyWAdd.active){ //9-1 bugfix ya que el bounding box que elimina tiles es 2 casillas mas grande
-          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
-          bodyWAdd.active = true;
-        }
-        if(bodyWRemove != undefined && bodyWRemove.active){
-          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-          bodyWRemove.active = false;
-        }
-      }
-      bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  - yBoundry - 1];
-      if(bodyWRemove != undefined && bodyWRemove.active){
-        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        bodyWRemove.active = false;
-      }
-      bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  + yBoundry + 1];
-      if(bodyWRemove != undefined && bodyWRemove.active){
-        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        bodyWRemove.active = false;
-      }
-    }
-  }
-  yFrontiers(dir, boundry, layers = 1){
-    const xBoundry = boundry + 1; //7+2
-    const yBoundry = boundry*dir;
-    const xNormalized = Math.floor(this.sprite.x/32);
-    const yNormalized = Math.floor(this.sprite.y/32);
-    var bodyWAdd;
-    var bodyWRemove;
-
-    for(var i=-xBoundry; i<xBoundry+1; i++){
-      const yAdd = yNormalized + yBoundry + j*dir;
-      const yRemove = yNormalized - yBoundry - 2*dir - j*dir;
-      for(var j=0; j<layers; j++){
-        bodyWAdd = this.scene.tileBodyMatrix[xNormalized + i][yAdd];
-        bodyWRemove = this.scene.tileBodyMatrix[xNormalized + i][yRemove];
-        if(bodyWAdd != null && !bodyWAdd.active){
-          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
-          bodyWAdd.active = true;
-        }
-        if(bodyWRemove != null && bodyWRemove.active){
-          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-          bodyWRemove.active = false;
-        }
-      }
-      bodyWRemove = this.scene.tileBodyMatrix[xNormalized - xBoundry - 1][yRemove];
-      if(bodyWRemove != null && bodyWRemove.active){
-        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        bodyWRemove.active = false;
-      }
-      bodyWRemove = this.scene.tileBodyMatrix[xNormalized + xBoundry + 1][yRemove];
-      if(bodyWRemove != null && bodyWRemove.active){
-        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        bodyWRemove.active = false;
       }
     }
   }
@@ -442,6 +371,103 @@ export default class Player {
     }
     function destroyDebree(debree) { debree.destroy() }
     */
+  }
+
+  updateBoundry(){
+    //BAJO CONSTRUCCIÓN
+    this.advance32X += (this.sprite.body.position.x - this.earlyPos.x);
+    if(this.advance32X >= 32){
+      const layersX = Math.floor(this.advance32X/32);
+      this.xFrontiers(1, 7, layersX);
+      this.advance32X = this.advance32X - 32*layersX;
+    }else if (this.advance32X <= -32) {
+      const layersX = Math.floor(Math.abs(this.advance32X/32));
+      this.xFrontiers(-1, 7, layersX);
+      this.advance32X = this.advance32X + 32*layersX;
+    }
+    this.advance32Y += (this.sprite.body.position.y - this.earlyPos.y);
+    if(this.advance32Y >= 32){
+      const layersY = Math.floor(this.advance32Y/32);
+      this.yFrontiers(1, 7, layersY);
+      this.advance32Y = this.advance32Y - 32*layersY;
+    }else if (this.advance32Y <= -32) {
+      const layersY = Math.floor(Math.abs(this.advance32Y/32));
+      this.yFrontiers(-1, 7, layersY);
+      this.advance32Y = this.advance32Y + 32*layersY;
+    }
+    this.earlyPos.x = this.sprite.body.position.x;
+    this.earlyPos.y = this.sprite.body.position.y;
+    //BAJO CONSTRUCCIÓN
+  }
+  xFrontiers(dir, boundry, layers = 1){
+    const xBoundry = boundry*dir;
+    const yBoundry = boundry + 1; //7+2
+    const xNormalized = Math.floor(this.sprite.x/32);
+    const yNormalized = Math.floor(this.sprite.y/32);
+    var bodyWAdd;
+    var bodyWRemove;
+
+    for(var i=0; i<layers; i++){
+      const xAdd = xNormalized + xBoundry + i*dir;
+      const xRemove = xNormalized - xBoundry - 2*dir - i*dir;
+      for(var j=-yBoundry; j<yBoundry+1; j++){
+        bodyWAdd = this.scene.tileBodyMatrix[xAdd][yNormalized +j];
+        bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized +j];
+        if(bodyWAdd != undefined && !bodyWAdd.active){ //9-1 bugfix ya que el bounding box que elimina tiles es 2 casillas mas grande
+          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
+          bodyWAdd.active = true;
+        }
+        if(bodyWRemove != undefined && bodyWRemove.active){
+          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+          bodyWRemove.active = false;
+        }
+      }
+      bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  - yBoundry - 1];
+      if(bodyWRemove != undefined && bodyWRemove.active){
+        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        bodyWRemove.active = false;
+      }
+      bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  + yBoundry + 1];
+      if(bodyWRemove != undefined && bodyWRemove.active){
+        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        bodyWRemove.active = false;
+      }
+    }
+  }
+  yFrontiers(dir, boundry, layers = 1){
+    const xBoundry = boundry + 1; //7+2
+    const yBoundry = boundry*dir;
+    const xNormalized = Math.floor(this.sprite.x/32);
+    const yNormalized = Math.floor(this.sprite.y/32);
+    var bodyWAdd;
+    var bodyWRemove;
+
+    for(var i=-xBoundry; i<xBoundry+1; i++){
+      const yAdd = yNormalized + yBoundry + j*dir;
+      const yRemove = yNormalized - yBoundry - 2*dir - j*dir;
+      for(var j=0; j<layers; j++){
+        bodyWAdd = this.scene.tileBodyMatrix[xNormalized + i][yAdd];
+        bodyWRemove = this.scene.tileBodyMatrix[xNormalized + i][yRemove];
+        if(bodyWAdd != null && !bodyWAdd.active){
+          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
+          bodyWAdd.active = true;
+        }
+        if(bodyWRemove != null && bodyWRemove.active){
+          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+          bodyWRemove.active = false;
+        }
+      }
+      bodyWRemove = this.scene.tileBodyMatrix[xNormalized - xBoundry - 1][yRemove];
+      if(bodyWRemove != null && bodyWRemove.active){
+        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        bodyWRemove.active = false;
+      }
+      bodyWRemove = this.scene.tileBodyMatrix[xNormalized + xBoundry + 1][yRemove];
+      if(bodyWRemove != null && bodyWRemove.active){
+        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        bodyWRemove.active = false;
+      }
+    }
   }
 
 }

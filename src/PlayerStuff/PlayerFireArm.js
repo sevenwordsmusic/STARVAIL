@@ -15,8 +15,7 @@ export default class PlayerFireArm {
 
       this.shoulderOffsetX = -5;
       this.shoulderOffsetY = -this.scene.game.player.sprite.height/2 + 25;
-      this.armDir = new Phaser.Math.Vector2(this.scene.input.activePointer.x + this.cam.scrollX - this.sprite.x, this.scene.input.activePointer.y + this.cam.scrollY - this.sprite.y);
-      this.armDir.normalize();
+      this.armDir = new Phaser.Math.Vector2(1, 1);
 
       this.sprite.setScale(0.3, 0.25);
       this.fireArmActive = false;
@@ -37,18 +36,18 @@ export default class PlayerFireArm {
       }
   }
 
-  fireBomb(){
+  fireBomb(dir = 1){
     this.armDir.normalize();
-    return new Bomb(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, (this.scene.input.activePointer.x < this.scene.game.player.sprite.x)?-1:1);
+    return new Bomb(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, dir);
   }
 
-  fireWeaponProjectile(wNumber){
+  fireWeaponProjectile(wNumber, dir = 1){
     switch(wNumber){
       case 0:
         this.fireBullet();
       break;
       case 1:
-        this.fireBomb();
+        this.fireBomb(dir);
       break;
       default:
         console.log("no weapon");
