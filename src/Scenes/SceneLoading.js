@@ -9,7 +9,8 @@ export default class SceneLoading extends Phaser.Scene {
     //IMAGES, SPRITES, SPRITESHEETS
     this.load.image('square', 'assets/square.jpg');
     this.load.image('hexa', 'assets/hexa.png');
-    this.load.spritesheet('crosshair', 'assets/crosshair.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('crosshair', 'assets/HUD/crosshair.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('weaponsHUD', 'assets/HUD/weaponsHUD.png', { frameWidth: 268, frameHeight: 252 });
 
     this.load.spritesheet('playerRun', 'assets/Sprites/Player/player_run.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('playerIdle', 'assets/Sprites/Player/player_idle.png', { frameWidth: 64, frameHeight: 64 });

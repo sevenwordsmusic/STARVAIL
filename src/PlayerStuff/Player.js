@@ -3,7 +3,7 @@ import PlayerFireArmPC from "./PlayerFireArmPC.js";
 import PlayerFireArmMobile from "./PlayerFireArmMobile.js";
 
 export default class Player {
-  constructor(scene, x, y, cursorsMove, weaponChange) {
+  constructor(scene, x, y) {
     //inicializacion
     this.scene = scene;
     this.sprite = scene.matter.add.sprite(x, y, 'playerIdle', 0);
@@ -44,34 +44,6 @@ export default class Player {
       .setOrigin(0.5, 0.75)     //0.5, 0.55
       .body.collisionFilter.group = -1;
 
-    this.weaponChange = weaponChange;
-
-    if(this.scene.game.onPC){
-      this.cursors = cursorsMove;
-      this.fireArm = new PlayerFireArmPC(this.scene, x, y);
-      this.firingPointer = this.scene.input.activePointer;
-      this.movingPointer = undefined;
-    }
-    else {
-      this.scene.input.addPointer(1);
-      this.joyStick = this.scene.plugins.get('rexvirtualjoystickplugin').add(this, {
-        x: 120,
-        y: 420,
-        radius: 100,
-        base: this.scene.add.circle(0, 0, 100, 0x888888),
-        thumb: this.scene.add.circle(0, 0, 50, 0xcccccc),
-        // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
-        // forceMin: 16,
-        // enable: true
-      });
-      this.joyStick.base.setDepth(100);
-      this.joyStick.thumb.setDepth(100);
-      this.cursors = this.joyStick.createCursorKeys();
-      this.fireArm = new PlayerFireArmMobile(this.scene, x, y);
-      this.firingPointer = undefined;
-      this.movingPointer = undefined;
-    }
-
     this.earlyPos = new Phaser.Math.Vector2(this.sprite.body.position.x, this.sprite.body.position.y);
     this.advance32X = 0;
     this.advance32Y = 0;
@@ -88,40 +60,82 @@ export default class Player {
     this.weapons[1] = {name: "BombLauncher", fireRate: 30 * this.scene.matter.world.getDelta() , chFrame: 1};
     this.weaponCounter = 0;
 
-    this.weaponChange.on('down', function(event){
-      this.fireCounterHold = 0;
-      this.weaponCounter = (this.weaponCounter+1)%this.weapons.length;
-      this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame)
-      console.log(this.weapons[this.weaponCounter].name);
-    }, this);
+    if(this.scene.game.onPC){
+      this.cursors = this.scene.input.keyboard.addKeys({
+      'up': Phaser.Input.Keyboard.KeyCodes.W,
+      'left': Phaser.Input.Keyboard.KeyCodes.A,
+      'right': Phaser.Input.Keyboard.KeyCodes.D,
+      'down': Phaser.Input.Keyboard.KeyCodes.S});
+      this.weaponChange = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-    //DISPARO
-    this.scene.input.on('pointerdown', function(pointer){
-      if(!this.scene.game.onPC){
-        if(Math.pow(pointer.x - this.joyStick.base.x,2) + Math.pow(pointer.y - this.joyStick.base.y,2) - Math.pow(this.joyStick.base.width/2, 2) > 0){
-          console.log("AA");
+      this.fireArm = new PlayerFireArmPC(this.scene, x, y);
+      this.firingPointer = this.scene.input.activePointer;
+      this.movingPointer = undefined;
+
+      //EVENTOS
+      this.weaponChange.on('down', function(event){
+        this.changeWeapon();
+      }, this);
+
+      //DISPARO
+      this.scene.input.on('pointerdown', function(pointer){
+        this.initializeFire();
+      }, this);
+      //DISPARO
+      //EVENTOS
+    }
+    else {
+      this.scene.input.addPointer(1);
+      this.joyStick = this.scene.plugins.get('rexvirtualjoystickplugin').add(this, {
+        x: 120,
+        y: 420,
+        radius: 100,
+        base: this.scene.add.circle(0, 0, 100, 0x888888),
+        thumb: this.scene.add.circle(0, 0, 50, 0xcccccc),
+        // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
+        // forceMin: 16,
+        // enable: true
+      });
+      this.joyStick.base.setDepth(100);
+      this.joyStick.thumb.setDepth(100);
+      this.cursors = this.joyStick.createCursorKeys();
+
+      this.button = this.scene.add.sprite(858, 450, 'weaponsHUD',0).setScale(0.75).setInteractive();
+      this.button.setScrollFactor(0);
+
+      this.fireArm = new PlayerFireArmMobile(this.scene, x, y);
+      this.firingPointer = undefined;
+      this.movingPointer = undefined;
+
+      //EVENTOS
+      this.button.on('pointerdown', function () {
+        this.changeWeapon();
+      }, this);
+
+      //DISPARO
+      this.scene.input.on('pointerdown', function(pointer){
+        if(Math.pow(pointer.x - this.joyStick.base.x,2) + Math.pow(pointer.y - this.joyStick.base.y,2) - Math.pow(this.joyStick.base.width/2, 2) <= 0){
+          this.movingPointer = pointer;
+        }
+        else if(Math.pow(pointer.x - this.button.x,2) + Math.pow(pointer.y - this.button.y,2) - Math.pow(this.button.width/2 ,2) <= 0){
+          //boton cambio arma
+        }
+        else{
           this.firingPointer = pointer;
           this.initializeFire();
         }
-        else{
-          this.movingPointer = pointer;
+      }, this);
+      this.scene.input.on('pointerup', function(pointer){
+        if(pointer == this.firingPointer){
+          this.fireCounterHold = 0;
+          this.firingPointer = undefined;
+        }else {
+          this.movingPointer = undefined;
         }
-      }else{
-        this.firingPointer = pointer;
-        this.initializeFire();
-      }
-    }, this);
-
-    this.scene.input.on('pointerup', function(pointer){
-      if(pointer == this.firingPointer){
-        this.fireCounterHold = 0;
-
-        this.firingPointer = undefined;
-      }else {
-        this.movingPointer = undefined;
-      }
-    }, this);
-    //DISPARO
+      }, this);
+      //DISPARO
+      //EVENTOS
+    }
 
     scene.matterCollision.addOnCollideStart({
       objectA: [this.sensors.bottom, this.sensors.left, this.sensors.right],
@@ -205,6 +219,12 @@ export default class Player {
     }
     this.fireCounterHold = 0;
     this.crossCounter = 0;
+  }
+  changeWeapon(){
+    this.fireCounterHold = 0;
+    this.weaponCounter = (this.weaponCounter+1)%this.weapons.length;
+    this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame)
+    console.log(this.weapons[this.weaponCounter].name);
   }
 
   update(time, delta) {

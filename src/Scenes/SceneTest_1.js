@@ -124,20 +124,10 @@ export default class SceneTest_1 extends Phaser.Scene {
     }
     console.timeEnd("plsWork");*/
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
-    var cursors = this.input.keyboard.addKeys({ 'up': Phaser.Input.Keyboard.KeyCodes.W, 'left': Phaser.Input.Keyboard.KeyCodes.A, 'right': Phaser.Input.Keyboard.KeyCodes.D,
-    'down': Phaser.Input.Keyboard.KeyCodes.S});
-    //this.game.player = new PlayerDummy(this);
-    new Player(this, 320, 448, cursors, this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE));
-    //var en1 = new Dummy(this, 500, 300);
-    /*console.time("ddddd");
-    for(var i=0; i< 1000; i++){
-      Phaser.Physics.Matter.Matter.Sleeping.set(en1.sprite.body, true);
-      //en1.sprite.setToSleep();
-      en1.sprite.setActive(false);
-    }
-    console.timeEnd("ddddd");*/ //importante!!!
-    //var en2 = new Dummy(this, 700, 300);
-    //var en3 = new Dummy(this, 900, 300);
+    new Player(this, 320, 448);
+    var en1 = new Dummy(this, 500, 300);
+    var en1 = new Dummy(this, 600, 300);
+    var en1 = new Dummy(this, 700, 300);
     //Colisiones del escneario con el jugador
     this.matterCollision.addOnCollideStart({
       objectA: this.game.player.mainBody,

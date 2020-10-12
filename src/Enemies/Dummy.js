@@ -21,7 +21,7 @@ export default class Dummy extends Enemy {
         ddiirr = -1;
       }
       if(ddiirr == -1)
-        this.sprite.y += 6*ddiirr;
+        this.sprite.y += 4*ddiirr;
 
     }
   }

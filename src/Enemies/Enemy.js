@@ -5,12 +5,14 @@ export default class Enemy {
     this.scene = scene;
     this.sprite = scene.matter.add.sprite(x,y,sprtImg,0);
     this.sprite.parent = this;
-
     this.hp = hp;
 
     this.sprite.body.collisionFilter.group = -1;
 
     //cada vez que se crea un enemigo se añade su "body" al arrya de cuerpos que interaccionan con las balas y al array de cuerpos de enemigos
+
+    if(this.scene.enemyBodies == undefined)
+      this.scene.enemyBodies = [];
     this.currentBodyIndex = this.scene.bulletInteracBodies.length;
     this.scene.bulletInteracBodies[this.currentBodyIndex] = this.sprite.body;
     this.currentEnemyIndex = this.scene.enemyBodies.length;
