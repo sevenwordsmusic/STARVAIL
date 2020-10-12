@@ -26,11 +26,11 @@ export default class Player {
     //los 3 cuerpos que rodean al principal son sensores que detectan con que collisiona el personaje
     const { Body, Bodies } = Phaser.Physics.Matter.Matter; // Native Matter modules
     const { width: w, height: h } = this.sprite;
-    this.mainBody = Bodies.rectangle(0, 6, w * 0.75, h * 0.8, { chamfer: { radius: 5 } });
+    this.mainBody = Bodies.rectangle(0, 6, w * 0.45, h * 0.85, { chamfer: { radius: 5 } });
     this.sensors = {
-      bottom: Bodies.rectangle(0, 36, w * 0.6, 8, { isSensor: true }),
-      left: Bodies.rectangle(-w * 0.45, 6, 5, h * 0.6, { isSensor: true }),
-      right: Bodies.rectangle(w * 0.45, 6, 5, h * 0.6, { isSensor: true })
+      bottom: Bodies.rectangle(0, 36, w * 0.3, 8, { isSensor: true }),
+      left: Bodies.rectangle(-w * 0.3, 6, 5, h * 0.6, { isSensor: true }),
+      right: Bodies.rectangle(w * 0.3, 6, 5, h * 0.6, { isSensor: true })
     };
     const compoundBody = Body.create({
       parts: [this.mainBody, this.sensors.bottom, this.sensors.left, this.sensors.right],
@@ -41,7 +41,7 @@ export default class Player {
       .setExistingBody(compoundBody)
       .setFixedRotation()
       .setPosition(x, y)
-      .setOrigin(0.5, 0.75)     //0.5, 0.55
+      .setOrigin(0.5, 0.72)     //0.5, 0.55
       .body.collisionFilter.group = -1;
 
     //BRAZO
@@ -57,6 +57,7 @@ export default class Player {
 
     //jet
     this.activatedJet = false;
+    this.isTakingOf = false;
 
     this.fireCounterTap = 0;
     this.fireCounterHold = 0;
@@ -280,13 +281,18 @@ export default class Player {
 
       //JET
       if(Phaser.Input.Keyboard.JustDown(this.cursors.up)){
-            if(!this.activatedJet){
-              this.sprite.anims.play('propulsion', true);
-              this.sprite.body.frictionAir = 0.06;
-              this.activatedJet = true;
-              //this.falseVelocityY = -1/this.scene.matter.world.getDelta();
-              this.sprite.setIgnoreGravity(true);
-            }
+          if(!this.activatedJet){
+            this.isTakingOf = true;
+            this.sprite.anims.play('propulsion', true);
+            this.movingArm.anims.play('arm_airUp', true);
+            this.sprite.once('animationcomplete', function(){
+              this.isTakingOf = false;
+            },this);
+            this.sprite.body.frictionAir = 0.06;
+            this.activatedJet = true;
+            //this.falseVelocityY = -1/this.scene.matter.world.getDelta();
+            this.sprite.setIgnoreGravity(true);
+          }
       }
       if(this.cursors.up.isDown){
         if(this.sprite.body.velocity.y >= this.braceVelocity){
@@ -311,31 +317,36 @@ export default class Player {
   playAnimation(isFireing){
     if(this.activatedJet){
       this.sprite.anims.setTimeScale(1);
-      if(this.cursors.down.isDown){
-        this.sprite.anims.play('airDown', true);
-        this.movingArm.anims.play('arm_airDown', true);
-        this.fireArm.adjustOffset(-7, -19);
-      }else if(this.cursors.right.isDown || this.cursors.left.isDown){
-        this.sprite.anims.play('airMove', true);
-        this.movingArm.anims.play('arm_airMove', true);
-        this.fireArm.adjustOffset(1, -19);
-      }else if(this.cursors.up.isDown){
-        this.sprite.anims.play('airUp', true);
-        this.movingArm.anims.play('arm_airUp', true);
-        this.fireArm.adjustOffset(-5, -25);
-      }else{
-        this.sprite.anims.play('airIdle', true);
-        this.movingArm.anims.play('arm_airIdle', true);
-        this.fireArm.adjustOffset(-5, -25);
+      this.movingArm.anims.setTimeScale(1);
+      if(!this.isTakingOf){
+        if(this.cursors.down.isDown){
+          this.sprite.anims.play('airDown', true);
+          this.movingArm.anims.play('arm_airDown', true);
+          this.fireArm.adjustOffset(-7, -19);
+        }else if(this.cursors.right.isDown || this.cursors.left.isDown){
+          this.sprite.anims.play('airMove', true);
+          this.movingArm.anims.play('arm_airMove', true);
+          this.fireArm.adjustOffset(1, -19);
+        }else if(this.cursors.up.isDown){
+          this.sprite.anims.play('airUp', true);
+          this.movingArm.anims.play('arm_airUp', true);
+          this.fireArm.adjustOffset(-5, -25);
+        }else{
+          this.sprite.anims.play('airIdle', true);
+          this.movingArm.anims.play('arm_airIdle', true);
+          this.fireArm.adjustOffset(-5, -25);
+        }
       }
     }else{
       if(this.cursors.right.isDown || this.cursors.left.isDown){
         this.sprite.anims.setTimeScale(this.playerMoveForceX());
+        this.movingArm.anims.setTimeScale(this.playerMoveForceX());
         this.sprite.anims.play('wRight', true);
         this.movingArm.anims.play('arm_wRight', true);
         this.fireArm.adjustOffset(3, -18);
       }else{
         this.sprite.anims.setTimeScale(1);
+        this.movingArm.anims.setTimeScale(1);
         this.sprite.anims.play('idle', true);
         this.movingArm.anims.play('arm_idle', true);
         this.fireArm.adjustOffset(-4, -22);

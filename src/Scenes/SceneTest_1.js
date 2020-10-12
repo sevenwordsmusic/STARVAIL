@@ -45,26 +45,26 @@ export default class SceneTest_1 extends Phaser.Scene {
     //this.add.image(1200, 400, 'bg3_e').setScale(2).setScrollFactor(0.75).setDepth(-500);
 
     //Inicializacion y creacion de mapa de tiles.
-    const map2 = this.make.tilemap({ key: "map2" });
-    const tileset2 = map2.addTilesetImage("electrical_tileset", "tiles2");
+    const map = this.make.tilemap({ key: "map" });
+    const tileset1 = map.addTilesetImage("Cyber_Tiles_1","tiles1");
+    const tileset2 = map.addTilesetImage("Cyber_Tiles_2","tiles2");
+    const tileset3 = map.addTilesetImage("Cyber_Tiles_3a","tiles3");
 
     //Capas de tiles.
-    //const layerminus2 = map2.createStaticLayer("background_layer_-2depth", tileset2, 0, 0);
-    //layerminus2.depth = -20;
-    //const layerminus1 = map2.createStaticLayer("deco_layer_-1depth", tileset2, 0, 0);
-    //layerminus1.depth = -10;
-    const baselayer = map2.createStaticLayer("base_layer_0depth", tileset2, 0, 0);
+    const baselayer = map.createStaticLayer("Base Layer", [tileset1, tileset2, tileset3], 200, 0);
     baselayer.depth = -5;
-    const lethallayer = map2.createStaticLayer("lethal_layer_0depth", tileset2, 0, 0);
-    lethallayer.depth = -5;
+    const frontlayer = map.createStaticLayer("Front Layer", [tileset1, tileset2, tileset3], 200, 0);
+    frontlayer.depth = 25;
+    const background1 = map.createStaticLayer("Background 1", [tileset1, tileset2, tileset3], 200, 0);
+    background1.depth = -25;
+    const background2 = map.createStaticLayer("Background 2", [tileset1, tileset2, tileset3], 200, 0);
+    background2.depth = -30;
 
     //Colisiones de las capas.
     //layerminus1.setCollisionByProperty({ Collides: true });
     //this.matter.world.convertTilemapLayer(layerminus1);
     baselayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(baselayer);
-    lethallayer.setCollisionByProperty({ Collides: true });
-    this.matter.world.convertTilemapLayer(lethallayer);
 
     var tileBodyMatrix = [];
     for(var i=0; i<240; i++){
@@ -78,21 +78,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     baselayer.forEachTile(function (tile){
       if(tile.physics.matterBody != undefined){
         const tileBody = tile.physics.matterBody.body;
-        if(tileBody.position.x < 2944 && tileBody.position.x > 1856 && tileBody.position.y < 576 && tileBody.position.y > -512){
-          tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, true);
-          //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
-        }else {
-          tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, false);
-          Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
-        }
-        this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
-        counerAux++;
-      }
-    }, this);
-    lethallayer.forEachTile(function (tile){
-      if(tile.physics.matterBody != undefined){
-        const tileBody = tile.physics.matterBody.body;
-        if(tileBody.position.x < 2944 && tileBody.position.x > 1856 && tileBody.position.y < 576 && tileBody.position.y > -512){
+        if(tileBody.position.x < 2000 /*&& tileBody.position.x > 1856 && tileBody.position.y < 576 && tileBody.position.y > -512*/){
           tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, true);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         }else {
@@ -109,31 +95,18 @@ export default class SceneTest_1 extends Phaser.Scene {
         return target[Math.max(0,prop)];
       }
     });
-    /*console.time("plsWork");
-    for(var i=0; i<100; i++){
 
-      baselayer.forEachTile(function (tile){
-        if(tile.physics.matterBody != undefined){
-          //tile.physics.matterBody.removeBody()
-          var aux1 = tile.physics.matterBody.body;
-          Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tile.physics.matterBody.body);
-          Phaser.Physics.Matter.Matter.Composite.addBody(tile.physics.matterBody.world.localWorld, tile.physics.matterBody.body);
-          counerAux++;
-        }
-      }, this);
-    }
-    console.timeEnd("plsWork");*/
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
-    new Player(this, 2400, -96);
-    //var en1 = new Dummy(this, 500, 300);
-    //var en1 = new Dummy(this, 600, 300);
+    new Player(this, 500, 300);
+    var en1 = new Dummy(this, 300, 100);
+    var en1 = new Dummy(this, 700, 100);
     //var en1 = new Dummy(this, 700, 300);
     //Colisiones del escneario con el jugador
-    this.matterCollision.addOnCollideStart({
+    /*this.matterCollision.addOnCollideStart({
       objectA: this.game.player.mainBody,
       callback: lethalCollide,
       context: this.game.player
-    });
+    });*/
 
     //Función lethalCollide, que comprueba si la colisión con los pinchos ha sido letal.
     function lethalCollide({ gameObjectB }) {
@@ -164,9 +137,9 @@ export default class SceneTest_1 extends Phaser.Scene {
     //Camara.
     cam = this.cameras.main;
     this.matter.world.setBounds(0, -500, 10000, 10000);
-    cam.setBounds(0, -500, 10000, 1100);
+    cam.setBounds(0, -500, 10000, 1435);
     cam.startFollow(this.game.player.sprite, false, 0.05, 0.05, 0, 0);
-    cam.setBackgroundColor('rgba(132, 167, 219, 1)');
+    cam.setBackgroundColor('rgba(150, 174, 191, 1)');
 
     this.input.setDefaultCursor('none');
   }
