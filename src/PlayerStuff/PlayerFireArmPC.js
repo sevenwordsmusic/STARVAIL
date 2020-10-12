@@ -26,8 +26,7 @@ export default class PlayerFireArmPC extends PlayerFireArm{
       this.sprite.y = spY;
       this.armDir.x = this.scene.input.activePointer.x + this.cam.scrollX - spX;
       this.armDir.y = this.scene.input.activePointer.y + this.cam.scrollY - spY;
-      this.sprite.angle = this.armDir.angle() * 180/Math.PI - 90;
-
+      this.sprite.angle = this.armDir.angle() * 180/Math.PI;
 
       //crosshair code
       this.crosshairSpr.x = this.scene.input.activePointer.x + this.cam.scrollX;

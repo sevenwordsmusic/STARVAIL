@@ -10,14 +10,14 @@ export default class PlayerFireArm {
 
       this.spread = 0.1;
 
-      this.sprite.setOrigin(0.5,0.05);
+      this.sprite.setOrigin(0.05,0.5);
       this.sprite.setDepth(6);
 
-      this.shoulderOffsetX = -5;
-      this.shoulderOffsetY = -this.scene.game.player.sprite.height/2 + 25;
-      this.armDir = new Phaser.Math.Vector2(1, 1);
+      this.sprite.setScale(1.2);
 
-      this.sprite.setScale(0.3, 0.25);
+      this.shoulderOffsetX = -4;
+      this.shoulderOffsetY = -22;
+      this.armDir = new Phaser.Math.Vector2(1, 1);
       this.fireArmActive = false;
       this.sprite.setActive(false).setVisible(false);
   }
@@ -53,6 +53,15 @@ export default class PlayerFireArm {
         console.log("no weapon");
       break;
     }
+  }
+
+  adjustOffset(xOff, yOff){
+    this.shoulderOffsetX = xOff;
+    this.shoulderOffsetY = yOff;
+  }
+
+  flipOffset(dir){
+    this.shoulderOffsetX = this.shoulderOffsetX * dir;
   }
 
   /*setFireArmState(state){

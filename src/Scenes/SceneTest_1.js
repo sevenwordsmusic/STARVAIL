@@ -78,7 +78,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     baselayer.forEachTile(function (tile){
       if(tile.physics.matterBody != undefined){
         const tileBody = tile.physics.matterBody.body;
-        if(tileBody.position.x <= 1024 && tileBody.position.y <= 608){
+        if(tileBody.position.x < 1698 && tileBody.position.x > 608 && tileBody.position.y < 576 && tileBody.position.y > -512){
           tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, true);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         }else {
@@ -92,7 +92,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     lethallayer.forEachTile(function (tile){
       if(tile.physics.matterBody != undefined){
         const tileBody = tile.physics.matterBody.body;
-        if(tileBody.position.x <= 1024 && tileBody.position.y <= 608){
+        if(false){
           tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, true);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         }else {
@@ -124,10 +124,10 @@ export default class SceneTest_1 extends Phaser.Scene {
     }
     console.timeEnd("plsWork");*/
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
-    new Player(this, 320, 448);
-    var en1 = new Dummy(this, 500, 300);
-    var en1 = new Dummy(this, 600, 300);
-    var en1 = new Dummy(this, 700, 300);
+    new Player(this, 1152, 32);
+    //var en1 = new Dummy(this, 500, 300);
+    //var en1 = new Dummy(this, 600, 300);
+    //var en1 = new Dummy(this, 700, 300);
     //Colisiones del escneario con el jugador
     this.matterCollision.addOnCollideStart({
       objectA: this.game.player.mainBody,

@@ -29,14 +29,14 @@ export default class PlayerFireArmMobile extends PlayerFireArm{
   fireBullet(bulletSpeed = 30, bulletExpireTime = 1000){
     this.armDir.x = this.scene.game.player.firingPointer.x + this.cam.scrollX - (this.scene.game.player.sprite.x + this.shoulderOffsetX);
     this.armDir.y = this.scene.game.player.firingPointer.y + this.cam.scrollY - (this.scene.game.player.sprite.y + this.shoulderOffsetY);
-    this.sprite.angle = this.armDir.angle() * 180/Math.PI - 90;
+    this.sprite.angle = this.armDir.angle() * 180/Math.PI;
     super.fireBullet(bulletSpeed, bulletExpireTime);
   }
 
   fireBomb(){
     this.armDir.x = this.scene.game.player.firingPointer.x + this.cam.scrollX - (this.scene.game.player.sprite.x + this.shoulderOffsetX);
     this.armDir.y = this.scene.game.player.firingPointer.y + this.cam.scrollY - (this.scene.game.player.sprite.y + this.shoulderOffsetY);
-    this.sprite.angle = this.armDir.angle() * 180/Math.PI - 90;
+    this.sprite.angle = this.armDir.angle() * 180/Math.PI;
     super.fireBomb();
   }
 }

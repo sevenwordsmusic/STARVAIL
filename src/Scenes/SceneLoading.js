@@ -12,9 +12,12 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('crosshair', 'assets/HUD/crosshair.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('weaponsHUD', 'assets/HUD/weaponsHUD.png', { frameWidth: 268, frameHeight: 252 });
 
-    this.load.spritesheet('playerRun', 'assets/Sprites/Player/player_run.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('playerIdle', 'assets/Sprites/Player/player_idle.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('playerJumpUp', 'assets/Sprites/Player/player_jump.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('playerRun', 'assets/Sprites/Player/player_run_nogun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('playerIdle', 'assets/Sprites/Player/player_idle_nogun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('playerAirUp', 'assets/Sprites/Player/player_moveup_nogun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('playerAirIdle', 'assets/Sprites/Player/player_flyidle_nogun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('playerAirMove', 'assets/Sprites/Player/player_movefly_nogun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('playerAirDown', 'assets/Sprites/Player/player_movedown_nogun.png', { frameWidth: 64, frameHeight: 64 });
     //this.load.spritesheet('androidJumpDown', 'assets/Sprites/Player/male_android_jumping_down.png', { frameWidth: 32, frameHeight: 64 });
 
     this.load.image('playerFireArm', 'assets/Sprites/Player/player_FireArm.png', { frameWidth: 32, frameHeight: 64 });
@@ -56,10 +59,34 @@ export default class SceneLoading extends Phaser.Scene {
         repeat: -1
     });
     this.anims.create({
-        key: 'jumpUp',
-        frames: this.anims.generateFrameNumbers('playerJumpUp', { start: 0, end: 2 }),
+        key: 'propulsion',
+        frames: this.anims.generateFrameNumbers('playerAirUp', { start: 0, end: 1 }),
         frameRate: 10,
         repeat: 0
+    });
+    this.anims.create({
+        key: 'airIdle',
+        frames: this.anims.generateFrameNumbers('playerAirIdle', { start: 0, end: 6 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'airUp',
+        frames: this.anims.generateFrameNumbers('playerAirUp', { start: 1, end: 1 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'airMove',
+        frames: this.anims.generateFrameNumbers('playerAirMove', { start: 0, end: 0 }),
+        frameRate: 1,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'airDown',
+        frames: this.anims.generateFrameNumbers('playerAirDown', { start: 0, end: 0 }),
+        frameRate: 1,
+        repeat: -1
     });
     /*this.anims.create({
         key: 'jumpDown',

@@ -270,7 +270,7 @@ export default class Player {
       //JET
       if(Phaser.Input.Keyboard.JustDown(this.cursors.up)){
             if(!this.activatedJet){
-              this.sprite.anims.play('jumpUp', false);
+              this.sprite.anims.play('propulsion', true);
               this.sprite.body.frictionAir = 0.06;
               this.activatedJet = true;
               //this.falseVelocityY = -1/this.scene.matter.world.getDelta();
@@ -300,22 +300,34 @@ export default class Player {
   playAnimation(isFireing){
     if(this.activatedJet){
       this.sprite.anims.setTimeScale(1);
-      //this.sprite.anims.play('jumpUp', false);
+      if(this.cursors.down.isDown){
+        this.sprite.anims.play('airDown', true);
+        this.fireArm.adjustOffset(-7, -19);
+      }else if(this.cursors.right.isDown || this.cursors.left.isDown){
+        this.sprite.anims.play('airMove', true);
+        this.fireArm.adjustOffset(1, -19);
+      }else if(this.cursors.up.isDown){
+        this.sprite.anims.play('airUp', true);
+        this.fireArm.adjustOffset(-5, -25);
+      }else{
+        this.sprite.anims.play('airIdle', true);
+        this.fireArm.adjustOffset(-5, -25);
+      }
     }else{
-      if(this.cursors.right.isDown){
+      if(this.cursors.right.isDown || this.cursors.left.isDown){
         this.sprite.anims.setTimeScale(this.playerMoveForceX());
         this.sprite.anims.play('wRight', true);
-      }else if(this.cursors.left.isDown){
-        this.sprite.anims.setTimeScale(this.playerMoveForceX());
-        this.sprite.anims.play('wRight', true);
+        this.fireArm.adjustOffset(5, -18);
       }else{
         this.sprite.anims.setTimeScale(1);
         this.sprite.anims.play('idle', true);
+        this.fireArm.adjustOffset(-4, -22);
       }
     }
 
     if(isFireing){
       this.sprite.setFlipX(this.fireArm.armDir.x < 0);
+      this.fireArm.flipOffset((this.fireArm.armDir.x < 0)?-1:1);
     }else{
       if(this.cursors.right.isDown){
         this.sprite.setFlipX(false);
@@ -398,21 +410,21 @@ export default class Player {
     this.advance32X += (this.sprite.body.position.x - this.earlyPos.x);
     if(this.advance32X >= 32){
       const layersX = Math.floor(this.advance32X/32);
-      this.xFrontiers(1, 7, layersX);
+      this.xFrontiers(1, 17, layersX);
       this.advance32X = this.advance32X - 32*layersX;
     }else if (this.advance32X <= -32) {
       const layersX = Math.floor(Math.abs(this.advance32X/32));
-      this.xFrontiers(-1, 7, layersX);
+      this.xFrontiers(-1, 17, layersX);
       this.advance32X = this.advance32X + 32*layersX;
     }
     this.advance32Y += (this.sprite.body.position.y - this.earlyPos.y);
     if(this.advance32Y >= 32){
       const layersY = Math.floor(this.advance32Y/32);
-      this.yFrontiers(1, 7, layersY);
+      this.yFrontiers(1, 17, layersY);
       this.advance32Y = this.advance32Y - 32*layersY;
     }else if (this.advance32Y <= -32) {
       const layersY = Math.floor(Math.abs(this.advance32Y/32));
-      this.yFrontiers(-1, 7, layersY);
+      this.yFrontiers(-1, 17, layersY);
       this.advance32Y = this.advance32Y + 32*layersY;
     }
     this.earlyPos.x = this.sprite.body.position.x;
