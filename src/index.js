@@ -22,7 +22,7 @@ var config = {
     default: 'matter',
     matter: {
       gravity: { y: 0.98 },
-      debug: true
+      debug: false
     }
   },
   //escenas principales
@@ -64,5 +64,4 @@ function mobileTabletChek() {
   return check;
 };
 game.onPC = !mobileTabletChek();
-document.getElementById('mouse').innerHTML = game.onPC + "   c";
 console.log("onPC:  " +game.onPC);

@@ -18,6 +18,13 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('playerAirIdle', 'assets/Sprites/Player/player_flyidle_nogun.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('playerAirMove', 'assets/Sprites/Player/player_movefly_nogun.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('playerAirDown', 'assets/Sprites/Player/player_movedown_nogun.png', { frameWidth: 64, frameHeight: 64 });
+
+    this.load.spritesheet('arm_playerRun', 'assets/Sprites/Player/player_run_onlygun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('arm_playerIdle', 'assets/Sprites/Player/player_idle_onlygun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('arm_playerAirUp', 'assets/Sprites/Player/player_moveup_onlygun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('arm_playerAirIdle', 'assets/Sprites/Player/player_flyidle_onlygun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('arm_playerAirMove', 'assets/Sprites/Player/player_movefly_onlygun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('arm_playerAirDown', 'assets/Sprites/Player/player_movedown_onlygun.png', { frameWidth: 64, frameHeight: 64 });
     //this.load.spritesheet('androidJumpDown', 'assets/Sprites/Player/male_android_jumping_down.png', { frameWidth: 32, frameHeight: 64 });
 
     this.load.image('playerFireArm', 'assets/Sprites/Player/player_FireArm.png', { frameWidth: 32, frameHeight: 64 });
@@ -88,19 +95,57 @@ export default class SceneLoading extends Phaser.Scene {
         frameRate: 1,
         repeat: -1
     });
-    /*this.anims.create({
-        key: 'jumpDown',
-        frames: this.anims.generateFrameNumbers('androidJumpDown', { start: 0, end: 1 }),
-        frameRate: 6,
+
+    //SOLO MANO
+    this.anims.create({
+        key: 'arm_wRight',
+        frames: this.anims.generateFrameNumbers('arm_playerRun', { start: 0, end: 7 }),
+        frameRate: 14,
         repeat: -1
-    });*/
+    });
+    this.anims.create({
+        key: 'arm_idle',
+        frames: this.anims.generateFrameNumbers('arm_playerIdle', { start: 0, end: 6 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'arm_propulsion',
+        frames: this.anims.generateFrameNumbers('arm_playerAirUp', { start: 0, end: 1 }),
+        frameRate: 10,
+        repeat: 0
+    });
+    this.anims.create({
+        key: 'arm_airIdle',
+        frames: this.anims.generateFrameNumbers('arm_playerAirIdle', { start: 0, end: 6 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'arm_airUp',
+        frames: this.anims.generateFrameNumbers('arm_playerAirUp', { start: 1, end: 1 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'arm_airMove',
+        frames: this.anims.generateFrameNumbers('arm_playerAirMove', { start: 0, end: 0 }),
+        frameRate: 1,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'arm_airDown',
+        frames: this.anims.generateFrameNumbers('arm_playerAirDown', { start: 0, end: 0 }),
+        frameRate: 1,
+        repeat: -1
+    });
 
     this.anims.create({
-                key: 'eBomb',
-                frames: this.anims.generateFrameNumbers('explodingBomb', { start: 0, end: 13 }),
-                frameRate: 7,
-                repeat: 0
-            });
+            key: 'eBomb',
+            frames: this.anims.generateFrameNumbers('explodingBomb', { start: 0, end: 13 }),
+            frameRate: 7,
+            repeat: 0
+        });
 
     this.anims.create({
             key: 'exprosion',

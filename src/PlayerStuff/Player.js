@@ -44,6 +44,11 @@ export default class Player {
       .setOrigin(0.5, 0.75)     //0.5, 0.55
       .body.collisionFilter.group = -1;
 
+    //BRAZO
+    this.movingArm = this.scene.add.sprite(x, y, 'arm_playerIdle', 0);
+    this.movingArm.setOrigin(0.5, 0.75);
+    this.movingArm.setScale(this.sprite.scale);
+
     this.earlyPos = new Phaser.Math.Vector2(this.sprite.body.position.x, this.sprite.body.position.y);
     this.advance32X = 0;
     this.advance32Y = 0;
@@ -211,8 +216,10 @@ export default class Player {
   }
   initializeFire(){
     //inicializacón de disparo
-    if(!this.fireArm.fireArmActive)
+    if(!this.fireArm.fireArmActive){
       this.fireArm.enableFireArm();
+      this.movingArm.setVisible(false);
+    }
     if (this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate){
       this.fireCounterTap = 0;
       this.fireArm.fireWeaponProjectile(this.weaponCounter, (this.firingPointer.x < this.sprite.x)?-1:1);
@@ -241,6 +248,8 @@ export default class Player {
           this.sprite.setVelocityX(-this.scene.game.moveVelocity * delta * this.leftMultiply * this.playerMoveForceX());
         }
       }
+      this.movingArm.x = this.sprite.x;
+      this.movingArm.y = this.sprite.y;
       this.playAnimation(this.fireArm.fireArmActive);
 
       if (this.sprite.y > 640) {
@@ -259,8 +268,10 @@ export default class Player {
         }
       }
       else{
-        if(this.crossCounter > this.fireArm.afterActive && this.fireArm.fireArmActive)
+        if(this.crossCounter > this.fireArm.afterActive && this.fireArm.fireArmActive){
           this.fireArm.disableFireArm();
+          this.movingArm.setVisible(true);
+        }
         else
           this.crossCounter += delta;
       }
@@ -302,37 +313,46 @@ export default class Player {
       this.sprite.anims.setTimeScale(1);
       if(this.cursors.down.isDown){
         this.sprite.anims.play('airDown', true);
+        this.movingArm.anims.play('arm_airDown', true);
         this.fireArm.adjustOffset(-7, -19);
       }else if(this.cursors.right.isDown || this.cursors.left.isDown){
         this.sprite.anims.play('airMove', true);
+        this.movingArm.anims.play('arm_airMove', true);
         this.fireArm.adjustOffset(1, -19);
       }else if(this.cursors.up.isDown){
         this.sprite.anims.play('airUp', true);
+        this.movingArm.anims.play('arm_airUp', true);
         this.fireArm.adjustOffset(-5, -25);
       }else{
         this.sprite.anims.play('airIdle', true);
+        this.movingArm.anims.play('arm_airIdle', true);
         this.fireArm.adjustOffset(-5, -25);
       }
     }else{
       if(this.cursors.right.isDown || this.cursors.left.isDown){
         this.sprite.anims.setTimeScale(this.playerMoveForceX());
         this.sprite.anims.play('wRight', true);
-        this.fireArm.adjustOffset(5, -18);
+        this.movingArm.anims.play('arm_wRight', true);
+        this.fireArm.adjustOffset(3, -18);
       }else{
         this.sprite.anims.setTimeScale(1);
         this.sprite.anims.play('idle', true);
+        this.movingArm.anims.play('arm_idle', true);
         this.fireArm.adjustOffset(-4, -22);
       }
     }
 
     if(isFireing){
       this.sprite.setFlipX(this.fireArm.armDir.x < 0);
+      this.movingArm.setFlipX(this.fireArm.armDir.x < 0);
       this.fireArm.flipOffset((this.fireArm.armDir.x < 0)?-1:1);
     }else{
       if(this.cursors.right.isDown){
         this.sprite.setFlipX(false);
+        this.movingArm.setFlipX(false);
       }else if(this.cursors.left.isDown){
         this.sprite.setFlipX(true);
+        this.movingArm.setFlipX(true);
       }
     }
   }
