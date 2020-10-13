@@ -4,7 +4,7 @@ export default class Enemy {
     //inicializacion
     this.scene = scene;
     this.sprite = scene.matter.add.sprite(x,y,sprtImg,0);
-    this.sprite.parent = this;
+    this.sprite.parent = this; //Para poder acceder a la clase enemigo desde el sprite del enemigo
     this.hp = hp;
 
     this.sprite.body.collisionFilter.group = -1;

@@ -76,7 +76,7 @@ export default class Player {
       'up': Phaser.Input.Keyboard.KeyCodes.W,
       'left': Phaser.Input.Keyboard.KeyCodes.A,
       'right': Phaser.Input.Keyboard.KeyCodes.D,
-      'down': Phaser.Input.Keyboard.KeyCodes.S});
+      'down': Phaser.Input.Keyboard.KeyCodes.S});2
       this.weaponChange = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
       this.fireArm = new PlayerFireArmPC(this.scene, x, y);
