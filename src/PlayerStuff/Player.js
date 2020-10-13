@@ -44,26 +44,31 @@ export default class Player {
       .setOrigin(0.5, 0.72)     //0.5, 0.55
       .body.collisionFilter.group = -1;
 
+    this.isTouching = { left: false, right: false, ground: false };
+
     //BRAZO
     this.movingArm = this.scene.add.sprite(x, y, 'arm_playerIdle', 0);
     this.movingArm.setOrigin(0.5, 0.75);
     this.movingArm.setScale(this.sprite.scale);
+    //BRAZO
 
+    //código para boundry box de cuerpos de matter (no se toca)
     this.earlyPos = new Phaser.Math.Vector2(this.sprite.body.position.x, this.sprite.body.position.y);
     this.advance32X = 0;
     this.advance32Y = 0;
-
-    this.isTouching = { left: false, right: false, ground: false };
 
     //jet
     this.activatedJet = false;
     this.isTakingOf = false;
 
+    //disparo y brazo de disparo
     this.fireCounterTap = 0;
     this.fireCounterHold = 0;
     this.weapons = [];
+    //creacion de armas con nombre, velocidad de ataque (cuanto más grande más lento)
     this.weapons[0] = {name: "MachineGun", fireRate: 4 * this.scene.matter.world.getDelta() , chFrame: 0};
     this.weapons[1] = {name: "BombLauncher", fireRate: 30 * this.scene.matter.world.getDelta() , chFrame: 1};
+    this.weapons[2] = {name: "Ejemplo", fireRate: 10 * this.scene.matter.world.getDelta() , chFrame: 1};
     this.weaponCounter = 0;
 
     if(this.scene.game.onPC){
@@ -222,9 +227,11 @@ export default class Player {
       this.movingArm.setVisible(false);
     }
     if (this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate){
+      //cooldown para el tap o al presionar una vez el arma
       this.fireCounterTap = 0;
-      this.fireArm.fireWeaponProjectile(this.weaponCounter, (this.firingPointer.x < this.sprite.x)?-1:1);
+      this.fireArm.fireWeaponProjectile(this.weaponCounter);
     }
+    //variable que controla la velocidad de disparo del armo si se esta continuamente presionando el ratón
     this.fireCounterHold = 0;
     this.crossCounter = 0;
   }
@@ -253,9 +260,10 @@ export default class Player {
       this.movingArm.y = this.sprite.y;
       this.playAnimation(this.fireArm.fireArmActive);
 
-      if (this.sprite.y > 640) {
+      //código fantasma de juegos en red
+      /*if (this.sprite.y > 640) {
         this.damaged(new Phaser.Math.Vector2(0, -1), 40);
-      }
+      }*/
       this.leftMultiply = 1;
       this.rightMultiply = 1;
 
@@ -265,7 +273,7 @@ export default class Player {
         if (this.fireCounterHold >= this.weapons[this.weaponCounter].fireRate){
           this.fireCounterHold = 0;
           this.fireCounterTap = 0;
-          this.fireArm.fireWeaponProjectile(this.weaponCounter, (this.firingPointer.x < this.sprite.x)?-1:1);
+          this.fireArm.fireWeaponProjectile(this.weaponCounter);
         }
       }
       else{
@@ -285,6 +293,7 @@ export default class Player {
             this.isTakingOf = true;
             this.sprite.anims.play('propulsion', true);
             this.movingArm.anims.play('arm_airUp', true);
+            this.fireArm.adjustOffset(-5, -22);
             this.sprite.once('animationcomplete', function(){
               this.isTakingOf = false;
             },this);
@@ -314,7 +323,7 @@ export default class Player {
       //JET
     }
   }
-  playAnimation(isFireing){
+  playAnimation(isFiring){
     if(this.activatedJet){
       this.sprite.anims.setTimeScale(1);
       this.movingArm.anims.setTimeScale(1);
@@ -339,11 +348,11 @@ export default class Player {
       }
     }else{
       if(this.cursors.right.isDown || this.cursors.left.isDown){
-        this.sprite.anims.setTimeScale(this.playerMoveForceX());
-        this.movingArm.anims.setTimeScale(this.playerMoveForceX());
+        this.sprite.anims.setTimeScale(this.playerMoveForceX());            //hay que clampear
+        this.movingArm.anims.setTimeScale(this.playerMoveForceX());        //hay que clampear
         this.sprite.anims.play('wRight', true);
         this.movingArm.anims.play('arm_wRight', true);
-        this.fireArm.adjustOffset(3, -18);
+        this.fireArm.adjustOffset(3, -14);
       }else{
         this.sprite.anims.setTimeScale(1);
         this.movingArm.anims.setTimeScale(1);
@@ -353,7 +362,7 @@ export default class Player {
       }
     }
 
-    if(isFireing){
+    if(isFiring){
       this.sprite.setFlipX(this.fireArm.armDir.x < 0);
       this.movingArm.setFlipX(this.fireArm.armDir.x < 0);
       this.fireArm.flipOffset((this.fireArm.armDir.x < 0)?-1:1);

@@ -17,13 +17,6 @@ export default class SceneTest_1 extends Phaser.Scene {
     super("test1");
   }
 
-  preload() {
-    var url;
-
-    url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
-    this.load.plugin('rexvirtualjoystickplugin', url, true);
-}
-
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
@@ -48,7 +41,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     const map = this.make.tilemap({ key: "map" });
     const tileset1 = map.addTilesetImage("Cyber_Tiles_1","tiles1");
     const tileset2 = map.addTilesetImage("Cyber_Tiles_2","tiles2");
-    const tileset3 = map.addTilesetImage("Cyber_Tiles_3a","tiles3");
+    const tileset3 = map.addTilesetImage("Cyber_Tiles_3","tiles3");
 
     //Capas de tiles.
     const baselayer = map.createStaticLayer("Base Layer", [tileset1, tileset2, tileset3], 200, 0);
@@ -57,8 +50,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     frontlayer.depth = 25;
     const background1 = map.createStaticLayer("Background 1", [tileset1, tileset2, tileset3], 200, 0);
     background1.depth = -25;
-    const background2 = map.createStaticLayer("Background 2", [tileset1, tileset2, tileset3], 200, 0);
-    background2.depth = -30;
+    //const background2 = map.createStaticLayer("Background 2", [tileset1, tileset2, tileset3], 200, 0);
+    //background2.depth = -30;
 
     //Colisiones de las capas.
     //layerminus1.setCollisionByProperty({ Collides: true });
@@ -98,15 +91,15 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
     new Player(this, 500, 300);
-    var en1 = new Dummy(this, 300, 100);
-    var en1 = new Dummy(this, 700, 100);
-    //var en1 = new Dummy(this, 700, 300);
+    new Dummy(this, 300, 100);
+    new Dummy(this, 700, 100);
+
     //Colisiones del escneario con el jugador
     /*this.matterCollision.addOnCollideStart({
       objectA: this.game.player.mainBody,
       callback: lethalCollide,
       context: this.game.player
-    });*/
+    });
 
     //Función lethalCollide, que comprueba si la colisión con los pinchos ha sido letal.
     function lethalCollide({ gameObjectB }) {
@@ -116,7 +109,7 @@ export default class SceneTest_1 extends Phaser.Scene {
         //this.damaged(new Phaser.Math.Vector2(this.sprite.x - gameObjectB.x, -(this.sprite.y - gameObjectB.y)), 60);
         console.log("damage");
       }
-    }
+    }*/
 
     /*
     //Colisiones con los jugadores androides.
@@ -136,12 +129,18 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     //Camara.
     cam = this.cameras.main;
+    cam.setRoundPixels(true);
     this.matter.world.setBounds(0, -500, 10000, 10000);
     cam.setBounds(0, -500, 10000, 1435);
-    cam.startFollow(this.game.player.sprite, false, 0.05, 0.05, 0, 0);
+    cam.startFollow(this.game.player.sprite, true, 0.05, 0.05, 0, 0);
     cam.setBackgroundColor('rgba(150, 174, 191, 1)');
 
     this.input.setDefaultCursor('none');
+
+
+    /*var keyObj = this.input.keyboard.addKey('K');  // Get key object
+    keyObj.on('down', function(event) { console.log("k presionada"); });*/
+
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {

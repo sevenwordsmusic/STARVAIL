@@ -11,6 +11,7 @@ export default class Bomb extends Projectile {
     this.sprite.setCircle(11);
     this.sprite.setOrigin(0.5, 0.61);
     this.sprite.setDepth(5).setAngularVelocity(0.2 * dir);
+    this.sprite.setFlipX(dir >= 0);
     this.sprite.body.collisionFilter.group = -1;
 
     //se calcula la direccion y magnitud del vector de velocidad

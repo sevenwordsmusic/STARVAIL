@@ -1,6 +1,5 @@
 import Enemy from "./Enemy.js";
 
-var ddiirr = -1;
 //enemigo que hereda de Enemy
 export default class Dummy extends Enemy {
   constructor(scene, x, y){
@@ -12,6 +11,7 @@ export default class Dummy extends Enemy {
     this.sprite.body.collisionFilter.group = -1;
     this.scene.bulletInteracBodies[this.currentBodyIndex] = this.sprite.body;
     this.scene.enemyBodies[this.currentEnemyIndex] = this.sprite.body;
+
   }
 
   damage(dmg){
@@ -19,6 +19,7 @@ export default class Dummy extends Enemy {
   }
 
   enemyDead(){
+    //codigo de explosion
     super.enemyDead();
   }
 }

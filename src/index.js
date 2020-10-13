@@ -51,7 +51,7 @@ game.musicVolume = 0.3;
 game.soundVolume = 0.2;
 game.moveVelocity = 0.215;
 game.jetVelocity = 0.215;
-game.airVelocityFraction = 0.3;
+game.airVelocityFraction = 0.3;   //Creo que no se usa
 
 game.bulletInteracBodies = [];
 game.enemyBodies = [];

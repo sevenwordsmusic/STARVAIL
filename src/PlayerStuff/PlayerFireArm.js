@@ -22,6 +22,7 @@ export default class PlayerFireArm {
       this.sprite.setActive(false).setVisible(false);
   }
 
+  //cambiar speed a array de weapons
   fireBullet(bulletSpeed = 30, bulletExpireTime = 1000){
       this.armDir.normalize();
       const addedRandomAngle = (2*Math.random() - 1) * this.spread;
@@ -41,13 +42,13 @@ export default class PlayerFireArm {
     return new Bomb(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, dir);
   }
 
-  fireWeaponProjectile(wNumber, dir = 1){
+  fireWeaponProjectile(wNumber){
     switch(wNumber){
       case 0:
         this.fireBullet();
       break;
       case 1:
-        this.fireBomb(dir);
+        this.fireBomb((this.armDir.x < 0)?-1:1);
       break;
       default:
         console.log("no weapon");

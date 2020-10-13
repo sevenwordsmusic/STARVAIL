@@ -74,7 +74,7 @@ export default class PlayerFireArmPC extends PlayerFireArm{
       super.fireBullet(bulletSpeed, bulletExpireTime);
   }
 
-  fireBomb(){
-      super.fireBomb();
+  fireBomb(dir){
+      super.fireBomb(dir);
   }
 }
