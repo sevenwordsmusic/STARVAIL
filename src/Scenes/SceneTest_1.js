@@ -7,9 +7,14 @@ var mouse;
 //var firstFollow;
 //var fadeOut;
 
+
+//Texto prueba para el dialogo
+var content = 'En un futuro lejano y una tierra cuyo nombre se ha olvidado, una torre se alza hasta lo alto del cielo. Se dice que aquellos individuos que se vean infectados por el virus de la angustia existencial peregrinarán a esta torre, con la intención de llegar a su cima y hallar el sentido a su vida inmortal';
+
 //Imports en la escena.
 import Player from "../PlayerStuff/Player.js";
 import Dummy from "../Enemies/Dummy.js";
+import Dialog from "../Plugins/Dialog.js"
 
 //Clase Scene2, que extiende de Phaser.Scene.
 export default class SceneTest_1 extends Phaser.Scene {
@@ -17,12 +22,32 @@ export default class SceneTest_1 extends Phaser.Scene {
     super("test1");
   }
 
+  preload() { 
+    this.load.scenePlugin({
+        key: 'rexuiplugin',
+        url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
+        sceneKey: 'rexUI'
+    });
+
+    this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
+}
+
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
     //game.matter.world.pause();
     mouse = this.input.activePointer;
     //fadeOut = false;
+
+    //TESTING DIALOG
+    var dialogTest = new Dialog(this, 100, 400, {
+      wrapWidth: 500,
+      fixedWidth: 500,
+      fixedHeight: 65,
+    });
+
+    dialogTest.textBox.start(content,10);
+
 
     //Música. POR SI QUEREMOS MÚSICA
     /*
@@ -39,9 +64,9 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     //Inicializacion y creacion de mapa de tiles.
     const map = this.make.tilemap({ key: "map" });
-    const tileset1 = map.addTilesetImage("Cyber_Tiles_1","tiles1");
-    const tileset2 = map.addTilesetImage("Cyber_Tiles_2","tiles2");
-    const tileset3 = map.addTilesetImage("Cyber_Tiles_3","tiles3");
+    const tileset1 = map.addTilesetImage("Cyber_Tiles_1", "tiles1");
+    const tileset2 = map.addTilesetImage("Cyber_Tiles_2", "tiles2");
+    const tileset3 = map.addTilesetImage("Cyber_Tiles_3", "tiles3");
 
     //Capas de tiles.
     const baselayer = map.createStaticLayer("Base Layer", [tileset1, tileset2, tileset3], 200, 0);
@@ -59,23 +84,24 @@ export default class SceneTest_1 extends Phaser.Scene {
     baselayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(baselayer);
 
+    //Sistema de cargado dinamico de colliders
     var tileBodyMatrix = [];
-    for(var i=0; i<240; i++){
+    for (var i = 0; i < 240; i++) {
       tileBodyMatrix[i] = [];
-      for(var j=0; j<20; j++){
+      for (var j = 0; j < 20; j++) {
         tileBodyMatrix[i][j] = undefined;
       }
     }
     this.bulletInteracBodies = [];
     var counerAux = 0;
-    baselayer.forEachTile(function (tile){
-      if(tile.physics.matterBody != undefined){
+    baselayer.forEachTile(function (tile) {
+      if (tile.physics.matterBody != undefined) {
         const tileBody = tile.physics.matterBody.body;
-        if(tileBody.position.x < 2000 /*&& tileBody.position.x > 1856 && tileBody.position.y < 576 && tileBody.position.y > -512*/){
-          tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, true);
+        if (tileBody.position.x < 2000 /*&& tileBody.position.x > 1856 && tileBody.position.y < 576 && tileBody.position.y > -512*/) {
+          tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
-        }else {
-          tileBodyMatrix[Math.floor(tileBody.position.x/32)][Math.floor(tileBody.position.y/32)] = new BodyWrapper(tileBody, false);
+        } else {
+          tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, false);
           Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         }
         this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
@@ -83,9 +109,9 @@ export default class SceneTest_1 extends Phaser.Scene {
       }
     }, this);
 
-    this.tileBodyMatrix = new Proxy(tileBodyMatrix,{
-      get(target, prop){
-        return target[Math.max(0,prop)];
+    this.tileBodyMatrix = new Proxy(tileBodyMatrix, {
+      get(target, prop) {
+        return target[Math.max(0, prop)];
       }
     });
 
@@ -138,6 +164,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.input.setDefaultCursor('none');
 
 
+
+
     /*var keyObj = this.input.keyboard.addKey('K');  // Get key object
     keyObj.on('down', function(event) { console.log("k presionada"); });*/
 
@@ -148,8 +176,9 @@ export default class SceneTest_1 extends Phaser.Scene {
   }
 }
 
-class BodyWrapper{
-  constructor(body, active){
+
+class BodyWrapper {
+  constructor(body, active) {
     this.body = body;
     this.active = active;
   }

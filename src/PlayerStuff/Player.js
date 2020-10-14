@@ -298,7 +298,7 @@ export default class Player {
         if(this.sprite.body.velocity.y >= this.braceVelocity){
           this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * delta * this.playerMoveForceY());
         }else {
-          this.sprite.setVelocityY(-this.scene.game.jetVelocity * delta * this.playerMoveForceY());
+           this.sprite.setVelocityY(-this.scene.game.jetVelocity * delta * this.playerMoveForceY());
         }
       }
       if(this.cursors.down.isDown){
