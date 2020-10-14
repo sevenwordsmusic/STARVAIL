@@ -22,7 +22,7 @@ var config = {
     default: 'matter',
     matter: {
       gravity: { y: 0.98 },
-      debug: true
+      debug: false
     }
   },
   //escenas principales

@@ -9,7 +9,14 @@ var mouse;
 
 
 //Texto prueba para el dialogo
-var content = 'En un futuro lejano y una tierra cuyo nombre se ha olvidado, una torre se alza hasta lo alto del cielo. Se dice que aquellos individuos que se vean infectados por el virus de la angustia existencial peregrinarán a esta torre, con la intención de llegar a su cima y hallar el sentido a su vida inmortal';
+var dialogTest
+var content = `[b]D42K-H[/b]
+Así que [i]finalmente[/i] has venido
+
+[b]D42K-H[/b]
+4ULS82... Sabes que sólo hay una respuesta al dolor que sentimos por el mero hecho de [color=red][b]existir[/b][/color], ¿verdad?
+[b]D42K-H[/b]
+Si así es, ya sabes lo que tenemos que hacer.`;
 
 //Imports en la escena.
 import Player from "../PlayerStuff/Player.js";
@@ -40,10 +47,10 @@ export default class SceneTest_1 extends Phaser.Scene {
     //fadeOut = false;
 
     //TESTING DIALOG
-    var dialogTest = new Dialog(this, 100, 400, {
-      wrapWidth: 500,
-      fixedWidth: 500,
-      fixedHeight: 65,
+    dialogTest = new Dialog(this, 50, 400,true,5000, {
+      wrapWidth: 700,
+      fixedWidth: 700,
+      fixedHeight: 80,
     });
 
     dialogTest.textBox.start(content,10);
@@ -173,6 +180,9 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
     //document.getElementById('mouse').innerHTML = "X: " + Math.round(mouse.x + cam.scrollX) + " | Y: " + Math.round(mouse.y + cam.scrollY);
+  
+  //dialogTest.textBox.destroy();
+  
   }
 }
 

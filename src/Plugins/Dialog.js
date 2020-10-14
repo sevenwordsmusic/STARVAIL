@@ -1,12 +1,14 @@
 export default class Dialog {
     
-    constructor(scene, x, y, config) {
+    //Parametros: escena, posicion x, posicion y, booleano que determina si se destruirá el dialogo cuando acaba, 
+    //tiempo que pasará en milisegundos desde que acaba el dialogo hasta que se destruye si lo anterior es cierto, y configuración
+    constructor(scene, x, y, destroyonEnd,timeToDestroy, config) {
         this.scene = scene;
 
         //Colores para el dialogo
-        const COLOR_PRIMARY = 0x4e342e;
-        const COLOR_LIGHT = 0x7b5e57;
-        const COLOR_DARK = 0x260e04;
+        const COLOR_PRIMARY = 0x181818;
+        const COLOR_LIGHT = 0xFFFFFF;
+        const COLOR_DARK = 0x00000;
 
         const GetValue = Phaser.Utils.Objects.GetValue;
 
@@ -20,7 +22,7 @@ export default class Dialog {
             background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY)
                 .setStrokeStyle(2, COLOR_LIGHT),
 
-            icon: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_DARK),
+            icon: scene.rexUI.add.roundRectangle(100, 50, 2, 2, 30, COLOR_DARK),
 
             // text: this.getBuiltInText(wrapWidth, fixedWidth, fixedHeight),
             text: this.getBBcodeText(wrapWidth, fixedWidth, fixedHeight),
@@ -35,6 +37,7 @@ export default class Dialog {
                 icon: 10,
                 text: 10,
             }
+            
         })
             .setOrigin(0)
             .layout();
@@ -52,6 +55,14 @@ export default class Dialog {
             }, this.textBox)
             .on('pageend', function () {
                 if (this.isLastPage) {
+
+                    if(destroyonEnd) {
+                        var timer = scene.time.addEvent({
+                            delay: timeToDestroy,                // ms
+                            callback: () =>  (this.destroy())
+                        });
+                    }
+
                     return;
                 }
 
@@ -67,6 +78,9 @@ export default class Dialog {
                     yoyo: false
                 });
             }, this.textBox)
+
+            
+
         //.on('type', function () {
         //})
 
