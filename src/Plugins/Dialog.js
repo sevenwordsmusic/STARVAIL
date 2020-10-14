@@ -71,7 +71,7 @@ export default class Dialog {
         //})
 
 
-        this.textBox.setScrollFactor(0);
+        this.textBox.setScrollFactor(0).setDepth(101);
     }
 
      getBuiltInText (wrapWidth, fixedWidth, fixedHeight) {
