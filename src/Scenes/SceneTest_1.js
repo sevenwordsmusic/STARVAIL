@@ -93,7 +93,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     new Player(this, 500, 300);
     new Dummy(this, 300, 100);
     new Dummy(this, 700, 100);
-
+    //var sssd = new HealthBar(this, 400, 400, 300, 20, 0x00ff00, 0x000000, 0xffffff, 100);
     //Colisiones del escneario con el jugador
     /*this.matterCollision.addOnCollideStart({
       objectA: this.game.player.mainBody,

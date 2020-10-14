@@ -22,13 +22,14 @@ var config = {
     default: 'matter',
     matter: {
       gravity: { y: 0.98 },
-      debug: false
+      debug: true
     }
   },
   //escenas principales
   scene: [
     SceneLoading,
     SceneTest_1,
+    Joystick_test
   ],
   plugins: {
 
@@ -51,6 +52,14 @@ game.musicVolume = 0.3;
 game.soundVolume = 0.2;
 game.moveVelocity = 0.215;
 game.jetVelocity = 0.215;
+game.totalPlayerHp = 100;
+game.hpRecoveryRate = 1;
+game.totalPlayerEnergy = 100;
+game.energyRecoveryRate = 0.5;
+game.energyCostJetBeginning = 0.1;
+game.energyJetIncrease = 0.002  //velocidad con la que aumenta el coste del jet
+game.energyCostJetPropulsion = 5;
+
 game.airVelocityFraction = 0.3;   //Creo que no se usa
 
 game.bulletInteracBodies = [];

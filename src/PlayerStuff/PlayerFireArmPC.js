@@ -66,15 +66,22 @@ export default class PlayerFireArmPC extends PlayerFireArm{
     this.sprite.setActive(false).setVisible(false);
     this.fireArmActive = false;
   }
+  destroyFireArm(){
+    this.scene.events.off("update", this.update, this);
+    this.graphics.clear();
+    this.crosshairSpr.destroy();
+    this.sprite.destroy();
+    this.fireArmActive = false;
+  }
   changeCrosshairSpr(spNumber){
     this.crosshairSpr.setFrame(spNumber);
   }
 
-  fireBullet(bulletSpeed = 30, bulletExpireTime = 1000){
+  fireBullet(bulletSpeed, bulletExpireTime){
       super.fireBullet(bulletSpeed, bulletExpireTime);
   }
 
-  fireBomb(dir){
-      super.fireBomb(dir);
+  fireBomb(bombSpeed, dir, bombExpireTime){
+      super.fireBomb(bombSpeed, dir, bombExpireTime);
   }
 }

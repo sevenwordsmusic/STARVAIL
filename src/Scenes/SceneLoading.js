@@ -25,7 +25,8 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('arm_playerAirIdle', 'assets/Sprites/Player/player_flyidle_onlygun.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('arm_playerAirMove', 'assets/Sprites/Player/player_movefly_onlygun.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('arm_playerAirDown', 'assets/Sprites/Player/player_movedown_onlygun.png', { frameWidth: 64, frameHeight: 64 });
-    //this.load.spritesheet('androidJumpDown', 'assets/Sprites/Player/male_android_jumping_down.png', { frameWidth: 32, frameHeight: 64 });
+
+    this.load.spritesheet('playerDeath', 'assets/Sprites/Player/player_death.png', { frameWidth: 64, frameHeight: 64 });
 
     this.load.image('playerFireArm', 'assets/Sprites/Player/player_FireArm.png', { frameWidth: 32, frameHeight: 64 });
 
@@ -70,7 +71,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.anims.create({
         key: 'propulsion',
         frames: this.anims.generateFrameNumbers('playerAirUp', { start: 0, end: 1 }),
-        frameRate: 10,
+        frameRate: 20,
         repeat: 0
     });
     this.anims.create({
@@ -114,7 +115,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.anims.create({
         key: 'arm_propulsion',
         frames: this.anims.generateFrameNumbers('arm_playerAirUp', { start: 0, end: 1 }),
-        frameRate: 10,
+        frameRate: 20,
         repeat: 0
     });
     this.anims.create({
@@ -127,19 +128,27 @@ export default class SceneLoading extends Phaser.Scene {
         key: 'arm_airUp',
         frames: this.anims.generateFrameNumbers('arm_playerAirUp', { start: 1, end: 1 }),
         frameRate: 5,
-        repeat: -1
+        repeat: 0
     });
     this.anims.create({
         key: 'arm_airMove',
         frames: this.anims.generateFrameNumbers('arm_playerAirMove', { start: 0, end: 0 }),
         frameRate: 1,
-        repeat: -1
+        repeat: 0
     });
     this.anims.create({
         key: 'arm_airDown',
         frames: this.anims.generateFrameNumbers('arm_playerAirDown', { start: 0, end: 0 }),
         frameRate: 1,
-        repeat: -1
+        repeat: 0
+    });
+
+    //MAS ANIMACIONES PERSONAJE
+    this.anims.create({
+        key: 'death',
+        frames: this.anims.generateFrameNumbers('playerDeath', { start: 0, end: 0 }),
+        frameRate: 1,
+        repeat: 0
     });
 
     this.anims.create({

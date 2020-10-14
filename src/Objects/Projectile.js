@@ -7,9 +7,9 @@ export default class Projectile {
 
     //despues de un tiempo determinado el proyectil sera destruido por este timer
     this.timer = this.scene.time.addEvent({
-          delay: this.expTime,
-          callback: () => (this.itemExpire(this))
-        });
+      delay: this.expTime,
+      callback: () => (this.itemExpire(this))
+    });
   }
 
   //funcion que destruye al proyectil

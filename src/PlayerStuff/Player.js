@@ -1,6 +1,7 @@
 
 import PlayerFireArmPC from "./PlayerFireArmPC.js";
 import PlayerFireArmMobile from "./PlayerFireArmMobile.js";
+import Bar from "./Bar.js";
 
 export default class Player {
   constructor(scene, x, y) {
@@ -57,18 +58,30 @@ export default class Player {
     this.advance32X = 0;
     this.advance32Y = 0;
 
+    //vida, energía y sus barras correspondientes
+    this.hp = this.scene.game.totalPlayerHp;
+    this.energy = this.scene.game.totalPlayerEnergy;
+    this.hpBar = new Bar(this.scene, 50,450, 250, 25, 0x00ff00, 0x999999, 0x000000, this.hp);
+    this.energyBar = new Bar(this.scene, 50,485, 250, 25, 0x0000ff, 0x999999, 0x000000, this.energy);
+
+    //miniinvulnerabilidad al ser dañado
+    this.invulTimer = this.scene.time.addEvent({
+      delay: 100
+    });
     //jet
     this.activatedJet = false;
     this.isTakingOf = false;
+    this.jetAumulator = 0;
 
     //disparo y brazo de disparo
     this.fireCounterTap = 0;
     this.fireCounterHold = 0;
     this.weapons = [];
-    //creacion de armas con nombre, velocidad de ataque (cuanto más grande más lento)
-    this.weapons[0] = {name: "MachineGun", fireRate: 4 * this.scene.matter.world.getDelta() , chFrame: 0};
-    this.weapons[1] = {name: "BombLauncher", fireRate: 30 * this.scene.matter.world.getDelta() , chFrame: 1};
-    this.weapons[2] = {name: "Ejemplo", fireRate: 10 * this.scene.matter.world.getDelta() , chFrame: 1};
+    //creacion de armas con nombre, "rate" de ataque (cuanto más grande más lento), velocidad de proyectil, tiempo de vida de proyectil, coste de energia por disparo,
+    //cuanta proporción de "recovery de energía" hay al disparar (por ej: si es 0.5 recuperamos la mitad de energía que de normal cada update), y el frame del crosshair.png que se usa
+    this.weapons[0] = {name: "MachineGun", fireRate: 4 * this.scene.matter.world.getDelta(), projectileSpeed: 30, expireTime: 1000, energyCost: 1, energyRecoverProportion: 0, chFrame: 0};
+    this.weapons[1] = {name: "BombLauncher", fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 10, energyRecoverProportion: 0.2, chFrame: 1};
+    //this.weapons[2] = {name: "Ejemplo", fireRate: 10 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 1000, energyCost: 10 , chFrame: 1};
     this.weaponCounter = 0;
 
     if(this.scene.game.onPC){
@@ -76,7 +89,7 @@ export default class Player {
       'up': Phaser.Input.Keyboard.KeyCodes.W,
       'left': Phaser.Input.Keyboard.KeyCodes.A,
       'right': Phaser.Input.Keyboard.KeyCodes.D,
-      'down': Phaser.Input.Keyboard.KeyCodes.S});2
+      'down': Phaser.Input.Keyboard.KeyCodes.S});
       this.weaponChange = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
       this.fireArm = new PlayerFireArmPC(this.scene, x, y);
@@ -112,7 +125,7 @@ export default class Player {
       this.cursors = this.joyStick.createCursorKeys();
 
       this.button = this.scene.add.sprite(858, 450, 'weaponsHUD',0).setScale(0.75).setInteractive();
-      this.button.setScrollFactor(0);
+      this.button.setScrollFactor(0).setDepth(100);;
 
       this.fireArm = new PlayerFireArmMobile(this.scene, x, y);
       this.firingPointer = undefined;
@@ -159,11 +172,7 @@ export default class Player {
       context: this
     });
 
-    //var
-    this.invulnerable = false;
-    this.alive = true;
-
-    /*
+        /*
     scene.matterCollision.addOnCollideStart({
       objectA: this.sensors.bottom,
       callback: this.soundFall,
@@ -185,9 +194,10 @@ export default class Player {
       this.isTouching.ground = true;
       if(this.activatedJet && this.cursors.down.isDown){
           this.sprite.body.frictionAir = 0.01;
-          this.sprite.setVelocityY(this.scene.game.jetVelocity * this.scene.matter.world.getDelta());
+          //this.sprite.setVelocityY(this.scene.game.jetVelocity * this.scene.matter.world.getDelta());
           this.sprite.setIgnoreGravity(false);
           this.activatedJet = false;
+          this.jetAumulator = 0;
       }
     }
     //if (bodyB.name == "interactableBody") return;     //ejemplo para cuerpo NO chocables
@@ -220,108 +230,104 @@ export default class Player {
     if(!this.scene.game.onPC) return Math.abs(Math.min(Math.max(this.joyStick.forceY/100, -1), 1));
     else return 1;
   }
-  initializeFire(){
-    //inicializacón de disparo
-    if(!this.fireArm.fireArmActive){
-      this.fireArm.enableFireArm();
-      this.movingArm.setVisible(false);
-    }
-    if (this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate){
-      //cooldown para el tap o al presionar una vez el arma
-      this.fireCounterTap = 0;
-      this.fireArm.fireWeaponProjectile(this.weaponCounter);
-    }
-    //variable que controla la velocidad de disparo del armo si se esta continuamente presionando el ratón
-    this.fireCounterHold = 0;
-    this.crossCounter = 0;
-  }
-  changeWeapon(){
-    this.fireCounterHold = 0;
-    this.weaponCounter = (this.weaponCounter+1)%this.weapons.length;
-    this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame)
-    console.log(this.weapons[this.weaponCounter].name);
-  }
 
   update(time, delta) {
     this.updateBoundry();
-    if (this.scene.game.lives <= 0) { return; } //CAMBIAR ESPERA ACTIVA
-    if (this.alive) {
-      if (this.cursors.right.isDown) {
-        if (!(this.isTouching.ground && this.isTouching.right)) {
-          this.sprite.setVelocityX(this.scene.game.moveVelocity * delta * this.rightMultiply * this.playerMoveForceX());
-        }
-      }
-      else if (this.cursors.left.isDown) {
-        if (!(this.isTouching.ground && this.isTouching.left)) {
-          this.sprite.setVelocityX(-this.scene.game.moveVelocity * delta * this.leftMultiply * this.playerMoveForceX());
-        }
-      }
-      this.movingArm.x = this.sprite.x;
-      this.movingArm.y = this.sprite.y;
-      this.playAnimation(this.fireArm.fireArmActive);
+    if (this.hp <= 0) { return; } //CAMBIAR ESPERA ACTIVA
 
-      //código fantasma de juegos en red
-      /*if (this.sprite.y > 640) {
-        this.damaged(new Phaser.Math.Vector2(0, -1), 40);
-      }*/
-      this.leftMultiply = 1;
-      this.rightMultiply = 1;
+    if (this.cursors.right.isDown) {
+      if (!(this.isTouching.ground && this.isTouching.right)) {
+        this.sprite.setVelocityX(this.scene.game.moveVelocity * delta * this.rightMultiply * this.playerMoveForceX());
+      }
+    }
+    else if (this.cursors.left.isDown) {
+      if (!(this.isTouching.ground && this.isTouching.left)) {
+        this.sprite.setVelocityX(-this.scene.game.moveVelocity * delta * this.leftMultiply * this.playerMoveForceX());
+      }
+    }
+    this.movingArm.x = this.sprite.x;
+    this.movingArm.y = this.sprite.y;
+    this.playAnimation(this.fireArm.fireArmActive);
 
-      //DISPARAR
-      if(this.firingPointer != undefined && this.firingPointer.isDown){
-        this.fireCounterHold += delta;
-        if (this.fireCounterHold >= this.weapons[this.weaponCounter].fireRate){
-          this.fireCounterHold = 0;
-          this.fireCounterTap = 0;
-          this.fireArm.fireWeaponProjectile(this.weaponCounter);
-        }
-      }
-      else{
-        if(this.crossCounter > this.fireArm.afterActive && this.fireArm.fireArmActive){
-          this.fireArm.disableFireArm();
-          this.movingArm.setVisible(true);
-        }
-        else
-          this.crossCounter += delta;
-      }
-      this.fireCounterTap += delta;
-      //DISPARAR
+    //código fantasma de juegos en red
+    /*if (this.sprite.y > 640) {
+      this.damaged(new Phaser.Math.Vector2(0, -1), 40);
+    }*/
+    this.leftMultiply = 1;
+    this.rightMultiply = 1;
 
-      //JET
-      if(Phaser.Input.Keyboard.JustDown(this.cursors.up)){
-          if(!this.activatedJet){
-            this.isTakingOf = true;
-            this.sprite.anims.play('propulsion', true);
-            this.movingArm.anims.play('arm_airUp', true);
-            this.fireArm.adjustOffset(-5, -22);
-            this.sprite.once('animationcomplete', function(){
-              this.isTakingOf = false;
-            },this);
-            this.sprite.body.frictionAir = 0.06;
-            this.activatedJet = true;
-            //this.falseVelocityY = -1/this.scene.matter.world.getDelta();
-            this.sprite.setIgnoreGravity(true);
-          }
+    //DISPARAR
+    if(this.firingPointer != undefined && this.firingPointer.isDown){
+      this.fireCounterHold += delta;
+      if (this.fireCounterHold >= this.weapons[this.weaponCounter].fireRate){
+        this.fireCounterHold = 0;
+        this.fireCounterTap = 0;
+        this.fireProjectile();
       }
-      if(this.cursors.up.isDown){
+    }
+    else{
+      if(this.crossCounter > this.fireArm.afterActive && this.fireArm.fireArmActive){
+        this.fireArm.disableFireArm();
+        this.movingArm.setVisible(true);
+      }
+      else
+        this.crossCounter += delta;
+    }
+    this.fireCounterTap += delta;
+    //DISPARAR
+
+    //JET
+    if(Phaser.Input.Keyboard.JustDown(this.cursors.up)){
+        if(!this.activatedJet && this.energy >= this.scene.game.energyCostJetPropulsion){
+          this.isTakingOf = true;
+          this.sprite.anims.play('propulsion', true);
+          this.movingArm.anims.play('arm_airUp', true);
+          this.fireArm.adjustOffset(-5, -22);
+          this.sprite.once('animationcomplete', function(){
+            this.isTakingOf = false;
+          },this);
+          this.sprite.body.frictionAir = 0.06;
+          this.activatedJet = true;
+          //this.falseVelocityY = -1/this.scene.matter.world.getDelta();
+          this.sprite.setIgnoreGravity(true);
+          this.playerUseEnergy(this.scene.game.energyCostJetPropulsion);
+        }
+    }
+    if(this.activatedJet){
+      if(this.cursors.up.isDown && !this.isTakingOf){
         if(this.sprite.body.velocity.y >= this.braceVelocity){
           this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * delta * this.playerMoveForceY());
         }else {
           this.sprite.setVelocityY(-this.scene.game.jetVelocity * delta * this.playerMoveForceY());
         }
       }
-      if(this.cursors.down.isDown && this.activatedJet){
+      if(this.cursors.down.isDown){
         this.sprite.setVelocityY(this.scene.game.jetVelocity * delta * this.playerMoveForceY());
       }
-      //gravedad falsa para el trhust inicial
-      if(this.falseVelocityY < 0){
-        this.sprite.y += (this.falseVelocityY * delta);
-        this.falseVelocityY += (this.falseGravity * delta);
+      if(this.energy > 0){
+        this.playerUseEnergy(this.scene.game.energyCostJetBeginning + this.jetAumulator);
+        this.jetAumulator += (this.scene.game.energyJetIncrease * delta/this.scene.matter.world.getDelta());  //posiblemente cambiar coste con descenso para ofrecer al jugador posibilidades si se equivoca y activa sin querer el jet
+      }else{
+        this.playerUseEnergy(this.energy);
+        this.offJet();
+        this.jetAumulator = 0;
       }
-      else
-        this.falseVelocityY = 0;
-      //JET
+    }else{
+      if(this.energy < this.scene.game.totalPlayerEnergy){
+        if(this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate + 60)
+          this.playerUseEnergy(-this.scene.game.energyRecoveryRate);
+        else
+          this.playerUseEnergy(-this.scene.game.energyRecoveryRate*this.weapons[this.weaponCounter].energyRecoverProportion);
+      }
     }
+    //gravedad falsa para el trhust inicial
+    if(this.falseVelocityY < 0){
+      this.sprite.y += (this.falseVelocityY * delta);
+      this.falseVelocityY += (this.falseGravity * delta);
+    }
+    else
+      this.falseVelocityY = 0;
+    //JET
   }
   playAnimation(isFiring){
     if(this.activatedJet){
@@ -377,17 +383,91 @@ export default class Player {
     }
   }
 
-  damaged(deathVector, deathSpread) {
-    /*if (!this.invulnerable) {
+  playerDamage(num, ignoreInvul = false) {
+    const delayT = 100;
+    if (this.invulTimer.elapsed == delayT || ignoreInvul) {
       //var dieSound = this.scene.sound.add('die', {volume: this.scene.game.soundVolume});  SONIDO MUERTE
       //dieSound.play();
-      this.sprite.visible = false;
-      this.sprite.setVelocityX(0);
-      this.deathSpawn(deathVector, deathSpread);
-      this.sprite.y = 900;
+      this.invulTimer = this.scene.time.addEvent({
+        delay: delayT
+      });
 
-    }*/
+      this.hp -= num;
+      if(this.hp < 0){
+        this.hp = 0;
+        this.playerDeath();
+      }
+      this.hpBar.draw(this.hp);
+    }
   }
+
+  playerDeath(){
+    this.offJet();
+    this.scene.input.off('pointerdown');
+    this.scene.input.off('pointerup');
+    if(this.weaponChange != undefined) {this.weaponChange.destroy();}
+    this.fireArm.destroyFireArm();
+    this.movingArm.destroy();
+    this.sprite.anims.play('death', true);
+
+    console.log("Te has Muerto...");
+  }
+
+  playerUseEnergy(num){
+    this.energy -= num;
+    this.energyBar.draw(this.energy);
+  }
+
+  offJet(){
+    if(this.activatedJet){
+      this.sprite.body.frictionAir = 0.01;
+      this.sprite.setIgnoreGravity(false);
+      this.activatedJet = false;
+    }
+  }
+
+  initializeFire(){
+    //inicializacón de disparo
+    if(!this.fireArm.fireArmActive){
+      this.fireArm.enableFireArm();
+      this.movingArm.setVisible(false);
+    }
+    if (this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate){
+      //cooldown para el tap o al presionar una vez el arma
+      this.fireCounterTap = 0;
+      this.fireProjectile();
+    }
+    //variable que controla la velocidad de disparo del armo si se esta continuamente presionando el ratón
+    this.fireCounterHold = 0;
+    this.crossCounter = 0;
+  }
+  fireProjectile(){
+    if(this.energy >= this.weapons[this.weaponCounter].energyCost){
+      switch(this.weaponCounter){
+        case 0:
+          this.fireArm.fireBullet(this.weapons[this.weaponCounter].projectileSpeed, this.weapons[this.weaponCounter].expireTime);
+        break;
+        case 1:
+          this.fireArm.fireBomb(this.weapons[this.weaponCounter].projectileSpeed,  this.weapons[this.weaponCounter].expireTime);
+        break;
+        default:
+          console.log("no weapon");
+        break;
+      }
+      this.playerUseEnergy(this.weapons[this.weaponCounter].energyCost);
+    }
+    else{
+      this.playerUseEnergy(this.energy);
+      this.offJet();
+    }
+  }
+  changeWeapon(){
+    this.fireCounterHold = 0;
+    this.weaponCounter = (this.weaponCounter+1)%this.weapons.length;
+    this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame)
+    console.log(this.weapons[this.weaponCounter].name);
+  }
+
   respawn() {
     /* POR SI QUEREMOS PARPADEO
     this.sprite.setDepth(1);

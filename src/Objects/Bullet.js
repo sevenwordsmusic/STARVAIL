@@ -58,9 +58,9 @@ export default class Bullet extends Projectile {
       this.expTime = Math.min(1000,(bulletDistance * this.scene.matter.world.getDelta())/speed);
 
       this.timer.reset({
-            delay: this.expTime,
-            callback: () => (this.itemExpire(this))
-          });
+        delay: this.expTime,
+        callback: () => (this.itemExpire(this))
+      });
     },this);
     //mejorar esto si las balas hacen mucho daño
   }

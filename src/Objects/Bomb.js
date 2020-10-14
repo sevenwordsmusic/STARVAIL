@@ -3,8 +3,8 @@ import SuperiorQuery from "../SuperiorQuery.js";
 
 //proyectil que hereda de Projectile
 export default class Bomb extends Projectile {
-  constructor(scene, x, y, dir){
-    super(scene, x, y, 2000);
+  constructor(scene, x, y, speed, dir, expTime){
+    super(scene, x, y, expTime);
     //inicializacion
     this.sprite = scene.matter.add.sprite(x,y,'explodingBomb',0);
 
@@ -17,7 +17,7 @@ export default class Bomb extends Projectile {
     //se calcula la direccion y magnitud del vector de velocidad
     this.pVelocity = new Phaser.Math.Vector2(this.scene.input.activePointer.x + this.scene.cameras.main.scrollX -x, this.scene.input.activePointer.y + this.scene.cameras.main.scrollY-y);
     const fAdjuster = Math.min(1, 0.4 + this.pVelocity.length()/400);
-    this.pVelocity = this.pVelocity.normalize().scale(10 * fAdjuster);
+    this.pVelocity = this.pVelocity.normalize().scale(speed * fAdjuster);
     this.sprite.setVelocity(this.pVelocity.x -(1*dir), this.pVelocity.y - 4);
 
     //animacion de bomba
