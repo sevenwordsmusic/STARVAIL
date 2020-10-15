@@ -385,7 +385,7 @@ export default class Player {
       this.movingArm.setFlipX(this.fireArm.armDir.x < 0);
       this.fireArm.flipOffset((this.fireArm.armDir.x < 0)?-1:1);
     }else{
-      this.scene.game.isFiring=false;
+        this.scene.game.isFiring=false;
       if(this.cursors.right.isDown){
         this.sprite.setFlipX(false);
         this.movingArm.setFlipX(false);

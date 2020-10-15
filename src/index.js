@@ -50,6 +50,7 @@ var config = {
 var game = new Phaser.Game(config);
 
 //Declaramos variables globales del juego.
+game.musicVolume = 0.3;
 game.soundVolume = 0.2;
 game.moveVelocity = 0.215;
 game.jetVelocity = 0.215;
@@ -59,7 +60,7 @@ game.totalPlayerEnergy = 300;
 game.energyRecoveryRate = 0.5;
 game.energyCostJetBeginning = 0.1;
 game.energyJetIncrease = 0.002  //velocidad con la que aumenta el coste del jet
-game.isFiring= false;
+game.energyCostJetPropulsion = 5;
 game.airVelocityFraction = 0.3;   //Creo que no se usa
 
 game.currentBgAnimation = 0;

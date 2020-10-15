@@ -46,7 +46,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
-    this.stinger=false;
+    this.Stinger=false;
     this.bgm0000 =  this.sound.add('bgm0000', {
       volume: 0.0,
       loop: true
@@ -67,10 +67,10 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bgm0001a.play();
     this.bgm0001b.play();
     this.timer = this.time.addEvent({
-        delay: 10000,
+        delay: 2500,
+        callback: musicBar,
         loop: true
-    });
-
+    },this);
     //INIT de AUDIO
 
 
@@ -212,7 +212,6 @@ export default class SceneTest_1 extends Phaser.Scene {
       this.game.currentBgAnimation = this.timeBg.anims.currentFrame.index-1; //se puede cambiar para que solo se iguale cuando la escena termina !!!!!
 
     //AUDIO TESTING
-    /*
 
     var relativeHeight=850;
     var maxVolume=1;
@@ -220,19 +219,19 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bgm0001a.volume=volumeNormalized;
     this.bgm0001b.volume=1-volumeNormalized;
     this.bgm0002.volume=volumeNormalized;
-    if(this.timer.getProgress()<=0.01 && this.stinger){
-      this.stinger=false;
-      this.bgm0000.volume=1.0;
+    if(this.game.isFiring && !this.stinger0000){
+      this.stinger0000=true;
     }
-    if(this.game.isFiring && !this.stinger){
-      this.stinger=true;
-      this.bgm0000.volume=0.0;
-    }*/
-    this.bgm0000.volume=this.timer.getProgress();
-    //console.log("STINGER: " + this.stinger + "PROGRESS: " + this.timer.getProgress() + "GAME: " + this.game.isFiring);
+}
+}
+function musicBar(){console.log(this.stinger0000);
+  if(this.stinger0000){
+    this.stinger0000=false;
+    this.bgm0000.volume=1.0;
   }
 
 }
+
 /*this.cameras.remove(this.cameras.main)
 cam = new CameraTest(0,0);
 cam.setScene(this);
