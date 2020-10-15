@@ -60,7 +60,6 @@ export default class Joystick_test extends Phaser.Scene {
       auxtext += "right  ";
     if(cursorKeys.left.isDown)
       auxtext += "left  ";
-    musicManager();
     console.log(auxtext);
   }
 

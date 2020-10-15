@@ -48,7 +48,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     console.log(this);
 
     //INIT de AUDIO
-    /*
+
     this.bgm0000 =  this.sound.add('bgm0000', {
       volume: 1.0,
       loop: true
@@ -69,7 +69,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bgm0001a.play();
     this.bgm0001b.play();
     this.bgm0002.play();
-    */
+
     //INIT de AUDIO
 
 
@@ -218,14 +218,14 @@ export default class SceneTest_1 extends Phaser.Scene {
       this.game.currentBgAnimation = this.timeBg.anims.currentFrame.index-1; //se puede cambiar para que solo se iguale cuando la escena termina !!!!!
 
     //AUDIO TESTING
-    /*
+
     var relativeHeight=850;
     var maxVolume=1;
     var volumeNormalized=maxVolume-(this.game.player.earlyPos.y*(maxVolume/relativeHeight));
     this.bgm0001a.volume=volumeNormalized;
     this.bgm0001b.volume=1-volumeNormalized;
     this.bgm0002.volume=volumeNormalized;
-    */
+
   }
 
 }

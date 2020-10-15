@@ -3,6 +3,7 @@
 //todas las clases necesarias (incluyendo todas las escenas-modulos)
 import Player from "./PlayerStuff/Player.js";
 import SceneLoading from "./Scenes/SceneLoading.js";
+import Audio from "./Audio.js";
 import SceneTest_1 from "./Scenes/SceneTest_1.js";
 import SceneTest_2 from "./Scenes/SceneTest_2.js";
 import Joystick_test from "./Scenes/Joystick_test.js";
@@ -15,7 +16,7 @@ var config = {
   height: 540,
   parent: 'phaserDOM',
   audio: {
-    disableWebAudio: true
+    disableWebAudio: false
   },
   //Físicas del juego
   physics: {
@@ -27,6 +28,7 @@ var config = {
   },
   //escenas principales
   scene: [
+    Audio,
     SceneLoading,
     SceneTest_1,
     Joystick_test
