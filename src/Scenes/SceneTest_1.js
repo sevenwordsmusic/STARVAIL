@@ -60,12 +60,13 @@ export default class SceneTest_1 extends Phaser.Scene {
       loop: true
     })
       this.bgm0002 =  this.sound.add('bgm0002', {
-      volume: 1.0,
+      volume: 0.0,
       loop: true
     })
     this.bgm0000.play();
     this.bgm0001a.play();
     this.bgm0001b.play();
+    this.bgm0002.play();
     this.timer = this.time.addEvent({
         delay: 1250,
         callback: ()=>musicBar(this),
