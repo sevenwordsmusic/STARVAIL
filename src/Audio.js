@@ -13,12 +13,13 @@ export default class Audio extends Phaser.Scene {
   }
 
   create(){
-    this.game.maxMusicVolume= 0.5;
-    this.game.bgm0000 = this.sound.add('bgm0000', { loop: true, volume: this.game.maxMusicVolume });
-    this.game.bgm0001a = this.sound.add('bgm0001a', { loop: true, volume: this.game.maxMusicVolume });
-    this.game.bgm0001b = this.sound.add('bgm0001b', { loop: true, volume: this.game.maxMusicVolume });
-    this.game.bgm0002 = this.sound.add('bgm0001b', { loop: true, volume: this.game.maxMusicVolume });
-
+    //AUDIO
+    this.game.musicVolume= 0.5;
+    this.game.bgm0000 = this.sound.add('bgm0000', { loop: true, volume: this.game.musicVolume });
+    this.game.bgm0001a = this.sound.add('bgm0001a', { loop: true, volume: this.game.musicVolume });
+    this.game.bgm0001b = this.sound.add('bgm0001b', { loop: true, volume: this.game.musicVolume });
+    this.game.bgm0002 = this.sound.add('bgm0001b', { loop: true, volume: this.game.musicVolume });
+    
     console.log("AUDIO LOADED.")
     this.scene.start("SceneLoading");
   }
