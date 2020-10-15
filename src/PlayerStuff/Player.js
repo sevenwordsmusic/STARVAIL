@@ -59,6 +59,7 @@ export default class Player {
     this.advance32Y = 0;
 
     //vida, energía y sus barras correspondientes
+    this.alive = true;
     this.hp = this.scene.game.totalPlayerHp;
     this.energy = this.scene.game.totalPlayerEnergy;
     this.hpBar = new Bar(this.scene, 50,450, 250, 25, 0x00ff00, 0x999999, 0x000000, this.hp);
@@ -102,8 +103,12 @@ export default class Player {
       }, this);
 
       //DISPARO
-      this.scene.input.on('pointerdown', function(pointer){
-        this.initializeFire();
+      this.scene.input.on('pointerdown', function(pointer, gameObject){
+        if(gameObject[0] != undefined && gameObject[0].playerInteractable === true){
+          console.log("acabas de interactuar con algo interactuable");
+        }else{
+          this.initializeFire();
+        }
       }, this);
       //DISPARO
       //EVENTOS
@@ -121,11 +126,14 @@ export default class Player {
         // enable: true
       });
       this.joyStick.base.setDepth(100);
+      this.joyStick.base.playerInteractable = true;
       this.joyStick.thumb.setDepth(100);
+      this.joyStick.thumb.playerInteractable = true;
       this.cursors = this.joyStick.createCursorKeys();
 
       this.button = this.scene.add.sprite(858, 450, 'weaponsHUD',0).setScale(0.75).setInteractive();
-      this.button.setScrollFactor(0).setDepth(100);;
+      this.button.setScrollFactor(0).setDepth(100);
+      this.button.playerInteractable = true;
 
       this.fireArm = new PlayerFireArmMobile(this.scene, x, y);
       this.firingPointer = undefined;
@@ -137,14 +145,10 @@ export default class Player {
       }, this);
 
       //DISPARO
-      this.scene.input.on('pointerdown', function(pointer){
-        if(Math.pow(pointer.x - this.joyStick.base.x,2) + Math.pow(pointer.y - this.joyStick.base.y,2) - Math.pow(this.joyStick.base.width/2, 2) <= 0){
+      this.scene.input.on('pointerdown', function(pointer, gameObject){
+        if(gameObject[0] != undefined && gameObject[0].playerInteractable === true){
           this.movingPointer = pointer;
-        }
-        else if(Math.pow(pointer.x - this.button.x,2) + Math.pow(pointer.y - this.button.y,2) - Math.pow(this.button.width/2 ,2) <= 0){
-          //boton cambio arma
-        }
-        else{
+        }else{
           this.firingPointer = pointer;
           this.initializeFire();
         }
@@ -232,8 +236,15 @@ export default class Player {
   }
 
   update(time, delta) {
+    if (!this.alive) { return; } //CAMBIAR ESPERA ACTIVA
     this.updateBoundry();
-    if (this.hp <= 0) { return; } //CAMBIAR ESPERA ACTIVA
+
+
+    if(this.sprite.body.velocity.x > -0.01 && this.sprite.body.velocity.x < 0.01)
+      this.sprite.body.velocity.x = 0;
+
+      if(this.sprite.body.velocity.y > -0.01 && this.sprite.body.velocity.y < 0.01)
+        this.sprite.body.velocity.y = 0;
 
     if (this.cursors.right.isDown) {
       if (!(this.isTouching.ground && this.isTouching.right)) {
@@ -294,15 +305,15 @@ export default class Player {
         }
     }
     if(this.activatedJet){
-      if(this.cursors.up.isDown && !this.isTakingOf){
+      if(this.cursors.down.isDown){
+        this.sprite.setVelocityY(this.scene.game.jetVelocity * delta * this.playerMoveForceY());
+      }
+      else if(this.cursors.up.isDown && !this.isTakingOf){
         if(this.sprite.body.velocity.y >= this.braceVelocity){
           this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * delta * this.playerMoveForceY());
         }else {
            this.sprite.setVelocityY(-this.scene.game.jetVelocity * delta * this.playerMoveForceY());
         }
-      }
-      if(this.cursors.down.isDown){
-        this.sprite.setVelocityY(this.scene.game.jetVelocity * delta * this.playerMoveForceY());
       }
       if(this.energy > 0){
         this.playerUseEnergy(this.scene.game.energyCostJetBeginning + this.jetAumulator);
@@ -315,9 +326,9 @@ export default class Player {
     }else{
       if(this.energy < this.scene.game.totalPlayerEnergy){
         if(this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate + 60)
-          this.playerUseEnergy(-this.scene.game.energyRecoveryRate);
+          this.playerGainEnergy(this.scene.game.energyRecoveryRate);
         else
-          this.playerUseEnergy(-this.scene.game.energyRecoveryRate*this.weapons[this.weaponCounter].energyRecoverProportion);
+          this.playerGainEnergy(this.scene.game.energyRecoveryRate*this.weapons[this.weaponCounter].energyRecoverProportion);
       }
     }
     //gravedad falsa para el trhust inicial
@@ -402,6 +413,7 @@ export default class Player {
   }
 
   playerDeath(){
+    this.alive = false;
     this.offJet();
     this.scene.input.off('pointerdown');
     this.scene.input.off('pointerup');
@@ -415,6 +427,10 @@ export default class Player {
 
   playerUseEnergy(num){
     this.energy -= num;
+    this.energyBar.draw(this.energy);
+  }
+  playerGainEnergy(num){
+    this.energy += num;
     this.energyBar.draw(this.energy);
   }
 
@@ -462,6 +478,7 @@ export default class Player {
     }
   }
   changeWeapon(){
+    this.scene.game.anims.resumeAll();
     this.fireCounterHold = 0;
     this.weaponCounter = (this.weaponCounter+1)%this.weapons.length;
     this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame)

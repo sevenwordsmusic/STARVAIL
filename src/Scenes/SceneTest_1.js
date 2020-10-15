@@ -9,7 +9,7 @@ var mouse;
 
 
 //Texto prueba para el dialogo
-var dialogTest
+var dialogTest;
 var content = `[b]D42K-H[/b]
 Así que [i]finalmente[/i] has venido
 
@@ -22,28 +22,34 @@ Si así es, ya sabes lo que tenemos que hacer.`;
 import Player from "../PlayerStuff/Player.js";
 import Dummy from "../Enemies/Dummy.js";
 import Dialog from "../Plugins/Dialog.js"
+import SceneTest_2 from "./SceneTest_2.js"
+import Joystick_test from "./Joystick_test.js"
+import LevelEnd from "../Objects/LevelEnd.js";
 
 //Clase Scene2, que extiende de Phaser.Scene.
 export default class SceneTest_1 extends Phaser.Scene {
-  constructor() {
-    super("test1");
+  static #count = 0;
+  static addNumber(){
+    SceneTest_1.#count = (SceneTest_1.getNumber() + 1)%5 ;
   }
-
-  preload() { 
-
-    this.load.scenePlugin({
-        key: 'rexuiplugin',
-        url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
-        sceneKey: 'rexUI'
-    });
-
-    this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
-}
+  static getNumber(){
+    return SceneTest_1.#count;
+  }
+  constructor() {
+    super('test' + (SceneTest_1.getNumber() + 1));
+    SceneTest_1.addNumber();
+  }
+  preload(){
+    Dialog.preloadToScene(this);
+  }
 
   //Función create, que crea los elementos del propio juego.
   create() {
+    console.log(this);
+
+    //INIT de AUDIO
     /*
-      this.bgm0000 =  this.sound.add('bgm0000', {
+    this.bgm0000 =  this.sound.add('bgm0000', {
       volume: 1.0,
       loop: true
     })
@@ -64,9 +70,19 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bgm0001b.play();
     this.bgm0002.play();
     */
-    console.log(this);
+    //INIT de AUDIO
+
+
     //game.matter.world.pause();
     mouse = this.input.activePointer;
+
+    //Camara.
+    cam = this.cameras.main;
+    cam.setBackgroundColor('rgba(150, 174, 191, 1)');
+    this.matter.world.setBounds(0, -500, 10000, 10000);
+    cam.setBounds(0, -500, 10000, 1435);
+
+    cam.fadeIn(1000);
     //fadeOut = false;
 
     //TESTING DIALOG
@@ -79,34 +95,43 @@ export default class SceneTest_1 extends Phaser.Scene {
     dialogTest.textBox.start(content,10);
 
 
+    //Música. POR SI QUEREMOS MÚSICA
+    /*
+    this.game.currentMusic.stop();
+    this.game.currentMusic = this.sound.add('theme', { loop: true, volume: this.game.musicVolume });
+    this.game.currentMusic.play();
+    */
+
     //Backgrounds.
     //this.add.image(480, 270, 'bg_e').setScrollFactor(0).setDepth(-503);
     //this.add.image(1300, 290, 'bg1_e').setScale(2).setScrollFactor(0.25).setDepth(-502);
     //this.add.image(1100, 320, 'bg2_e').setScale(2).setScrollFactor(0.5).setDepth(-501);
     //this.add.image(1200, 400, 'bg3_e').setScale(2).setScrollFactor(0.75).setDepth(-500);
 
+    this.timeBg = this.add.sprite(480, 100/*270*/, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
+    this.timeBg.once('animationcomplete', function(){
+      this.game.transitionToScene(this, 'Joystick', Joystick_test)
+    },this);
+
     //Inicializacion y creacion de mapa de tiles.
     const map = this.make.tilemap({ key: "map" });
-    const tileset1 = map.addTilesetImage("Cyber_Tiles_1", "tiles1");
-    const tileset2 = map.addTilesetImage("Cyber_Tiles_2", "tiles2");
-    const tileset3 = map.addTilesetImage("Cyber_Tiles_3", "tiles3");
-
+    const tileset1 = map.addTilesetImage("Cyber_Tiles_1", "tiles1", 32, 32, 1, 2);
+    const tileset2 = map.addTilesetImage("Cyber_Tiles_2", "tiles2", 32, 32, 1, 2);
+    const tileset3 = map.addTilesetImage("Cyber_Tiles_3", "tiles3", 32, 32, 1, 2);
     //Capas de tiles.
-    const baselayer = map.createStaticLayer("Base Layer", [tileset1, tileset2, tileset3], 200, 0);
+    const baselayer = map.createDynamicLayer("Base Layer", [tileset1, tileset2, tileset3], 600, 0);
     baselayer.depth = -5;
-    const frontlayer = map.createStaticLayer("Front Layer", [tileset1, tileset2, tileset3], 200, 0);
+    const frontlayer = map.createDynamicLayer("Front Layer", [tileset1, tileset2, tileset3], 600, 0);
     frontlayer.depth = 25;
-    const background1 = map.createStaticLayer("Background 1", [tileset1, tileset2, tileset3], 200, 0);
+    const background1 = map.createDynamicLayer("Background 1", [tileset1, tileset2, tileset3], 600, 0);
     background1.depth = -25;
     //const background2 = map.createStaticLayer("Background 2", [tileset1, tileset2, tileset3], 200, 0);
     //background2.depth = -30;
-
     //Colisiones de las capas.
     //layerminus1.setCollisionByProperty({ Collides: true });
     //this.matter.world.convertTilemapLayer(layerminus1);
     baselayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(baselayer);
-
     //Sistema de cargado dinamico de colliders
     var tileBodyMatrix = [];
     for (var i = 0; i < 240; i++) {
@@ -118,6 +143,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bulletInteracBodies = [];
     var counerAux = 0;
     baselayer.forEachTile(function (tile) {
+      //tile.setSize
       if (tile.physics.matterBody != undefined) {
         const tileBody = tile.physics.matterBody.body;
         if (tileBody.position.x < 2000 /*&& tileBody.position.x > 1856 && tileBody.position.y < 576 && tileBody.position.y > -512*/) {
@@ -130,6 +156,7 @@ export default class SceneTest_1 extends Phaser.Scene {
         this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
         counerAux++;
       }
+      tile.x += 120;
     }, this);
 
     this.tileBodyMatrix = new Proxy(tileBodyMatrix, {
@@ -139,9 +166,13 @@ export default class SceneTest_1 extends Phaser.Scene {
     });
 
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
-    new Player(this, 500, 300);
-    new Dummy(this, 300, 100);
-    new Dummy(this, 700, 100);
+    new Player(this, 900, 700);
+    cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
+    new Dummy(this, 900, 100);
+    new Dummy(this, 800, 100);
+    new Dummy(this, 1000, 100);
+    new LevelEnd(this, 1150, 100, 'star', 'testsec', SceneTest_2);
+
     //var sssd = new HealthBar(this, 400, 400, 300, 20, 0x00ff00, 0x000000, 0xffffff, 100);
     //Colisiones del escneario con el jugador
     /*this.matterCollision.addOnCollideStart({
@@ -176,27 +207,15 @@ export default class SceneTest_1 extends Phaser.Scene {
       });
     }*/
 
-    //Camara.
-    cam = this.cameras.main;
-    cam.setRoundPixels(true);
-    this.matter.world.setBounds(0, -500, 10000, 10000);
-    cam.setBounds(0, -500, 10000, 1435);
-    cam.startFollow(this.game.player.sprite, true, 0.05, 0.05, 0, 0);
-    cam.setBackgroundColor('rgba(150, 174, 191, 1)');
 
     this.input.setDefaultCursor('none');
-
-
-
-
     /*var keyObj = this.input.keyboard.addKey('K');  // Get key object
     keyObj.on('down', function(event) { console.log("k presionada"); });*/
-
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
-    //document.getElementById('mouse').innerHTML = "X: " + Math.round(mouse.x + cam.scrollX) + " | Y: " + Math.round(mouse.y + cam.scrollY);
-  //dialogTest.textBox.destroy();
+    if(this.timeBg.anims.currentFrame != undefined)
+      this.game.currentBgAnimation = this.timeBg.anims.currentFrame.index-1; //se puede cambiar para que solo se iguale cuando la escena termina !!!!!
 
     //AUDIO TESTING
     /*
@@ -210,7 +229,110 @@ export default class SceneTest_1 extends Phaser.Scene {
   }
 
 }
+/*this.cameras.remove(this.cameras.main)
+cam = new CameraTest(0,0);
+cam.setScene(this);
+this.cameras.addExisting(cam);*/
+/*class CameraTest extends Phaser.Cameras.Scene2D.Camera{
+  constructor(x,y){
+    super(x,y,960,540);
+  }
+  preRender(resolution){
+    var width = this.width;
+    var height = this.height;
 
+    var halfWidth = width * 0.5;
+    var halfHeight = height * 0.5;
+
+    var zoom = this.zoom * resolution;
+    var matrix = this.matrix;
+
+    var originX = width * this.originX;
+    var originY = height * this.originY;
+
+    var follow = this._follow;
+    var deadzone = this.deadzone;
+
+    var sx = this.scrollX;
+    var sy = this.scrollY;
+
+    if (deadzone)
+    {
+        CenterOn(deadzone, this.midPoint.x, this.midPoint.y);
+    }
+
+    if (follow && !this.panEffect.isRunning)
+    {
+        var fx = (follow.x - this.followOffset.x);
+        var fy = (follow.y - this.followOffset.y);
+
+        if (deadzone)
+        {
+            if (fx < deadzone.x)
+            {
+                sx = Phaser.Math.Linear(sx, sx - (deadzone.x - fx), this.lerp.x);
+            }
+            else if (fx > deadzone.right)
+            {
+                sx = Phaser.Math.Linear(sx, sx + (fx - deadzone.right), this.lerp.x);
+            }
+
+            if (fy < deadzone.y)
+            {
+                sy = Phaser.Math.Linear(sy, sy - (deadzone.y - fy), this.lerp.y);
+            }
+            else if (fy > deadzone.bottom)
+            {
+                sy = Phaser.Math.Linear(sy, sy + (fy - deadzone.bottom), this.lerp.y);
+            }
+        }
+        else
+        {
+            sx = Phaser.Math.Linear(sx, fx - originX, this.lerp.x);
+            sy = Phaser.Math.Linear(sy, fy - originY, this.lerp.y);
+        }
+    }
+
+    if (this.useBounds)
+    {
+        sx = this.clampX(sx);
+        sy = this.clampY(sy);
+    }
+
+    if (this.roundPixels)
+    {
+        originX = Math.round(originX);
+        originY = Math.round(originY);
+    }
+
+    //  Values are in pixels and not impacted by zooming the Camera
+    this.scrollX = sx;
+    this.scrollY = sy;
+
+    var midX = sx + halfWidth;
+    var midY = sy + halfHeight;
+
+    //  The center of the camera, in world space, so taking zoom into account
+    //  Basically the pixel value of what it's looking at in the middle of the cam
+    this.midPoint.set(midX, midY);
+
+    var displayWidth = width / zoom;
+    var displayHeight = height / zoom;
+
+    this.worldView.setTo(
+        midX - (displayWidth / 2),
+        midY - (displayHeight / 2),
+        displayWidth,
+        displayHeight
+    );
+
+    matrix.applyITRS(this.x + originX, this.y + originY, this.rotation, zoom, zoom);
+    matrix.translate(-originX, -originY);
+
+    this.shakeEffect.preRender();
+  }
+
+}*/
 
 class BodyWrapper {
   constructor(body, active) {
@@ -218,4 +340,3 @@ class BodyWrapper {
     this.active = active;
   }
 }
-

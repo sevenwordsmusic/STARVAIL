@@ -5,7 +5,6 @@ export default class SceneLoading extends Phaser.Scene {
   }
 
   preload(){
-
     //AUDIO
     this.load.audio('bgm0000', 'assets/audio/BGM/0000.wav');
     this.load.audio('bgm0001a', 'assets/audio/BGM/0001a.wav');
@@ -15,7 +14,7 @@ export default class SceneLoading extends Phaser.Scene {
 
     //IMAGES, SPRITES, SPRITESHEETS
     this.load.image('square', 'assets/square.jpg');
-    this.load.image('hexa', 'assets/hexa.png');
+    this.load.image('star', 'assets/star.png');
     this.load.spritesheet('crosshair', 'assets/HUD/crosshair.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('weaponsHUD', 'assets/HUD/weaponsHUD.png', { frameWidth: 268, frameHeight: 252 });
 
@@ -43,6 +42,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('bg1_e', 'assets/Backgrounds/Sky/CloudsFar.png');
     this.load.image('bg2_e', 'assets/Backgrounds/Sky/CloudsMid.png');
     this.load.image('bg3_e', 'assets/Backgrounds/Sky/CloudsClose.png');
+    this.load.spritesheet('animatedBg', 'assets/animatedBgTest.png', { frameWidth: 631, frameHeight: 148 });
 
     this.load.image("tiles1", "../assets/Tilesets/Cyber_Tiles_1.png");
     this.load.image("tiles2", "../assets/Tilesets/Cyber_Tiles_2.png");
@@ -59,23 +59,27 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.plugin('rexdragplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexdragplugin.min.js', true);
     this.load.image('arrow', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow.png');
 
-    //preload del sistema de dialogo
-    this.load.scenePlugin({
-        key: 'rexuiplugin',
-        url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
-        sceneKey: 'rexUI'
-    });
     this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
-    
+
   }
 
   create(){
+    console.log(this);
+
+    //AUDIO
     this.game.musicVolume= 0.5;
     this.game.bgm0000 = this.sound.add('bgm0000', { loop: true, volume: this.game.musicVolume });
     this.game.bgm0001a = this.sound.add('bgm0001a', { loop: true, volume: this.game.musicVolume });
     this.game.bgm0001b = this.sound.add('bgm0001b', { loop: true, volume: this.game.musicVolume });
     this.game.bgm0002 = this.sound.add('bgm0001b', { loop: true, volume: this.game.musicVolume });
-    console.log(this);
+
+    //BG ANIMADO
+    this.anims.create({
+        key: 'bgAnimation',
+        frames: this.anims.generateFrameNumbers('animatedBg', { start: 0, end: 5 }),
+        frameRate: 0.1,
+        repeat: 0
+    });
 
     //ANIMS
     this.anims.create({
@@ -192,5 +196,3 @@ export default class SceneLoading extends Phaser.Scene {
 
   }
 }
-
-

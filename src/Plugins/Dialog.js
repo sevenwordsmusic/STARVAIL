@@ -1,6 +1,12 @@
 export default class Dialog {
-    
-    //Parametros: escena, posicion x, posicion y, booleano que determina si se destruirá el dialogo cuando acaba, 
+    static preloadToScene(scene){
+      scene.load.scenePlugin({
+          key: 'rexuiplugin',
+          url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
+          sceneKey: 'rexUI'
+      });
+    }
+    //Parametros: escena, posicion x, posicion y, booleano que determina si se destruirá el dialogo cuando acaba,
     //tiempo que pasará en milisegundos desde que acaba el dialogo hasta que se destruye si lo anterior es cierto, y configuración
     constructor(scene, x, y, destroyonEnd,timeToDestroy, config) {
         this.scene = scene;
@@ -37,7 +43,7 @@ export default class Dialog {
                 icon: 10,
                 text: 10,
             }
-            
+
         })
             .setOrigin(0)
             .layout();
@@ -79,7 +85,7 @@ export default class Dialog {
                 });
             }, this.textBox)
 
-            
+
 
         //.on('type', function () {
         //})
@@ -98,12 +104,12 @@ export default class Dialog {
         })
           .setFixedSize(fixedWidth, fixedHeight);
       }
-      
+
      getBBcodeText (wrapWidth, fixedWidth, fixedHeight) {
         return this.scene.rexUI.add.BBCodeText(0, 0, '', {
           fixedWidth: fixedWidth,
           fixedHeight: fixedHeight,
-      
+
           fontSize: '20px',
           wrap: {
             mode: 'word',

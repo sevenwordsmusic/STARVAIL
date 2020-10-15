@@ -22,7 +22,7 @@ var config = {
     default: 'matter',
     matter: {
       gravity: { y: 0.98 },
-      debug: false
+      debug: true
     }
   },
   //escenas principales
@@ -54,7 +54,7 @@ game.moveVelocity = 0.215;
 game.jetVelocity = 0.215;
 game.totalPlayerHp = 100;
 game.hpRecoveryRate = 1;
-game.totalPlayerEnergy = 10000;
+game.totalPlayerEnergy = 300;
 game.energyRecoveryRate = 0.5;
 game.energyCostJetBeginning = 0.1;
 game.energyJetIncrease = 0.002  //velocidad con la que aumenta el coste del jet
@@ -62,10 +62,23 @@ game.energyCostJetPropulsion = 5;
 
 game.airVelocityFraction = 0.3;   //Creo que no se usa
 
+game.currentBgAnimation = 0;
+game.transitionToScene = function(scene, keyNext, sceneNext){
+  var SceneCurrentClass = eval(scene.constructor.name);
+  var SceneNextClass = sceneNext;
+  scene.cameras.main.once('camerafadeoutcomplete', function (camera) {
+    console.log(scene.scene.key);
+    scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());
+    scene.game.scene.add('', new SceneNextClass(keyNext + ((SceneNextClass.getNumber()+ 1)%5)), true);
+  }, scene);
+  scene.cameras.main.fadeOut(1000);
+}
 game.bulletInteracBodies = [];
 game.enemyBodies = [];
 
-game.audioBgm = [];
+//COSAS DE AUDIO
+game.audioBgm = []; 
+//COSAS DE AUDIO
 
 function mobileTabletChek() {
   let check = false;
@@ -76,5 +89,3 @@ function mobileTabletChek() {
 };
 game.onPC = !mobileTabletChek();
 console.log("onPC:  " +game.onPC);
-
-
