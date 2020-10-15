@@ -7,7 +7,12 @@ import SceneTest_1 from "./Scenes/SceneTest_1.js";
 import SceneTest_2 from "./Scenes/SceneTest_2.js";
 import Joystick_test from "./Scenes/Joystick_test.js";
 
-import SceneMenuPrinc from "./Scenes/SceneMenuPrincipal.js"
+import SceneMainMenu from "./Scenes/SceneMainMenu.js"
+import SceneCredits from "./Scenes/SceneCredits.js"
+import SceneOptions from "./Scenes/SceneOptionsMM.js"
+import SceneGameEbi from "./Scenes/SceneGameEbi.js"
+import ScenePause from "./Scenes/ScenePause.js"
+import SceneOptionsGame from "./Scenes/SceneOptionsGame.js"
 
 //Configuración de Phaser 3
 var config = {
@@ -30,7 +35,13 @@ var config = {
   //escenas principales
   scene: [
     SceneLoading,
-    SceneMenuPrinc,
+    SceneMainMenu,
+    SceneCredits,
+    SceneOptions,
+    SceneGameEbi,
+    ScenePause,
+    SceneOptionsGame,
+
     SceneTest_1,
   ],
   plugins: {
