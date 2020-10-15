@@ -1,5 +1,5 @@
-import Bomb from "../Objects/Bomb.js";
-import Bullet from "../Objects/Bullet.js";
+import Bomb from "../Objects/Projectiles/Bomb.js";
+import Bullet from "../Objects/Projectiles/Bullet.js";
 import SuperiorQuery from "../SuperiorQuery.js";
 
 export default class PlayerFireArm {

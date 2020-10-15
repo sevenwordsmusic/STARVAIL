@@ -37,10 +37,11 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('bg3_e', 'assets/Backgrounds/Sky/CloudsClose.png');
     this.load.spritesheet('animatedBg', 'assets/animatedBgTest.png', { frameWidth: 631, frameHeight: 148 });
 
-    this.load.image("tiles1", "../assets/Tilesets/Cyber_Tiles_1.png");
-    this.load.image("tiles2", "../assets/Tilesets/Cyber_Tiles_2.png");
-    this.load.image("tiles3", "../assets/Tilesets/Cyber_Tiles_3.png");
-    this.load.tilemapTiledJSON("map", "../assets/Mapas/Testing_Grounds.json");
+    //this.load.image("tiles1", "assets/Tilesets/Cyber_Tiles_1.png");
+    this.load.image("tiles1", "assets/Tilesets/Cyber_Tiles_1a.png");
+    this.load.image("tiles2", "assets/Tilesets/Cyber_Tiles_2a.png");
+    this.load.image("tiles3", "assets/Tilesets/Cyber_Tiles_3a.png");
+    this.load.tilemapTiledJSON("map2", "assets/Mapas/Testing_Grounds_2.json");
 
 
     this.load.image('bullet', 'assets/Sprites/Bullet/bullet.png');

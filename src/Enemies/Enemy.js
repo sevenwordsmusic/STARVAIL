@@ -1,6 +1,4 @@
 //Clase padre de todos los enemigos
-
-import DropableEnergy from "../Objects/DropableEnergy.js"
 export default class Enemy {
   constructor(scene, x, y, sprtImg, hp){
     //inicializacion
@@ -8,6 +6,7 @@ export default class Enemy {
     this.sprite = scene.matter.add.sprite(x,y,sprtImg,0);
     this.sprite.parent = this;
     this.hp = hp;
+    this.airEnemy; //true si es aereo,  false si es terrestre
 
     this.sprite.body.collisionFilter.group = -1;
 
@@ -46,7 +45,5 @@ export default class Enemy {
     this.sprite.destroy();
     //se emite un evento avisando a las balas que tienen a este enemigo como "target" para que cambien a un target nuevo
     this.scene.events.emit('noEnemy' + this.currentBodyIndex);
-
-    new DropableEnergy(this.scene, xAux, yAux, 23);
   }
 }

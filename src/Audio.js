@@ -3,6 +3,15 @@ export default class Audio extends Phaser.Scene {
     super("Audio");
   }
 
+  static musicBar(scene){
+    if(scene.stinger0000){
+      scene.stinger0000=false;
+      scene.bgm0000.volume=1.0;
+    }else{
+      scene.bgm0000.volume=0.0;
+    }
+  }
+
   preload(){
     //LOAD AUDIO
     this.load.audio('bgm0000', 'assets/audio/BGM/0000.wav');
@@ -19,7 +28,7 @@ export default class Audio extends Phaser.Scene {
     this.game.bgm0001a = this.sound.add('bgm0001a', { loop: true, volume: this.game.musicVolume });
     this.game.bgm0001b = this.sound.add('bgm0001b', { loop: true, volume: this.game.musicVolume });
     this.game.bgm0002 = this.sound.add('bgm0001b', { loop: true, volume: this.game.musicVolume });
-    
+
     console.log("AUDIO LOADED.")
     this.scene.start("SceneLoading");
   }

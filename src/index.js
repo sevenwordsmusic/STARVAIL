@@ -28,7 +28,7 @@ var config = {
   },
   //escenas principales
   scene: [
-    Audio,
+    //Audio,
     SceneLoading,
     SceneTest_1,
     Joystick_test
@@ -78,7 +78,7 @@ game.bulletInteracBodies = [];
 game.enemyBodies = [];
 
 //COSAS DE AUDIO
-game.audioBgm = []; 
+game.audioBgm = [];
 //COSAS DE AUDIO
 
 function mobileTabletChek() {

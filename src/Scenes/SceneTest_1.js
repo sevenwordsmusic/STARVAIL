@@ -25,6 +25,7 @@ import Dialog from "../Plugins/Dialog.js"
 import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
 import LevelEnd from "../Objects/LevelEnd.js";
+import Audio from "../Audio.js";
 
 //Clase Scene2, que extiende de Phaser.Scene.
 export default class SceneTest_1 extends Phaser.Scene {
@@ -69,7 +70,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bgm0002.play();
     this.timer = this.time.addEvent({
         delay: 1250,
-        callback: ()=>musicBar(this),
+        callback: ()=>Audio.musicBar(this),
         loop: true
     });
     //INIT de AUDIO
@@ -105,21 +106,24 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     this.timeBg = this.add.sprite(480, 100/*270*/, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
     this.timeBg.once('animationcomplete', function(){
+      if(this.timeBg.anims.currentFrame != undefined)
+        this.game.currentBgAnimation = this.timeBg.anims.currentFrame.index-1;
       this.game.transitionToScene(this, 'Joystick', Joystick_test)
     },this);
 
     //Inicializacion y creacion de mapa de tiles.
-    const map = this.make.tilemap({ key: "map" });
-    const tileset1 = map.addTilesetImage("Cyber_Tiles_1", "tiles1", 32, 32, 1, 2);
+    const map = this.make.tilemap({ key: "map2" });
+    /*const tileset1 = map.addTilesetImage("Cyber_Tiles_1", "tiles1", 32, 32, 1, 2);
     const tileset2 = map.addTilesetImage("Cyber_Tiles_2", "tiles2", 32, 32, 1, 2);
-    const tileset3 = map.addTilesetImage("Cyber_Tiles_3", "tiles3", 32, 32, 1, 2);
+    const tileset3 = map.addTilesetImage("Cyber_Tiles_3", "tiles3", 32, 32, 1, 2);*/
+    const tilessetTest = map.addTilesetImage("1. main platforms", "tiles1", 32, 32, 0, 0);
     //Capas de tiles.
-    const baselayer = map.createDynamicLayer("Base Layer", [tileset1, tileset2, tileset3], 600, 0);
+    const baselayer = map.createDynamicLayer("Base Layer", tilessetTest, 600, 0);
     baselayer.depth = -5;
-    const frontlayer = map.createDynamicLayer("Front Layer", [tileset1, tileset2, tileset3], 600, 0);
-    frontlayer.depth = 25;
-    const background1 = map.createDynamicLayer("Background 1", [tileset1, tileset2, tileset3], 600, 0);
-    background1.depth = -25;
+    //const frontlayer = map.createDynamicLayer("Front Layer", [tileset1, tileset2, tileset3], 600, 0);
+    //frontlayer.depth = 25;
+    //const background1 = map.createDynamicLayer("Background 1", [tileset1, tileset2, tileset3], 600, 0);
+    //background1.depth = -25;
     //const background2 = map.createStaticLayer("Background 2", [tileset1, tileset2, tileset3], 200, 0);
     //background2.depth = -30;
     //Colisiones de las capas.
@@ -209,8 +213,6 @@ export default class SceneTest_1 extends Phaser.Scene {
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
-    if(this.timeBg.anims.currentFrame != undefined)
-      this.game.currentBgAnimation = this.timeBg.anims.currentFrame.index-1; //se puede cambiar para que solo se iguale cuando la escena termina !!!!!
 
     //AUDIO TESTING
 
@@ -224,14 +226,6 @@ export default class SceneTest_1 extends Phaser.Scene {
       this.stinger0000=true;
     }
 }
-}
-function musicBar(scene){
-  if(scene.stinger0000){
-    scene.stinger0000=false;
-    scene.bgm0000.volume=1.0;
-  }else{
-    scene.bgm0000.volume=0.0;
-  }
 }
 
 /*this.cameras.remove(this.cameras.main)
