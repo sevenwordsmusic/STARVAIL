@@ -42,6 +42,7 @@ export default class SceneTest_1 extends Phaser.Scene {
 
   //Función create, que crea los elementos del propio juego.
   create() {
+    /*
       this.bgm0000 =  this.sound.add('bgm0000', {
       volume: 1.0,
       loop: true
@@ -62,7 +63,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bgm0001a.play();
     this.bgm0001b.play();
     this.bgm0002.play();
-    
+    */
     console.log(this);
     //game.matter.world.pause();
     mouse = this.input.activePointer;
@@ -198,12 +199,14 @@ export default class SceneTest_1 extends Phaser.Scene {
   //dialogTest.textBox.destroy();
 
     //AUDIO TESTING
+    /*
     var relativeHeight=850;
     var maxVolume=1;
     var volumeNormalized=maxVolume-(this.game.player.earlyPos.y*(maxVolume/relativeHeight));
     this.bgm0001a.volume=volumeNormalized;
     this.bgm0001b.volume=1-volumeNormalized;
     this.bgm0002.volume=volumeNormalized;
+    */
   }
 
 }
