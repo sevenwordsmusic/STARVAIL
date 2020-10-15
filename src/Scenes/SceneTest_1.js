@@ -46,7 +46,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
-    this.Stinger=false;
+    this.stinger0000=false;
     this.bgm0000 =  this.sound.add('bgm0000', {
       volume: 0.0,
       loop: true
@@ -67,10 +67,10 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bgm0001a.play();
     this.bgm0001b.play();
     this.timer = this.time.addEvent({
-        delay: 2500,
-        callback: musicBar,
+        delay: 1250,
+        callback: ()=>musicBar(this),
         loop: true
-    },this);
+    });
     //INIT de AUDIO
 
 
@@ -224,14 +224,17 @@ export default class SceneTest_1 extends Phaser.Scene {
     }
 }
 }
-function musicBar(){console.log(this.stinger0000);
-  if(this.stinger0000){
-    this.stinger0000=false;
-    this.bgm0000.volume=1.0;
+function musicOneBar(scene){
+  if(scene.stinger0000){
+    scene.stinger0000=false;
+    scene.bgm0000.volume=1.0;
+  }else{
+    scene.bgm0000.volume=0.0;
   }
+}
+function musicTwoBar(scene){
 
 }
-
 /*this.cameras.remove(this.cameras.main)
 cam = new CameraTest(0,0);
 cam.setScene(this);
