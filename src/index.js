@@ -28,7 +28,7 @@ var config = {
   },
   //escenas principales
   scene: [
-    //Audio,
+    Audio,
     SceneLoading,
     SceneTest_1,
     Joystick_test
