@@ -48,7 +48,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     console.log(this);
     this.stinger=false;
     this.bgm0000 =  this.sound.add('bgm0000', {
-      volume: 1.0,
+      volume: 0.0,
       loop: true
     })
       this.bgm0001a =  this.sound.add('bgm0001a', {
@@ -67,7 +67,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bgm0001a.play();
     this.bgm0001b.play();
     this.timer = this.time.addEvent({
-        delay: 1,
+        delay: 10000,
         loop: true
     });
 
@@ -212,6 +212,7 @@ export default class SceneTest_1 extends Phaser.Scene {
       this.game.currentBgAnimation = this.timeBg.anims.currentFrame.index-1; //se puede cambiar para que solo se iguale cuando la escena termina !!!!!
 
     //AUDIO TESTING
+    /*
 
     var relativeHeight=850;
     var maxVolume=1;
@@ -219,14 +220,16 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bgm0001a.volume=volumeNormalized;
     this.bgm0001b.volume=1-volumeNormalized;
     this.bgm0002.volume=volumeNormalized;
-    if(this.timer.getProgress()<=0.0005 && this.stinger){
-      console.log("A");
+    if(this.timer.getProgress()<=0.01 && this.stinger){
       this.stinger=false;
+      this.bgm0000.volume=1.0;
     }
-    if(this.game.player.isFiring && !this.stinger){
+    if(this.game.isFiring && !this.stinger){
       this.stinger=true;
-    }
-    console.log(this.game.player.isFiring);
+      this.bgm0000.volume=0.0;
+    }*/
+    this.bgm0000.volume=this.timer.getProgress();
+    //console.log("STINGER: " + this.stinger + "PROGRESS: " + this.timer.getProgress() + "GAME: " + this.game.isFiring);
   }
 
 }
