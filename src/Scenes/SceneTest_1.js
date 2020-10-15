@@ -30,6 +30,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   }
 
   preload() { 
+
     this.load.scenePlugin({
         key: 'rexuiplugin',
         url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
@@ -41,6 +42,27 @@ export default class SceneTest_1 extends Phaser.Scene {
 
   //Función create, que crea los elementos del propio juego.
   create() {
+      this.bgm0000 =  this.sound.add('bgm0000', {
+      volume: 1.0,
+      loop: true
+    })
+      this.bgm0001a =  this.sound.add('bgm0001a', {
+      volume: 1.0,
+      loop: true
+    })
+      this.bgm0001b =  this.sound.add('bgm0001b', {
+      volume: 1.0,
+      loop: true
+    })
+      this.bgm0002 =  this.sound.add('bgm0002', {
+      volume: 1.0,
+      loop: true
+    })
+    this.bgm0000.play();
+    this.bgm0001a.play();
+    this.bgm0001b.play();
+    this.bgm0002.play();
+    
     console.log(this);
     //game.matter.world.pause();
     mouse = this.input.activePointer;
@@ -55,13 +77,6 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     dialogTest.textBox.start(content,10);
 
-
-    //Música. POR SI QUEREMOS MÚSICA
-    /*
-    this.game.currentMusic.stop();
-    this.game.currentMusic = this.sound.add('theme', { loop: true, volume: this.game.musicVolume });
-    this.game.currentMusic.play();
-    */
 
     //Backgrounds.
     //this.add.image(480, 270, 'bg_e').setScrollFactor(0).setDepth(-503);
@@ -180,10 +195,17 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
     //document.getElementById('mouse').innerHTML = "X: " + Math.round(mouse.x + cam.scrollX) + " | Y: " + Math.round(mouse.y + cam.scrollY);
-  
   //dialogTest.textBox.destroy();
-  
+
+    //AUDIO TESTING
+    var relativeHeight=850;
+    var maxVolume=1;
+    var volumeNormalized=maxVolume-(this.game.player.earlyPos.y*(maxVolume/relativeHeight));
+    this.bgm0001a.volume=volumeNormalized;
+    this.bgm0001b.volume=1-volumeNormalized;
+    this.bgm0002.volume=volumeNormalized;
   }
+
 }
 
 
@@ -193,3 +215,4 @@ class BodyWrapper {
     this.active = active;
   }
 }
+

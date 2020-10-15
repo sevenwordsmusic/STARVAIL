@@ -65,6 +65,8 @@ game.airVelocityFraction = 0.3;   //Creo que no se usa
 game.bulletInteracBodies = [];
 game.enemyBodies = [];
 
+game.audioBgm = [];
+
 function mobileTabletChek() {
   let check = false;
   var a = navigator.userAgent;
@@ -74,3 +76,5 @@ function mobileTabletChek() {
 };
 game.onPC = !mobileTabletChek();
 console.log("onPC:  " +game.onPC);
+
+

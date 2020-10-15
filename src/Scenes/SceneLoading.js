@@ -6,6 +6,13 @@ export default class SceneLoading extends Phaser.Scene {
 
   preload(){
 
+    //AUDIO
+    this.load.audio('bgm0000', 'assets/audio/BGM/0000.wav');
+    this.load.audio('bgm0001a', 'assets/audio/BGM/0001a.wav');
+    this.load.audio('bgm0001b', 'assets/audio/BGM/0001b.wav');
+    this.load.audio('bgm0002', 'assets/audio/BGM/0002.wav');
+
+
     //IMAGES, SPRITES, SPRITESHEETS
     this.load.image('square', 'assets/square.jpg');
     this.load.image('hexa', 'assets/hexa.png');
@@ -63,6 +70,11 @@ export default class SceneLoading extends Phaser.Scene {
   }
 
   create(){
+    this.game.musicVolume= 0.5;
+    this.game.bgm0000 = this.sound.add('bgm0000', { loop: true, volume: this.game.musicVolume });
+    this.game.bgm0001a = this.sound.add('bgm0001a', { loop: true, volume: this.game.musicVolume });
+    this.game.bgm0001b = this.sound.add('bgm0001b', { loop: true, volume: this.game.musicVolume });
+    this.game.bgm0002 = this.sound.add('bgm0001b', { loop: true, volume: this.game.musicVolume });
     console.log(this);
 
     //ANIMS
@@ -180,3 +192,5 @@ export default class SceneLoading extends Phaser.Scene {
 
   }
 }
+
+
