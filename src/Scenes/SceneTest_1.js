@@ -224,7 +224,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     }
 }
 }
-function musicOneBar(scene){
+function musicBar(scene){
   if(scene.stinger0000){
     scene.stinger0000=false;
     scene.bgm0000.volume=1.0;
@@ -232,9 +232,7 @@ function musicOneBar(scene){
     scene.bgm0000.volume=0.0;
   }
 }
-function musicTwoBar(scene){
 
-}
 /*this.cameras.remove(this.cameras.main)
 cam = new CameraTest(0,0);
 cam.setScene(this);
