@@ -26,7 +26,8 @@ export default class Audio extends Phaser.Scene {
             if(scene.bgmIfWeapon[i].volume>0.0){
                 scene.tweens.add({
                     targets:  scene.bgmIfWeapon[i],
-                    volume:   18,
+                    volume:   0.0,
+                    duration:   18,
                 });
             }
         }
