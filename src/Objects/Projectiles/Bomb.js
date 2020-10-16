@@ -38,7 +38,7 @@ export default class Bomb extends Projectile {
       this.touchDelay++;
       this.scene.impact_01.play();
       this.scene.impact_01.setRate(0.85+(Math.random() * 0.3));
-    }else if(this.touchDown==true){
+    }else if(this.touchDown==true && this.touchDelay== 3){
       this.touchDown=false;
       this.touchDelay=0;
     }
@@ -61,6 +61,11 @@ export default class Bomb extends Projectile {
       bombExprosion.anims.play('exprosion', true);
 
       //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
+      var distance= (920-this.distanceToPlayer())/920;
+      if(distance<0.0){
+        distance=0.0;
+      }
+      this.scene.explosion_01.volume=distance;
       this.scene.explosion_01.play();
       super.itemExpire(proj);
   }

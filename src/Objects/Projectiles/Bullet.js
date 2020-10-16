@@ -40,6 +40,11 @@ export default class Bullet extends Projectile {
     bombExprosion.anims.play('exprosion', true);
 
     //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
+    var distance= (920-this.distanceToPlayer())/920;
+    if(distance<0.0){
+        distance=0.0;
+    }
+    this.scene.impact_00.volume=distance;
     this.scene.impact_00.play();
     this.scene.impact_00.setRate(0.9+(Math.random() * 0.2));
     super.itemExpire(proj);
