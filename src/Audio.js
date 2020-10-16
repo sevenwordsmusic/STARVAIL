@@ -16,7 +16,7 @@ export default class Audio extends Phaser.Scene {
     var relativeHeight=920;
     var maxVolume=1;
     var volumeNormalized=maxVolume-(scene.game.player.earlyPos.y*(maxVolume/relativeHeight));
-    if(volumeNormalized<=1.0 && volumeNormalized >=0.0){
+    if(volumeNormalized<=1.0 || volumeNormalized >=0.0){
         scene.loopFliying.volume=volumeNormalized; 
     }
   }
@@ -30,13 +30,13 @@ static musicLayerShot(scene){
                 scene.tweens.add({
                     targets:  scene.bgmIfWeapon[i],
                     volume:   1.0,
-                    duration: 18,
+                    duration: 18.028846,
                 });
             }else{
                 scene.tweens.add({
                     targets:  scene.bgmIfWeapon[i],
                     volume:   0.0,
-                    duration: 18,
+                    duration: 18.028846,
                 });  
             }
         }
@@ -121,6 +121,7 @@ static musicLayerJet(scene){
     this.load.audio('shot_01', 'assets/audio/SFX/shot_01.mp3');
 
     this.load.audio('impact_00', 'assets/audio/SFX/impact_00.mp3');
+    this.load.audio('impact_01', 'assets/audio/SFX/impact_01.mp3');   
   }
 
   create(){

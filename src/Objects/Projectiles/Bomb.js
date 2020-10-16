@@ -27,11 +27,18 @@ export default class Bomb extends Projectile {
       callback: this.onSensorCollide,
       context: this
     });
+    //AUDIO
+    this.touchDown=false;
     
   }
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
     //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
+    if(!this.touchDown){
+      this.touchDown=true;
+      this.scene.impact_01.play();
+      this.scene.impact_01.setRate(0.85+(Math.random() * 0.3));
+    }
   }
 
   itemExpire(proj){

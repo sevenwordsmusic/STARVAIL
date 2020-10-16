@@ -53,6 +53,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.shot_00= this.sound.add('shot_00');
     this.shot_01= this.sound.add('shot_01');
     this.impact_00= this.sound.add('impact_00');
+    this.impact_01= this.sound.add('impact_01');
     this.stingerShot=false;
     this.stingerJet=false;
     this.stingerMovement=false;
