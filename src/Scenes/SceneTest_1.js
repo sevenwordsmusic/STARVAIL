@@ -49,18 +49,27 @@ export default class SceneTest_1 extends Phaser.Scene {
     console.log(this);
     this.stinger0000=false;
     this.bgm0000 =  this.sound.add('bgm0000', {
+      volume: 1.0,
+      loop: true
+    })
+    this.bgm0001a =  this.sound.add('bgm0001a', {
+      volume: 1.0,
+      loop: true
+    })
+    this.bgm0001b =  this.sound.add('bgm0001b', {
+      volume: 1.0,
+      loop: true
+    })
+    this.bgm0002 =  this.sound.add('bgm0002', {
       volume: 0.0,
       loop: true
     })
-      this.bgm0001a =  this.sound.add('bgm0001a', {
-      volume: 1.0,
+    this.bgmIfWeapon=[];
+    this.bgmIfWeapon[0] =  this.sound.add('bgmIfWeapon0', {
+      volume: 0.0,
       loop: true
     })
-      this.bgm0001b =  this.sound.add('bgm0001b', {
-      volume: 1.0,
-      loop: true
-    })
-      this.bgm0002 =  this.sound.add('bgm0002', {
+    this.bgmIfWeapon[1] =  this.sound.add('bgmIfWeapon1', {
       volume: 0.0,
       loop: true
     })
@@ -68,8 +77,10 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bgm0001a.play();
     this.bgm0001b.play();
     this.bgm0002.play();
+    this.bgmIfWeapon[0].play();
+    this.bgmIfWeapon[1].play(); 
     this.timer = this.time.addEvent({
-        delay: 1250,
+        delay: 2500,
         callback: ()=>Audio.musicBar(this),
         loop: true
     });
@@ -85,7 +96,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.matter.world.setBounds(0, -500, 10000, 10000);
     cam.setBounds(0, -500, 10000, 1435);
 
-    cam.fadeIn(1000);
+    cam.fadeIn(1250);
     //fadeOut = false;
 
     //TESTING DIALOG
@@ -214,17 +225,8 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
 
-    //AUDIO TESTING
-
-    var relativeHeight=850;
-    var maxVolume=1;
-    var volumeNormalized=maxVolume-(this.game.player.earlyPos.y*(maxVolume/relativeHeight));
-    this.bgm0001a.volume=volumeNormalized;
-    this.bgm0001b.volume=1-volumeNormalized;
-    this.bgm0002.volume=volumeNormalized;
-    if(this.game.isFiring && !this.stinger0000){
-      this.stinger0000=true;
-    }
+  //AUDIO:
+  Audio.musicLayerHeight(this);
 }
 }
 

@@ -6,9 +6,29 @@ export default class Audio extends Phaser.Scene {
   static musicBar(scene){
     if(scene.stinger0000){
       scene.stinger0000=false;
-      scene.bgm0000.volume=1.0;
+      for(var i=0; i<scene.bgmIfWeapon.length ; i++){
+        if(scene.game.player.weaponCounter==i){
+            scene.bgmIfWeapon[scene.game.player.weaponCounter].volume=1.0;
+        }else{
+            scene.bgmIfWeapon[i].volume=0.0;
+        }
+      }
     }else{
-      scene.bgm0000.volume=0.0;
+      for(var i=0; i<scene.bgmIfWeapon.length ; i++){
+        scene.bgmIfWeapon[i].volume=0.0;
+      }
+    }
+  }
+
+  static musicLayerHeight(scene){
+    var relativeHeight=960;
+    var maxVolume=1;
+    var volumeNormalized=maxVolume-(scene.game.player.earlyPos.y*(maxVolume/relativeHeight));
+    scene.bgm0001a.volume=volumeNormalized;
+    scene.bgm0001b.volume=1-volumeNormalized;
+    scene.bgm0002.volume=volumeNormalized;
+    if(scene.game.isFiring && !scene.stinger0000){
+      scene.stinger0000=true;
     }
   }
 
@@ -18,17 +38,11 @@ export default class Audio extends Phaser.Scene {
     this.load.audio('bgm0001a', 'assets/audio/BGM/0001a.wav');
     this.load.audio('bgm0001b', 'assets/audio/BGM/0001b.wav');
     this.load.audio('bgm0002', 'assets/audio/BGM/0002.wav');
-
+    this.load.audio('bgmIfWeapon0', 'assets/audio/BGM/ifWeapon0.wav');
+    this.load.audio('bgmIfWeapon1', 'assets/audio/BGM/ifWeapon1.wav');
   }
 
   create(){
-    //AUDIO
-    this.game.musicVolume= 0.5;
-    this.game.bgm0000 = this.sound.add('bgm0000', { loop: true, volume: this.game.musicVolume });
-    this.game.bgm0001a = this.sound.add('bgm0001a', { loop: true, volume: this.game.musicVolume });
-    this.game.bgm0001b = this.sound.add('bgm0001b', { loop: true, volume: this.game.musicVolume });
-    this.game.bgm0002 = this.sound.add('bgm0001b', { loop: true, volume: this.game.musicVolume });
-
     console.log("AUDIO LOADED.")
     this.scene.start("SceneLoading");
   }

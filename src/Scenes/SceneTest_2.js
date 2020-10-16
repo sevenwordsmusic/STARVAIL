@@ -53,7 +53,7 @@ export default class SceneTest_2 extends Phaser.Scene {
     this.matter.world.setBounds(0, -500, 10000, 10000);
     cam.setBounds(0, -500, 10000, 1435);
 
-    cam.fadeIn(1000);
+    cam.fadeIn(1250);
     //fadeOut = false;
 
     /*//TESTING DIALOG
