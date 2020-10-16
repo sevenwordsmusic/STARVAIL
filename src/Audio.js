@@ -1,9 +1,9 @@
 export default class Audio extends Phaser.Scene {
   constructor() {
     super("Audio");
-    this.earlyPos=0.0;
   }
   static counter=-1;
+  static earlyPos=0.0;
   static musicBar(scene){
     this.counter++;
     console.log("AUDIO BAR: " + this.counter);
@@ -76,19 +76,19 @@ static musicLayerJet(scene){
   static musicLayerMovement(scene){
     if(scene.stingerMovement){
         console.log("AUDIO MOVEMENT LAYER: ON.");
-        scene.stingerMovement=false;/*
+        scene.stingerMovement=false;
                 scene.tweens.add({
                     targets:  scene.loopMovement,
                     volume:   1.0,
-                    duration: 1153.8461525,
-                }); */
+                    duration: 9.0,
+                });
     }else{
-        console.log("AUDIO MOVEMENT LAYER: OFF.");/*
+        console.log("AUDIO MOVEMENT LAYER: OFF.");
                 scene.tweens.add({
                     targets:  scene.loopMovement,
                     volume:   0.0,
-                    duration: 9230.76922,
-                }); */
+                    duration: 9.0,
+                });
     }
   }
 
@@ -100,9 +100,11 @@ static musicLayerJet(scene){
     if( scene.game.player.isTouching.ground && !scene.stingerJet){
       scene.stingerJet=true;
     }
-    if( scene.game.player.earlyPos.x != this.earlyPos){
-        this.earlyPos=scene.game.player.earlyPos.x;
+    if( Math.floor(scene.game.player.earlyPos.x) != Math.floor(this.earlyPos)){
+        this.earlyPos=Math.floor(scene.game.player.earlyPos.x);
         scene.stingerMovement=true;
+    }else{
+
     }
   }
 

@@ -49,6 +49,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
+    //INIT de AUDIO
     this.shot_00= this.sound.add('shot_00');
     this.shot_01= this.sound.add('shot_01');
     this.impact_00= this.sound.add('impact_00');
@@ -67,7 +68,7 @@ export default class SceneTest_1 extends Phaser.Scene {
       volume: 0.0,
       loop: true
     })
-    this.loopMoving =  this.sound.add('loop0000moving', {
+    this.loopMovement =  this.sound.add('loop0000moving', {
       volume: 0.0,
       loop: true
     })
@@ -83,7 +84,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.loopBase.play();
     this.loopFliying.play();
     this.loopLevitating.play();
-    //this.loopMoving.play();
+    this.loopMovement.play();
     this.bgmIfWeapon[0].play();
     this.bgmIfWeapon[1].play(); 
     this.timer = this.time.addEvent({
