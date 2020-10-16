@@ -2,32 +2,36 @@ export default class Audio extends Phaser.Scene {
   constructor() {
     super("Audio");
   }
-
+  static counter=-1;
   static musicBar(scene){
+    this.counter++;
+    console.log("AUDIO BAR: " + this.counter);
     if(scene.stingerShot){
+        console.log("AUDIO FIRING LAYER: " + scene.game.player.weaponCounter + " ON.");
       scene.stingerShot=false;
         for(var i=0; i<scene.game.player.weapons.length; i++){
             if(scene.game.player.weaponCounter==i){
                 scene.tweens.add({
                     targets:  scene.bgmIfWeapon[i],
                     volume:   1.0,
-                    duration: 2.307692305,
+                    duration: 18,
                 });
             }else{
                 scene.tweens.add({
                     targets:  scene.bgmIfWeapon[i],
                     volume:   0.0,
-                    duration: 1.1538461525,
+                    duration: 18,
                 });  
             }
         }
     }else{
+        console.log("AUDIO FIRING LAYER: " + scene.game.player.weaponCounter + " OFF.");
         for(var i=0; i<scene.game.player.weapons.length; i++){
             if(scene.bgmIfWeapon[i].volume>0.0){
                 scene.tweens.add({
                     targets:  scene.bgmIfWeapon[i],
                     volume:   0.0,
-                    duration: 1.1538461525,
+                    duration: 4615.38461,
                 });
             }
         }
