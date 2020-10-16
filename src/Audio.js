@@ -54,10 +54,16 @@ export default class Audio extends Phaser.Scene {
     this.load.audio('bgm0002', 'assets/audio/BGM/0002.wav');
     this.load.audio('bgmIfWeapon0', 'assets/audio/BGM/ifWeapon0.wav');
     this.load.audio('bgmIfWeapon1', 'assets/audio/BGM/ifWeapon1.wav');
+
+    this.load.audio('shot_00', 'assets/audio/SFX/shot_00.mp3');
+    this.load.audio('shot_01', 'assets/audio/SFX/shot_01.mp3');
+
+    this.load.audio('impact_00', 'assets/audio/SFX/impact_00.mp3');
   }
 
   create(){
     console.log("AUDIO LOADED.")
     this.scene.start("SceneLoading");
   }
+
 }

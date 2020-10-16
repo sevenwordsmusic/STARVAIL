@@ -39,7 +39,7 @@ export default class Bullet extends Projectile {
     bombExprosion.anims.play('exprosion', true);
 
     //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
-
+    this.scene.impact_00.play();
     super.itemExpire(proj);
   }
 

@@ -49,6 +49,9 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
+    this.shot_00= this.sound.add('shot_00');
+    this.shot_01= this.sound.add('shot_01');
+    this.impact_00= this.sound.add('impact_00');
     this.stinger0000=false;
     this.bgm0000 =  this.sound.add('bgm0000', {
       volume: 1.0,

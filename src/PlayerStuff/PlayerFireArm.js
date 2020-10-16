@@ -24,6 +24,9 @@ export default class PlayerFireArm {
 
   //cambiar speed a array de weapons
   fireBullet(bulletSpeed, bulletExpireTime){
+      //AUDIO_BALAEXPLOSIVA_Shot
+      this.scene.shot_00.play();
+      //
       this.armDir.normalize();
       const addedRandomAngle = (2*Math.random() - 1) * this.spread;
       this.armDir.x = Math.cos(this.armDir.angle() + addedRandomAngle);
@@ -35,13 +38,14 @@ export default class PlayerFireArm {
       }else{
         return new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision);
       }
-      //AUDIO_BALAEXPLOSIVA_Shot
+
   }
 
   fireBomb(bombSpeed, bombExpireTime){
+    //AUDIO_BOMBA_Shot
+    this.scene.shot_01.play();
     this.armDir.normalize();
     return new Bomb(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, bombSpeed, (this.armDir.x < 0)?-1:1, bombExpireTime);
-    //AUDIO_BOMBA_Shot
   }
 
   adjustOffset(xOff, yOff){
