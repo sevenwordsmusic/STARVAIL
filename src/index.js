@@ -33,7 +33,7 @@ var config = {
     SceneTest_1,
     Joystick_test
   ],
-  plugins: {
+    plugins: {
 
     //plugin de collisiones de matter  https://github.com/mikewesthad/phaser-matter-collision-plugin
     scene: [

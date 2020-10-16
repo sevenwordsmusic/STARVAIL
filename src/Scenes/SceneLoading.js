@@ -65,7 +65,7 @@ export default class SceneLoading extends Phaser.Scene {
         key: 'bgAnimation',
         frames: this.anims.generateFrameNumbers('animatedBg', { start: 0, end: 5 }),
         frameRate: 0.001,
-        repeat: 0
+        repeat: 0 
     });
 
     //ANIMS

@@ -6,17 +6,29 @@ export default class Audio extends Phaser.Scene {
   static musicBar(scene){
     if(scene.stinger0000){
       scene.stinger0000=false;
-      for(var i=0; i<scene.bgmIfWeapon.length ; i++){
-        if(scene.game.player.weaponCounter==i){
-            scene.bgmIfWeapon[scene.game.player.weaponCounter].volume=1.0;
-        }else{
-            scene.bgmIfWeapon[i].volume=0.0;
+        for(var i=0; i<scene.game.player.weapons.length; i++){
+            if(scene.game.player.weaponCounter==i){
+                scene.tweens.add({
+                    targets:  scene.bgmIfWeapon[i],
+                    volume:   1.0,
+                    duration: 1250,
+                });
+            }else{
+                scene.tweens.add({
+                    targets:  scene.bgmIfWeapon[i],
+                    volume:   0.0,
+                    duration: 1250,
+                });  
+            }
         }
-      }
     }else{
-      for(var i=0; i<scene.bgmIfWeapon.length ; i++){
-        scene.bgmIfWeapon[i].volume=0.0;
-      }
+        for(var i=0; i<scene.game.player.weapons.length; i++){
+            scene.tweens.add({
+                targets:  scene.bgmIfWeapon[i],
+                volume:   0.0,
+                duration: 1250,
+            });
+        }
     }
   }
 
