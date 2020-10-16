@@ -4,7 +4,7 @@ import SuperiorQuery from "../../SuperiorQuery.js";
 
 //proyectil que hereda de Projectile
 export default class Bullet extends Projectile {
-  constructor(scene, x, y, speed, velDirection, expTime, target){
+  constructor(scene, x, y, speed, velDirection, expTime, target, distanceToPlayer){
     super(scene, x, y,  expTime);
     //inicializacion
     this.sprite = scene.add.sprite(x,y,'bullet',0);
@@ -14,6 +14,7 @@ export default class Bullet extends Projectile {
     this.pVelocity = new Phaser.Math.Vector2(velDirection.x, velDirection.y);
     this.pVelocity.scale(speed / this.scene.matter.world.getDelta());
 
+    this.distAcumulator = distanceToPlayer;
     //si el "target" del proyectil es un enemigo se invoca una funcion especial
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)
       this.prepareBullet(this.target.colSpecialObj.currentBodyIndex, x, y, this.scene.input.activePointer.x + this.scene.cameras.main.scrollX, this.scene.input.activePointer.y + this.scene.cameras.main.scrollY , speed);
@@ -66,5 +67,11 @@ export default class Bullet extends Projectile {
       });
     },this);
     //mejorar esto si las balas hacen mucho daño
+
+    this.distAcumulator += bulletDistance;
+  }
+
+  distanceToPlayer(){
+    return this.distAcumulator;
   }
 }

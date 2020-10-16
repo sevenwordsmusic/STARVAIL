@@ -64,4 +64,8 @@ export default class Bomb extends Projectile {
       this.scene.explosion_01.play();
       super.itemExpire(proj);
   }
+
+  distanceToPlayer(){
+    return Math.sqrt(pow(this.sprite.x - this.scene.game.player.sprite.x,2) + pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+  }
 }
