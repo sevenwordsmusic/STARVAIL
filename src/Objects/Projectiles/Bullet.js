@@ -65,7 +65,7 @@ export default class Bullet extends Projectile {
       this.target = SuperiorQuery.superiorRayCast(x, y, auxDir, 14 ,this.scene.bulletInteracBodies);
       const bulletDistance = Math.sqrt(Math.pow(this.target.colX - this.sprite.x,2) + Math.pow(this.target.colY - this.sprite.y,2));
       this.expTime = Math.min(1000,(bulletDistance * this.scene.matter.world.getDelta())/speed);
-
+      this.distAcumulator += bulletDistance;
       this.timer.reset({
         delay: this.expTime,
         callback: () => (this.itemExpire(this))
@@ -73,7 +73,7 @@ export default class Bullet extends Projectile {
     },this);
     //mejorar esto si las balas hacen mucho daño
 
-    this.distAcumulator += bulletDistance;
+    
   }
 
   distanceToPlayer(){
