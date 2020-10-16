@@ -23,11 +23,13 @@ export default class Audio extends Phaser.Scene {
         }
     }else{
         for(var i=0; i<scene.game.player.weapons.length; i++){
-            scene.tweens.add({
-                targets:  scene.bgmIfWeapon[i],
-                volume:   0.0,
-                duration: 1250,
-            });
+            if(scene.bgmIfWeapon[i].volume>0.0){
+                scene.tweens.add({
+                    targets:  scene.bgmIfWeapon[i],
+                    volume:   0.0,
+                    duration: 1250,
+                });
+            }
         }
     }
   }
