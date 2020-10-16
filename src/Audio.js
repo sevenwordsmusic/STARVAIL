@@ -16,7 +16,7 @@ export default class Audio extends Phaser.Scene {
     var relativeHeight=920;
     var maxVolume=1;
     var volumeNormalized=maxVolume-(scene.game.player.earlyPos.y*(maxVolume/relativeHeight));
-    if(volumeNormalized<=1.0 || volumeNormalized >=0.0){
+    if(volumeNormalized<=1.0 && volumeNormalized >0.0){
         scene.loopFliying.volume=volumeNormalized; 
     }
   }
@@ -56,19 +56,19 @@ static musicLayerShot(scene){
 
 static musicLayerJet(scene){
     if(scene.stingerJet){
-        console.log("AUDIO JET LAYER: " + scene.game.player.weaponCounter + " ON.");
-        scene.stingerJet=false;
-                scene.tweens.add({
-                    targets:  scene.loopLevitating,
-                    volume:   1.0,
-                    duration: 1153.8461525,
-                }); 
-    }else{
         console.log("AUDIO JET LAYER: " + scene.game.player.weaponCounter + " OFF.");
+        scene.stingerJet=false;
                 scene.tweens.add({
                     targets:  scene.loopLevitating,
                     volume:   0.0,
                     duration: 9230.76922,
+                }); 
+    }else{
+        console.log("AUDIO JET LAYER: " + scene.game.player.weaponCounter + " ON.");
+                scene.tweens.add({
+                    targets:  scene.loopLevitating,
+                    volume:   1.0,
+                    duration: 1153.8461525,
                 }); 
     }
   }
