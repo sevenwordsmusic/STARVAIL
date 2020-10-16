@@ -52,40 +52,32 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.shot_00= this.sound.add('shot_00');
     this.shot_01= this.sound.add('shot_01');
     this.impact_00= this.sound.add('impact_00');
-    this.stinger0000=false;
-    this.bgm0000 =  this.sound.add('bgm0000', {
+    this.stingerShot=false;
+    this.loopBase =  this.sound.add('loop0000base', {
       volume: 1.0,
       loop: true
     })
-    this.bgm0001a =  this.sound.add('bgm0001a', {
-      volume: 1.0,
-      loop: true
-    })
-    this.bgm0001b =  this.sound.add('bgm0001b', {
-      volume: 1.0,
-      loop: true
-    })
-    this.bgm0002 =  this.sound.add('bgm0002', {
+    this.loopFliying =  this.sound.add('loop0000flying', {
       volume: 0.0,
       loop: true
     })
     this.bgmIfWeapon=[];
-    this.bgmIfWeapon[0] =  this.sound.add('bgmIfWeapon0', {
+    this.bgmIfWeapon[0] =  this.sound.add('loop0000weapon_00', {
       volume: 0.0,
       loop: true
     })
-    this.bgmIfWeapon[1] =  this.sound.add('bgmIfWeapon1', {
+    this.bgmIfWeapon[1] =  this.sound.add('loop0000weapon_01', {
       volume: 0.0,
       loop: true
     })
-    this.bgm0000.play();
-    this.bgm0001a.play();
-    this.bgm0001b.play();
-    this.bgm0002.play();
+    this.loopBase.play();
+    //this.bgm0001a.play();
+    //this.bgm0001b.play();
+    this.loopFliying.play();
     this.bgmIfWeapon[0].play();
     this.bgmIfWeapon[1].play(); 
     this.timer = this.time.addEvent({
-        delay: 2500,
+        delay: 2307.69230769, 
         callback: ()=>Audio.musicBar(this),
         loop: true
     });
@@ -233,7 +225,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   update(time, delta) {
 
   //AUDIO:
-  Audio.musicLayerHeight(this);
+  Audio.musicUpdate(this);
 }
 }
 
