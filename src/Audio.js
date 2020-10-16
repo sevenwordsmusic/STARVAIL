@@ -11,13 +11,13 @@ export default class Audio extends Phaser.Scene {
                 scene.tweens.add({
                     targets:  scene.bgmIfWeapon[i],
                     volume:   1.0,
-                    duration: 18,
+                    duration: 2.307692305,
                 });
             }else{
                 scene.tweens.add({
                     targets:  scene.bgmIfWeapon[i],
                     volume:   0.0,
-                    duration: 18,
+                    duration: 1.1538461525,
                 });  
             }
         }
@@ -27,7 +27,7 @@ export default class Audio extends Phaser.Scene {
                 scene.tweens.add({
                     targets:  scene.bgmIfWeapon[i],
                     volume:   0.0,
-                    duration:   18,
+                    duration: 1.1538461525,
                 });
             }
         }

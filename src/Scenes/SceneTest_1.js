@@ -77,7 +77,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.bgmIfWeapon[0].play();
     this.bgmIfWeapon[1].play(); 
     this.timer = this.time.addEvent({
-        delay: 9.23076923077 / 4, 
+        delay: 9.23076923077 / 2, 
         callback: ()=>Audio.musicBar(this),
         loop: true
     });

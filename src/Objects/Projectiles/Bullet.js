@@ -39,7 +39,7 @@ export default class Bullet extends Projectile {
     bombExprosion.anims.play('exprosion', true);
 
     //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
-    this.scene.impact_00.setDetune(Math.floor(Math.random() * 48)-24);
+    this.scene.impact_00.setRate(0.9+(Math.random() * 0.2));
     this.scene.impact_00.play();
     super.itemExpire(proj);
   }
