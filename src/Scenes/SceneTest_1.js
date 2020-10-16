@@ -53,11 +53,21 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.shot_01= this.sound.add('shot_01');
     this.impact_00= this.sound.add('impact_00');
     this.stingerShot=false;
+    this.stingerJet=false;
+    this.stingerMovement=false;
     this.loopBase =  this.sound.add('loop0000base', {
       volume: 1.0,
       loop: true
     })
     this.loopFliying =  this.sound.add('loop0000flying', {
+      volume: 0.0,
+      loop: true
+    })
+    this.loopLevitating =  this.sound.add('loop0000levitating', {
+      volume: 0.0,
+      loop: true
+    })
+    this.loopMoving =  this.sound.add('loop0000moving', {
       volume: 0.0,
       loop: true
     })
@@ -71,9 +81,9 @@ export default class SceneTest_1 extends Phaser.Scene {
       loop: true
     })
     this.loopBase.play();
-    //this.bgm0001a.play();
-    //this.bgm0001b.play();
     this.loopFliying.play();
+    this.loopLevitating.play();
+    //this.loopMoving.play();
     this.bgmIfWeapon[0].play();
     this.bgmIfWeapon[1].play(); 
     this.timer = this.time.addEvent({
