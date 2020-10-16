@@ -26,6 +26,8 @@ import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
 import LevelEnd from "../Objects/LevelEnd.js";
 import Audio from "../Audio.js";
+import InteractableEnergyOnce from "../Objects/Interactables/InteractableEnergyOnce.js"
+import InteractableEnergy from "../Objects/Interactables/InteractableEnergy.js"
 
 //Clase Scene2, que extiende de Phaser.Scene.
 export default class SceneTest_1 extends Phaser.Scene {
@@ -183,6 +185,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     new Dummy(this, 1000, 100);
     new LevelEnd(this, 1150, 100, 'star', 'testsec', SceneTest_2);
 
+    new InteractableEnergyOnce(this, 700,700);InteractableEnergy
+    new InteractableEnergy(this, 1000,700);
     //var sssd = new HealthBar(this, 400, 400, 300, 20, 0x00ff00, 0x000000, 0xffffff, 100);
     //Colisiones del escneario con el jugador
     /*this.matterCollision.addOnCollideStart({

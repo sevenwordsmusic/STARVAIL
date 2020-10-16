@@ -10,7 +10,7 @@ export default class DropableGround extends Dropable{
       parts: [mainBody, this.sensor],
       frictionAir: 0.02
     });
-    this.sprite.setExistingBody(compoundBody).setFixedRotation().setPosition(x, y)
+    this.sprite.setExistingBody(compoundBody).setFixedRotation().setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
     this.sprite.body.restitution = 0.5;
     scene.matterCollision.addOnCollideStart({         //si da problemas al colisonar con player añadir el resto de cuerpos de player al collider
       objectA: this.sensor,

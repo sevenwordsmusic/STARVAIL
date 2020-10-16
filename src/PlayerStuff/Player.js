@@ -107,7 +107,14 @@ export default class Player {
         if(gameObject[0] != undefined && gameObject[0].playerInteractable === true){
           console.log("acabas de interactuar con algo interactuable");
         }else{
+          this.firingPointer = pointer;
           this.initializeFire();
+        }
+      }, this);
+      this.scene.input.on('pointerup', function(pointer){
+        if(pointer == this.firingPointer){
+          this.fireCounterHold = 0;
+          this.firingPointer = undefined;
         }
       }, this);
       //DISPARO

@@ -81,21 +81,24 @@ export default class SceneTest_2 extends Phaser.Scene {
 
     this.timeBg = this.add.sprite(480, 100/*270*/, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
     this.timeBg.once('animationcomplete', function(){
-        this.game.transitionToScene(this, 'Joystick', Joystick_test)
+      if(this.timeBg.anims.currentFrame != undefined)
+        this.game.currentBgAnimation = this.timeBg.anims.currentFrame.index-1;
+      this.game.transitionToScene(this, 'Joystick', Joystick_test)
     },this);
 
     //Inicializacion y creacion de mapa de tiles.
-    const map = this.make.tilemap({ key: "map" });
-    const tileset1 = map.addTilesetImage("Cyber_Tiles_1", "tiles1", 32, 32, 1, 2);
+    const map = this.make.tilemap({ key: "map2" });
+    /*const tileset1 = map.addTilesetImage("Cyber_Tiles_1", "tiles1", 32, 32, 1, 2);
     const tileset2 = map.addTilesetImage("Cyber_Tiles_2", "tiles2", 32, 32, 1, 2);
-    const tileset3 = map.addTilesetImage("Cyber_Tiles_3", "tiles3", 32, 32, 1, 2);
+    const tileset3 = map.addTilesetImage("Cyber_Tiles_3", "tiles3", 32, 32, 1, 2);*/
+    const tilessetTest = map.addTilesetImage("1. main platforms", "tiles1", 32, 32, 0, 0);
     //Capas de tiles.
-    const baselayer = map.createDynamicLayer("Base Layer", [tileset1, tileset2, tileset3], 600, 0);
+    const baselayer = map.createDynamicLayer("Base Layer", tilessetTest, 600, 0);
     baselayer.depth = -5;
-    const frontlayer = map.createDynamicLayer("Front Layer", [tileset1, tileset2, tileset3], 600, 0);
-    frontlayer.depth = 25;
-    const background1 = map.createDynamicLayer("Background 1", [tileset1, tileset2, tileset3], 600, 0);
-    background1.depth = -25;
+    //const frontlayer = map.createDynamicLayer("Front Layer", [tileset1, tileset2, tileset3], 600, 0);
+    //frontlayer.depth = 25;
+    //const background1 = map.createDynamicLayer("Background 1", [tileset1, tileset2, tileset3], 600, 0);
+    //background1.depth = -25;
     //const background2 = map.createStaticLayer("Background 2", [tileset1, tileset2, tileset3], 200, 0);
     //background2.depth = -30;
     //Colisiones de las capas.
@@ -183,8 +186,6 @@ export default class SceneTest_2 extends Phaser.Scene {
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
-    if(this.timeBg.anims.currentFrame != undefined)
-      this.game.currentBgAnimation = this.timeBg.anims.currentFrame.index-1; //se puede cambiar para que solo se iguale cuando la escena termina !!!!!
   }
 }
 /*this.cameras.remove(this.cameras.main)

@@ -92,6 +92,7 @@ export default class Dialog {
 
 
         this.textBox.setScrollFactor(0).setDepth(101);
+        this.textBox.playerInteractable = true;
     }
 
      getBuiltInText (wrapWidth, fixedWidth, fixedHeight) {
