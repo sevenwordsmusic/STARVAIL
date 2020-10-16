@@ -80,14 +80,14 @@ static musicLayerJet(scene){
                 scene.tweens.add({
                     targets:  scene.loopMovement,
                     volume:   1.0,
-                    duration: 9.0,
+                    duration: 2307.692305,
                 });
     }else{
         console.log("AUDIO MOVEMENT LAYER: OFF.");
                 scene.tweens.add({
                     targets:  scene.loopMovement,
                     volume:   0.0,
-                    duration: 9.0,
+                    duration: 2307.692305,
                 });
     }
   }
