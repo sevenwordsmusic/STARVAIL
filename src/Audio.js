@@ -121,7 +121,9 @@ static musicLayerJet(scene){
     this.load.audio('shot_01', 'assets/audio/SFX/shot_01.mp3');
 
     this.load.audio('impact_00', 'assets/audio/SFX/impact_00.mp3');
-    this.load.audio('impact_01', 'assets/audio/SFX/impact_01.mp3');   
+    this.load.audio('impact_01', 'assets/audio/SFX/impact_01.mp3');
+
+    this.load.audio('explosion_01', 'assets/audio/SFX/explosion_01.mp3'); 
   }
 
   create(){
