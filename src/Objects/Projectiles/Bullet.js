@@ -38,6 +38,8 @@ export default class Bullet extends Projectile {
     //animacion de explosion
     bombExprosion.anims.play('exprosion', true);
 
+    //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
+
     super.itemExpire(proj);
   }
 

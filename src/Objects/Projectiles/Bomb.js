@@ -22,6 +22,16 @@ export default class Bomb extends Projectile {
 
     //animacion de bomba
     this.sprite.anims.play('eBomb', true);
+    this.scene.matterCollision.addOnCollideStart({
+      objectA: this.sprite.body,
+      callback: this.onSensorCollide,
+      context: this
+    });
+    
+  }
+  onSensorCollide({ bodyA, bodyB, pair }) {
+    if (bodyB.isSensor) return;
+    //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
   }
 
   itemExpire(proj){
@@ -40,8 +50,7 @@ export default class Bomb extends Projectile {
       //animacion de explosion
       bombExprosion.anims.play('exprosion', true);
 
-      //var bombSound = scene.sound.add('bomb', {volume: scene.game.soundVolume});    //SONIDO BOMBA
-      //bombSound.play();
+      //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
       super.itemExpire(proj);
   }
 }
