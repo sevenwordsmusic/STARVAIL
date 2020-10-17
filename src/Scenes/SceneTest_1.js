@@ -21,6 +21,7 @@ Si así es, ya sabes lo que tenemos que hacer.`;
 //Imports en la escena.
 import Player from "../PlayerStuff/Player.js";
 import Dummy from "../Enemies/Dummy.js";
+import DummyAir from "../Enemies/DummyAir.js";
 import Dialog from "../Plugins/Dialog.js"
 import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
@@ -83,19 +84,18 @@ export default class SceneTest_1 extends Phaser.Scene {
       volume: 0.0,
       loop: true
     })
-    this.loopBase.play();
-    this.loopFliying.play();
-    this.loopLevitating.play();
+    //this.loopBase.play();
+    //this.loopFliying.play();
+    //this.loopLevitating.play();
     this.loopMovement.play();
     this.bgmIfWeapon[0].play();
-    this.bgmIfWeapon[1].play(); 
+    this.bgmIfWeapon[1].play();
     this.timer = this.time.addEvent({
         delay: 4615.38461,
         callback: ()=>Audio.musicBar(this),
         loop: true
     });
     //INIT de AUDIO
-
 
     //game.matter.world.pause();
     mouse = this.input.activePointer;
@@ -188,9 +188,9 @@ export default class SceneTest_1 extends Phaser.Scene {
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
     new Player(this, 900, 700);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
-    new Dummy(this, 900, 100);
-    new Dummy(this, 800, 100);
-    new Dummy(this, 1000, 100);
+    new Dummy(this, 800, 500);
+    new DummyAir(this, 800, 600);
+    new Dummy(this, 1000, 500);
     new LevelEnd(this, 1150, 100, 'star', 'testsec', SceneTest_2);
 
     new InteractableEnergyOnce(this, 700,700);InteractableEnergy

@@ -6,7 +6,6 @@ export default class Enemy {
     this.sprite = scene.matter.add.sprite(x,y,sprtImg,0);
     this.sprite.parent = this;
     this.hp = hp;
-    this.airEnemy; //true si es aereo,  false si es terrestre
 
     this.sprite.body.collisionFilter.group = -1;
 
@@ -22,13 +21,13 @@ export default class Enemy {
   }
 
   //funcion que quita vida y mata al enemigo
-  damage(dmg){
+  damage(dmg, xDmg, yDmg){
     if(this.hp < dmg){
-      this.enemyDead()
+      this.enemyDead(xDmg, yDmg)
     }
     else if(this.hp == dmg){
       this.hp -= dmg;
-      this.enemyDead();
+      this.enemyDead(xDmg, yDmg);
     }
     else{
       this.hp -= dmg;
@@ -37,8 +36,8 @@ export default class Enemy {
 
   enemyDead(){
     //el "body" del enemigo se quita del array de cuerpos que interaccionan con balas
-    this.scene.bulletInteracBodies[this.currentBodyIndex] = null;
-    this.scene.enemyBodies[this.currentEnemyIndex] = null;
+    this.scene.bulletInteracBodies[this.currentBodyIndex] = undefined;
+    this.scene.enemyBodies[this.currentEnemyIndex] = undefined;
 
     const xAux = this.sprite.x;
     const yAux = this.sprite.y;

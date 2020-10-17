@@ -1,9 +1,10 @@
 
 export default class Interactable {
-  constructor(scene, x, y, spr, singleUse){
+  constructor(scene, x, y, spr, singleUse, toggle){
     //inicializacion
     this.scene = scene;
     this.singleUse = singleUse;
+    this.toggle = toggle;
     this.activated = false;
     this.sprite = scene.add.sprite(x,y, spr ,0);
     this.sprite.setInteractive().on('pointerdown', function(){this.playerInteracted()}, this);
@@ -18,17 +19,19 @@ export default class Interactable {
   }
 
   playerInteracted(){
-    if(!this.singleUse){
-      if(!this.activated){
-        this.onActivated();
-      }else{
-        this.onDeactivated();
-      }
-      this.activated = !this.activated;
-    }
-    else{
+    if(this.singleUse){
       this.onActivated();
       this.onPermaDeactivated();
+    }else{
+      if(this.toggle){
+        if(!this.activated){
+          this.onActivated();
+        }else{
+          this.onDeactivated();
+        }
+      }else{
+        this.onActivated();
+      }
     }
   }
 
@@ -42,9 +45,11 @@ export default class Interactable {
   }
 
   onActivated(){
+    this.activated = true;
     console.log("activated");
   }
   onDeactivated(){
+    this.activated = false;
     console.log("deactivated");
   }
   onPermaDeactivated(){

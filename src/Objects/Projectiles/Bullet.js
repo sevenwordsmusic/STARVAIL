@@ -28,7 +28,7 @@ export default class Bullet extends Projectile {
   itemExpire(proj){
     this.scene.events.off("update", this.update, this);
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)
-      this.target.colSpecialObj.damage(7);
+      this.target.colSpecialObj.damage(7, this.sprite.x, this.sprite.y);
 
     const bombExprosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "exprosion");
     bombExprosion.setDepth(10).setScale(1) //42
@@ -67,8 +67,6 @@ export default class Bullet extends Projectile {
       });
     },this);
     //mejorar esto si las balas hacen mucho daño
-
-    
   }
 
   distanceToPlayer(){

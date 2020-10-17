@@ -2,7 +2,7 @@ import Interactable from "./Interactable.js"
 import DropableGroundEnergy from "../Dropables/DropableGroundEnergy.js"
 export default class InteractableEnergy extends Interactable {
   constructor(scene, x, y){
-    super(scene, x, y, 'star', false);
+    super(scene, x, y, 'star', false, true);
     this.sprite.setScale(2);
     this.spSize = 2;
     this.spChangeSpeed = 0.005;
@@ -12,7 +12,7 @@ export default class InteractableEnergy extends Interactable {
 
   onActivated(){
     super.onActivated();
-    new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, 15);
+    new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Phaser.Math.Between(-1.6, 1.6), 15);
     this.scene.events.off("update", this.update, this);
     this.sprite.setTint(0xff0000);
   }

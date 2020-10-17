@@ -43,7 +43,8 @@ export default class Player {
       .setFixedRotation()
       .setPosition(x, y)
       .setOrigin(0.5, 0.72)     //0.5, 0.55
-      .body.collisionFilter.group = -1;
+    this.sprite.body.collisionFilter.group = -1;
+    this.sprite.body.collisionFilter.mask = 123;
 
     this.isTouching = { left: false, right: false, ground: false };
 
