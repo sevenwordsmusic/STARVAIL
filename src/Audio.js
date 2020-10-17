@@ -1,133 +1,48 @@
 export default class Audio extends Phaser.Scene {
-<<<<<<< Updated upstream
-  constructor() {
-    super("Audio");
-  }
-  static counter=-1;
-  static earlyPos=0.0;
-  static musicBar(scene){
-    this.counter++;
-    //console.log("AUDIO BAR: " + this.counter);
-    this.musicLayerShot(scene);
-    this.musicLayerJet(scene);
-    this.musicLayerMovement(scene);
-  }
-
-  static musicLayerHeight(scene){
-    var relativeHeight=920;
-    var maxVolume=1;
-    var volumeNormalized=maxVolume-(scene.game.player.earlyPos.y*(maxVolume/relativeHeight));
-    if(volumeNormalized<=1.0 && volumeNormalized >0.0){
-        scene.loopFliying.volume=volumeNormalized;
-    }
-  }
-
-static musicLayerShot(scene){
-    if(scene.stingerShot){
-        //console.log("AUDIO FIRING LAYER: " + scene.game.player.weaponCounter + " ON.");
-      scene.stingerShot=false;
-        for(var i=0; i<scene.game.player.weapons.length; i++){
-            if(scene.game.player.weaponCounter==i){
-                scene.tweens.add({
-                    targets:  scene.bgmIfWeapon[i],
-                    volume:   1.0,
-                    duration: 18.028846,
-                });
-            }else{
-                scene.tweens.add({
-                    targets:  scene.bgmIfWeapon[i],
-                    volume:   0.0,
-                    duration: 18.028846,
-                });
-            }
-        }
-    }else{
-        //console.log("AUDIO FIRING LAYER: " + scene.game.player.weaponCounter + " OFF.");
-        for(var i=0; i<scene.game.player.weapons.length; i++){
-            if(scene.bgmIfWeapon[i].volume>0.0){
-                scene.tweens.add({
-                    targets:  scene.bgmIfWeapon[i],
-                    volume:   0.0,
-                    duration: 4615.38461,
-                });
-            }
-        }
-    }
-  }
-
-static musicLayerJet(scene){
-    if(scene.stingerJet){
-        //console.log("AUDIO JET LAYER: " + scene.game.player.weaponCounter + " OFF.");
-        scene.stingerJet=false;
-                scene.tweens.add({
-                    targets:  scene.loopLevitating,
-                    volume:   0.0,
-                    duration: 9230.76922,
-                });
-    }else{
-        //console.log("AUDIO JET LAYER: " + scene.game.player.weaponCounter + " ON.");
-                scene.tweens.add({
-                    targets:  scene.loopLevitating,
-                    volume:   1.0,
-                    duration: 1153.8461525,
-                });
-    }
-  }
-
-  static musicLayerMovement(scene){
-    if(scene.stingerMovement){
-        //console.log("AUDIO MOVEMENT LAYER: ON.");
-        scene.stingerMovement=false;
-                scene.tweens.add({
-                    targets:  scene.loopMovement,
-                    volume:   1.0,
-                    duration: 2307.692305,
-                });
-    }else{
-        //console.log("AUDIO MOVEMENT LAYER: OFF.");
-                scene.tweens.add({
-                    targets:  scene.loopMovement,
-                    volume:   0.0,
-                    duration: 2307.692305,
-                });
-=======
     constructor() {
         super("Audio");
     }
     static counter = -1;
     static earlyPos = 0.0;
     static earlyPropeller = false;
-    static vanishingPoint = 600;
+    static earlyWeapon = -1;
+    static vanishingPoint = 960;
     static halfDistance = this.vanishingPoint / 2;
     static bpm = 104;
     static beat = 16;
     static barRate = 60 / this.bpm * this.beat;
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64];
     static maxVolume = 1.0;
+    static volumeBGM = 1.0;
+    static volumeSFX = 1.0;
     static load;
     static instances
     static musicBar(scene) {
         this.counter++;
-        console.log("AUDIO BAR: " + this.counter);
         this.musicLayerShot(scene);
         this.musicLayerJet(scene);
         this.musicLayerMovement(scene);
     }
+    static volumeBGM(value){
+        this.volumeBGM = value;
+    }
+    static volumeSFX(value){
+        this.volumeSFX = value;
+    }
     static musicLayerHeight(scene) {
-        var volumeNormalized = this.maxVolume - (scene.game.player.earlyPos.y * (this.maxVolume / this.vanishingPoint));
-        if (volumeNormalized <= this.maxVolume && volumeNormalized > 0.0) {
+        var volumeNormalized = this.volumeBGM - (scene.game.player.earlyPos.y * (this.volumeBGM / this.vanishingPoint));
+        if (volumeNormalized <= this.volumeBGM && volumeNormalized > 0.0) {
             this.load.loopFliying.volume = volumeNormalized;
         }
     }
     static musicLayerShot(scene) {
         if (this.stingerShot) {
-            console.log("AUDIO FIRING LAYER: " + scene.game.player.weaponCounter + " ON.");
             this.stingerShot = false;
             for (var i = 0; i < scene.game.player.weapons.length; i++) {
                 if (scene.game.player.weaponCounter == i) {
                     scene.tweens.add({
                         targets: this.load.bgmIfWeapon[i],
-                        volume: this.maxVolume,
+                        volume: this.volumeBGM,
                         duration: this.barRateDiv[3],
                     });
                 } else {
@@ -139,7 +54,6 @@ static musicLayerJet(scene){
                 }
             }
         } else {
-            console.log("AUDIO FIRING LAYER: " + scene.game.player.weaponCounter + " OFF.");
             for (var i = 0; i < scene.game.player.weapons.length; i++) {
                 if (this.load.bgmIfWeapon[i].volume > 0.0) {
                     scene.tweens.add({
@@ -153,7 +67,6 @@ static musicLayerJet(scene){
     }
     static musicLayerJet(scene) {
         if (this.stingerJet) {
-            console.log("AUDIO JET LAYER: " + scene.game.player.weaponCounter + " OFF.");
             this.stingerJet = false;
             scene.tweens.add({
                 targets: this.load.loopLevitating,
@@ -161,45 +74,46 @@ static musicLayerJet(scene){
                 duration: this.barRate,
             });
         } else {
-            console.log("AUDIO JET LAYER: " + scene.game.player.weaponCounter + " ON.");
             scene.tweens.add({
                 targets: this.load.loopLevitating,
-                volume: this.maxVolume,
+                volume: this.volumeBGM,
                 duration: this.barRateDiv[2],
             });
         }
     }
     static musicLayerMovement(scene) {
         if (this.stingerMovement) {
-            console.log("AUDIO MOVEMENT LAYER: ON.");
             this.stingerMovement = false;
             scene.tweens.add({
                 targets: this.load.loopMovement,
-                volume: this.maxVolume,
+                volume: this.volumeBGM,
                 duration: this.barRateDiv[1],
             });
         } else {
-            console.log("AUDIO MOVEMENT LAYER: OFF.");
             scene.tweens.add({
                 targets: this.load.loopMovement,
                 volume: 0.0,
                 duration: this.barRateDiv[1],
             });
         }
->>>>>>> Stashed changes
     }
     static distancePlayRate(scene, audio, rate) {
-        var distance= (this.vanishingPoint - scene.distanceToPlayer()) / this.vanishingPoint;
-        if (distance < 0.0) {
-            distance = 0.0;
+        if (scene.distanceToPlayer() > this.vanishingPoint) {
+            var distance = this.volumeSFX;
+        } else if (scene.distanceToPlayer() < 0.0) {
+            var distance = 0.0;
+        } else {
+            var distance = (this.vanishingPoint - scene.distanceToPlayer()) / this.vanishingPoint;
         }
-        audio.volume = distance;;
+        audio.volume = distance;
         audio.play();
         audio.setRate(rate);
     }
     static playRate(audio, rate) {
+        audio.volume = this.volumeSFX;
         audio.play();
         audio.setRate(rate);
+        return audio;
     }
     static musicUpdate(scene) {
         this.musicLayerHeight(scene);
@@ -209,6 +123,11 @@ static musicLayerJet(scene){
         }
         if (scene.game.player.isTouching.ground && !this.stingerJet) {
             this.stingerJet = true;
+        }
+        if (scene.game.player.weaponCounter != this.earlyWeapon) {
+            this.earlyWeapon = scene.game.player.weaponCounter;
+            this.load.weaponChange_00.setRate(0.7 + scene.game.player.weaponCounter * 0.1 );
+            this.load.weaponChange_00.play();
         }
         if (Math.floor(scene.game.player.earlyPos.x) != Math.floor(this.earlyPos)) {
             this.earlyPos = Math.floor(scene.game.player.earlyPos.x);
@@ -222,21 +141,21 @@ static musicLayerJet(scene){
             this.load.engineLoop.play();
             scene.tweens.add({
                 targets: this.load.engineLoop,
-                volume: this.maxVolume,
+                volume: this.volumeSFX,
                 duration: this.barRateDiv[2],
             });
             this.load.propellerLoop.play();
             scene.tweens.add({
                 targets: this.load.propellerLoop,
-                volume: this.maxVolume,
-                rate: scene.game.player.energy / this.halfDistance + this.maxVolume,
+                volume: this.volumeSFX,
+                rate: scene.game.player.energy / this.halfDistance + this.volumeSFX,
                 duration: this.barRateDiv[2],
             });
         } else if (!scene.game.player.activatedJet && this.earlyPropeller) {
             this.earlyPropeller = false;
             this.load.propellerStop.play();
             this.load.propellerStop.setRate(0.9 + (Math.random() * 0.1));
-            this.load.propellerStop.volume = this.maxVolume;
+            this.load.propellerStop.volume = this.volumeSFX;
             this.load.propellerLoop.volume = 0.0;
             this.load.propellerLoop.setRate(0.001);
             this.load.propellerLoop.stop();
@@ -247,7 +166,7 @@ static musicLayerJet(scene){
         } else if (this.earlyPropeller) {
             scene.tweens.add({
                 targets: this.load.propellerLoop,
-                volume: this.maxVolume,
+                volume: this.volumeSFX,
                 rate: scene.game.player.energy / this.halfDistance + 0.85,
                 duration: this.barRateDiv[2],
             });
@@ -270,6 +189,7 @@ static musicLayerJet(scene){
         this.load.audio('impact_01', 'assets/audio/SFX/impact_01.mp3');
         this.load.audio('wick_00', 'assets/audio/SFX/wick_00.mp3');
         this.load.audio('explosion_01', 'assets/audio/SFX/explosion_01.mp3');
+        this.load.audio('weaponChange_00', 'assets/audio/SFX/weaponChange_00.mp3');
     }
     create() {
         //INIT de AUDIO
@@ -277,8 +197,9 @@ static musicLayerJet(scene){
         this.shot_01 = this.sound.add('shot_01');
         this.impact_00 = this.sound.add('impact_00');
         this.impact_01 = this.sound.add('impact_01');
-        this.explosion_01 = this.sound.add('explosion_01');
         this.wick_00 = this.sound.add('wick_00');
+        this.explosion_01 = this.sound.add('explosion_01');
+        this.weaponChange_00 = this.sound.add('weaponChange_00');
         this.propellerLoop = this.sound.add('propellerLoop_00', {
             volume: 0.0,
             loop: true
@@ -292,7 +213,7 @@ static musicLayerJet(scene){
         this.stingerJet = false;
         this.stingerMovement = false;
         this.loopBase = this.sound.add('loop0000base', {
-            volume: this.maxVolume,
+            volume: this.volumeBGM,
             loop: true
         })
         this.loopFliying = this.sound.add('loop0000flying', {
@@ -331,33 +252,4 @@ static musicLayerJet(scene){
         console.log("AUDIO LOADED.")
         this.scene.start("SceneLoading");
     }
-<<<<<<< Updated upstream
-  }
-
-  preload(){
-    //LOAD AUDIO
-    this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
-    this.load.audio('loop0000flying', 'assets/audio/BGM/loop0000flying.mp3');
-    this.load.audio('loop0000levitating', 'assets/audio/BGM/loop0000levitating.mp3');
-    this.load.audio('loop0000moving', 'assets/audio/BGM/loop0000moving.mp3');
-    this.load.audio('loop0000weapon_00', 'assets/audio/BGM/loop0000weapon_00.mp3');
-    this.load.audio('loop0000weapon_01', 'assets/audio/BGM/loop0000weapon_01.mp3');
-
-    this.load.audio('shot_00', 'assets/audio/SFX/shot_00.mp3');
-    this.load.audio('shot_01', 'assets/audio/SFX/shot_01.mp3');
-
-    this.load.audio('impact_00', 'assets/audio/SFX/impact_00.mp3');
-    this.load.audio('impact_01', 'assets/audio/SFX/impact_01.mp3');
-
-    this.load.audio('explosion_01', 'assets/audio/SFX/explosion_01.mp3');
-  }
-
-  create(){
-    console.log("AUDIO LOADED.")
-    this.scene.start("SceneLoading");
-  }
-
 }
-=======
-}
->>>>>>> Stashed changes

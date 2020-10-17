@@ -6,6 +6,8 @@ import Audio from "../../Audio.js";
 export default class Bomb extends Projectile {
   constructor(scene, x, y, speed, dir, expTime){
     super(scene, x, y, expTime);
+    //AUDIO:
+
     //inicializacion
     this.sprite = scene.matter.add.sprite(x,y,'explodingBomb',0);
 
@@ -44,7 +46,7 @@ export default class Bomb extends Projectile {
     });
 
     //AUDIO
-    Audio.playRate(Audio.load.wick_00,0.85+(Math.random() * 0.3));
+    this.sfx= Audio.playRate(Audio.load.wick_00,0.85+(Math.random() * 0.3));
     this.touchDown=true;
     this.touchDelay=0;
   }
@@ -84,6 +86,7 @@ export default class Bomb extends Projectile {
 
       //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
       Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
+      this.sfx.volume= 0.0;
       super.itemExpire(proj);
   }
 
