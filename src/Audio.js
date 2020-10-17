@@ -16,7 +16,7 @@ export default class Audio extends Phaser.Scene {
     static volumeBGM = 1.0;
     static volumeSFX = 1.0;
     static load;
-    static instances
+
     static musicBar(scene) {
         this.counter++;
         this.musicLayerShot(scene);
@@ -34,6 +34,18 @@ export default class Audio extends Phaser.Scene {
         if (volumeNormalized <= this.volumeBGM && volumeNormalized > 0.0) {
             this.load.loopFliying.volume = volumeNormalized;
         }
+    }
+    static musicLayerEnemies(scene) {
+        if (scene.game.player.getClosestEnemyDistance() > this.vanishingPoint) {
+            var distance = 0.0;
+        } else if (scene.game.player.getClosestEnemyDistance() < 0.0) {
+            var distance = this.volumeBGM;
+        } else {
+            var distance = (this.vanishingPoint - scene.game.player.getClosestEnemyDistance()) / this.vanishingPoint;
+        }
+
+        this.load.loopBase.volume=this.volumeBGM-distance;
+        this.load.loopEnemies.volume=distance;
     }
     static musicLayerShot(scene) {
         if (this.stingerShot) {
@@ -116,6 +128,7 @@ export default class Audio extends Phaser.Scene {
         return audio;
     }
     static musicUpdate(scene) {
+        this.musicLayerEnemies(scene);
         this.musicLayerHeight(scene);
         this.propellerFliying(scene);
         if (scene.game.isFiring && !this.stingerShot) {
@@ -175,11 +188,16 @@ export default class Audio extends Phaser.Scene {
     preload() {
         //LOAD AUDIO
         this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
+        this.load.audio('loop0000enemies', 'assets/audio/BGM/loop0000enemies.mp3');
         this.load.audio('loop0000flying', 'assets/audio/BGM/loop0000flying.mp3');
         this.load.audio('loop0000levitating', 'assets/audio/BGM/loop0000levitating.mp3');
         this.load.audio('loop0000moving', 'assets/audio/BGM/loop0000moving.mp3');
         this.load.audio('loop0000weapon_00', 'assets/audio/BGM/loop0000weapon_00.mp3');
         this.load.audio('loop0000weapon_01', 'assets/audio/BGM/loop0000weapon_01.mp3');
+        this.load.audio('loop0000weapon_02', 'assets/audio/BGM/loop0000weapon_01.mp3');
+        this.load.audio('loop0000weapon_03', 'assets/audio/BGM/loop0000weapon_01.mp3');
+        this.load.audio('loop0000weapon_04', 'assets/audio/BGM/loop0000weapon_01.mp3');
+        this.load.audio('loop0000weapon_05', 'assets/audio/BGM/loop0000weapon_01.mp3');
         this.load.audio('propellerLoop_00', 'assets/audio/SFX/propellerLoop_00.mp3');
         this.load.audio('engineLoop_00', 'assets/audio/SFX/engineLoop_00.mp3');
         this.load.audio('propellerStop_00', 'assets/audio/SFX/propellerStop_00.mp3');
@@ -216,6 +234,10 @@ export default class Audio extends Phaser.Scene {
             volume: this.volumeBGM,
             loop: true
         })
+        this.loopEnemies = this.sound.add('loop0000enemies', {
+            volume: 0.0,
+            loop: true
+        })
         this.loopFliying = this.sound.add('loop0000flying', {
             volume: 0.0,
             loop: true
@@ -237,13 +259,39 @@ export default class Audio extends Phaser.Scene {
             volume: 0.0,
             loop: true
         })
+        this.bgmIfWeapon[2] = this.sound.add('loop0000weapon_01', {
+            volume: 0.0,
+            loop: true
+        })
+        this.bgmIfWeapon[3] = this.sound.add('loop0000weapon_00', {
+            volume: 0.0,
+            loop: true
+        })
+        this.bgmIfWeapon[4] = this.sound.add('loop0000weapon_01', {
+            volume: 0.0,
+            loop: true
+        })
+        this.bgmIfWeapon[5] = this.sound.add('loop0000weapon_01', {
+            volume: 0.0,
+            loop: true
+        })
+        this.bgmIfWeapon[6] = this.sound.add('loop0000weapon_00', {
+            volume: 0.0,
+            loop: true
+        })
         this.loopBase.play();
+        this.loopEnemies.play();
         this.loopFliying.play();
         this.loopLevitating.play();
         this.loopMovement.play();
         this.bgmIfWeapon[0].play();
         this.bgmIfWeapon[1].play();
-        this.timer = this.time.addEvent({
+        this.bgmIfWeapon[2].play();
+        this.bgmIfWeapon[3].play();
+        this.bgmIfWeapon[4].play();
+        this.bgmIfWeapon[5].play();
+        this.bgmIfWeapon[6].play();
+        this.barTimer = this.time.addEvent({
             delay: Audio.barRateDiv[0],
             callback: () => Audio.musicBar(this),
             loop: true
