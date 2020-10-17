@@ -44,7 +44,11 @@ export default class Audio extends Phaser.Scene {
     static musicLayerHeight(scene) {
         var volumeNormalized = this.volumeBGM - (scene.game.player.earlyPos.y * (this.volumeBGM / this.vanishingPoint));
         if (volumeNormalized <= this.volumeBGM && volumeNormalized > 0.0) {
-            this.load.loopFliying.volume = volumeNormalized;
+                    scene.tweens.add({
+                        targets: this.load.loopFliying,
+                        volume: volumeNormalized,
+                        duration: this.barRateDiv[0],
+                    });
         }
     }
     static musicLayerEnemies(scene) {
@@ -58,12 +62,12 @@ export default class Audio extends Phaser.Scene {
                     scene.tweens.add({
                         targets: this.load.loopBase,
                         volume: this.volumeBGM-distance,
-                        duration: this.barRateDiv[1],
+                        duration: this.barRateDiv[2],
                     });
                     scene.tweens.add({
                         targets: this.load.loopEnemies,
                         volume: distance,
-                        duration: this.barRateDiv[1],
+                        duration: this.barRateDiv[2],
                     });
 
     }
@@ -75,13 +79,13 @@ export default class Audio extends Phaser.Scene {
                     scene.tweens.add({
                         targets: this.load.bgmIfWeapon[i],
                         volume: this.volumeBGM,
-                        duration: this.barRateDiv[3],
+                        duration: this.barRateDiv[2],
                     });
                 } else {
                     scene.tweens.add({
                         targets: this.load.bgmIfWeapon[i],
                         volume: 0.0,
-                        duration: this.barRateDiv[3],
+                        duration: this.barRateDiv[1],
                     });
                 }
             }
@@ -119,13 +123,13 @@ export default class Audio extends Phaser.Scene {
             scene.tweens.add({
                 targets: this.load.loopMovement,
                 volume: this.volumeBGM,
-                duration: this.barRateDiv[1],
+                duration: this.barRateDiv[3],
             });
         } else {
             scene.tweens.add({
                 targets: this.load.loopMovement,
                 volume: 0.0,
-                duration: this.barRateDiv[1],
+                duration: this.barRateDiv[2],
             });
         }
     }
@@ -182,7 +186,7 @@ export default class Audio extends Phaser.Scene {
             scene.tweens.add({
                 targets: this.load.propellerLoop,
                 volume: this.volumeSFX,
-                rate: scene.game.player.energy / this.halfDistance + this.volumeSFX,
+                rate: scene.game.player.energy / this.halfDistance + 0.85 + this.volumeSFX,
                 duration: this.barRateDiv[3],
             });
         } else if (!scene.game.player.activatedJet && this.earlyPropeller) {
