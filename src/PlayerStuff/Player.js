@@ -350,6 +350,8 @@ export default class Player {
     else
       this.falseVelocityY = 0;
     //JET
+    if(this.closestEnemy != undefined)
+    console.log(this.closestEnemy.currentEnemyIndex);
   }
   playAnimation(isFiring){
     if(this.activatedJet){
@@ -556,12 +558,18 @@ export default class Player {
   }
 
   seekPosibleClosestEnemy(){
-    var closeseEnemyDistance = this.getClosestEnemyDistance();
+    const closeseEnemyDistance = this.getClosestEnemyDistance();
     for(var i=0; i<this.scene.enemyBodies.length; i++){
-      const distanceToEnemy = Math.sqrt(Math.pow(this.sprite.x - this.scene.enemyBodies[i].gameObject.x,2) + Math.pow(this.sprite.y - this.scene.enemyBodies[i].gameObject.y,2));
-      if(distanceToEnemy < closeseEnemyDistance){
-        this.closestEnemy = this.scene.enemyBodies[i].gameObject.parent;
-        break;
+      if(this.scene.enemyBodies[i] != undefined){
+        const distanceToEnemy = Math.sqrt(Math.pow(this.sprite.x - this.scene.enemyBodies[i].gameObject.x,2) + Math.pow(this.sprite.y - this.scene.enemyBodies[i].gameObject.y,2));
+        if(distanceToEnemy < closeseEnemyDistance){
+          this.scene.events.off('noEnemy' + this.closestEnemy.currentBodyIndex);
+          this.closestEnemy = this.scene.enemyBodies[i].gameObject.parent;
+          this.scene.events.once('noEnemy' + this.closestEnemy.currentBodyIndex, function(){
+            this.initPosibleClosestEnemy();
+          },this);
+          break;
+        }
       }
     }
   }
@@ -569,16 +577,28 @@ export default class Player {
   initPosibleClosestEnemy(){
     var closeseEnemyDistance = Number.MAX_SAFE_INTEGER;
     for(var i=0; i<this.scene.enemyBodies.length; i++){
-      const distanceToEnemy = Math.sqrt(Math.pow(this.sprite.x - this.scene.enemyBodies[i].gameObject.x,2) + Math.pow(this.sprite.y - this.scene.enemyBodies[i].gameObject.y,2));
-      if(distanceToEnemy < closeseEnemyDistance){
-        this.closestEnemy = this.scene.enemyBodies[i].gameObject.parent;
-        closeseEnemyDistance = distanceToEnemy;
+      if(this.scene.enemyBodies[i] != undefined){
+        const distanceToEnemy = Math.sqrt(Math.pow(this.sprite.x - this.scene.enemyBodies[i].gameObject.x,2) + Math.pow(this.sprite.y - this.scene.enemyBodies[i].gameObject.y,2));
+        if(distanceToEnemy < closeseEnemyDistance){
+          this.closestEnemy = this.scene.enemyBodies[i].gameObject.parent;
+          closeseEnemyDistance = distanceToEnemy;
+        }
       }
+    }
+    if(closeseEnemyDistance != Number.MAX_SAFE_INTEGER){
+      this.scene.events.once('noEnemy' + this.closestEnemy.currentBodyIndex, function(){
+        this.initPosibleClosestEnemy();
+      },this);
+    }else{
+      this.closestEnemy = undefined;
     }
   }
 
   getClosestEnemyDistance(){
-    return Math.sqrt(Math.pow(this.sprite.x - this.closestEnemy.sprite.x,2) + Math.pow(this.sprite.y - this.closestEnemy.sprite.y,2));
+    if(this.closestEnemy != undefined)
+      return Math.sqrt(Math.pow(this.sprite.x - this.closestEnemy.sprite.x,2) + Math.pow(this.sprite.y - this.closestEnemy.sprite.y,2));
+    else
+      return Number.MAX_SAFE_INTEGER;
   }
 
   updateBoundry(){
