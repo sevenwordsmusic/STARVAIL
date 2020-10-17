@@ -50,8 +50,6 @@ var config = {
 var game = new Phaser.Game(config);
 
 //Declaramos variables globales del juego.
-game.musicVolume = 0.3;
-game.soundVolume = 0.2;
 game.moveVelocity = 0.215;
 game.jetVelocity = 0.215;
 game.totalPlayerHp = 100;
@@ -77,10 +75,6 @@ game.transitionToScene = function(scene, keyNext, sceneNext){
 game.bulletInteracBodies = [];
 game.enemyBodies = [];
 
-//COSAS DE AUDIO
-game.audioBgm = [];
-//COSAS DE AUDIO
-
 function mobileTabletChek() {
   let check = false;
   var a = navigator.userAgent;
@@ -90,3 +84,19 @@ function mobileTabletChek() {
 };
 game.onPC = !mobileTabletChek();
 console.log("onPC:  " +game.onPC);
+
+
+//DESTRUCTOR GLOBAL AL SALIR
+window.addEventListener("beforeunload", function (e) {
+  Player.destroy();
+  SceneLoading.destroy();
+  Audio.destroy();
+  SceneTest_1.destroy();
+  SceneTest_2.destroy();
+  Joystick_test.destroy();
+  game.destroy();
+  document.destroy();
+
+  (e || window.event).returnValue = confirmationMessage;
+  return confirmationMessage;
+});
