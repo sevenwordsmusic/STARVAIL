@@ -129,7 +129,7 @@ export default class Audio extends Phaser.Scene {
             this.load.weaponChange_00.setRate(0.7 + scene.game.player.weaponCounter * 0.1 );
             this.load.weaponChange_00.play();
         }
-        if (Math.floor(scene.game.player.earlyPos.x) != Math.floor(this.earlyPos)) {
+        if (Math.floor(scene.game.player.earlyPos.x) != this.earlyPos) {
             this.earlyPos = Math.floor(scene.game.player.earlyPos.x);
             this.stingerMovement = true;
         }
