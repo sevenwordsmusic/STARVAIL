@@ -62,7 +62,7 @@ export default class Audio extends Phaser.Scene {
                     scene.tweens.add({
                         targets: this.load.loopBase,
                         volume: this.volumeBGM-distance,
-                        duration: this.barRateDiv[2],
+                        duration: this.barRateDiv[1],
                     });
                     scene.tweens.add({
                         targets: this.load.loopEnemies,
@@ -72,7 +72,7 @@ export default class Audio extends Phaser.Scene {
 
     }
     static musicLayerShot(scene) {
-        if (this.stingerShot) {
+        if (this.stingerShot && scene.game.player.getClosestEnemyDistance() < this.halfDistance) {
             this.stingerShot = false;
             for (var i = 0; i < scene.game.player.weapons.length; i++) {
                 if (scene.game.player.weaponCounter == i) {
@@ -85,7 +85,7 @@ export default class Audio extends Phaser.Scene {
                     scene.tweens.add({
                         targets: this.load.bgmIfWeapon[i],
                         volume: 0.0,
-                        duration: this.barRateDiv[1],
+                        duration: this.barRateDiv[0],
                     });
                 }
             }
