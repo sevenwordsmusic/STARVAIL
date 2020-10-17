@@ -184,6 +184,9 @@ export default class Player {
       context: this
     });
 
+    this.closestEnemy = undefined;
+    this.initPosibleClosestEnemy();
+
         /*
     scene.matterCollision.addOnCollideStart({
       objectA: this.sensors.bottom,
@@ -552,8 +555,34 @@ export default class Player {
     */
   }
 
+  seekPosibleClosestEnemy(){
+    var closeseEnemyDistance = this.getClosestEnemyDistance();
+    for(var i=0; i<this.scene.enemyBodies.length; i++){
+      const distanceToEnemy = Math.sqrt(Math.pow(this.sprite.x - this.scene.enemyBodies[i].gameObject.x,2) + Math.pow(this.sprite.y - this.scene.enemyBodies[i].gameObject.y,2));
+      if(distanceToEnemy < closeseEnemyDistance){
+        this.closestEnemy = this.scene.enemyBodies[i].gameObject.parent;
+        break;
+      }
+    }
+  }
+
+  initPosibleClosestEnemy(){
+    var closeseEnemyDistance = Number.MAX_SAFE_INTEGER;
+    for(var i=0; i<this.scene.enemyBodies.length; i++){
+      const distanceToEnemy = Math.sqrt(Math.pow(this.sprite.x - this.scene.enemyBodies[i].gameObject.x,2) + Math.pow(this.sprite.y - this.scene.enemyBodies[i].gameObject.y,2));
+      if(distanceToEnemy < closeseEnemyDistance){
+        this.closestEnemy = this.scene.enemyBodies[i].gameObject.parent;
+        closeseEnemyDistance = distanceToEnemy;
+      }
+    }
+  }
+
+  getClosestEnemyDistance(){
+    return Math.sqrt(Math.pow(this.sprite.x - this.closestEnemy.sprite.x,2) + Math.pow(this.sprite.y - this.closestEnemy.sprite.y,2));
+  }
+
   updateBoundry(){
-    //BAJO CONSTRUCCIÓN
+    //BOUNDRY
     this.advance32X += (this.sprite.body.position.x - this.earlyPos.x);
     if(this.advance32X >= 32){
       const layersX = Math.floor(this.advance32X/32);
@@ -576,9 +605,10 @@ export default class Player {
     }
     this.earlyPos.x = this.sprite.body.position.x;
     this.earlyPos.y = this.sprite.body.position.y;
-    //BAJO CONSTRUCCIÓN
+    //BOUNDRY
   }
   xFrontiers(dir, boundry, layers = 1){
+    this.seekPosibleClosestEnemy();
     const xBoundry = boundry*dir;
     const yBoundry = boundry + 1; //7+2
     const xNormalized = Math.floor(this.sprite.x/32);
@@ -614,6 +644,7 @@ export default class Player {
     }
   }
   yFrontiers(dir, boundry, layers = 1){
+    this.seekPosibleClosestEnemy();
     const xBoundry = boundry + 1; //7+2
     const yBoundry = boundry*dir;
     const xNormalized = Math.floor(this.sprite.x/32);

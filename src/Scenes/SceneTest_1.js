@@ -50,7 +50,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
- 
+
     //game.matter.world.pause();
     mouse = this.input.activePointer;
 
@@ -140,14 +140,16 @@ export default class SceneTest_1 extends Phaser.Scene {
     });
 
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
-    new Player(this, 900, 700);
-    cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
     new Dummy(this, 800, 500);
     new DummyAir(this, 800, 600);
     new Dummy(this, 1000, 500);
+
+    new Player(this, 900, 700);
+    cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
+
     new LevelEnd(this, 1150, 100, 'star', 'testsec', SceneTest_2);
 
-    new InteractableEnergyOnce(this, 700,700);InteractableEnergy
+    new InteractableEnergyOnce(this, 700,700);
     new InteractableEnergy(this, 1000,700);
     //var sssd = new HealthBar(this, 400, 400, 300, 20, 0x00ff00, 0x000000, 0xffffff, 100);
     //Colisiones del escneario con el jugador

@@ -52,7 +52,6 @@ export default class Bomb extends Projectile {
   }
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
-    console.log("a");
     this.timer.remove();
     this.itemExpire(this);
   }
