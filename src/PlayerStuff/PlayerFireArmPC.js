@@ -50,7 +50,7 @@ export default class PlayerFireArmPC extends PlayerFireArm{
       this.graphics.clear();
       for(var i=0; i<numPoints; i++){
         var pAux = linePoints[i];
-        this.graphics.fillCircle(pAux.x, pAux.y, 2);
+        this.graphics.fillCircle(pAux.x, pAux.y, 1.25);
       }
   }
 
@@ -77,11 +77,7 @@ export default class PlayerFireArmPC extends PlayerFireArm{
     this.crosshairSpr.setFrame(spNumber);
   }
 
-  fireBullet(bulletSpeed, bulletExpireTime){
-      super.fireBullet(bulletSpeed, bulletExpireTime);
-  }
-
-  fireBomb(bombSpeed, dir, bombExpireTime){
-      super.fireBomb(bombSpeed, dir, bombExpireTime);
+  adjustFireDirection(){
+    //does nothing
   }
 }

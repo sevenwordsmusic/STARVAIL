@@ -5,11 +5,12 @@ import Audio from "../../Audio.js";
 
 //proyectil que hereda de Projectile
 export default class Bullet extends Projectile {
-  constructor(scene, x, y, speed, velDirection, expTime, target, distanceToPlayer){
+  constructor(scene, x, y, spr, dmg, speed, velDirection, expTime, target, distanceToPlayer){
     super(scene, x, y,  expTime);
     //inicializacion
-    this.sprite = scene.add.sprite(x,y,'bullet',0);
+    this.sprite = scene.add.sprite(x,y,spr,0);
     this.target = target;
+    this.dmg = dmg;
 
     //se calcula la direccion y magnitud del vector de velocidad
     this.pVelocity = new Phaser.Math.Vector2(velDirection.x, velDirection.y);
@@ -29,7 +30,7 @@ export default class Bullet extends Projectile {
   itemExpire(proj){
     this.scene.events.off("update", this.update, this);
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)
-      this.target.colSpecialObj.damage(7, this.sprite.x, this.sprite.y);
+      this.target.colSpecialObj.damage(this.dmg, this.sprite.x, this.sprite.y);
 
     const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "exprosion");
     bombExplosion.setDepth(10).setScale(1) //42

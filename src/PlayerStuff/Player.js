@@ -79,10 +79,7 @@ export default class Player {
     this.fireCounterTap = 0;
     this.fireCounterHold = 0;
     this.weapons = [];
-    //creacion de armas con nombre, "rate" de ataque (cuanto más grande más lento), velocidad de proyectil, tiempo de vida de proyectil, coste de energia por disparo,
-    //cuanta proporción de "recovery de energía" hay al disparar (por ej: si es 0.5 recuperamos la mitad de energía que de normal cada update), y el frame del crosshair.png que se usa
-    this.weapons[0] = {name: "MachineGun", fireRate: 4 * this.scene.matter.world.getDelta(), projectileSpeed: 30, expireTime: 1000, energyCost: 1, energyRecoverProportion: 0, chFrame: 0};
-    this.weapons[1] = {name: "BombLauncher", fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 10, energyRecoverProportion: 0.2, chFrame: 1};
+    this.initializeWeaponsArray();
     //this.weapons[2] = {name: "Ejemplo", fireRate: 10 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 1000, energyCost: 10 , chFrame: 1};
     this.weaponCounter = 0;
 
@@ -350,8 +347,6 @@ export default class Player {
     else
       this.falseVelocityY = 0;
     //JET
-    //if(this.closestEnemy != undefined)
-    //console.log(this.closestEnemy.currentEnemyIndex);
   }
   playAnimation(isFiring){
     if(this.activatedJet){
@@ -457,6 +452,16 @@ export default class Player {
     }
   }
 
+  initializeWeaponsArray(){
+    //creacion de armas con nombre, "rate" de ataque (cuanto más grande más lento), velocidad de proyectil, tiempo de vida de proyectil, coste de energia por disparo,
+    //cuanta proporción de "recovery de energía" hay al disparar (por ej: si es 0.5 recuperamos la mitad de energía que de normal cada update), el sprite del proyectil, el frame del crosshair.png que se usa
+    this.weapons[0] = {name: "BulletNormal", damage: 6, spread: 0.05, fireRate: 5 * this.scene.matter.world.getDelta(), projectileSpeed: 30, expireTime: 1000, energyCost: 0, energyRecoverProportion: 0, wSprite: "bullet", chFrame: 0};
+    this.weapons[1] = {name: "BulletSuperSonic", damage: 6, spread: 0.05, fireRate: 3 * this.scene.matter.world.getDelta(), projectileSpeed: 40, expireTime: 1000, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet", chFrame: 0};
+    this.weapons[2] = {name: "BulletExplosive", damage: 14, spread: 0.1, fireRate: 7 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 1000, energyCost: 0.25, energyRecoverProportion: 0, wSprite: "bullet", chFrame: 0};
+    this.weapons[3] = {name: "BombNormal", damage: 40, area: 45, fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 5, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
+    this.weapons[4] = {name: "BombMegaton", damage: 95, area: 68, extraEffect: 1.33, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 15, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
+  }
+
   initializeFire(){
     //inicializacón de disparo
     if(!this.fireArm.fireArmActive){
@@ -473,19 +478,26 @@ export default class Player {
     this.crossCounter = 0;
   }
   fireProjectile(){
-    if(this.energy >= this.weapons[this.weaponCounter].energyCost){
+    const currentWeapon = this.weapons[this.weaponCounter];
+    if(this.energy >= currentWeapon.energyCost){
+      this.fireArm.adjustFireDirection();
       switch(this.weaponCounter){
         case 0:
-          this.fireArm.fireBullet(this.weapons[this.weaponCounter].projectileSpeed, this.weapons[this.weaponCounter].expireTime);
-        break;
         case 1:
-          this.fireArm.fireBomb(this.weapons[this.weaponCounter].projectileSpeed,  this.weapons[this.weaponCounter].expireTime);
+        case 2:
+          this.fireArm.fireBullet(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.spread, currentWeapon.projectileSpeed, currentWeapon.expireTime);
+        break;
+        case 3:
+          this.fireArm.fireBomb(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.area, currentWeapon.projectileSpeed,  currentWeapon.expireTime);
+        break;
+        case 4:
+          this.fireArm.fireMegaton(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.area, currentWeapon.extraEffect, currentWeapon.projectileSpeed,  currentWeapon.expireTime);
         break;
         default:
           console.log("no weapon");
         break;
       }
-      this.playerUseEnergy(this.weapons[this.weaponCounter].energyCost);
+      this.playerUseEnergy(currentWeapon.energyCost);
     }
     else{
       this.playerUseEnergy(this.energy);
@@ -566,7 +578,7 @@ export default class Player {
           this.scene.events.off('noEnemy' + this.closestEnemy.currentBodyIndex);
           this.closestEnemy = this.scene.enemyBodies[i].gameObject.parent;
           this.scene.events.once('noEnemy' + this.closestEnemy.currentBodyIndex, function(){
-            this.initPosibleClosestEnemy();
+            this.seekPosibleClosestAlive();
           },this);
           break;
         }
@@ -587,10 +599,18 @@ export default class Player {
     }
     if(closeseEnemyDistance != Number.MAX_SAFE_INTEGER){
       this.scene.events.once('noEnemy' + this.closestEnemy.currentBodyIndex, function(){
-        this.initPosibleClosestEnemy();
+        this.seekPosibleClosestAlive();
       },this);
     }else{
       this.closestEnemy = undefined;
+    }
+  }
+
+  seekPosibleClosestAlive(){
+    if(this.closestEnemy == undefined || this.closestEnemy.sprite.body == undefined){
+      this.initPosibleClosestEnemy();
+    }else{
+      this.seekPosibleClosestEnemy();
     }
   }
 

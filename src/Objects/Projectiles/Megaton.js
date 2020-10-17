@@ -3,15 +3,17 @@ import SuperiorQuery from "../../SuperiorQuery.js";
 import Audio from "../../Audio.js";
 
 //proyectil que hereda de Projectile
-export default class Bomb extends Projectile {
-  constructor(scene, x, y, spr, dmg, area, speed, dir, expTime){
+export default class Megaton extends Projectile {
+  constructor(scene, x, y, spr, dmg, area, extraEff, speed, dir, expTime){
     super(scene, x, y, expTime);
     //AUDIO:
 
     //inicializacion
     this.sprite = scene.matter.add.sprite(x,y,spr,0);
+    this.sprite.parent = this;
     this.dmg = dmg;
     this.area = area;
+    this.extraEff = extraEff;
 
     const mainBody = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,11);
     const sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,19);
@@ -37,7 +39,6 @@ export default class Bomb extends Projectile {
 
     scene.matterCollision.addOnCollideStart({
       objectA: sensor,
-      objectB: this.scene.enemyBodies.filter(body => body != undefined),
       callback: this.onSensorCollide,
       context: this
     });
@@ -54,8 +55,13 @@ export default class Bomb extends Projectile {
   }
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
-    this.timer.remove();
-    this.itemExpire(this);
+    if(bodyB.gameObject.parent != undefined){
+      this.timer.remove();
+      if(bodyB.gameObject.parent.constructor.name === "Megaton")
+        this.itemExpire(this, true);
+      else
+        this.itemExpire(this, false);
+    }
   }
   onBodyCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
@@ -69,22 +75,27 @@ export default class Bomb extends Projectile {
     }
   }
 
-  itemExpire(proj){
-      const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
-      bombExplosion.setDepth(10).setScale(3) //42
+  itemExpire(proj, big = false){
+    var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
+    if(!big){
+      bombExplosion.setDepth(10).setScale(4.5) //42
       this.damageEnemiesArea();
+    }else{
+      bombExplosion.setDepth(10).setScale(4.5*this.extraEff) //42
+      this.damageEnemiesArea2();
+    }
 
-      //al completar su animacion de explsion, dicha instancia se autodestruye
-      bombExplosion.on('animationcomplete', function(){
-        bombExplosion.destroy();
-      });
-      //animacion de explosion
-      bombExplosion.anims.play('explosion', true);
+    //al completar su animacion de explsion, dicha instancia se autodestruye
+    bombExplosion.on('animationcomplete', function(){
+      bombExplosion.destroy();
+    });
+    //animacion de explosion
+    bombExplosion.anims.play('explosion', true);
 
-      //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-      Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
-      this.sfx.volume= 0.0;
-      super.itemExpire(proj);
+    //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
+    Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
+    this.sfx.volume= 0.0;
+    super.itemExpire(proj);
   }
 
   damageEnemiesArea(){
@@ -92,6 +103,14 @@ export default class Bomb extends Projectile {
     for(var i in damagedEnemies){
       if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
         damagedEnemies[i].gameObject.parent.damage(this.dmg, this.sprite.x, this.sprite.y);
+    }
+  }
+  damageEnemiesArea2(){
+    console.log("Big Explosion");
+    var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area*this.extraEff, this.scene.enemyBodies);
+    for(var i in damagedEnemies){
+      if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
+        damagedEnemies[i].gameObject.parent.damage(this.dmg*this.extraEff, this.sprite.x, this.sprite.y);
     }
   }
 
