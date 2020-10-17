@@ -50,53 +50,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
-    //INIT de AUDIO
-    this.shot_00= this.sound.add('shot_00');
-    this.shot_01= this.sound.add('shot_01');
-    this.impact_00= this.sound.add('impact_00');
-    this.impact_01= this.sound.add('impact_01');
-    this.explosion_01= this.sound.add('explosion_01');
-    this.stingerShot=false;
-    this.stingerJet=false;
-    this.stingerMovement=false;
-    this.loopBase =  this.sound.add('loop0000base', {
-      volume: 1.0,
-      loop: true
-    })
-    this.loopFliying =  this.sound.add('loop0000flying', {
-      volume: 0.0,
-      loop: true
-    })
-    this.loopLevitating =  this.sound.add('loop0000levitating', {
-      volume: 0.0,
-      loop: true
-    })
-    this.loopMovement =  this.sound.add('loop0000moving', {
-      volume: 0.0,
-      loop: true
-    })
-    this.bgmIfWeapon=[];
-    this.bgmIfWeapon[0] =  this.sound.add('loop0000weapon_00', {
-      volume: 0.0,
-      loop: true
-    })
-    this.bgmIfWeapon[1] =  this.sound.add('loop0000weapon_01', {
-      volume: 0.0,
-      loop: true
-    })
-    //this.loopBase.play();
-    //this.loopFliying.play();
-    //this.loopLevitating.play();
-    this.loopMovement.play();
-    this.bgmIfWeapon[0].play();
-    this.bgmIfWeapon[1].play();
-    this.timer = this.time.addEvent({
-        delay: 4615.38461,
-        callback: ()=>Audio.musicBar(this),
-        loop: true
-    });
-    //INIT de AUDIO
-
+ 
     //game.matter.world.pause();
     mouse = this.input.activePointer;
 
@@ -106,7 +60,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.matter.world.setBounds(0, -500, 10000, 10000);
     cam.setBounds(0, -500, 10000, 1435);
 
-    cam.fadeIn(1250);
+    cam.fadeIn(Audio.barRateDiv[2]);  //Constante de Audio para sincronía
     //fadeOut = false;
 
     //TESTING DIALOG
