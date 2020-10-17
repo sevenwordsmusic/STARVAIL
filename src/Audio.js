@@ -91,6 +91,14 @@ static musicLayerJet(scene){
                 });
     }
   }
+   static distanceAndPlay(scene,audio){
+    var distance= (640-scene.distanceToPlayer())/640;
+      if(distance<0.1){
+        distance=0.0;
+      }
+      audio.volume=distance;;
+      audio.play();
+    }
 
   static musicUpdate(scene){
     this.musicLayerHeight(scene);

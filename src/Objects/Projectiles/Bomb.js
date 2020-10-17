@@ -1,6 +1,6 @@
 import Projectile from "./Projectile.js";
 import SuperiorQuery from "../../SuperiorQuery.js";
-
+import Audio from "../../Audio.js";
 //proyectil que hereda de Projectile
 export default class Bomb extends Projectile {
   constructor(scene, x, y, speed, dir, expTime){
@@ -36,7 +36,7 @@ export default class Bomb extends Projectile {
     //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
     if(this.touchDown==true && this.touchDelay<3){
       this.touchDelay++;
-      this.scene.impact_01.play();
+      Audio.distanceAndPlay(this,this.scene.impact_01);
       this.scene.impact_01.setRate(0.85+(Math.random() * 0.3));
     }else if(this.touchDown==true && this.touchDelay== 3){
       this.touchDown=false;
@@ -61,12 +61,8 @@ export default class Bomb extends Projectile {
       bombExprosion.anims.play('exprosion', true);
 
       //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-      var distance= (920-this.distanceToPlayer())/920;
-      if(distance<0.0){
-        distance=0.0;
-      }
-      this.scene.explosion_01.volume=distance;
-      this.scene.explosion_01.play();
+
+      Audio.distanceAndPlay(this,this.scene.explosion_01);
       super.itemExpire(proj);
   }
 
