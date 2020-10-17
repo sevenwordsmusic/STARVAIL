@@ -350,8 +350,8 @@ export default class Player {
     else
       this.falseVelocityY = 0;
     //JET
-    if(this.closestEnemy != undefined)
-    console.log(this.closestEnemy.currentEnemyIndex);
+    //if(this.closestEnemy != undefined)
+    //console.log(this.closestEnemy.currentEnemyIndex);
   }
   playAnimation(isFiring){
     if(this.activatedJet){
@@ -602,33 +602,41 @@ export default class Player {
   }
 
   updateBoundry(){
+    let seekingNewEnemyX = false;
     //BOUNDRY
     this.advance32X += (this.sprite.body.position.x - this.earlyPos.x);
     if(this.advance32X >= 32){
       const layersX = Math.floor(this.advance32X/32);
       this.xFrontiers(1, 17, layersX);
       this.advance32X = this.advance32X - 32*layersX;
+      this.seekPosibleClosestEnemy();
+      seekingNewEnemyX = true
     }else if (this.advance32X <= -32) {
       const layersX = Math.floor(Math.abs(this.advance32X/32));
       this.xFrontiers(-1, 17, layersX);
       this.advance32X = this.advance32X + 32*layersX;
+      this.seekPosibleClosestEnemy();
+      seekingNewEnemyX = true
     }
     this.advance32Y += (this.sprite.body.position.y - this.earlyPos.y);
     if(this.advance32Y >= 32){
       const layersY = Math.floor(this.advance32Y/32);
       this.yFrontiers(1, 17, layersY);
       this.advance32Y = this.advance32Y - 32*layersY;
+      if(!seekingNewEnemyX)
+        this.seekPosibleClosestEnemy();
     }else if (this.advance32Y <= -32) {
       const layersY = Math.floor(Math.abs(this.advance32Y/32));
       this.yFrontiers(-1, 17, layersY);
       this.advance32Y = this.advance32Y + 32*layersY;
+      if(!seekingNewEnemyX)
+        this.seekPosibleClosestEnemy();
     }
     this.earlyPos.x = this.sprite.body.position.x;
     this.earlyPos.y = this.sprite.body.position.y;
     //BOUNDRY
   }
   xFrontiers(dir, boundry, layers = 1){
-    this.seekPosibleClosestEnemy();
     const xBoundry = boundry*dir;
     const yBoundry = boundry + 1; //7+2
     const xNormalized = Math.floor(this.sprite.x/32);
@@ -664,7 +672,6 @@ export default class Player {
     }
   }
   yFrontiers(dir, boundry, layers = 1){
-    this.seekPosibleClosestEnemy();
     const xBoundry = boundry + 1; //7+2
     const yBoundry = boundry*dir;
     const xNormalized = Math.floor(this.sprite.x/32);
