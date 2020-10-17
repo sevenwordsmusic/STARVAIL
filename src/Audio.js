@@ -113,7 +113,7 @@ export default class Audio extends Phaser.Scene {
             scene.tweens.add({
                 targets: this.load.loopLevitating,
                 volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
+                duration: this.barRateDiv[0],
             });
         }
     }
