@@ -189,11 +189,9 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.input.setDefaultCursor('none');
     /*var keyObj = this.input.keyboard.addKey('K');  // Get key object
     keyObj.on('down', function(event) { console.log("k presionada"); });*/
-            Audio.barTimer = this.time.addEvent({
-            delay: Audio.barRateDiv[0],
-            callback: () => Audio.musicBar(this),
-            loop: true
-        });
+    
+  //AUDIO:
+   Audio.startAudioEngine(this);
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
