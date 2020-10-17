@@ -172,7 +172,7 @@ export default class SceneLoading extends Phaser.Scene {
         });
 
     this.anims.create({
-            key: 'exprosion',
+            key: 'explosion',
             frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 7 }),
             frameRate: 12,
             repeat: 0

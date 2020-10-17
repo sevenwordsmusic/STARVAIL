@@ -2,6 +2,7 @@ import Projectile from "./Projectile.js";
 import Enemy from "../../Enemies/Enemy.js";
 import SuperiorQuery from "../../SuperiorQuery.js";
 import Audio from "../../Audio.js";
+
 //proyectil que hereda de Projectile
 export default class Bullet extends Projectile {
   constructor(scene, x, y, speed, velDirection, expTime, target, distanceToPlayer){
@@ -30,18 +31,17 @@ export default class Bullet extends Projectile {
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)
       this.target.colSpecialObj.damage(7, this.sprite.x, this.sprite.y);
 
-    const bombExprosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "exprosion");
-    bombExprosion.setDepth(10).setScale(1) //42
+    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "exprosion");
+    bombExplosion.setDepth(10).setScale(1) //42
     //al completar su animacion de explsion, dicha instancia se autodestruye
-    bombExprosion.on('animationcomplete', function(){
-      bombExprosion.destroy();
+    bombExplosion.on('animationcomplete', function(){
+      bombExplosion.destroy();
     });
     //animacion de explosion
-    bombExprosion.anims.play('exprosion', true);
+    bombExplosion.anims.play('explosion', true);
 
     //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
-    Audio.distanceAndPlay(this,this.scene.impact_00);
-    this.scene.impact_00.setRate(0.9+(Math.random() * 0.2));
+    Audio.distancePlayRate(this,Audio.load.impact_00,0.9+(Math.random() * 0.2));
     super.itemExpire(proj);
   }
 

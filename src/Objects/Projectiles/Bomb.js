@@ -1,6 +1,7 @@
 import Projectile from "./Projectile.js";
 import SuperiorQuery from "../../SuperiorQuery.js";
 import Audio from "../../Audio.js";
+
 //proyectil que hereda de Projectile
 export default class Bomb extends Projectile {
   constructor(scene, x, y, speed, dir, expTime){
@@ -43,6 +44,7 @@ export default class Bomb extends Projectile {
     });
 
     //AUDIO
+    Audio.playRate(Audio.load.wick_00,0.85+(Math.random() * 0.3));
     this.touchDown=true;
     this.touchDelay=0;
   }
@@ -57,8 +59,7 @@ export default class Bomb extends Projectile {
     //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
     if(this.touchDown==true && this.touchDelay<3){
       this.touchDelay++;
-      Audio.distanceAndPlay(this,this.scene.impact_01);
-      this.scene.impact_01.setRate(0.85+(Math.random() * 0.3));
+      Audio.distancePlayRate(this,Audio.load.impact_01,0.85+(Math.random() * 0.3));
     }else if(this.touchDown==true && this.touchDelay== 3){
       this.touchDown=false;
       this.touchDelay=0;
@@ -66,8 +67,8 @@ export default class Bomb extends Projectile {
   }
 
   itemExpire(proj){
-      const bombExprosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "exprosion");
-      bombExprosion.setDepth(10).setScale(3) //42
+      const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
+      bombExplosion.setDepth(10).setScale(3) //42
 
       var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, 40, this.scene.enemyBodies);
       for(var i in damagedEnemies){
@@ -75,15 +76,14 @@ export default class Bomb extends Projectile {
           damagedEnemies[i].gameObject.parent.damage(100, this.sprite.x, this.sprite.y);
       }
       //al completar su animacion de explsion, dicha instancia se autodestruye
-      bombExprosion.on('animationcomplete', function(){
-        bombExprosion.destroy();
+      bombExplosion.on('animationcomplete', function(){
+        bombExplosion.destroy();
       });
       //animacion de explosion
-      bombExprosion.anims.play('exprosion', true);
+      bombExplosion.anims.play('explosion', true);
 
       //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-
-      Audio.distanceAndPlay(this,this.scene.explosion_01);
+      Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
       super.itemExpire(proj);
   }
 

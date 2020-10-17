@@ -16,6 +16,7 @@ import Player from "../PlayerStuff/Player.js";
 import Dummy from "../Enemies/Dummy.js";
 import Dialog from "../Plugins/Dialog.js"
 import Joystick_test from "./Joystick_test.js"
+import Audio from "../Audio.js";
 
 //Clase Scene2, que extiende de Phaser.Scene.
 export default class SceneTest_2 extends Phaser.Scene {
@@ -53,7 +54,7 @@ export default class SceneTest_2 extends Phaser.Scene {
     this.matter.world.setBounds(0, -500, 10000, 10000);
     cam.setBounds(0, -500, 10000, 1435);
 
-    cam.fadeIn(1250);
+    cam.fadeIn(Audio.barRateDiv[2]);  //Constante de Audio para sincronía
     //fadeOut = false;
 
     /*//TESTING DIALOG
@@ -186,6 +187,8 @@ export default class SceneTest_2 extends Phaser.Scene {
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
+  //AUDIO:
+  Audio.musicUpdate(this);
   }
 }
 /*this.cameras.remove(this.cameras.main)
