@@ -12,6 +12,12 @@ export default class SceneExample extends Phaser.Scene {
 
     this.load.image('btnPause', 'assets/BtnPauseGame.png'); //btn pause
 
+
+    this.load.image('btnMuerte', 'assets/BtnPauseGame.png'); //btn pause
+
+    this.load.image('btnScore', 'assets/BtnPauseGame.png'); //btn pause
+
+
     //Corners
     this.load.image('corners', 'assets/Menu corners.png'); 
     
@@ -28,12 +34,20 @@ export default class SceneExample extends Phaser.Scene {
     //Options field
     var ebi=this.add.image(0,0,'ebi').setOrigin(0,0).setScale(0.25);
 
-    console.log("Boton pausa creado");
     //Boton pause
     this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25);
 		this.botonPause.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.pauseGame());
 
+    //Boton muerte
+    this.botonMuerte = this.add.image(260,270,'btnMuerte').setScale(0.25);
+		this.botonMuerte.setInteractive({ useHandCursor: true  } )
+    .on('pointerdown', () => this.gameOver());
+
+    //Boton score
+    this.botonScore = this.add.image(700,270,'btnScore').setScale(0.25);
+		this.botonScore.setInteractive({ useHandCursor: true  } )
+    .on('pointerdown', () => this.gameScore());
   }
 
   //Método que se ejecuta una vez por frame.
@@ -44,8 +58,26 @@ export default class SceneExample extends Phaser.Scene {
   pauseGame(){
     console.log("Juego pausado");
     
-    this.scene.run("ScenePause");
+    this.scene.start("ScenePause");
     this.scene.bringToTop("ScenePause");
     this.scene.pause("SceneGameEbi");
+  }
+
+  gameOver(){
+    console.log("Juego terminado");
+    
+    this.scene.start("SceneGameOver");
+    this.scene.bringToTop("SceneGameOver");
+    this.scene.stop("SceneGameEbi");
+    
+  }
+
+  gameScore(){
+    console.log("Pantalla de puntuacion");
+    
+    this.scene.start("SceneScore");
+    this.scene.bringToTop("SceneScore");
+    this.scene.stop("SceneGameEbi");
+    
   }
 }

@@ -9,7 +9,7 @@ export default class SceneExample extends Phaser.Scene {
   preload(){
     //Options menu
     this.load.image('OptionsScreen', 'assets/Options menu/OMScreen.png'); //field
-    this.load.image('btnExit', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
+    this.load.image('btnExitOptionsMM', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
     this.load.image('btnMinus', 'assets/Options menu/btnMinusOptionsMenu.png'); //btn minus
     this.load.image('btnMusic', 'assets/Options menu/btnMusicOptionsMenu.png'); //btn music
     this.load.image('btnPlus', 'assets/Options menu/btnPlusOptionsMenu.png'); //btn plus
@@ -29,7 +29,7 @@ export default class SceneExample extends Phaser.Scene {
     this.sfxVolume=0;
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x001191);
+    this.cameras.main.setBackgroundColor(0x990001);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
@@ -38,8 +38,8 @@ export default class SceneExample extends Phaser.Scene {
     var optionsScreen=this.add.image(0,0,'OptionsScreen').setOrigin(0,0).setScale(0.25);
     
     //Boton exit
-    this.botonExit = this.add.image(480,455,'btnExit').setScale(0.25);
-		this.botonExit.setInteractive({ useHandCursor: true  } )
+    this.btnExitOptionsMM = this.add.image(480,455,'btnExitOptionsMM').setScale(0.25);
+		this.btnExitOptionsMM.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.exitOptions());
 
 

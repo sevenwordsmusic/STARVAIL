@@ -11,9 +11,9 @@ export default class SceneExample extends Phaser.Scene {
 
     //Pause menu
     this.load.image('PauseScreen', 'assets/Pause menu/Botones Mpausa.png'); //field
-    this.load.image('btnResume', 'assets/Pause menu/btnResumePauseMenu.png'); //btn resume
-    this.load.image('btnOptions', 'assets/Pause menu/btnOptionsPauseMenu.png'); //btn options
-    this.load.image('btnExit', 'assets/Pause menu/btnExitPauseMenu.png'); //btn exit
+    this.load.image('btnResumeGamePause', 'assets/Pause menu/btnResumePauseMenu.png'); //btn resume
+    this.load.image('btnOptionsGame', 'assets/Pause menu/btnOptionsPauseMenu.png'); //btn options
+    this.load.image('btnExitPause', 'assets/Pause menu/btnExitPauseMenu.png'); //btn exit
 
     //Corners
     this.load.image('corners', 'assets/Menu corners.png');
@@ -23,29 +23,28 @@ export default class SceneExample extends Phaser.Scene {
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
 
-    this.cameras.main.setBackgroundColor(0x000000);
+    this.cameras.main.setBackgroundColor(0x009000);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
 
     //Credits field
-    var PauseScreen=this.add.image(0,0,'PauseScreen').setOrigin(0,0).setScale(0.25);
+    //var PauseScreen=this.add.image(0,0,'PauseScreen').setOrigin(0,0).setScale(0.25);
     
     //Boton resume
-    this.botonResume = this.add.image(480,140,'btnResume').setScale(0.25);
-		this.botonResume.setInteractive({ useHandCursor: true  } )
-    .on('pointerdown', () => this.resumeGame());
+    this.btnResumeGamePause = this.add.image(480,140,'btnResumeGamePause').setScale(0.25);
+		this.btnResumeGamePause.setInteractive({ useHandCursor: true  } )
+    .on('pointerdown', () => this.resumeGamePause());
 
     //Boton options
-    this.btnOptions = this.add.image(480,270,'btnOptions').setScale(0.25);
-		this.btnOptions.setInteractive({ useHandCursor: true  } )
+    this.btnOptionsGame = this.add.image(480,270,'btnOptionsGame').setScale(0.25);
+		this.btnOptionsGame.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.viewOptions());
 
     //Boton exit
-    this.botonExit = this.add.image(480,400,'btnExit').setScale(0.25);
-		this.botonExit.setInteractive({ useHandCursor: true  } )
+    this.btnExitPause = this.add.image(480,400,'btnExitPause').setScale(0.25);
+		this.btnExitPause.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.exitGame());
-
   }
 
   //Método que se ejecuta una vez por frame.
@@ -53,16 +52,19 @@ export default class SceneExample extends Phaser.Scene {
 
   }
 
-  resumeGame(){
+  resumeGamePause(){
     console.log("Volviendo al juego");
 
-    this.scene.sendToBack('ScenePause');
+    //this.scene.sendToBack('ScenePause');
 		this.scene.stop('ScenePause');
     this.scene.resume('SceneGameEbi');
-    //this.scene.bringToTop("SceneGameEbi");
+    this.scene.bringToTop("SceneGameEbi");
   }
 
   viewOptions(){
+    console.log("Entrando a options");
+
+    
     this.scene.run("SceneOptionsGame");
     this.scene.bringToTop("SceneOptionsGame");
     this.scene.pause("ScenePause");
@@ -72,6 +74,5 @@ export default class SceneExample extends Phaser.Scene {
     this.scene.start("SceneMM");
     this.scene.bringToTop("SceneMM");
     this.scene.stop("SceneGameEbi");
-
   }
 }

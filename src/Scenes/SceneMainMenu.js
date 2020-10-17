@@ -28,7 +28,7 @@ export default class SceneExample extends Phaser.Scene {
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
 
     //MM field
-    var MMScreen=this.add.image(0,0,'MMScreen').setOrigin(0,0).setScale(0.25);
+    //var MMScreen=this.add.image(0,0,'MMScreen').setOrigin(0,0).setScale(0.25);
     
     //Boton credits
     this.botonCredits = this.add.image(770,400,'btnCredits').setScale(0.25);
@@ -64,7 +64,7 @@ export default class SceneExample extends Phaser.Scene {
     
     this.scene.run("SceneGameEbi");
     this.scene.bringToTop("SceneGameEbi");
-    this.scene.pause("SceneMM");
+    this.scene.stop("SceneMM");
   }
   
   viewOptions(){

@@ -8,8 +8,8 @@ export default class SceneExample extends Phaser.Scene {
   //Se carga antes de ejecutar la escena. En este sitio se asignan las variables, se buscan los assets que se van a usar, se llama a los plugins, etc.
   preload(){
     //Options menu
-    this.load.image('OptionsScreen', 'assets/Options menu/OMScreen.png'); //field
-    this.load.image('btnExit', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
+    this.load.image('OptionsScreenGame', 'assets/Options menu/OMScreen.png'); //field
+    this.load.image('btnExitOptionsGame', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
     this.load.image('btnMinus', 'assets/Options menu/btnMinusOptionsMenu.png'); //btn minus
     this.load.image('btnMusic', 'assets/Options menu/btnMusicOptionsMenu.png'); //btn music
     this.load.image('btnPlus', 'assets/Options menu/btnPlusOptionsMenu.png'); //btn plus
@@ -22,7 +22,7 @@ export default class SceneExample extends Phaser.Scene {
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
 
-    this.cameras.main.setBackgroundColor(0x000000);
+    this.cameras.main.setBackgroundColor(0x000099);
 
     //Variables de prueba
     this.music=true;
@@ -31,17 +31,17 @@ export default class SceneExample extends Phaser.Scene {
     this.sfxVolume=0;
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x991191);
+    this.cameras.main.setBackgroundColor(0x000091);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
 
     //Options field
-    var optionsScreen=this.add.image(0,0,'OptionsScreen').setOrigin(0,0).setScale(0.25);
+    //var optionsScreen=this.add.image(0,0,'OptionsScreen').setOrigin(0,0).setScale(0.25);
     
     //Boton exit
-    this.botonExit = this.add.image(480,455,'btnExit').setScale(0.25);
-		this.botonExit.setInteractive({ useHandCursor: true  } )
+    this.btnExitOptionsGame = this.add.image(480,455,'btnExitOptionsGame').setScale(0.25);
+		this.btnExitOptionsGame.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.exitOptions());
 
 

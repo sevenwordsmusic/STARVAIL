@@ -13,6 +13,9 @@ import SceneOptions from "./Scenes/SceneOptionsMM.js"
 import SceneGameEbi from "./Scenes/SceneGameEbi.js"
 import ScenePause from "./Scenes/ScenePause.js"
 import SceneOptionsGame from "./Scenes/SceneOptionsGame.js"
+import SceneScore from "./Scenes/SceneScore.js"
+import SceneCreditsScore from "./Scenes/SceneCreditsScore.js"
+import SceneGameOver from "./Scenes/SceneGameOver.js"
 
 //Configuración de Phaser 3
 var config = {
@@ -41,6 +44,9 @@ var config = {
     SceneGameEbi,
     ScenePause,
     SceneOptionsGame,
+    SceneScore,
+    SceneCreditsScore,
+    SceneGameOver,
 
     SceneTest_1,
   ],
