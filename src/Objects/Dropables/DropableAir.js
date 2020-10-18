@@ -17,7 +17,7 @@ export default class DropableAir extends Dropable{
   }
 
   bounce(spreadVelX, dirX, spreadVelY, dirY){
-    var randomVec = new Phaser.Math.Vector2(Phaser.Math.Between(0.5, spreadVelX) * dirX, Phaser.Math.Between(0.5, spreadVelY) * dirY);
+    var randomVec = new Phaser.Math.Vector2(Phaser.Math.FloatBetween(0.5, spreadVelX) * dirX, Phaser.Math.FloatBetween(0.5, spreadVelY) * dirY);
     this.sprite.setVelocity(randomVec.x, randomVec.y);
   }
 

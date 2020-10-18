@@ -1,7 +1,10 @@
+import SuperiorQuery from "../SuperiorQuery.js";
+import Bullet from "../Objects/Projectiles/Bullet.js";
+import BulletBounce from "../Objects/Projectiles/BulletBounce.js";
 import Bomb from "../Objects/Projectiles/Bomb.js";
 import Megaton from "../Objects/Projectiles/Megaton.js";
-import Bullet from "../Objects/Projectiles/Bullet.js";
-import SuperiorQuery from "../SuperiorQuery.js";
+import MultiMissile from "../Objects/Projectiles/MultiMissile.js";
+import Missile from "../Objects/Projectiles/Missile.js";
 import Audio from "../Audio.js";
 
 export default class PlayerFireArm {
@@ -39,23 +42,68 @@ export default class PlayerFireArm {
       var bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
       if(bulletCollision.collided){
         var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
-        return new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed), bulletCollision, bulletDistance);
+        new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed), bulletCollision, bulletDistance);
       }else{
-        return new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
+        new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
       }
-
+  }
+  fireBulletBounce(spr, damage, bounce, bulletSpread, bulletSpeed, bulletExpireTime){
+      //AUDIO_BALAEXPLOSIVA_Shot
+      Audio.playRate(Audio.load.shot_00,0.95+(Math.random() * 0.1));
+      //
+      this.armDir.normalize();
+      const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
+      this.armDir.x = Math.cos(this.armDir.angle() + addedRandomAngle);
+      this.armDir.y = Math.sin(this.armDir.angle() + addedRandomAngle);
+      var bulletCollision = SuperiorQuery.superiorRayCastBounce(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
+      if(bulletCollision.collided){
+        var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
+        new BulletBounce(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bounce, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed), bulletCollision, bulletDistance);
+      }else{
+        new BulletBounce(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bounce, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
+      }
   }
   fireBomb(spr, damage, bombArea, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
      Audio.play(Audio.load.shot[this.scene.game.player.weaponCounter]);
     this.armDir.normalize();
-    return new Bomb(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bombArea, bombSpeed, (this.armDir.x < 0)?-1:1, bombExpireTime);
+    const xSpawn = this.sprite.x + this.armDir.x * 30;
+    const ySpawn = this.sprite.y + this.armDir.y * 30;
+    const dirVector = new Phaser.Math.Vector2(this.scene.input.activePointer.x + this.scene.cameras.main.scrollX -xSpawn, this.scene.input.activePointer.y + this.scene.cameras.main.scrollY-ySpawn);
+    var bombProjectile = new Bomb(this.scene, xSpawn, ySpawn, spr, damage, bombArea, bombSpeed, dirVector, (this.armDir.x < 0)?-1:1, bombExpireTime);
+    bombProjectile.armBomb();
   }
   fireMegaton(spr, damage, bombArea, extraEffect, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
      Audio.play(Audio.load.shot[this.scene.game.player.weaponCounter]);
     this.armDir.normalize();
-    return new Megaton(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bombArea, extraEffect, bombSpeed, (this.armDir.x < 0)?-1:1, bombExpireTime);
+    const xSpawn = this.sprite.x + this.armDir.x * 30;
+    const ySpawn = this.sprite.y + this.armDir.y * 30;
+    const dirVector = new Phaser.Math.Vector2(this.scene.input.activePointer.x + this.scene.cameras.main.scrollX -xSpawn, this.scene.input.activePointer.y + this.scene.cameras.main.scrollY-ySpawn);
+    var bombProjectile = new Megaton(this.scene, xSpawn, ySpawn, spr, damage, bombArea, extraEffect, bombSpeed, dirVector, (this.armDir.x < 0)?-1:1, bombExpireTime);
+    bombProjectile.armBomb();
+  }
+
+  fireMissile(spr, damage, bombArea, autoAim, bombSpeed, bombExpireTime){
+    //AUDIO_BOMBA_Shot
+    Audio.playRate(Audio.load.shot_01,0.875+(Math.random() * 0.25));
+    this.armDir.normalize();
+    const xSpawn = this.sprite.x + this.armDir.x * 30;
+    const ySpawn = this.sprite.y + this.armDir.y * 30;
+    const dirVector = new Phaser.Math.Vector2(this.scene.input.activePointer.x + this.scene.cameras.main.scrollX -xSpawn, this.scene.input.activePointer.y + this.scene.cameras.main.scrollY-ySpawn);
+    var bombProjectile = new Missile(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bombArea, autoAim, bombSpeed, dirVector, (this.armDir.x < 0)?-1:1, bombExpireTime);
+    bombProjectile.armBomb();
+  }
+
+  fireMulti(spr, damage, bombArea, offsprings, offspringScale, bombSpeed, bombExpireTime){
+    //AUDIO_BOMBA_Shot
+    Audio.playRate(Audio.load.shot_01,0.875+(Math.random() * 0.25));
+    this.armDir.normalize();
+    const xSpawn = this.sprite.x + this.armDir.x * 30;
+    const ySpawn = this.sprite.y + this.armDir.y * 30;
+    const dirVector = new Phaser.Math.Vector2(this.scene.input.activePointer.x + this.scene.cameras.main.scrollX -xSpawn, this.scene.input.activePointer.y + this.scene.cameras.main.scrollY-ySpawn);
+    var bombProjectile = new MultiMissile(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bombArea, offsprings, offspringScale, bombSpeed, dirVector, (this.armDir.x < 0)?-1:1, bombExpireTime);
+    bombProjectile.armBomb();
   }
 
   adjustOffset(xOff, yOff){

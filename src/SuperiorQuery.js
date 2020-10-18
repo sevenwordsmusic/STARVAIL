@@ -75,6 +75,97 @@ export default class SuperiorQuery{
       return closestCollision;
   }
 
+  //clase para calcular punto de collision entre una linea y un cuerpo o array de cuerpos (devuelve la collisión más cercana al origen del raycast)
+  static superiorRayCastBounce(x1, y1, dir, indentation, bodies){
+      //console.log(bodies)
+      var dir = new Phaser.Math.Vector2(dir.x, dir.y);
+      const indentationX = indentation * dir.x;
+      const indentationY = indentation * dir.y;
+      //dir.scale(5000);
+      var closestCollision = new ClosestBodyCollision();
+      var closestDistance = Number.MAX_SAFE_INTEGER - 1;
+
+      //variables auxiliares para optimizar el algoritmo
+      const vecSquareSum = dir.x*dir.x + dir.y*dir.y;
+      const vecCombSum = x1*dir.x + y1*dir.y;
+      const vecCombDif = y1*dir.x - x1*dir.y;
+
+      //se calculan las collisiones con todas los lados de todos los cuerpos seleccionados con el segmento del raycast
+      for(var i=0; i<bodies.length; i++){
+          if(bodies[i] != null && SuperiorQuery.superiorCircleSector( x1, y1, dir, vecSquareSum, vecCombSum, vecCombDif, bodies[i].position.x, bodies[i].position.y, 46)){
+            //console.log("a");
+            for(var j=0; j<bodies[i].parts.length; j++){
+                var vertices = bodies[i].parts[j].vertices;
+                var next = 0;
+                for (var current=0; current<vertices.length; current++) {
+                  next = (current+1) % vertices.length;
+
+                  var hit = SuperiorQuery.superiorLineLineCollision(x1, y1, x1 + dir.x, y1 + dir.y, vertices[current].x, vertices[current].y, vertices[next].x, vertices[next].y);
+                  if (hit.collided) {
+                    var currentDistance = Math.sqrt(Math.pow(hit.colX - x1,2) + Math.pow(hit.colY - y1,2));
+                    if(currentDistance < closestDistance){
+                      closestDistance = currentDistance;
+                      closestCollision.collided = true;
+                      closestCollision.colX = hit.colX + indentationX;
+                      closestCollision.colY = hit.colY + indentationY;
+                      if(bodies[i].gameObject.parent != undefined /* || */){
+                        closestCollision.colSpecialObj = bodies[i].gameObject.parent;
+                      }
+                      closestCollision.body = bodies[i];
+                      closestCollision.vertex = current;
+                      closestCollision.part = j;
+                    }
+                  }
+                }
+            }
+          }
+      }
+      //se devuelve una clase especial para organizar la información de la colisión
+      return closestCollision;
+  }
+
+  //clase para calcular punto de collision entre una linea y un cuerpo o array de cuerpos (devuelve la collisión más cercana al origen del raycast)
+  static superiorRayCastMisile(x1, y1, dir, bodies){
+      //console.log(bodies)
+      var dir = new Phaser.Math.Vector2(dir.x, dir.y);
+      //dir.scale(5000);
+      var closestCollision = new ClosestBodyCollision();
+      var closestDistance = Number.MAX_SAFE_INTEGER - 1;
+
+      //variables auxiliares para optimizar el algoritmo
+      const vecSquareSum = dir.x*dir.x + dir.y*dir.y;
+      const vecCombSum = x1*dir.x + y1*dir.y;
+      const vecCombDif = y1*dir.x - x1*dir.y;
+
+      //se calculan las collisiones con todas los lados de todos los cuerpos seleccionados con el segmento del raycast
+      for(var i=0; i<bodies.length; i++){
+          if(bodies[i] != null && SuperiorQuery.superiorCircleSector( x1, y1, dir, vecSquareSum, vecCombSum, vecCombDif, bodies[i].position.x, bodies[i].position.y, 46)){
+            //console.log("a");
+            for(var j=0; j<bodies[i].parts.length; j++){
+                var vertices = bodies[i].parts[j].vertices;
+                var next = 0;
+                for (var current=0; current<vertices.length; current++) {
+                  next = (current+1) % vertices.length;
+
+                  var hit = SuperiorQuery.superiorLineLineCollision(x1, y1, x1 + dir.x, y1 + dir.y, vertices[current].x, vertices[current].y, vertices[next].x, vertices[next].y);
+                  if (hit.collided) {
+                    var currentDistance = Math.sqrt(Math.pow(hit.colX - x1,2) + Math.pow(hit.colY - y1,2));
+                    if(currentDistance < closestDistance){
+                      closestDistance = currentDistance;
+                      closestCollision.collided = true;
+                      closestCollision.body = bodies[i];
+                      closestCollision.vertex = current;
+                      closestCollision.part = j;
+                    }
+                  }
+                }
+            }
+          }
+      }
+      //se devuelve una clase especial para organizar la información de la colisión
+      return closestCollision;
+  }
+
   //metodo para ver que cuerpos se collisiona con un semisegmento que empieza en x y
   //esta optimizado al maximo ya que se invoca 1000-2000 veces por disparo, según el numero de cuerpos collisionables del nivel
   static superiorCircleSector(x, y, vec, vecSquareSum, vecCombSum, vecCombDif, cx, cy, cRad){
@@ -87,6 +178,7 @@ export default class SuperiorQuery{
     return false;
   }
 
+  //método imperfecto (para areas muy pequeñas y cuerpos muy grandes no funciona!)
   static superiorRegion(x, y , radius, bodies){
       var touchedBodies = [];
       if(bodies == undefined) return touchedBodies;
@@ -100,6 +192,10 @@ export default class SuperiorQuery{
                       touchedBodies[touchedBodies.length] = bodies[i];
                       break bodyLoop;
                     }
+                }
+                if(Math.pow(x-bodies[i].parts[j].position.x,2) + Math.pow(y-bodies[i].parts[j].position.y,2) <= radius*radius){
+                  touchedBodies[touchedBodies.length] = bodies[i];
+                  break bodyLoop;
                 }
             }
           }

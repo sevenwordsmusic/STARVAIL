@@ -44,7 +44,10 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.tilemapTiledJSON("map2", "assets/Mapas/Testing_Grounds_2.json");
 
 
-    this.load.image('bullet', 'assets/Sprites/Bullet/bullet.png');
+    this.load.image('bullet1', 'assets/Sprites/Bullet/bullet1.png');
+    this.load.image('bullet2', 'assets/Sprites/Bullet/bullet2.png');
+    this.load.image('bullet3', 'assets/Sprites/Bullet/bullet3.png');
+    this.load.image('missile', 'assets/Sprites/Bullet/missile.png');
     this.load.spritesheet('explodingBomb', 'assets/Sprites/Bomb/bomb_ss.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
 
@@ -65,7 +68,7 @@ export default class SceneLoading extends Phaser.Scene {
         key: 'bgAnimation',
         frames: this.anims.generateFrameNumbers('animatedBg', { start: 0, end: 5 }),
         frameRate: 0.001,
-        repeat: 0 
+        repeat: 0
     });
 
     //ANIMS

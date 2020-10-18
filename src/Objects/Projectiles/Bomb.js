@@ -4,52 +4,68 @@ import Audio from "../../Audio.js";
 
 //proyectil que hereda de Projectile
 export default class Bomb extends Projectile {
-  constructor(scene, x, y, speed, dir, expTime){
+  constructor(scene, x, y, spr, dmg, area, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
     //AUDIO:
 
     //inicializacion
     this.sprite = scene.matter.add.sprite(x,y,'explodingBomb',0);
 
-    const mainBody = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,11);
-    const sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,16);
-    sensor.isSensor = true;
+    this.mainBody = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,11);
+    this.sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,19);
+    this.sensor.isSensor = true;
 
     const compoundBody = Phaser.Physics.Matter.Matter.Body.create({
-      parts: [mainBody, sensor],
+      parts: [this.mainBody, this.sensor],
     });
     this.sprite.setExistingBody(compoundBody).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
     this.sprite.setOrigin(0.5, 0.61).setDepth(5)
     this.sprite.setFlipX(dir >= 0);
     this.sprite.setAngularVelocity(0.2 * dir);
-    this.sprite.body.collisionFilter.group = 0;
-    this.sprite.body.collisionFilter.category = 4;
+    this.sprite.body.collisionFilter.group = -1;
+    this.sprite.body.collisionFilter.category = 0;
+    this.sprite.body.collisionFilter.mask = 123;
 
     //se calcula la direccion y magnitud del vector de velocidad
-    this.pVelocity = new Phaser.Math.Vector2(this.scene.input.activePointer.x + this.scene.cameras.main.scrollX -x, this.scene.input.activePointer.y + this.scene.cameras.main.scrollY-y);
+    this.pVelocity = velDir;
     const fAdjuster = Math.min(1, 0.4 + this.pVelocity.length()/400);
     this.pVelocity = this.pVelocity.normalize().scale(speed * fAdjuster);
     this.sprite.setVelocity(this.pVelocity.x -(1*dir), this.pVelocity.y - 4);
 
     this.sprite.body.restitution = 0.5;
 
-    scene.matterCollision.addOnCollideStart({
-      objectA: sensor,
-      objectB: this.scene.enemyBodies.filter(body => body != undefined),
-      callback: this.onSensorCollide,
-      context: this
-    });
-    scene.matterCollision.addOnCollideStart({
-      objectA: mainBody,
-      callback: this.onBodyCollide,
-      context: this
-    });
+    this.bombArmed1;
+    this.bombArmed2;
 
     //AUDIO
     this.sfx= Audio.playRate(Audio.load.wick_00,0.85+(Math.random() * 0.3));
     this.touchDown=true;
     this.touchDelay=0;
   }
+
+  armBomb(){
+    this.sprite.body.collisionFilter.group = 0;
+    this.sprite.body.collisionFilter.category = 4;
+    this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
+      objectA: this.sensor,
+      objectB: this.scene.enemyBodies.filter(body => body != undefined),
+      callback: this.onSensorCollide,
+      context: this
+    });
+    this.bombArmed2 = this.scene.matterCollision.addOnCollideStart({
+      objectA: this.mainBody,
+      callback: this.onBodyCollide,
+      context: this
+    });
+  }
+
+  delayArmBomb(delayTime){
+    this.scene.time.addEvent({
+      delay: delayTime,
+      callback: () => (this.armBomb())
+    });
+  }
+
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
     console.log("a");
@@ -69,8 +85,15 @@ export default class Bomb extends Projectile {
   }
 
   itemExpire(proj){
+      this.bombArmed1();
+      this.bombArmed2();
+      //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
+      Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
+      this.sfx.volume= 0.0;
+
       const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
-      bombExplosion.setDepth(10).setScale(3) //42
+      bombExplosion.setDepth(10).setScale(this.area/15) //45
+      this.damageEnemiesArea();
 
       var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, 40, this.scene.enemyBodies);
       for(var i in damagedEnemies){
@@ -84,13 +107,13 @@ export default class Bomb extends Projectile {
       //animacion de explosion
       bombExplosion.anims.play('explosion', true);
 
-      //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-      Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
-      this.sfx.volume= 0.0;
       super.itemExpire(proj);
   }
 
   distanceToPlayer(){
-    return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    if(this.sprite.body != undefined)
+      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    else
+      return 1000;    //ARREGLAR ESTO
   }
 }

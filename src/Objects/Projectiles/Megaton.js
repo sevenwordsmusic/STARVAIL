@@ -4,7 +4,7 @@ import Audio from "../../Audio.js";
 
 //proyectil que hereda de Projectile
 export default class Megaton extends Projectile {
-  constructor(scene, x, y, spr, dmg, area, extraEff, speed, dir, expTime){
+  constructor(scene, x, y, spr, dmg, area, extraEff, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
     //AUDIO:
 
@@ -15,44 +15,51 @@ export default class Megaton extends Projectile {
     this.area = area;
     this.extraEff = extraEff;
 
-    const mainBody = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,11);
-    const sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,19);
-    sensor.isSensor = true;
+    this.mainBody = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,11);
+    this.sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,19);
+    this.sensor.isSensor = true;
 
     const compoundBody = Phaser.Physics.Matter.Matter.Body.create({
-      parts: [mainBody, sensor],
+      parts: [this.mainBody, this.sensor],
     });
     this.sprite.setExistingBody(compoundBody).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
     this.sprite.setOrigin(0.5, 0.61).setDepth(5)
     this.sprite.setFlipX(dir >= 0);
     this.sprite.setAngularVelocity(0.2 * dir);
-    this.sprite.body.collisionFilter.group = 0;
+    this.sprite.body.collisionFilter.group = -1;
     this.sprite.body.collisionFilter.category = 4;
 
     //se calcula la direccion y magnitud del vector de velocidad
-    this.pVelocity = new Phaser.Math.Vector2(this.scene.input.activePointer.x + this.scene.cameras.main.scrollX -x, this.scene.input.activePointer.y + this.scene.cameras.main.scrollY-y);
+    this.pVelocity = velDir;
     const fAdjuster = Math.min(1, 0.4 + this.pVelocity.length()/400);
     this.pVelocity = this.pVelocity.normalize().scale(speed * fAdjuster);
     this.sprite.setVelocity(this.pVelocity.x -(1*dir), this.pVelocity.y - 4);
 
     this.sprite.body.restitution = 0.5;
 
-    scene.matterCollision.addOnCollideStart({
-      objectA: sensor,
-      callback: this.onSensorCollide,
-      context: this
-    });
-    scene.matterCollision.addOnCollideStart({
-      objectA: mainBody,
-      callback: this.onBodyCollide,
-      context: this
-    });
+    this.bombArmed1;
+    this.bombArmed2;
 
     //AUDIO
     this.sfx= Audio.playRate(Audio.load.wick_00,0.85+(Math.random() * 0.3));
     this.touchDown=true;
     this.touchDelay=0;
   }
+
+  armBomb(){
+    this.sprite.body.collisionFilter.group = 0;
+    this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
+      objectA: this.sensor,
+      callback: this.onSensorCollide,
+      context: this
+    });
+    this.bombArmed2 = this.scene.matterCollision.addOnCollideStart({
+      objectA: this.mainBody,
+      callback: this.onBodyCollide,
+      context: this
+    });
+  }
+
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
     if(bodyB.gameObject.parent != undefined){
@@ -76,13 +83,21 @@ export default class Megaton extends Projectile {
   }
 
   itemExpire(proj, big = false){
+    this.bombArmed1();
+    this.bombArmed2();
+    //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
+    Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
+    this.sfx.volume= 0.0;
+
     var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
     if(!big){
-      bombExplosion.setDepth(10).setScale(4.5) //42
+      bombExplosion.setDepth(10).setScale(this.area/15) //42
       this.damageEnemiesArea();
+      this.scene.cameras.main.shake(300, 0.01);
     }else{
-      bombExplosion.setDepth(10).setScale(4.5*this.extraEff) //42
+      bombExplosion.setDepth(10).setScale(this.area/15*this.extraEff) //42
       this.damageEnemiesArea2();
+      this.scene.cameras.main.shake(350*this.extraEff, 0.015*this.extraEff);
     }
 
     //al completar su animacion de explsion, dicha instancia se autodestruye
@@ -92,9 +107,6 @@ export default class Megaton extends Projectile {
     //animacion de explosion
     bombExplosion.anims.play('explosion', true);
 
-    //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-    Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
-    this.sfx.volume= 0.0;
     super.itemExpire(proj);
   }
 
@@ -115,6 +127,9 @@ export default class Megaton extends Projectile {
   }
 
   distanceToPlayer(){
-    return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    if(this.sprite.body != undefined)
+      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    else
+      return 1000;    //ARREGLAR ESTO
   }
 }

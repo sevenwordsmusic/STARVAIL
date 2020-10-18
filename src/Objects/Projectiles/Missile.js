@@ -1,0 +1,148 @@
+import Projectile from "./Projectile.js";
+import Bomb from "./Bomb.js";
+import SuperiorQuery from "../../SuperiorQuery.js";
+import Audio from "../../Audio.js";
+
+//proyectil que hereda de Projectile
+export default class Missile extends Projectile {
+  constructor(scene, x, y, spr, dmg, area, autoAim, speed, velDir, dir, expTime){
+    super(scene, x, y, expTime);
+    //AUDIO:
+
+    //inicializacion
+    this.sprite = scene.matter.add.sprite(x,y,spr,0);
+    this.sprite.parent = this;
+    this.dmg = dmg;
+    this.area = area;
+    this.speed = speed;
+    this.autoAim = autoAim;
+
+    this.sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,11);
+    this.sensor.isSensor = true;
+
+    this.sprite.setExistingBody(this.sensor).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
+    this.sprite.setOrigin(0.5, 0.61).setDepth(5)
+    this.sprite.setFlipX(dir < 0);
+    this.sprite.angle = velDir.angle() * 180/Math.PI + 90;
+    //this.sprite.setAngularVelocity(0.2 * dir);
+    this.sprite.body.collisionFilter.group = -1;
+    this.sprite.body.collisionFilter.category = 4;
+
+    this.sprite.setIgnoreGravity(true);
+
+    //se calcula la direccion y magnitud del vector de velocidad
+    this.pVelocity = velDir;
+    this.pVelocity = this.pVelocity.normalize().scale(speed);
+    this.sprite.setVelocity(this.pVelocity.x , this.pVelocity.y);
+
+    this.sprite.body.restitution = 0.5;
+
+    this.scene.events.on("update", this.update, this);
+    this.bombArmed1;
+    //this.bombArmed2;
+    this.comit = 1;
+    if(this.scene.game.player.closestEnemy != undefined){
+    const objectiveDirection3 = new Phaser.Math.Vector3(this.scene.game.player.closestEnemy.sprite.x - this.sprite.x,
+                                                this.scene.game.player.closestEnemy.sprite.y - this.sprite.y, 0);
+    const currentDir3 = new Phaser.Math.Vector3(this.pVelocity.x ,this.pVelocity.y  , 0);
+    const crossProd = objectiveDirection3.cross(currentDir3);
+    if(crossProd.z >= 0)
+      this.comit = -1;
+    else
+      this.comit = 1;
+
+    }
+
+    //AUDIO
+    this.sfx= Audio.playRate(Audio.load.wick_00,0.85+(Math.random() * 0.3));
+    this.touchDown=true;
+    this.touchDelay=0;
+  }
+
+  update(time, delta){
+    if(this.sprite.body != undefined){
+      const currentVel = new Phaser.Math.Vector2(this.sprite.body.velocity.x, this.sprite.body.velocity.y);
+      const currentAngle = currentVel.angle();
+
+      if(this.scene.game.player.closestEnemy != undefined){
+        const objectiveDirection = new Phaser.Math.Vector2(this.scene.game.player.closestEnemy.sprite.x - this.sprite.x,
+                                                  this.scene.game.player.closestEnemy.sprite.y - this.sprite.y);
+        const objectiveAngle = objectiveDirection.angle();
+
+        if(Math.abs(objectiveAngle - currentAngle) > this.autoAim * delta){
+          currentVel.x = Math.cos(currentAngle + this.autoAim * delta * this.comit) * this.speed/2.5;
+          currentVel.y = Math.sin(currentAngle + this.autoAim * delta * this.comit) * this.speed/2.5;
+          this.sprite.setVelocity(currentVel.x, currentVel.y);
+          this.sprite.angle = (currentAngle - this.autoAim) * 180/Math.PI + 90;
+        }
+        else{
+          objectiveDirection.normalize().scale(this.speed);
+          this.sprite.setVelocity(objectiveDirection.x, objectiveDirection.y);
+          this.sprite.angle = (objectiveAngle) * 180/Math.PI + 90;
+          this.scene.events.off("update", this.update, this);
+        }
+      }
+      else{
+        currentVel.x = Math.cos(currentAngle + this.autoAim * delta * this.comit) * this.speed/2.5;
+        currentVel.y = Math.sin(currentAngle + this.autoAim * delta * this.comit) * this.speed/2.5;
+        this.sprite.setVelocity(currentVel.x, currentVel.y);
+        this.sprite.angle = (currentAngle - this.autoAim) * 180/Math.PI + 90;
+      }
+    }
+  }
+
+  armBomb(){
+    this.sprite.body.collisionFilter.group = 0;
+    this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
+      objectA: this.sensor,
+      callback: this.onSensorCollide,
+      context: this
+    });
+  }
+
+  onSensorCollide({ bodyA, bodyB, pair }) {
+    if (bodyB.isSensor) return;
+    this.reachedTarget(this, bodyB, pair);
+  }
+
+  reachedTarget(proj, bodyB, pair){
+    if(this.sprite.body != undefined){
+      this.bombArmed1();
+      //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
+      Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
+      this.sfx.volume= 0.0;
+
+      var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
+      bombExplosion.setDepth(10).setScale(this.area/15) //42
+      this.damageEnemiesArea();
+
+      //al completar su animacion de explsion, dicha instancia se autodestruye
+      bombExplosion.on('animationcomplete', function(){
+        bombExplosion.destroy();
+      });
+      //animacion de explosion
+      bombExplosion.anims.play('explosion', true);
+
+      this.itemExpire(proj);
+    }
+  }
+
+  itemExpire(proj){
+    super.itemExpire(proj);
+  }
+
+  damageEnemiesArea(){
+    var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, this.scene.enemyBodies);
+    for(var i in damagedEnemies){
+      if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
+        damagedEnemies[i].gameObject.parent.damage(this.dmg, this.sprite.x, this.sprite.y);
+    }
+  }
+
+  distanceToPlayer(){
+    if(this.sprite.body != undefined)
+      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    else
+      return 1000;    //ARREGLAR ESTO
+  }
+}

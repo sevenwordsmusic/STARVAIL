@@ -4,13 +4,16 @@ import SuperiorQuery from "../../SuperiorQuery.js";
 import Audio from "../../Audio.js";
 
 //proyectil que hereda de Projectile
-export default class Bullet extends Projectile {
-  constructor(scene, x, y, spr, dmg, speed, velDirection, expTime, target, distanceToPlayer){
+export default class BulletBounce extends Projectile {
+  constructor(scene, x, y, spr, dmg, bounce, speed, velDirection, expTime, target, distanceToPlayer){
     super(scene, x, y,  expTime);
     //inicializacion
     this.sprite = scene.add.sprite(x,y,spr,0);
     this.target = target;
+
     this.dmg = dmg;
+    this.bounce = bounce
+    this.speed = speed;
 
     //se calcula la direccion y magnitud del vector de velocidad
     this.pVelocity = new Phaser.Math.Vector2(velDirection.x, velDirection.y);
@@ -29,7 +32,7 @@ export default class Bullet extends Projectile {
   //se para el update y si se trata de un enemigo, este recibe daño
   itemExpire(proj){
     this.scene.events.off("update", this.update, this);
-    
+
     //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
     Audio.distancePlayRate(this,Audio.load.impact_00,0.9+(Math.random() * 0.2));
 
@@ -45,7 +48,30 @@ export default class Bullet extends Projectile {
     //animacion de explosion
     bombExplosion.anims.play('explosion', true);
 
+    const xAux = this.sprite.x;
+    const yAux = this.sprite.y;
     super.itemExpire(proj);
+
+
+    if(this.bounce > 0 && this.target.body != undefined){
+      this.bounce--;
+      const vertices = this.target.body.parts[this.target.part].vertices;
+      const currentVertex = vertices[this.target.vertex];
+      const nextVertex = vertices[(this.target.vertex+1) % vertices.length];
+      var normalVector = new Phaser.Math.Vector2(nextVertex.y - currentVertex.y, currentVertex.x - nextVertex.x );
+      normalVector.normalize();
+      const randNormalAngle = normalVector.angle() + Phaser.Math.FloatBetween(- Math.PI/3, Math.PI/3);
+      normalVector.x = Math.cos(randNormalAngle);
+      normalVector.y = Math.sin(randNormalAngle);
+
+      var bulletCollision = SuperiorQuery.superiorRayCastBounce(xAux + normalVector.x * 48, yAux + normalVector.y * 48, normalVector, 14 ,this.scene.bulletInteracBodies);
+      if(bulletCollision.collided){
+        var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - (xAux + normalVector.x * 14),2) + Math.pow(bulletCollision.colY - (yAux + normalVector.y * 14),2));
+        return new BulletBounce(this.scene, xAux + normalVector.x * 14, yAux + normalVector.y * 14, this.sprite.texture, this.dmg, this.bounce, this.speed, normalVector, Math.min(1000,(bulletDistance * this.scene.matter.world.getDelta())/this.speed), bulletCollision, bulletDistance);
+      }else{
+        return new BulletBounce(this.scene, xAux + normalVector.x * 14, yAux + normalVector.y * 14, this.sprite.texture, this.dmg, this.bounce, this.speed, normalVector, 1000, bulletCollision, -1);
+      }
+    }
   }
 
   //update (al no tratarse de un cuerpo fisico, las posiciones nuevas se calculan "a mano")
@@ -60,7 +86,7 @@ export default class Bullet extends Projectile {
     this.scene.events.once('noEnemy' + index, function(){
       var auxDir = new Phaser.Math.Vector2(this.pVelocity.x, this.pVelocity.y);
       auxDir.normalize();
-      this.target = SuperiorQuery.superiorRayCast(x, y, auxDir, 14 ,this.scene.bulletInteracBodies);
+      this.target = SuperiorQuery.superiorRayCastBounce(x, y, auxDir, 14 ,this.scene.bulletInteracBodies);
       const bulletDistance = Math.sqrt(Math.pow(this.target.colX - this.sprite.x,2) + Math.pow(this.target.colY - this.sprite.y,2));
       this.expTime = Math.min(1000,(bulletDistance * this.scene.matter.world.getDelta())/speed);
       this.distAcumulator += bulletDistance;

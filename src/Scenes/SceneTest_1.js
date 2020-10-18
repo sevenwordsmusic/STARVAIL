@@ -142,7 +142,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     //Generamos las teclas y las añadimos al jugador androide, creándolos.
     new Dummy(this, 800, 500);
     new DummyAir(this, 800, 600);
-    new Dummy(this, 1000, 500);
+    new Dummy(this, 1300, 300);
 
     new Player(this, 900, 700);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);

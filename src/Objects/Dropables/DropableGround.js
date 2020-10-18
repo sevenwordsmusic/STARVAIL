@@ -21,7 +21,7 @@ export default class DropableGround extends Dropable{
   }
 
   bounce(spreadX, dir, speed, speedVar){
-    var randomVec = new Phaser.Math.Vector2(Phaser.Math.Between(1, spreadX) * dir, -Phaser.Math.Between(speed, speed+speedVar));
+    var randomVec = new Phaser.Math.Vector2(Phaser.Math.FloatBetween(1, spreadX) * dir, -Phaser.Math.FloatBetween(speed, speed+speedVar));
     this.sprite.setVelocity(randomVec.x, randomVec.y);
   }
 
