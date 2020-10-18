@@ -152,9 +152,11 @@ export default class Audio extends Phaser.Scene {
         audio.setRate(rate);
         return audio;
     }
-    static play(audio) {
-        audio.play();
-        return audio;
+    static play(audio){
+        audio.setRate(0.95+(Math.random() * 0.1));
+        this.desechable.push(audio);
+        this.desechable.pop().play();
+        return this.desechable.pop();
     }
     static audioUpdate(scene) {
         this.musicLayerEnemies(scene);
@@ -166,14 +168,11 @@ export default class Audio extends Phaser.Scene {
         if (scene.game.isFiring && !this.stingerShot) {
             this.stingerShot = true;
         }
-        if (scene.game.player.isTouching.ground && !this.stingerJet) {
-            this.stingerJet = true;
-        }
-        if (scene.game.player.isTouching.ground && !scene.game.player.activatedJet && !this.stingerWalk) {
+        if (Math.floor(scene.game.player.earlyPos.x) != Math.floor(this.earlyPos) && !scene.game.player.activatedJet && !this.stingerWalk) {
             this.stingerWalk = true;
             this.load.walkLoop.play();
         }
-        if(this.stingerWalk && (!scene.game.player.isTouching.ground || scene.game.player.activatedJet || Math.floor(scene.game.player.earlyPos.x) == Math.floor(this.earlyPos))){
+        if(this.stingerWalk && (scene.game.player.activatedJet || Math.floor(scene.game.player.earlyPos.x) == Math.floor(this.earlyPos))){
             this.stingerWalk = false;
             this.load.walkLoop.stop();
         }
@@ -207,7 +206,7 @@ export default class Audio extends Phaser.Scene {
                 rate: scene.game.player.energy / this.halfDistance + 0.85 + this.volumeSFX,
                 duration: this.barRateDiv[3],
             });
-            this.load.movingPart_00.setRate(1.25);
+            this.load.movingPart_00.setRate(0.75);
             this.load.movingPart_00.play();
         } else if (!scene.game.player.activatedJet && this.earlyPropeller) {
             this.earlyPropeller = false;
@@ -246,20 +245,51 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('engineLoop_00', 'assets/audio/SFX/engineLoop_00.mp3');
         this.load.audio('propellerStop_00', 'assets/audio/SFX/propellerStop_00.mp3');
         this.load.audio('walkLoop_00', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('shot_00', 'assets/audio/SFX/shot_00.mp3');
-        this.load.audio('shot_01', 'assets/audio/SFX/shot_01.mp3');
-        this.load.audio('impact_00', 'assets/audio/SFX/impact_00.mp3');
-        this.load.audio('impact_01', 'assets/audio/SFX/impact_01.mp3');
-        this.load.audio('wick_00', 'assets/audio/SFX/wick_00.mp3');
-        this.load.audio('explosion_01', 'assets/audio/SFX/explosion_01.mp3');
-        this.load.audio('weaponChange_00', 'assets/audio/SFX/weaponChange_00.mp3');
-        this.load.audio('movingPart_00', 'assets/audio/SFX/movingPart_00.mp3');
-        this.load.audio('trigger_00', 'assets/audio/SFX/trigger_00.mp3');
+        this.load.audio('shot_00', 'assets/audio/SFX/shot_00.mp3', {
+    instances: 16
+});
+        this.load.audio('shot_01', 'assets/audio/SFX/shot_01.mp3', {
+    instances: 16
+});
+        this.load.audio('shot_02', 'assets/audio/SFX/shot_02.mp3', {
+    instances: 16
+});
+        this.load.audio('shot_03', 'assets/audio/SFX/shot_03.mp3', {
+    instances: 16
+});
+        this.load.audio('shot_04', 'assets/audio/SFX/shot_04.mp3', {
+    instances: 16
+});
+        this.load.audio('impact_00', 'assets/audio/SFX/impact_00.mp3', {
+    instances: 16
+});
+        this.load.audio('impact_01', 'assets/audio/SFX/impact_01.mp3', {
+    instances: 16
+});
+        this.load.audio('wick_00', 'assets/audio/SFX/wick_00.mp3', {
+    instances: 16
+});
+        this.load.audio('explosion_01', 'assets/audio/SFX/explosion_01.mp3', {
+    instances: 16
+});
+        this.load.audio('weaponChange_00', 'assets/audio/SFX/weaponChange_00.mp3', {
+    instances: 16
+});
+        this.load.audio('movingPart_00', 'assets/audio/SFX/movingPart_00.mp3', {
+    instances: 16
+});
+        this.load.audio('trigger_00', 'assets/audio/SFX/trigger_00.mp3', {
+    instances: 16
+});
     }
     create() {
         //INIT de AUDIO
-        this.shot_00 = this.sound.add('shot_00');
-        this.shot_01 = this.sound.add('shot_01');
+        this.shot=[];
+        this.shot[0] = this.sound.add('shot_00');
+        this.shot[1] = this.sound.add('shot_01');
+        this.shot[2] = this.sound.add('shot_02');
+        this.shot[3] = this.sound.add('shot_03');
+        this.shot[4] = this.sound.add('shot_04');
         this.impact_00 = this.sound.add('impact_00');
         this.impact_01 = this.sound.add('impact_01');
         this.wick_00 = this.sound.add('wick_00');

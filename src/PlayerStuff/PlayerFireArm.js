@@ -30,7 +30,7 @@ export default class PlayerFireArm {
   //cambiar speed a array de weapons
   fireBullet(spr, damage, bulletSpread, bulletSpeed, bulletExpireTime){
       //AUDIO_BALAEXPLOSIVA_Shot
-      Audio.playRate(Audio.load.shot_00,0.95+(Math.random() * 0.1));
+      Audio.play(Audio.load.shot[this.scene.game.player.weaponCounter]);
       //
       this.armDir.normalize();
       const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
@@ -47,13 +47,13 @@ export default class PlayerFireArm {
   }
   fireBomb(spr, damage, bombArea, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
-    Audio.playRate(Audio.load.shot_01,0.875+(Math.random() * 0.25));
+     Audio.play(Audio.load.shot[this.scene.game.player.weaponCounter]);
     this.armDir.normalize();
     return new Bomb(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bombArea, bombSpeed, (this.armDir.x < 0)?-1:1, bombExpireTime);
   }
   fireMegaton(spr, damage, bombArea, extraEffect, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
-    Audio.playRate(Audio.load.shot_01,0.875+(Math.random() * 0.25));
+     Audio.play(Audio.load.shot[this.scene.game.player.weaponCounter]);
     this.armDir.normalize();
     return new Megaton(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bombArea, extraEffect, bombSpeed, (this.armDir.x < 0)?-1:1, bombExpireTime);
   }
