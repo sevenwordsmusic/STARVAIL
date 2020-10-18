@@ -97,7 +97,7 @@ export default class MultiMissile extends Projectile {
           const angleVector = new Phaser.Math.Vector2(Math.cos(angle), Math.sin(angle))
           offspring = new Bomb(this.scene, this.sprite.x, this.sprite.y, bombPreset.wSprite, bombPreset.damage, bombPreset.area, Phaser.Math.FloatBetween(5, 10), angleVector, (angleVector.x < 0)?-1:1, Phaser.Math.FloatBetween(1750, 2250));
           offspring.sprite.setScale(0.65);
-          offspring.delayArmBomb(300);
+          offspring.armBomb();
           angle -= angleChangeRate;
         }
         offspring = undefined;
@@ -106,7 +106,7 @@ export default class MultiMissile extends Projectile {
         for(var i=0; i<this.offsprings; i++){
           offspring = new Bomb(this.scene, this.sprite.x, this.sprite.y, bombPreset.wSprite, bombPreset.damage * this.offspringScale, bombPreset.area * this.offspringScale, 0, new Phaser.Math.Vector2(1, 1), 1, 2000);
           offspring.sprite.setScale(this.offspringScale);
-          offspring.delayArmBomb(300);
+          offspring.armBomb();
         }
       }
       this.itemExpire(proj);

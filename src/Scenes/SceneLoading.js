@@ -50,6 +50,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('missile', 'assets/Sprites/Bullet/missile.png');
     this.load.spritesheet('explodingBomb', 'assets/Sprites/Bomb/bomb_ss.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
+    this.load.spritesheet('explosion2', 'assets/Sprites/Explosions/explosion-5.png', { frameWidth: 256, frameHeight: 256 });
 
     //preload del joystick
     this.load.plugin('rexvirtualjoystickplugin', 'src/rexvirtualjoystickplugin.min.js', true);
@@ -178,6 +179,13 @@ export default class SceneLoading extends Phaser.Scene {
             key: 'explosion',
             frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 7 }),
             frameRate: 12,
+            repeat: 0
+        });
+
+    this.anims.create({
+            key: 'explosion2',
+            frames: this.anims.generateFrameNumbers('explosion2', { start: 0, end: 6 }),
+            frameRate: 10,
             repeat: 0
         });
 

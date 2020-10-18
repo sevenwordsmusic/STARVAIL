@@ -86,7 +86,7 @@ export default class Audio extends Phaser.Scene {
                         targets: this.load.bgmIfWeapon[i],
                         volume: 0.0,
                         duration: this.barRateDiv[3],
-                    });  
+                    });
                 }
             }
         } else {
@@ -355,6 +355,29 @@ export default class Audio extends Phaser.Scene {
             volume: 0.0,
             loop: true
         })
+        // HE AÑADIDO ESTO PORQUE AL HABER MÁS ARMAS DABA ERROR (sustituyelos luego)
+        this.bgmIfWeapon[5] = this.sound.add('loop0000weapon_00', {
+            volume: 0.0,
+            loop: true
+        })
+        this.bgmIfWeapon[6] = this.sound.add('loop0000weapon_01', {
+            volume: 0.0,
+            loop: true
+        })
+        this.bgmIfWeapon[7] = this.sound.add('loop0000weapon_02', {
+            volume: 0.0,
+            loop: true
+        })
+        this.bgmIfWeapon[8] = this.sound.add('loop0000weapon_03', {
+            volume: 0.0,
+            loop: true
+        })
+        this.bgmIfWeapon[9] = this.sound.add('loop0000weapon_04', {
+            volume: 0.0,
+            loop: true
+        })
+        // HE AÑADIDO ESTO PORQUE AL HABER MÁS ARMAS DABA ERROR (sustituyelos luego)
+
         this.loopBase.play();
         this.loopEnemies.play();
         this.loopFliying.play();

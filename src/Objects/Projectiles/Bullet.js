@@ -29,14 +29,14 @@ export default class Bullet extends Projectile {
   //se para el update y si se trata de un enemigo, este recibe daño
   itemExpire(proj){
     this.scene.events.off("update", this.update, this);
-    
+
     //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
     Audio.distancePlayRate(this,Audio.load.impact_00,0.9+(Math.random() * 0.2));
 
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)
       this.target.colSpecialObj.damage(this.dmg, this.sprite.x, this.sprite.y);
 
-    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "exprosion");
+    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
     bombExplosion.setDepth(10).setScale(1) //42
     //al completar su animacion de explsion, dicha instancia se autodestruye
     bombExplosion.on('animationcomplete', function(){

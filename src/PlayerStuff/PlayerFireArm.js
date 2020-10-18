@@ -49,7 +49,7 @@ export default class PlayerFireArm {
   }
   fireBulletBounce(spr, damage, bounce, bulletSpread, bulletSpeed, bulletExpireTime){
       //AUDIO_BALAEXPLOSIVA_Shot
-      Audio.playRate(Audio.load.shot_00,0.95+(Math.random() * 0.1));
+      Audio.play(Audio.load.shot[0]);
       //
       this.armDir.normalize();
       const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
@@ -75,7 +75,7 @@ export default class PlayerFireArm {
   }
   fireMegaton(spr, damage, bombArea, extraEffect, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
-     Audio.play(Audio.load.shot[this.scene.game.player.weaponCounter]);
+     Audio.play(Audio.load.shot[4]);
     this.armDir.normalize();
     const xSpawn = this.sprite.x + this.armDir.x * 30;
     const ySpawn = this.sprite.y + this.armDir.y * 30;
@@ -86,7 +86,7 @@ export default class PlayerFireArm {
 
   fireMissile(spr, damage, bombArea, autoAim, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
-    Audio.playRate(Audio.load.shot_01,0.875+(Math.random() * 0.25));
+     Audio.play(Audio.load.shot[4]);
     this.armDir.normalize();
     const xSpawn = this.sprite.x + this.armDir.x * 30;
     const ySpawn = this.sprite.y + this.armDir.y * 30;
@@ -97,7 +97,7 @@ export default class PlayerFireArm {
 
   fireMulti(spr, damage, bombArea, offsprings, offspringScale, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
-    Audio.playRate(Audio.load.shot_01,0.875+(Math.random() * 0.25));
+     Audio.play(Audio.load.shot[4]);
     this.armDir.normalize();
     const xSpawn = this.sprite.x + this.armDir.x * 30;
     const ySpawn = this.sprite.y + this.armDir.y * 30;

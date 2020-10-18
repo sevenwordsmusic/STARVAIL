@@ -7,6 +7,8 @@ export default class Bomb extends Projectile {
   constructor(scene, x, y, spr, dmg, area, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
     //AUDIO:
+    this.dmg = dmg;
+    this.area = area;
 
     //inicializacion
     this.sprite = scene.matter.add.sprite(x,y,'explodingBomb',0);
@@ -68,7 +70,6 @@ export default class Bomb extends Projectile {
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
-    console.log("a");
     this.timer.remove();
     this.itemExpire(this);
   }
@@ -94,12 +95,6 @@ export default class Bomb extends Projectile {
       const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //45
       this.damageEnemiesArea();
-
-      var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, 40, this.scene.enemyBodies);
-      for(var i in damagedEnemies){
-        if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
-          damagedEnemies[i].gameObject.parent.damage(100, this.sprite.x, this.sprite.y);
-      }
       //al completar su animacion de explsion, dicha instancia se autodestruye
       bombExplosion.on('animationcomplete', function(){
         bombExplosion.destroy();
@@ -108,6 +103,14 @@ export default class Bomb extends Projectile {
       bombExplosion.anims.play('explosion', true);
 
       super.itemExpire(proj);
+  }
+
+  damageEnemiesArea(){
+    var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, this.scene.enemyBodies);
+    for(var i in damagedEnemies){
+      if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
+        damagedEnemies[i].gameObject.parent.damage(this.dmg, this.sprite.x, this.sprite.y);
+    }
   }
 
   distanceToPlayer(){
