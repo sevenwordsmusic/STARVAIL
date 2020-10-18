@@ -152,10 +152,17 @@ export default class Audio extends Phaser.Scene {
         audio.setRate(rate);
         return audio;
     }
+    static play(audio) {
+        audio.play();
+        return audio;
+    }
     static audioUpdate(scene) {
         this.musicLayerEnemies(scene);
         this.musicLayerHeight(scene);
         this.propellerFliying(scene);
+        if (scene.game.isFiring && scene.game.player.energy<1) {
+            this.load.trigger_00.play();
+        }
         if (scene.game.isFiring && !this.stingerShot) {
             this.stingerShot = true;
         }
@@ -172,6 +179,7 @@ export default class Audio extends Phaser.Scene {
         }
         if (scene.game.player.weaponCounter != this.earlyWeapon) {
             this.earlyWeapon = scene.game.player.weaponCounter;
+            this.load.trigger_00.setRate(0.95 + scene.game.player.weaponCounter * 0.05 );
             this.load.weaponChange_00.setRate(0.95 + scene.game.player.weaponCounter * 0.05 );
             this.load.weaponChange_00.play();
             this.load.movingPart_00.setRate(0.95 + scene.game.player.weaponCounter * 0.05 );
@@ -246,6 +254,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('explosion_01', 'assets/audio/SFX/explosion_01.mp3');
         this.load.audio('weaponChange_00', 'assets/audio/SFX/weaponChange_00.mp3');
         this.load.audio('movingPart_00', 'assets/audio/SFX/movingPart_00.mp3');
+        this.load.audio('trigger_00', 'assets/audio/SFX/trigger_00.mp3');
     }
     create() {
         //INIT de AUDIO
@@ -257,6 +266,7 @@ export default class Audio extends Phaser.Scene {
         this.explosion_01 = this.sound.add('explosion_01');
         this.weaponChange_00 = this.sound.add('weaponChange_00');
         this.movingPart_00 = this.sound.add('movingPart_00');
+        this.trigger_00 = this.sound.add('trigger_00');
         this.propellerLoop = this.sound.add('propellerLoop_00', {
             volume: 0.0,
             loop: true
