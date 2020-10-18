@@ -197,7 +197,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   update(time, delta) {
 
   //AUDIO:
-  Audio.musicUpdate(this);
+  Audio.audioUpdate(this);
 }
 }
 
