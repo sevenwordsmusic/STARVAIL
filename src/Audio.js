@@ -106,13 +106,13 @@ export default class Audio extends Phaser.Scene {
             this.stingerJet = false;
             scene.tweens.add({
                 targets: this.load.loopLevitating,
-                volume: 0.0,
-                duration: this.barRateDiv[0],
+                volume: this.volumeBGM,
+                duration: this.barRateDiv[1],
             });
         } else {
             scene.tweens.add({
                 targets: this.load.loopLevitating,
-                volume: this.volumeBGM,
+                volume: 0.0,
                 duration: this.barRateDiv[2],
             });
         }
@@ -153,7 +153,7 @@ export default class Audio extends Phaser.Scene {
         return audio;
     }
     static play(audio){
-        audio.setRate(0.95+(Math.random() * 0.1));
+        audio.setRate(0.95+(Math.random() * 0.05));
         this.desechable.push(audio);
         this.desechable.pop().play();
         return this.desechable.pop();
@@ -167,6 +167,9 @@ export default class Audio extends Phaser.Scene {
         }
         if (scene.game.isFiring && !this.stingerShot) {
             this.stingerShot = true;
+        }
+        if (scene.game.player.activatedJet && !this.stingerJet) {
+            this.stingerJet = true;
         }
         if (Math.floor(scene.game.player.earlyPos.x) != Math.floor(this.earlyPos) && !scene.game.player.activatedJet && !this.stingerWalk) {
             this.stingerWalk = true;
