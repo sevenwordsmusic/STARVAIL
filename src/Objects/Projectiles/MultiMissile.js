@@ -44,11 +44,9 @@ export default class MultiMissile extends Projectile {
 
 
     //AUDIO
-    if(scene.game.player.weaponCounter==7){
-      this.sfx=Audio.play3Dinstance(this, 7).volume;
+      this.sfx=Audio.play3Dinstance(this, 12);
       this.touchDown=true;
       this.touchDelay=0;
-    }
     //
   }
 
@@ -81,7 +79,8 @@ export default class MultiMissile extends Projectile {
     if(this.sprite.body != undefined){
       this.bombArmed1();
       //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-      this.sfx.volume= 0.0;
+        Audio.play3Dinstance(this, 15);
+        this.sfx.volume= 0.0;
       //
 
       var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");

@@ -30,8 +30,16 @@ export default class Bullet extends Projectile {
   itemExpire(proj){
     this.scene.events.off("update", this.update, this);
 
-    //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
-    Audio.play3Dinstance(this, 0);
+     //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
+      if(this.scene.game.player.weaponCounter==0){
+        Audio.play3Dinstance(this, 0);
+      }else if(this.scene.game.player.weaponCounter==1){
+        Audio.play3Dinstance(this, 1);
+      }else if(this.scene.game.player.weaponCounter==2){
+        Audio.play3Dinstance(this, 2);
+      }
+      //
+    
 
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)
       this.target.colSpecialObj.damage(this.dmg, this.sprite.x, this.sprite.y);

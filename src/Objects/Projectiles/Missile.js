@@ -7,9 +7,7 @@ import Audio from "../../Audio.js";
 export default class Missile extends Projectile {
   constructor(scene, x, y, spr, dmg, area, autoAim, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
-    //AUDIO:
-
-    //inicializacion
+     //inicializacion
     this.sprite = scene.matter.add.sprite(x,y,spr,0);
     this.sprite.parent = this;
     this.dmg = dmg;
@@ -54,9 +52,10 @@ export default class Missile extends Projectile {
     }
 
     //AUDIO
-    this.sfx= Audio.playRate(Audio.load.wick_00,0.85+(Math.random() * 0.3));
-    this.touchDown=true;
-    this.touchDelay=0;
+      this.sfx=Audio.play3Dinstance(this, 12);
+      this.touchDown=true;
+      this.touchDelay=0;
+    //
   }
 
   update(time, delta){
@@ -109,8 +108,9 @@ export default class Missile extends Projectile {
     if(this.sprite.body != undefined){
       this.bombArmed1();
       //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-      Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
-      this.sfx.volume= 0.0;
+        Audio.play3Dinstance(this, 15);
+        this.sfx.volume= 0.0;
+      //
 
       var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //42
