@@ -179,7 +179,6 @@ export default class Audio extends Phaser.Scene {
         }else{
             Audio.SFXinstance=0;
         }
-        console.log(type + " " + rnd + " " + SFXinstance );
     }
     
     static playUIinstance(type, rate) {
