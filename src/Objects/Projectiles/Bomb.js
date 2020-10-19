@@ -91,7 +91,7 @@ export default class Bomb extends Projectile {
       this.bombArmed1();
       this.bombArmed2();
       //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-        Audio.play3Dinstance(this, 15);
+        Audio.play2Dinstance(15);
         this.sfx.volume= 0.0;
       //
       const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
