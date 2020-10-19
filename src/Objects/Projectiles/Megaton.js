@@ -88,7 +88,7 @@ export default class Megaton extends Projectile {
     this.bombArmed1();
     this.bombArmed2();
     //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-    Audio.play2Dinstance(16);
+    Audio.play3Dinstance(this,16);
     this.sfx.volume= 0.0;
     //
     var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
