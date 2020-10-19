@@ -53,12 +53,14 @@ export default class SceneExample extends Phaser.Scene {
   }
 
   resumeGamePause(){
-    console.log("Volviendo al juego");
+    console.log("Volviendo al juego desde el menu de pausa");
 
-    //this.scene.sendToBack('ScenePause');
+    this.scene.sendToBack('ScenePause');
 		this.scene.stop('ScenePause');
     this.scene.resume('SceneGameEbi');
     this.scene.bringToTop("SceneGameEbi");
+
+    console.log("Instrucciones ejecutadas");
   }
 
   viewOptions(){

@@ -58,7 +58,7 @@ export default class SceneExample extends Phaser.Scene {
   pauseGame(){
     console.log("Juego pausado");
     
-    this.scene.start("ScenePause");
+    this.scene.run("ScenePause");
     this.scene.bringToTop("ScenePause");
     this.scene.pause("SceneGameEbi");
   }
