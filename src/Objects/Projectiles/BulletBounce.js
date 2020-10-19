@@ -28,13 +28,14 @@ export default class BulletBounce extends Projectile {
     this.sprite.angle = this.pVelocity.angle() * 180/Math.PI + 90;
     this.scene.events.on("update", this.update, this); //para que se ejecute el udate
   }
-
   //se para el update y si se trata de un enemigo, este recibe daño
   itemExpire(proj){
     this.scene.events.off("update", this.update, this);
 
     //AUDIO_bounce
-    Audio.play3Dinstance(this,3);
+    if(this.bounce>0){
+      Audio.play3DinstanceRnd(this,3,5,this.bounce/3);
+    }
     //
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)
       this.target.colSpecialObj.damage(this.dmg, this.sprite.x, this.sprite.y);
@@ -45,9 +46,9 @@ export default class BulletBounce extends Projectile {
     bombExplosion.on('animationcomplete', function(){
       bombExplosion.destroy();
     });
+
     //animacion de explosion
     bombExplosion.anims.play('explosion', true);
-
     const xAux = this.sprite.x;
     const yAux = this.sprite.y;
     super.itemExpire(proj);

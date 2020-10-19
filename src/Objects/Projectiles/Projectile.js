@@ -17,5 +17,7 @@ export default class Projectile {
     //console.log("item expired");
     proj.sprite.destroy();
     proj = undefined;
+
+
   }
 }
