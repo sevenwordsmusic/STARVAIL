@@ -195,7 +195,7 @@ export default class Audio extends Phaser.Scene {
         this.musicLayerEnemies(scene);
         this.musicLayerHeight(scene);
         this.propellerFliying(scene);
-        if (scene.game.isFiring && scene.game.player.energy<1) {
+        if (scene.game.isFiring && scene.game.player.energy<0.6) {
             this.load.soundInstance[10].setRate(0.9 + scene.game.player.weaponCounter * 0.05);
             this.load.soundInstance[10].play();
         }
