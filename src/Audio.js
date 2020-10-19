@@ -329,6 +329,8 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('loop0000weapon_03', 'assets/audio/BGM/loop0000weapon_03.mp3');
         this.load.audio('loop0000weapon_04', 'assets/audio/BGM/loop0000weapon_04.mp3');
         this.load.audio('loop0000weapon_05', 'assets/audio/BGM/loop0000weapon_05.mp3');
+        this.load.audio('loop0000weapon_06', 'assets/audio/BGM/loop0000weapon_06.mp3');
+        this.load.audio('loop0000weapon_07', 'assets/audio/BGM/loop0000weapon_07.mp3');
     }
     create() {
         //INIT AUDIO
@@ -525,19 +527,11 @@ export default class Audio extends Phaser.Scene {
             volume: 0.0,
             loop: true
         })
-        this.bgmIfWeapon[6] = this.sound.add('loop0000weapon_01', {
+        this.bgmIfWeapon[6] = this.sound.add('loop0000weapon_06', {
             volume: 0.0,
             loop: true
         })
-        this.bgmIfWeapon[7] = this.sound.add('loop0000weapon_02', {
-            volume: 0.0,
-            loop: true
-        })
-        this.bgmIfWeapon[8] = this.sound.add('loop0000weapon_03', {
-            volume: 0.0,
-            loop: true
-        })
-        this.bgmIfWeapon[9] = this.sound.add('loop0000weapon_04', {
+        this.bgmIfWeapon[7] = this.sound.add('loop0000weapon_07', {
             volume: 0.0,
             loop: true
         })
