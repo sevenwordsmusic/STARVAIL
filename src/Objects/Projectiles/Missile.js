@@ -107,10 +107,7 @@ export default class Missile extends Projectile {
   reachedTarget(proj, bodyB, pair){
     if(this.sprite.body != undefined){
       this.bombArmed1();
-      //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-        Audio.play3Dinstance(this, 15);
-        this.sfx.volume= 0.0;
-      //
+W
 
       var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //42
