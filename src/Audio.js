@@ -205,13 +205,24 @@ export default class Audio extends Phaser.Scene {
         if (scene.game.player.activatedJet && !this.stingerJet) {
             this.stingerJet = true;
         }
-        if (Math.floor(scene.game.player.earlyPos.x) != Math.floor(this.earlyPos) && !scene.game.player.activatedJet && !this.stingerWalk) {
+        if (Math.floor(scene.game.player.earlyPos.x) != this.earlyPos && !scene.game.player.activatedJet && !this.stingerWalk) {
             this.stingerWalk = true;
+            this.load.walkLoop.setDetune(0.9 + scene.game.player.weaponCounter * 0.05);
             this.load.walkLoop.play();
+
         }
-        if(this.stingerWalk && (scene.game.player.activatedJet || Math.floor(scene.game.player.earlyPos.x) == Math.floor(this.earlyPos))){
+        if(this.stingerWalk && (scene.game.player.activatedJet || Math.floor(scene.game.player.earlyPos.x) == this.earlyPos)){
             this.stingerWalk = false;
             this.load.walkLoop.stop();
+        }
+        if (!this.stingerSurface && Math.floor(scene.game.player.earlyPos.x) != this.earlyPos && !scene.game.player.activatedJet && scene.game.player.isTouching.ground) {
+            this.stingerSurface = true;
+            this.load.surfaceLoop.setDetune(0.9 + scene.game.player.weaponCounter * 0.05);
+            this.load.surfaceLoop.play();
+        }
+        if(this.stingerSurface && ( Math.floor(scene.game.player.earlyPos.x) == this.earlyPos || scene.game.player.activatedJet || !scene.game.player.isTouching.ground)){
+            this.stingerSurface = false;
+            this.load.surfaceLoop.stop();
         }
         if (scene.game.player.weaponCounter != this.earlyWeapon) {
             this.earlyWeapon = scene.game.player.weaponCounter;
@@ -242,7 +253,7 @@ export default class Audio extends Phaser.Scene {
                 rate: scene.game.player.energy /  this.barRateDiv[3] + this.volumeSFX + this.volumeSFX,
                 duration: this.barRateDiv[3],
             });
-            this.load.soundInstance[9].setRate(0.5);
+            this.load.soundInstance[9].setRate(0.4);
             this.load.soundInstance[9].play();
         } else if (!scene.game.player.activatedJet && this.earlyPropeller) {
             this.earlyPropeller = false;
@@ -300,6 +311,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('shot_07', 'assets/audio/SFX/shot_07.mp3');
         //UI LOOPS
         this.load.audio('walkLoop_00', 'assets/audio/SFX/walkLoop_00.mp3');
+        this.load.audio('surfaceLoop_00', 'assets/audio/SFX/surfaceLoop_00.mp3');
         this.load.audio('propellerLoop_00', 'assets/audio/SFX/propellerLoop_00.mp3');
         this.load.audio('engineLoop_00', 'assets/audio/SFX/engineLoop_00.mp3');
         //MUSIC LOOPS
@@ -322,6 +334,7 @@ export default class Audio extends Phaser.Scene {
         this.stingerJet = false;
         this.stingerWalk = false;
         this.stingerMovement = false;
+        this.stingerSurface = false;
         //IMPACTS
         this.soundInstance[0]=[];
         for(var i=0; i<Audio.maxSFXinstances; i++){
@@ -387,6 +400,10 @@ export default class Audio extends Phaser.Scene {
         for(var i=0; i<Audio.maxSFXinstances; i++){
             this.soundInstance[12][i] = this.sound.add('wick_00');
         }
+        this.soundInstance[13]=[];
+        for(var i=0; i<Audio.maxSFXinstances; i++){
+            this.soundInstance[13][i] = this.sound.add('wick_00');
+        }
         //EXPLOSION
         this.explosion_01 = this.sound.add('explosion_01');
 
@@ -427,6 +444,10 @@ export default class Audio extends Phaser.Scene {
         }
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
+            volume: this.volumeSFX,
+            loop: true
+        })
+        this.surfaceLoop = this.sound.add('surfaceLoop_00', {
             volume: this.volumeSFX,
             loop: true
         })

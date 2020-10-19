@@ -40,11 +40,9 @@ export default class Bomb extends Projectile {
     this.bombArmed2;
 
     //AUDIO
-    if(scene.game.player.weaponCounter==4){
-      this.sfx=Audio.play3Dinstance(this, 12).volume;
+      this.sfx=Audio.play3Dinstance(this, 12);
       this.touchDown=true;
       this.touchDelay=0;
-    }
     //
   }
 
@@ -79,7 +77,6 @@ export default class Bomb extends Projectile {
   onBodyCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
     //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
-    if(scene.game.player.weaponCounter==4){
       if(this.touchDown==true && this.touchDelay<3){
         this.touchDelay++;
         this.sfx.volume=Audio.play3Dinstance(this, 4).volume;
@@ -87,7 +84,6 @@ export default class Bomb extends Projectile {
         this.touchDown=false;
         this.touchDelay=0;
       }
-    }
     //
   }
 
@@ -96,7 +92,7 @@ export default class Bomb extends Projectile {
       this.bombArmed2();
       //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
       this.sfx.volume= 0.0;
-
+      //
       const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //45
       this.damageEnemiesArea();
