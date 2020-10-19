@@ -42,10 +42,14 @@ export default class MultiMissile extends Projectile {
     this.bombArmed1;
     //this.bombArmed2;
 
+
     //AUDIO
-    this.sfx= Audio.playRate(Audio.load.wick_00,0.85+(Math.random() * 0.3));
-    this.touchDown=true;
-    this.touchDelay=0;
+    if(scene.game.player.weaponCounter==7){
+      this.sfx=Audio.play3Dinstance(this, 7).volume;
+      this.touchDown=true;
+      this.touchDelay=0;
+    }
+    //
   }
 
   armBomb(){
@@ -59,6 +63,17 @@ export default class MultiMissile extends Projectile {
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
+      //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
+      if(scene.game.player.weaponCounter==7){
+        if(this.touchDown==true && this.touchDelay<3){
+          this.touchDelay++;
+          this.sfx.volume=Audio.play3Dinstance(this, 7).volume;
+        }else if(this.touchDown==true && this.touchDelay== 3){
+          this.touchDown=false;
+          this.touchDelay=0;
+        }
+      }
+      //
     this.reachedTarget(this, bodyB, pair);
   }
 
@@ -66,8 +81,8 @@ export default class MultiMissile extends Projectile {
     if(this.sprite.body != undefined){
       this.bombArmed1();
       //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-      Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
       this.sfx.volume= 0.0;
+      //
 
       var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //42

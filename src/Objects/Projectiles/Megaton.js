@@ -75,7 +75,7 @@ export default class Megaton extends Projectile {
     //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
     if(this.touchDown==true && this.touchDelay<3){
       this.touchDelay++;
-      Audio.distancePlayRate(this,Audio.load.impact_01,0.85+(Math.random() * 0.3));
+      Audio.play3Dinstance(this, 1);
     }else if(this.touchDown==true && this.touchDelay== 3){
       this.touchDown=false;
       this.touchDelay=0;
@@ -86,7 +86,7 @@ export default class Megaton extends Projectile {
     this.bombArmed1();
     this.bombArmed2();
     //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-    Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
+    Audio.play3Dinstance(this, 1);
     this.sfx.volume= 0.0;
 
     var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");

@@ -33,9 +33,9 @@ export default class BulletBounce extends Projectile {
   itemExpire(proj){
     this.scene.events.off("update", this.update, this);
 
-    //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
-    Audio.distancePlayRate(this,Audio.load.impact_00,0.9+(Math.random() * 0.2));
-
+    //AUDIO_bounce
+    Audio.play3Dinstance(this,3);
+    //
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)
       this.target.colSpecialObj.damage(this.dmg, this.sprite.x, this.sprite.y);
 

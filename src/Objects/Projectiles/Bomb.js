@@ -40,9 +40,12 @@ export default class Bomb extends Projectile {
     this.bombArmed2;
 
     //AUDIO
-    this.sfx= Audio.playRate(Audio.load.wick_00,0.85+(Math.random() * 0.3));
-    this.touchDown=true;
-    this.touchDelay=0;
+    if(scene.game.player.weaponCounter==4){
+      this.sfx=Audio.play3Dinstance(this, 12).volume;
+      this.touchDown=true;
+      this.touchDelay=0;
+    }
+    //
   }
 
   armBomb(){
@@ -76,20 +79,22 @@ export default class Bomb extends Projectile {
   onBodyCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
     //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
-    if(this.touchDown==true && this.touchDelay<3){
-      this.touchDelay++;
-      Audio.distancePlayRate(this,Audio.load.impact_01,0.85+(Math.random() * 0.3));
-    }else if(this.touchDown==true && this.touchDelay== 3){
-      this.touchDown=false;
-      this.touchDelay=0;
+    if(scene.game.player.weaponCounter==4){
+      if(this.touchDown==true && this.touchDelay<3){
+        this.touchDelay++;
+        this.sfx.volume=Audio.play3Dinstance(this, 4).volume;
+      }else if(this.touchDown==true && this.touchDelay== 3){
+        this.touchDown=false;
+        this.touchDelay=0;
+      }
     }
+    //
   }
 
   itemExpire(proj){
       this.bombArmed1();
       this.bombArmed2();
       //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-      Audio.distancePlayRate(this,Audio.load.explosion_01,0.85+(Math.random() * 0.3));
       this.sfx.volume= 0.0;
 
       const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");

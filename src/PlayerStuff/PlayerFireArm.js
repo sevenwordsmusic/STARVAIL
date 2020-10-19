@@ -32,8 +32,14 @@ export default class PlayerFireArm {
 
   //cambiar speed a array de weapons
   fireBullet(spr, damage, bulletSpread, bulletSpeed, bulletExpireTime){
-      //AUDIO_BALAEXPLOSIVA_Shot
-      Audio.play(Audio.load.shot[this.scene.game.player.weaponCounter]);
+      //AUDIO
+      if(this.scene.game.player.weaponCounter==0){
+        Audio.play2Dinstance(20);
+      }else if(this.scene.game.player.weaponCounter==1){
+        Audio.play2Dinstance(21);
+      }else if(this.scene.game.player.weaponCounter==2){
+        Audio.play2Dinstance(22);
+      }
       //
       this.armDir.normalize();
       const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
@@ -49,7 +55,7 @@ export default class PlayerFireArm {
   }
   fireBulletBounce(spr, damage, bounce, bulletSpread, bulletSpeed, bulletExpireTime){
       //AUDIO_BALAEXPLOSIVA_Shot
-      Audio.play(Audio.load.shot[0]);
+      Audio.play2Dinstance(23);
       //
       this.armDir.normalize();
       const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
@@ -65,7 +71,7 @@ export default class PlayerFireArm {
   }
   fireBomb(spr, damage, bombArea, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
-     Audio.play(Audio.load.shot[this.scene.game.player.weaponCounter]);
+    Audio.play2Dinstance(24);
     this.armDir.normalize();
     const xSpawn = this.sprite.x + this.armDir.x * 30;
     const ySpawn = this.sprite.y + this.armDir.y * 30;
@@ -75,7 +81,7 @@ export default class PlayerFireArm {
   }
   fireMegaton(spr, damage, bombArea, extraEffect, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
-     Audio.play(Audio.load.shot[4]);
+    Audio.play2Dinstance(25);
     this.armDir.normalize();
     const xSpawn = this.sprite.x + this.armDir.x * 30;
     const ySpawn = this.sprite.y + this.armDir.y * 30;
@@ -86,7 +92,7 @@ export default class PlayerFireArm {
 
   fireMissile(spr, damage, bombArea, autoAim, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
-     Audio.play(Audio.load.shot[4]);
+    Audio.play2Dinstance(26);
     this.armDir.normalize();
     const xSpawn = this.sprite.x + this.armDir.x * 30;
     const ySpawn = this.sprite.y + this.armDir.y * 30;
@@ -97,7 +103,7 @@ export default class PlayerFireArm {
 
   fireMulti(spr, damage, bombArea, offsprings, offspringScale, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
-     Audio.play(Audio.load.shot[4]);
+    Audio.play2Dinstance(27);
     this.armDir.normalize();
     const xSpawn = this.sprite.x + this.armDir.x * 30;
     const ySpawn = this.sprite.y + this.armDir.y * 30;
