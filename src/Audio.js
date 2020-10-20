@@ -13,7 +13,7 @@ export default class Audio extends Phaser.Scene {
     static maxVolume = 1.0;
     static vanishingPoint = this.barRateDiv[2]*this.maxVolume;
     static halfDistance = this.vanishingPoint / 2;
-    static volumeBGM = this.maxVolume;
+    static volumeBGM = 0.75;
     static volumeSFX = this.maxVolume;
     static load;
     static barTimer;
