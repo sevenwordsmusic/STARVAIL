@@ -35,8 +35,6 @@ export default class PlayerFireArm {
       //AUDIO
       if(this.scene.game.player.weaponCounter==0){
         Audio.play2Dinstance(20);
-      }else if(this.scene.game.player.weaponCounter==1){
-        Audio.play2Dinstance(21);
       }else if(this.scene.game.player.weaponCounter==2){
         Audio.play2Dinstance(22);
       }
@@ -49,6 +47,22 @@ export default class PlayerFireArm {
       if(bulletCollision.collided){
         var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
         new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed), bulletCollision, bulletDistance);
+      }else{
+        new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
+      }
+  }
+  fireBulletFast(spr, damage, bulletSpread, bulletSpeed, bulletExpireTime){
+      //AUDIO
+      Audio.play2Dinstance(21);
+      //
+      this.armDir.normalize();
+      const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
+      this.armDir.x = Math.cos(this.armDir.angle() + addedRandomAngle);
+      this.armDir.y = Math.sin(this.armDir.angle() + addedRandomAngle);
+      var bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
+      if(bulletCollision.collided){
+        var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
+        new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, Math.min(Math.max(17,bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed)), bulletCollision, bulletDistance);
       }else{
         new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
       }

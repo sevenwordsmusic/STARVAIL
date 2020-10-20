@@ -139,15 +139,16 @@ export default class SceneTest_1 extends Phaser.Scene {
       }
     });
 
-    //Generamos las teclas y las añadimos al jugador androide, creándolos.
-    new Dummy(this, 800, 500);
+    map.getObjectLayer("Enemy Layer").objects.forEach(point => {
+      new Dummy(this, point.x + 600, point.y);
+    });
     new DummyAir(this, 800, 600);
-    new Dummy(this, 1300, 300);
 
     new Player(this, 900, 700);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
-    new LevelEnd(this, 1150, 100, 'star', 'testsec', SceneTest_2);
+    const levelEnd = map.findObject("Sensors", obj => obj.name === "asd");
+    new LevelEnd(this, levelEnd.x + 600, levelEnd.y, 'star', 'testsec', SceneTest_2);
 
     new InteractableEnergyOnce(this, 700,700);
     new InteractableEnergy(this, 1000,700);
@@ -189,7 +190,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.input.setDefaultCursor('none');
     /*var keyObj = this.input.keyboard.addKey('K');  // Get key object
     keyObj.on('down', function(event) { console.log("k presionada"); });*/
-    
+
   //AUDIO:
    Audio.startAudioEngine(this);
   }

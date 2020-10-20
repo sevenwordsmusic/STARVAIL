@@ -62,7 +62,7 @@ export default class MultiMissile extends Projectile {
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
       //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
-      if(scene.game.player.weaponCounter==7){
+      if(this.scene.game.player.weaponCounter==7){
         if(this.touchDown==true && this.touchDelay<3){
           this.touchDelay++;
           this.sfx.volume=Audio.play3Dinstance(this, 7).volume;
