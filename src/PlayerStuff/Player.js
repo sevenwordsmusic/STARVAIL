@@ -70,6 +70,11 @@ export default class Player {
     this.invulTimer = this.scene.time.addEvent({
       delay: 100
     });
+
+    this.adjustedFriction = 0.2/this.scene.matter.world.getDelta();
+    this.knockVector = new Phaser.Math.Vector2(0,0);
+    this.knockVecNomralized = new Phaser.Math.Vector2(0,0);
+
     //jet
     this.activatedJet = false;
     this.isTakingOf = false;
@@ -97,6 +102,7 @@ export default class Player {
 
       //EVENTOS
       this.weaponChange.on('down', function(event){
+        //this.playerDamageKnockback(20, 0.1, new Phaser.Math.Vector2(-1,0));
         this.changeWeapon();
       }, this);
 
@@ -192,6 +198,14 @@ export default class Player {
     });*/
 
     //FIREARM
+
+    this.tween = this.scene.tweens.add({
+      targets: this.sprite,
+      alpha: {from: 1, to: 0.2},
+      duration: 100,
+      repeat: 0,
+      yoyo: true
+    })
 
     console.log(this);
   }
@@ -346,6 +360,8 @@ export default class Player {
     }
     else
       this.falseVelocityY = 0;
+
+    this.updateKnockback(time, delta);
     //JET
   }
   playAnimation(isFiring){
@@ -404,6 +420,17 @@ export default class Player {
     }
   }
 
+  updateKnockback(time, delta){
+    if(this.knockVector.length() > this.adjustedFriction){
+      this.knockVector.x -= this.knockVecNomralized.x * this.adjustedFriction;
+      this.knockVector.y -= this.knockVecNomralized.y * this.adjustedFriction;
+      this.sprite.x += this.knockVector.x * delta;
+      this.sprite.y += this.knockVector.y * delta;
+      this.knockVector.x -= this.adjustedFriction*Math.sign(this.knockVector.x);
+      this.knockVector.y -= this.adjustedFriction*Math.sign(this.knockVector.y);
+    }
+  }
+
   playerDamage(num, ignoreInvul = false) {
     const delayT = 100;
     if (this.invulTimer.elapsed == delayT || ignoreInvul) {
@@ -412,14 +439,24 @@ export default class Player {
       this.invulTimer = this.scene.time.addEvent({
         delay: delayT
       });
-
+      if(this.tween.progress == 1){
+        this.tween.restart();
+      }
       this.hp -= num;
-      if(this.hp < 0){
+      if(this.hp <= 0){
         this.hp = 0;
         this.playerDeath();
       }
       this.hpBar.draw(this.hp);
     }
+  }
+  playerDamageKnockback(num, knockback, knockVec , ignoreInvul = false) {
+    this.knockVector.x = knockVec.x;
+    this.knockVector.y = knockVec.y;
+    this.knockVecNomralized = this.knockVector.normalize();
+    this.knockVector.scale(knockback);
+
+    this.playerDamage(num, ignoreInvul);
   }
 
   playerDeath(){
@@ -457,12 +494,12 @@ export default class Player {
     //cuanta proporción de "recovery de energía" hay al disparar (por ej: si es 0.5 recuperamos la mitad de energía que de normal cada update), el sprite del proyectil, el frame del crosshair.png que se usa
     this.weapons[0] = {name: "BulletNormal", damage: 6, spread: 0.05, fireRate: 6 * this.scene.matter.world.getDelta(), projectileSpeed: 30, expireTime: 1000, energyCost: 0, energyRecoverProportion: 0, wSprite: "bullet1", chFrame: 0};
     this.weapons[1] = {name: "BulletSuperSonic", damage: 6, spread: 0.05, fireRate: 3 * this.scene.matter.world.getDelta(), projectileSpeed: 40, expireTime: 1000, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet3", chFrame: 0};
-    this.weapons[2] = {name: "BulletExplosive", damage: 14, spread: 0.1, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 1000, energyCost: 0.25, energyRecoverProportion: 0, wSprite: "bullet2", chFrame: 0};
+    this.weapons[2] = {name: "BulletExplosive", damage: 14, knockback: 1 / this.scene.matter.world.getDelta(),  spread: 0.1, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 1000, energyCost: 0.25, energyRecoverProportion: 0, wSprite: "bullet2", chFrame: 0};
     this.weapons[3] = {name: "BulletBounce", damage: 10, bounce: 3, spread: 0.075, fireRate: 7 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 1000, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet1", chFrame: 0};
-    this.weapons[4] = {name: "BombNormal", damage: 40, area: 45, fireRate: 25 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
-    this.weapons[5] = {name: "BombMegaton", damage: 95, area: 68, extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
-    this.weapons[6] = {name: "Misil", damage: 40, area: 30, autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 1};
-    this.weapons[7] = {name: "MissileMulti", damage: 10, area: 25, offsprings: 7, offspringScale: 0.6, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 3000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 1};
+    this.weapons[4] = {name: "BombNormal", damage: 40, area: 45, knockback:  2 / this.scene.matter.world.getDelta(), fireRate: 25 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
+    this.weapons[5] = {name: "BombMegaton", damage: 95, area: 68, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
+    this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 1};
+    this.weapons[7] = {name: "MissileMulti", damage: 10, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.6, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 3000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 1};
   }
 
   initializeFire(){
@@ -486,24 +523,28 @@ export default class Player {
       this.fireArm.adjustFireDirection();
       switch(this.weaponCounter){
         case 0:
-        case 1:
-        case 2:
           this.fireArm.fireBullet(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.spread, currentWeapon.projectileSpeed, currentWeapon.expireTime);
+        break;
+        case 1:
+          this.fireArm.fireBulletFast(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.spread, currentWeapon.projectileSpeed, currentWeapon.expireTime);
+        break;
+        case 2:
+          this.fireArm.fireBulletExplosive(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.knockback, currentWeapon.spread, currentWeapon.projectileSpeed, currentWeapon.expireTime);
         break;
         case 3:
           this.fireArm.fireBulletBounce(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.bounce, currentWeapon.spread, currentWeapon.projectileSpeed, currentWeapon.expireTime);
         break;
         case 4:
-          this.fireArm.fireBomb(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.area, currentWeapon.projectileSpeed,  currentWeapon.expireTime);
+          this.fireArm.fireBomb(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.area, currentWeapon.knockback, currentWeapon.projectileSpeed,  currentWeapon.expireTime);
         break;
         case 5:
-          this.fireArm.fireMegaton(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.area, currentWeapon.extraEffect, currentWeapon.projectileSpeed,  currentWeapon.expireTime);
+          this.fireArm.fireMegaton(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.area, currentWeapon.knockback, currentWeapon.extraEffect, currentWeapon.projectileSpeed,  currentWeapon.expireTime);
         break;
         case 6:
-          this.fireArm.fireMissile(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.area, currentWeapon.autoAim, currentWeapon.projectileSpeed,  currentWeapon.expireTime);
+          this.fireArm.fireMissile(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.area, currentWeapon.knockback, currentWeapon.autoAim, currentWeapon.projectileSpeed,  currentWeapon.expireTime);
         break;
         case 7:
-          this.fireArm.fireMulti(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.area, currentWeapon.offsprings, currentWeapon.offspringScale, currentWeapon.projectileSpeed,  currentWeapon.expireTime);
+          this.fireArm.fireMulti(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.area, currentWeapon.knockback, currentWeapon.offsprings, currentWeapon.offspringScale, currentWeapon.projectileSpeed,  currentWeapon.expireTime);
         break;
         default:
           console.log("no weapon");

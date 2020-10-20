@@ -1,17 +1,17 @@
-import Projectile from "./Projectile.js";
-import Bomb from "./Bomb.js";
-import SuperiorQuery from "../../SuperiorQuery.js";
-import Audio from "../../Audio.js";
+import Projectile from "../Projectile.js";
+import SuperiorQuery from "../../../SuperiorQuery.js";
+import Audio from "../../../Audio.js";
 
 //proyectil que hereda de Projectile
 export default class Missile extends Projectile {
-  constructor(scene, x, y, spr, dmg, area, autoAim, speed, velDir, dir, expTime){
+  constructor(scene, x, y, spr, dmg, area, knockback, autoAim, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
      //inicializacion
     this.sprite = scene.matter.add.sprite(x,y,spr,0);
     this.sprite.parent = this;
     this.dmg = dmg;
     this.area = area;
+    this.knockback = knockback;
     this.speed = speed;
     this.autoAim = autoAim;
 
@@ -131,7 +131,7 @@ export default class Missile extends Projectile {
     var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, this.scene.enemyBodies);
     for(var i in damagedEnemies){
       if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
-        damagedEnemies[i].gameObject.parent.damage(this.dmg, this.sprite.x, this.sprite.y);
+        damagedEnemies[i].gameObject.parent.damageAndKnock(this.dmg, this.knockback, new Phaser.Math.Vector2(damagedEnemies[i].gameObject.x - this.sprite.x, damagedEnemies[i].gameObject.y - this.sprite.y));
     }
   }
 

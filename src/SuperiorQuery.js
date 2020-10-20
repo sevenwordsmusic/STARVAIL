@@ -203,6 +203,11 @@ export default class SuperiorQuery{
       return touchedBodies;
   }
 
+  static superiorBoundBodyOverlap(x1, y1, x2, y2, body){
+    return (x1 <= body.bounds.max.x && x2 >= body.bounds.min.x
+          && y2 >= body.bounds.min.y && y1 <= body.bounds.max.y);
+  }
+
 
 
   /*static superiorCircleAngle(cX,cY,cRad, spread, x,y , vec){

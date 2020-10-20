@@ -1,17 +1,20 @@
-import Projectile from "./Projectile.js";
-import SuperiorQuery from "../../SuperiorQuery.js";
-import Audio from "../../Audio.js";
+import Projectile from "../Projectile.js";
+import SuperiorQuery from "../../../SuperiorQuery.js";
+import Audio from "../../../Audio.js";
 
 //proyectil que hereda de Projectile
-export default class Bomb extends Projectile {
-  constructor(scene, x, y, spr, dmg, area, speed, velDir, dir, expTime){
+export default class Megaton extends Projectile {
+  constructor(scene, x, y, spr, dmg, area, knockback, extraEff, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
     //AUDIO:
-    this.dmg = dmg;
-    this.area = area;
 
     //inicializacion
-    this.sprite = scene.matter.add.sprite(x,y,'explodingBomb',0);
+    this.sprite = scene.matter.add.sprite(x,y,spr,0);
+    this.sprite.parent = this;
+    this.dmg = dmg;
+    this.area = area;
+    this.knockback = knockback;
+    this.extraEff = extraEff;
 
     this.mainBody = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,11);
     this.sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,19);
@@ -24,7 +27,7 @@ export default class Bomb extends Projectile {
     this.sprite.setOrigin(0.5, 0.61).setDepth(5)
     this.sprite.setFlipX(dir >= 0);
     this.sprite.setAngularVelocity(0.2 * dir);
-    this.sprite.body.collisionFilter.group = 0;
+      this.sprite.body.collisionFilter.group = 0;
     this.sprite.body.collisionFilter.category = 4;
 
     //se calcula la direccion y magnitud del vector de velocidad
@@ -39,7 +42,7 @@ export default class Bomb extends Projectile {
     this.bombArmed2;
 
     //AUDIO
-      this.sfx=Audio.play3Dinstance(this, 12);
+      this.sfx=Audio.play3Dinstance(this, 13);
       this.touchDown=true;
       this.touchDelay=0;
     //
@@ -48,7 +51,6 @@ export default class Bomb extends Projectile {
   armBomb(){
     this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
       objectA: this.sensor,
-      objectB: this.scene.enemyBodies.filter(body => body != undefined),
       callback: this.onSensorCollide,
       context: this
     });
@@ -59,18 +61,15 @@ export default class Bomb extends Projectile {
     });
   }
 
-  delayArmBomb(delayTime){
-    this.sprite.body.collisionFilter.mask = 123;
-    this.scene.time.addEvent({
-      delay: delayTime,
-      callback: () => (this.armBomb())
-    });
-  }
-
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
-    this.timer.remove();
-    this.itemExpire(this);
+    if(bodyB.gameObject.parent != undefined){
+      this.timer.remove();
+      if(bodyB.gameObject.parent.constructor.name === "Megaton")
+        this.itemExpire(this, true);
+      else
+        this.itemExpire(this, false);
+    }
   }
   onBodyCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
@@ -85,31 +84,47 @@ export default class Bomb extends Projectile {
     //
   }
 
-  itemExpire(proj){
-      this.bombArmed1();
-      this.bombArmed2();
-      //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-        Audio.play3Dinstance(this,15);
-        this.sfx.volume= 0.0;
-      //
-      const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
-      bombExplosion.setDepth(10).setScale(this.area/15) //45
+  itemExpire(proj, big = false){
+    this.bombArmed1();
+    this.bombArmed2();
+    //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
+    Audio.play3Dinstance(this,16);
+    this.sfx.volume= 0.0;
+    //
+    var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
+    if(!big){
+      bombExplosion.setDepth(10).setScale(this.area/15) //42
       this.damageEnemiesArea();
-      //al completar su animacion de explsion, dicha instancia se autodestruye
-      bombExplosion.on('animationcomplete', function(){
-        bombExplosion.destroy();
-      });
-      //animacion de explosion
-      bombExplosion.anims.play('explosion', true);
+      this.scene.cameras.main.shake(300, 0.01);
+    }else{
+      bombExplosion.setDepth(10).setScale(this.area/15*this.extraEff) //42
+      this.damageEnemiesArea2();
+      this.scene.cameras.main.shake(350*this.extraEff, 0.015*this.extraEff);
+    }
 
-      super.itemExpire(proj);
+    //al completar su animacion de explsion, dicha instancia se autodestruye
+    bombExplosion.on('animationcomplete', function(){
+      bombExplosion.destroy();
+    });
+    //animacion de explosion
+    bombExplosion.anims.play('explosion', true);
+
+    super.itemExpire(proj);
   }
 
   damageEnemiesArea(){
     var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, this.scene.enemyBodies);
     for(var i in damagedEnemies){
       if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
-        damagedEnemies[i].gameObject.parent.damage(this.dmg, this.sprite.x, this.sprite.y);
+        damagedEnemies[i].gameObject.parent.damageAndKnock(this.dmg, this.knockback, new Phaser.Math.Vector2(damagedEnemies[i].gameObject.x - this.sprite.x, damagedEnemies[i].gameObject.y - this.sprite.y));
+    }
+  }
+  damageEnemiesArea2(){
+    console.log("Big Explosion");
+    var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area*this.extraEff, this.scene.enemyBodies);
+    for(var i in damagedEnemies){
+      if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
+        damagedEnemies[i].gameObject.parent.damageAndKnock(this.dmg*this.extraEff, this.knockback*this.extraEff, new Phaser.Math.Vector2(damagedEnemies[i].gameObject.x - this.sprite.x, damagedEnemies[i].gameObject.y - this.sprite.y));
     }
   }
 

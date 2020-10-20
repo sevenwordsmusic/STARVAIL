@@ -21,7 +21,7 @@ Si así es, ya sabes lo que tenemos que hacer.`;
 //Imports en la escena.
 import Player from "../PlayerStuff/Player.js";
 import Dummy from "../Enemies/Dummy.js";
-import DummyAir from "../Enemies/DummyAir.js";
+import ZapperAir from "../Enemies/ZapperAir.js";
 import Dialog from "../Plugins/Dialog.js"
 import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
@@ -64,7 +64,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     //fadeOut = false;
 
     //TESTING DIALOG
-    dialogTest = new Dialog(this, 50, 400,true,5000, {
+    dialogTest = new Dialog(this, 50, 0/*400*/,true,5000, {
       wrapWidth: 700,
       fixedWidth: 700,
       fixedHeight: 80,
@@ -138,13 +138,13 @@ export default class SceneTest_1 extends Phaser.Scene {
         return target[Math.max(0, prop)];
       }
     });
-
+    this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
     map.getObjectLayer("Enemy Layer").objects.forEach(point => {
       new Dummy(this, point.x + 600, point.y);
     });
-    new DummyAir(this, 800, 600);
+    new ZapperAir(this, 800, 600);
 
-    new Player(this, 900, 700);
+    new Player(this, 1100, 700);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
     const levelEnd = map.findObject("Sensors", obj => obj.name === "asd");

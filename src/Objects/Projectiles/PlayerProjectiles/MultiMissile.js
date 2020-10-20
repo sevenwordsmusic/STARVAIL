@@ -1,11 +1,11 @@
-import Projectile from "./Projectile.js";
+import Projectile from "../Projectile.js";
 import Bomb from "./Bomb.js";
-import SuperiorQuery from "../../SuperiorQuery.js";
-import Audio from "../../Audio.js";
+import SuperiorQuery from "../../../SuperiorQuery.js";
+import Audio from "../../../Audio.js";
 
 //proyectil que hereda de Projectile
 export default class MultiMissile extends Projectile {
-  constructor(scene, x, y, spr, dmg, area, offsprings, offspringScale, speed, velDir, dir, expTime){
+  constructor(scene, x, y, spr, dmg, area, knockback, offsprings, offspringScale, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
     //AUDIO:
 
@@ -14,6 +14,7 @@ export default class MultiMissile extends Projectile {
     this.sprite.parent = this;
     this.dmg = dmg;
     this.area = area;
+    this.knockback = knockback;
     this.offsprings = offsprings;
     this.offspringScale = offspringScale;
     this.initX = x;
@@ -109,8 +110,8 @@ export default class MultiMissile extends Projectile {
         var offspring;
         for(var i=0; i<this.offsprings; i++){
           const angleVector = new Phaser.Math.Vector2(Math.cos(angle), Math.sin(angle))
-          offspring = new Bomb(this.scene, this.sprite.x, this.sprite.y, bombPreset.wSprite, bombPreset.damage, bombPreset.area, Phaser.Math.FloatBetween(5, 10), angleVector, (angleVector.x < 0)?-1:1, Phaser.Math.FloatBetween(1750, 2250));
-          offspring.sprite.setScale(0.65);
+          offspring = new Bomb(this.scene, this.sprite.x, this.sprite.y, bombPreset.wSprite, bombPreset.damage * this.offspringScale, bombPreset.area * this.offspringScale, bombPreset.knockback * this.offspringScale, Phaser.Math.FloatBetween(5, 10), angleVector, (angleVector.x < 0)?-1:1, Phaser.Math.FloatBetween(1750, 2250));
+          offspring.sprite.setScale(this.offspringScale);
           offspring.delayArmBomb(300);
           angle -= angleChangeRate;
         }
@@ -118,7 +119,7 @@ export default class MultiMissile extends Projectile {
       }
       else{
         for(var i=0; i<this.offsprings; i++){
-          offspring = new Bomb(this.scene, this.sprite.x, this.sprite.y, bombPreset.wSprite, bombPreset.damage * this.offspringScale, bombPreset.area * this.offspringScale, 0, new Phaser.Math.Vector2(1, 1), 1, 2000);
+          offspring = new Bomb(this.scene, this.sprite.x, this.sprite.y, bombPreset.wSprite, bombPreset.damage * this.offspringScale, bombPreset.area * this.offspringScale, bombPreset.knockback * this.offspringScale, 0, new Phaser.Math.Vector2(1, 1), 1, 2000);
           offspring.sprite.setScale(this.offspringScale);
           offspring.delayArmBomb(300);
         }
@@ -135,7 +136,7 @@ export default class MultiMissile extends Projectile {
     var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, this.scene.enemyBodies);
     for(var i in damagedEnemies){
       if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
-        damagedEnemies[i].gameObject.parent.damage(this.dmg, this.sprite.x, this.sprite.y);
+        damagedEnemies[i].gameObject.parent.damageAndKnock(this.dmg, this.knockback, new Phaser.Math.Vector2(damagedEnemies[i].gameObject.x - this.sprite.x, damagedEnemies[i].gameObject.y - this.sprite.y));
     }
   }
 

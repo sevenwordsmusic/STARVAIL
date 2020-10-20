@@ -29,7 +29,7 @@ export default class SceneLoading extends Phaser.Scene {
 
     this.load.image('playerFireArm', 'assets/Sprites/Player/player_FireArm.png', { frameWidth: 32, frameHeight: 64 });
 
-    this.load.image('dummy', 'assets/Sprites/Enemies/dummy.png');
+    this.load.spritesheet('dummy', 'assets/Sprites/Enemies/dummy.png', { frameWidth: 175, frameHeight: 220 });
 
     this.load.image('bg_e', 'assets/Backgrounds/Sky/SkyBG.png');
     this.load.image('bg1_e', 'assets/Backgrounds/Sky/CloudsFar.png');
@@ -186,6 +186,13 @@ export default class SceneLoading extends Phaser.Scene {
             key: 'explosion2',
             frames: this.anims.generateFrameNumbers('explosion2', { start: 0, end: 6 }),
             frameRate: 10,
+            repeat: 0
+        });
+
+    this.anims.create({
+            key: 'dummy',
+            frames: this.anims.generateFrameNumbers('dummy', { start: 0, end: 1 }),
+            frameRate: 0.5,
             repeat: 0
         });
 

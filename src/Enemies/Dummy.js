@@ -1,5 +1,6 @@
 import Enemy from "./Enemy.js";
 import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
+import EnergyBall from "../Objects/Projectiles/EnemyProjectiles/EnergyBall.js"
 
 //enemigo que hereda de Enemy
 export default class Dummy extends Enemy {
@@ -13,16 +14,24 @@ export default class Dummy extends Enemy {
     this.scene.bulletInteracBodies[this.currentBodyIndex] = this.sprite.body;
     this.scene.enemyBodies[this.currentEnemyIndex] = this.sprite.body;
     this.sprite.body.collisionFilter.group = -1;
+
+    this.adjustedFriction = this.sprite.body.friction / this.scene.matter.world.getDelta();
+    this.scene.events.on("update", this.update, this); //para que se ejecute el udate
   }
 
-  damage(dmg, xDmg, yDmg){
-    super.damage(dmg, xDmg, yDmg);
+  update(time, delta){
+      super.update(time, delta);
   }
 
-  enemyDead(xDmg, yDmg){
+  damage(dmg, v){
+    super.damage(dmg, v);
+  }
+
+  enemyDead(vXDmg){
     const xAux = this.sprite.x;
     const yAux = this.sprite.y;
+    new EnergyBall(this.scene, xAux, yAux, 14, 0.1, 15, new Phaser.Math.Vector2(-1,0), 1000);
     super.enemyDead();
-    new DropableGroundEnergy(this.scene, xAux, yAux, Math.sign(xAux - xDmg),  23);
+    new DropableGroundEnergy(this.scene, xAux, yAux, Math.sign(vXDmg),  23);
   }
 }
