@@ -17,8 +17,9 @@ export default class Audio extends Phaser.Scene {
     static volumeSFX = this.maxVolume;
     static load;
     static barTimer;
-    static maxSFXinstances=64;
+    static maxSFXinstances=32;
     static SFXinstance=0;
+    static stingerKilling=false;
 
     static startAudioEngine(scene){
         Audio.barTimer = scene.time.addEvent({
@@ -31,6 +32,7 @@ export default class Audio extends Phaser.Scene {
     static musicBar(scene) {
         this.counter++;
         this.musicLayerShot(scene);
+        this.musicLayerKilling(scene);
         this.musicLayerJet(scene);
         this.musicLayerMovement(scene);
     }
@@ -53,6 +55,7 @@ export default class Audio extends Phaser.Scene {
     static musicLayerEnemies(scene) {
         if (scene.game.player.getClosestEnemyDistance() > this.vanishingPoint) {
             var distance = 0.0;
+            Audio.stingerKilling = false;
         } else if (scene.game.player.getClosestEnemyDistance() < 0.0) {
             var distance = this.volumeBGM;
         } else {
@@ -70,6 +73,22 @@ export default class Audio extends Phaser.Scene {
                     });
 
     }
+    static musicLayerKilling(scene) {
+        if (Audio.stingerKilling && scene.game.isFiring) {
+            Audio.stingerKilling = false;
+            scene.tweens.add({
+                targets: this.load.loopKilling,
+                volume: this.volumeBGM,
+                duration: this.barRateDiv[2],
+            });
+        } else if (!Audio.stingerKilling){
+            scene.tweens.add({
+                targets: this.load.loopKilling,
+                volume: 0.0,
+                duration: this.barRateDiv[0],
+            });
+        }
+    }
     static musicLayerShot(scene) {
         if (this.stingerShot && scene.game.player.getClosestEnemyDistance() < this.halfDistance) {
             this.stingerShot = false;
@@ -78,13 +97,13 @@ export default class Audio extends Phaser.Scene {
                     scene.tweens.add({
                         targets: this.load.bgmIfWeapon[i],
                         volume: this.volumeBGM,
-                        duration: this.barRateDiv[3],
+                        duration: this.barRateDiv[2],
                     });
                 } else {
                     scene.tweens.add({
                         targets: this.load.bgmIfWeapon[i],
                         volume: 0.0,
-                        duration: this.barRateDiv[3],
+                        duration: this.barRateDiv[2],
                     });
                 }
             }
@@ -106,13 +125,13 @@ export default class Audio extends Phaser.Scene {
             scene.tweens.add({
                 targets: this.load.loopLevitating,
                 volume: this.volumeBGM,
-                duration: this.barRateDiv[1],
+                duration: this.barRateDiv[0],
             });
         } else {
             scene.tweens.add({
                 targets: this.load.loopLevitating,
                 volume: 0.0,
-                duration: this.barRateDiv[2],
+                duration: this.barRateDiv[1],
             });
         }
     }
@@ -215,6 +234,9 @@ export default class Audio extends Phaser.Scene {
 
         }
         if(this.stingerWalk && (scene.game.player.activatedJet || Math.floor(scene.game.player.earlyPos.x) == this.earlyPos)){
+            this.stingerWalk = false;
+            this.load.walkLoop.stop();
+        }else if(this.stingerWalk && !scene.game.player.cursors.left.isDown && !scene.game.player.cursors.right.isDown){
             this.stingerWalk = false;
             this.load.walkLoop.stop();
         }
@@ -325,6 +347,7 @@ export default class Audio extends Phaser.Scene {
         //MUSIC LOOPS
         this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
         this.load.audio('loop0000enemies', 'assets/audio/BGM/loop0000enemies.mp3');
+        this.load.audio('loop0000killing', 'assets/audio/BGM/loop0000killing.mp3');
         this.load.audio('loop0000flying', 'assets/audio/BGM/loop0000flying.mp3');
         this.load.audio('loop0000levitating', 'assets/audio/BGM/loop0000levitating.mp3');
         this.load.audio('loop0000moving', 'assets/audio/BGM/loop0000moving.mp3');
@@ -495,6 +518,10 @@ export default class Audio extends Phaser.Scene {
             volume: 0.0,
             loop: true
         })
+        this.loopKilling = this.sound.add('loop0000killing', {
+            volume: 0.0,
+            loop: true
+        })
         this.loopFliying = this.sound.add('loop0000flying', {
             volume: 0.0,
             loop: true
@@ -543,6 +570,7 @@ export default class Audio extends Phaser.Scene {
         //INIT PLAY LEVEL0000
         this.loopBase.play();
         this.loopEnemies.play();
+        this.loopKilling.play();
         this.loopFliying.play();
         this.loopLevitating.play();
         this.loopMovement.play();
@@ -556,5 +584,6 @@ export default class Audio extends Phaser.Scene {
         console.log("AUDIO LOADED: everything went better than expected :D !!!");
         //Let's go motherfuckers~ 
         this.scene.start("SceneLoading");
+
     }
 }

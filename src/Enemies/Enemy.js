@@ -1,3 +1,4 @@
+import Audio from "../Audio.js";
 //Clase padre de todos los enemigos
 export default class Enemy {
   constructor(scene, x, y, sprtImg, hp){
@@ -35,10 +36,12 @@ export default class Enemy {
   }
 
   enemyDead(){
+    //AUDIO
+    Audio.stingerKilling=true;
+    //
     //el "body" del enemigo se quita del array de cuerpos que interaccionan con balas
     this.scene.bulletInteracBodies[this.currentBodyIndex] = undefined;
     this.scene.enemyBodies[this.currentEnemyIndex] = undefined;
-
     const xAux = this.sprite.x;
     const yAux = this.sprite.y;
     this.sprite.destroy();

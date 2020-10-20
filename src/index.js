@@ -15,6 +15,7 @@ var config = {
   width: 960,
   height: 540,
   parent: 'phaserDOM',
+  pixelArt: true,
   audio: {
     disableWebAudio: false
   },
