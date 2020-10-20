@@ -107,7 +107,6 @@ export default class Missile extends Projectile {
   reachedTarget(proj, bodyB, pair){
     if(this.sprite.body != undefined){
       this.bombArmed1();
-W
 
       var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //42

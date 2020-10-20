@@ -24,9 +24,8 @@ export default class Bomb extends Projectile {
     this.sprite.setOrigin(0.5, 0.61).setDepth(5)
     this.sprite.setFlipX(dir >= 0);
     this.sprite.setAngularVelocity(0.2 * dir);
-    this.sprite.body.collisionFilter.group = -1;
-    this.sprite.body.collisionFilter.category = 0;
-    this.sprite.body.collisionFilter.mask = 123;
+    this.sprite.body.collisionFilter.group = 0;
+    this.sprite.body.collisionFilter.category = 4;
 
     //se calcula la direccion y magnitud del vector de velocidad
     this.pVelocity = velDir;
@@ -47,8 +46,6 @@ export default class Bomb extends Projectile {
   }
 
   armBomb(){
-    this.sprite.body.collisionFilter.group = 0;
-    this.sprite.body.collisionFilter.category = 4;
     this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
       objectA: this.sensor,
       objectB: this.scene.enemyBodies.filter(body => body != undefined),
@@ -63,6 +60,7 @@ export default class Bomb extends Projectile {
   }
 
   delayArmBomb(delayTime){
+    this.sprite.body.collisionFilter.mask = 123;
     this.scene.time.addEvent({
       delay: delayTime,
       callback: () => (this.armBomb())
