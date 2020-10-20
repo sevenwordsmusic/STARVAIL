@@ -103,7 +103,7 @@ export default class Audio extends Phaser.Scene {
                     scene.tweens.add({
                         targets: this.load.bgmIfWeapon[i],
                         volume: 0.0,
-                        duration: this.barRateDiv[2],
+                        duration: this.barRateDiv[1],
                     });
                 }
             }
