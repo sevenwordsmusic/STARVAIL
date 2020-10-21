@@ -1,6 +1,6 @@
 Vagrant's Tower (nombre temporal) - Game Design Document 
 ======
-<em>Redactado por Víctor Sierra Fernández</em>
+<em>Documento redactado por Víctor Sierra Fernández</em>
 
 [1. Introducción](#introducción)
 
