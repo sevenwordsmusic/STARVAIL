@@ -20,7 +20,7 @@ Si así es, ya sabes lo que tenemos que hacer.`;
 
 //Imports en la escena.
 import Player from "../PlayerStuff/Player.js";
-import Dummy from "../Enemies/Dummy.js";
+import ZapperGround from "../Enemies/ZapperGround.js";
 import ZapperAir from "../Enemies/ZapperAir.js";
 import Dialog from "../Plugins/Dialog.js"
 import SceneTest_2 from "./SceneTest_2.js"
@@ -58,19 +58,21 @@ export default class SceneTest_1 extends Phaser.Scene {
     cam = this.cameras.main;
     cam.setBackgroundColor('rgba(150, 174, 191, 1)');
     this.matter.world.setBounds(0, -500, 10000, 10000);
-    cam.setBounds(0, -500, 10000, 1435);
+    cam.setBounds(0, -500, 10000, 10000);/*
+    this.matter.world.setBounds(0, -500, 2900, 2800);
+    cam.setBounds(0, -500, 2880, 2784);*/
 
     cam.fadeIn(Audio.barRateDiv[2]);  //Constante de Audio para sincronía
     //fadeOut = false;
 
     //TESTING DIALOG
-    dialogTest = new Dialog(this, 50, 0/*400*/,true,5000, {
+    /*dialogTest = new Dialog(this, 50, 400,true,5000, {
       wrapWidth: 700,
       fixedWidth: 700,
       fixedHeight: 80,
     });
 
-    dialogTest.textBox.start(content,10);
+    dialogTest.textBox.start(content,10);*/
 
 
     //Backgrounds.
@@ -87,25 +89,25 @@ export default class SceneTest_1 extends Phaser.Scene {
     },this);
 
     //Inicializacion y creacion de mapa de tiles.
-    const map = this.make.tilemap({ key: "map2" });
-    /*const tileset1 = map.addTilesetImage("Cyber_Tiles_1", "tiles1", 32, 32, 1, 2);
-    const tileset2 = map.addTilesetImage("Cyber_Tiles_2", "tiles2", 32, 32, 1, 2);
-    const tileset3 = map.addTilesetImage("Cyber_Tiles_3", "tiles3", 32, 32, 1, 2);*/
-    const tilessetTest = map.addTilesetImage("1. main platforms", "tiles1", 32, 32, 0, 0);
+    const map = this.make.tilemap({ key: "map" });
+    const tileset1 = map.addTilesetImage("background_layer", "tilesBackgorund", 32, 32, 0, 0);
+    const tileset2 = map.addTilesetImage("front_layer", "tilesFront", 32, 32, 0, 0);
+    const tileset3 = map.addTilesetImage("main_layer", "tilesMain", 32, 32, 0, 0);
+    const tileset4 = map.addTilesetImage("second_layer", "tilesSecond", 32, 32, 0, 0);
     //Capas de tiles.
-    const baselayer = map.createDynamicLayer("Base Layer", tilessetTest, 600, 0);
-    baselayer.depth = -5;
-    //const frontlayer = map.createDynamicLayer("Front Layer", [tileset1, tileset2, tileset3], 600, 0);
-    //frontlayer.depth = 25;
-    //const background1 = map.createDynamicLayer("Background 1", [tileset1, tileset2, tileset3], 600, 0);
-    //background1.depth = -25;
-    //const background2 = map.createStaticLayer("Background 2", [tileset1, tileset2, tileset3], 200, 0);
-    //background2.depth = -30;
+
+    const mainlayer = map.createDynamicLayer("Main_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    console.log(mainlayer);
+    mainlayer.depth = -5;
+    const frontlayer = map.createDynamicLayer("Front_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    frontlayer.depth = 25;
+    const secondlayer = map.createDynamicLayer("Second_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    secondlayer.depth = -25;
+    const background = map.createStaticLayer("Background_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    background.depth = -30;
     //Colisiones de las capas.
-    //layerminus1.setCollisionByProperty({ Collides: true });
-    //this.matter.world.convertTilemapLayer(layerminus1);
-    baselayer.setCollisionByProperty({ Collides: true });
-    this.matter.world.convertTilemapLayer(baselayer);
+    mainlayer.setCollisionByProperty({ Collides: true });
+    this.matter.world.convertTilemapLayer(mainlayer);
     //Sistema de cargado dinamico de colliders
     var tileBodyMatrix = [];
     for (var i = 0; i < 240; i++) {
@@ -116,7 +118,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     }
     this.bulletInteracBodies = [];
     var counerAux = 0;
-    baselayer.forEachTile(function (tile) {
+    mainlayer.forEachTile(function (tile) {
       //tile.setSize
       if (tile.physics.matterBody != undefined) {
         const tileBody = tile.physics.matterBody.body;
@@ -139,19 +141,24 @@ export default class SceneTest_1 extends Phaser.Scene {
       }
     });
     this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
-    map.getObjectLayer("Enemy Layer").objects.forEach(point => {
-      new Dummy(this, point.x + 600, point.y);
-    });
-    new ZapperAir(this, 800, 600);
 
-    new Player(this, 1100, 700);
+    //inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
+    map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
+      if(point.name === "zapper1")
+        new ZapperGround(this, point.x, point.y);
+      if(point.name === "zapper2")
+        new ZapperAir(this, point.x, point.y);
+    });
+    map.getObjectLayer("Chest_Layer").objects.forEach(point => {
+      new InteractableEnergyOnce(this, point.x, point.y);
+    });
+
+    new Player(this, 416, 2624);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
-    const levelEnd = map.findObject("Sensors", obj => obj.name === "asd");
-    new LevelEnd(this, levelEnd.x + 600, levelEnd.y, 'star', 'testsec', SceneTest_2);
+    //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)
+    new LevelEnd(this, 704, 64, 'star', 'testsec', SceneTest_2);
 
-    new InteractableEnergyOnce(this, 700,700);
-    new InteractableEnergy(this, 1000,700);
     //var sssd = new HealthBar(this, 400, 400, 300, 20, 0x00ff00, 0x000000, 0xffffff, 100);
     //Colisiones del escneario con el jugador
     /*this.matterCollision.addOnCollideStart({

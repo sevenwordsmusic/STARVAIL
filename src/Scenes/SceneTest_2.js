@@ -13,7 +13,7 @@ var content = 'En un futuro lejano y una tierra cuyo nombre se ha olvidado, una 
 
 //Imports en la escena.
 import Player from "../PlayerStuff/Player.js";
-import Dummy from "../Enemies/Dummy.js";
+import ZapperGround from "../Enemies/ZapperGround.js";
 import Dialog from "../Plugins/Dialog.js"
 import Joystick_test from "./Joystick_test.js"
 import Audio from "../Audio.js";

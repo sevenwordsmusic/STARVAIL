@@ -22,52 +22,64 @@ export default class ZapperAir extends Enemy {
     this.scene.events.on("update", this.update, this); //para que se ejecute el udate
 
     //Variables de IA
-    this.patrolSpeed = 2;
-    this.detectSpeed = 2.5;
-    this.hitDamage = 15;
+    //No Tocar
+    this.patrolDir = new Phaser.Math.Vector2(0,0);
     this.patrolDistance = 1000;
-    this.detectDistance = 250;
-    this.hitDistance = 50;
+    this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
+    this.stopper = 1;
+    //No Tocar
+
+    //Ajustar estas
+    this.patrolRouteLength = 50*this.scene.matter.world.getDelta();  //al patrullar cuanto se desplaza antes de darse la vuelta
+    this.patrolSpeed = 1;                                             //velocidad al patrullar
+    this.detectDistance = 100;                                        //distancia a la uqe detecta el jugador cuando esta patrullando
+    this.detectSpeed = 2.5/this.scene.matter.world.getDelta();        //velocidad al detectarlo
+    this.hitDistance = 50;                                            //distancia de la cual se pone a golpear
+    this.hitSpeed = 0.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
+    this.hitDamage = 15;                                              //daño al golpear
+    //Ajustar estas
     //Variables de IA
 
     //IA
     this.initializeAI(4);
-    this.stateOnStart(0, function(){
-      this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
-      this.newPatrol = true;
-    });
     this.stateUpdate(0, function(){
       const velocityVec = new Phaser.Math.Vector2(this.scene.game.player.sprite.x - this.sprite.x, this.scene.game.player.sprite.y - this.sprite.y);
-      const velLength = velocityVec.length()
+      const velLength = velocityVec.length();
       //console.log("w8ing");
       if(velocityVec.length() <= this.patrolDistance){
         this.goTo(1);
       }
     })
     this.stateOnStart(1, function(){
-    this.sprite.body.frictionAir = 0;
-      if(this.newPatrol)
-        var objectiveVel = new Phaser.Math.Vector2(Phaser.Math.Between(-100, 100) ,Phaser.Math.Between(-100, 100));
-      else
-        var objectiveVel = new Phaser.Math.Vector2(Phaser.Math.Between(0, 100)*(((this.initPos.x - this.sprite.x)>=0)?1:-1) ,Phaser.Math.Between(0, 100)*(((this.initPos.y - this.sprite.y)>=0)?1:-1));
-      this.newPatrol = !this.newPatrol;
-      objectiveVel.normalize().scale(this.patrolSpeed);
-      this.sprite.setVelocityX(objectiveVel.x);
-      this.sprite.setVelocityY(objectiveVel.y);
+      this.stopper = 0;
+      this.sprite.body.frictionAir = 0;
+      const distanceFromStart = (new Phaser.Math.Vector2(this.initPos.x - this.sprite.x, this.initPos.y - this.sprite.y)).length();
+      this.velX = Phaser.Math.FloatBetween(this.patrolSpeed/2, this.patrolSpeed);
+      this.velY = Phaser.Math.FloatBetween(this.patrolSpeed/2, this.patrolSpeed);
+      if(distanceFromStart < this.patrolRouteLength){
+        this.patrolDir.x = Math.sign(this.velX);
+        this.patrolDir.y = Math.sign(this.velY);
+      }
+      else{
+        this.patrolDir.x = Math.sign(this.initPos.x - this.sprite.x);
+        this.patrolDir.y = Math.sign(this.initPos.y - this.sprite.y);
+      }
       this.patrolTimer = this.scene.time.addEvent({
         delay: 3000,
         callback: () => (this.resetState())
       },this);
       this.patrolTimer = this.scene.time.addEvent({
         delay: 1000,
-        callback: () => (this.sprite.body.frictionAir = 0.03)
+        callback: () => (this.stopper = 1, this.sprite.body.frictionAir = 0.03)
       },this);
     });
-    this.stateUpdate(1, function(){
+    this.stateUpdate(1, function(time, delta){
+      if(this.sprite.body === undefined)return;
       const velocityVec = new Phaser.Math.Vector2(this.scene.game.player.sprite.x - this.sprite.x,this.scene.game.player.sprite.y - this.sprite.y);
       const velLength = velocityVec.length()
       if(velLength > this.detectDistance){
-        //hace algo durante patrulla
+        this.sprite.setVelocityX(this.velX * this.patrolDir.x * this.stopper);
+        this.sprite.setVelocityY(this.velY * this.patrolDir.y * this.stopper);
       }else{
         this.goTo(2);
       }
@@ -77,13 +89,14 @@ export default class ZapperAir extends Enemy {
       this.sprite.body.frictionAir = 0.06;
     });
 
-    this.stateUpdate(2, function(){
+    this.stateUpdate(2, function(time, delta){
+      if(this.sprite.body === undefined)return;
       const velocityVec = new Phaser.Math.Vector2(this.scene.game.player.sprite.x - this.sprite.x,this.scene.game.player.sprite.y - this.sprite.y);
       const velLength = velocityVec.length()
       if(velLength > this.hitDistance){
         velocityVec.scale(this.detectSpeed/velLength);
-        this.sprite.setVelocityX(velocityVec.x);
-        this.sprite.setVelocityY(velocityVec.y);
+        this.sprite.setVelocityX(velocityVec.x * delta);
+        this.sprite.setVelocityY(velocityVec.y * delta);
         //console.log("persuing");
       }else{
         this.goTo(3)
@@ -95,7 +108,7 @@ export default class ZapperAir extends Enemy {
         this.goTo(2);
       },this);
       this.scene.time.addEvent({
-        delay: 1000,
+        delay: 500,
         callback: () => (this.inflictDamagePlayerArea(this.sprite.x-50, this.sprite.y-50, this.sprite.x+50, this.sprite.y+50))
       },this);
     });

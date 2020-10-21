@@ -160,7 +160,7 @@ export default class Audio extends Phaser.Scene {
             Audio.SFXinstance++;
         }else{
             Audio.SFXinstance=0;
-        }  
+        }
     }
     static play3Dinstance(scene, type) {
         if (scene.distanceToPlayer() > this.vanishingPoint) {
@@ -200,7 +200,7 @@ export default class Audio extends Phaser.Scene {
             Audio.SFXinstance=0;
         }
     }
-    
+
     static playUIinstance(type, rate) {
         this.load.soundInstance[type][Audio.SFXinstance].setRate(rate);
         this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
@@ -209,7 +209,7 @@ export default class Audio extends Phaser.Scene {
             Audio.SFXinstance++;
         }else{
             Audio.SFXinstance=0;
-        }   
+        }
     }
     static audioUpdate(scene) {
         this.musicLayerEnemies(scene);
@@ -458,7 +458,7 @@ export default class Audio extends Phaser.Scene {
         this.soundInstance[19]=[];
         for(var i=0; i<Audio.maxSFXinstances; i++){
             this.soundInstance[19][i] = this.sound.add('explosion_05');
-        }   
+        }
         //SHOTS
         this.soundInstance[20]=[];
         for(var i=0; i<Audio.maxSFXinstances; i++){
@@ -567,6 +567,11 @@ export default class Audio extends Phaser.Scene {
             volume: 0.0,
             loop: true
         })
+        //esto lo he añadido como placeholder para el lasser
+        this.bgmIfWeapon[8] = this.sound.add('loop0000weapon_01', {
+            volume: 0.0,
+            loop: true
+        })
         //INIT PLAY LEVEL0000
         this.loopBase.play();
         this.loopEnemies.play();
@@ -582,7 +587,7 @@ export default class Audio extends Phaser.Scene {
         //THE LOAD.
         Audio.load = this;
         console.log("AUDIO LOADED: everything went better than expected :D !!!");
-        //Let's go motherfuckers~ 
+        //Let's go motherfuckers~
         this.scene.start("SceneLoading");
 
     }

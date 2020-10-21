@@ -2,6 +2,7 @@ import SuperiorQuery from "../SuperiorQuery.js";
 import Bullet from "../Objects/Projectiles/PlayerProjectiles/Bullet.js";
 import BulletBounce from "../Objects/Projectiles/PlayerProjectiles/BulletBounce.js";
 import BulletExplosive from "../Objects/Projectiles/PlayerProjectiles/BulletExplosive.js";
+import LasserBullet from "../Objects/Projectiles/PlayerProjectiles/LasserBullet.js";
 import Bomb from "../Objects/Projectiles/PlayerProjectiles/Bomb.js";
 import Megaton from "../Objects/Projectiles/PlayerProjectiles/Megaton.js";
 import MultiMissile from "../Objects/Projectiles/PlayerProjectiles/MultiMissile.js";
@@ -91,6 +92,19 @@ export default class PlayerFireArm {
         new BulletBounce(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bounce, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed), bulletCollision, bulletDistance);
       }else{
         new BulletBounce(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bounce, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
+      }
+  }
+  fireLasser(damage, bulletSpeed, bulletExpireTime){
+      //AUDIO
+      Audio.play2Dinstance(21);
+      //
+      this.armDir.normalize();
+      var bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
+      if(bulletCollision.collided){
+        var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
+        new LasserBullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, damage, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed), bulletCollision, bulletDistance);
+      }else{
+        new LasserBullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, damage, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
       }
   }
   fireBomb(spr, damage, bombArea, knockback, bombSpeed, bombExpireTime){

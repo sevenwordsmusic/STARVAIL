@@ -37,17 +37,19 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('bg3_e', 'assets/Backgrounds/Sky/CloudsClose.png');
     this.load.spritesheet('animatedBg', 'assets/animatedBgTest.png', { frameWidth: 631, frameHeight: 148 });
 
-    //this.load.image("tiles1", "assets/Tilesets/Cyber_Tiles_1.png");
-    this.load.image("tiles1", "assets/Tilesets/Cyber_Tiles_1a.png");
-    this.load.image("tiles2", "assets/Tilesets/Cyber_Tiles_2a.png");
-    this.load.image("tiles3", "assets/Tilesets/Cyber_Tiles_3a.png");
-    this.load.tilemapTiledJSON("map2", "assets/Mapas/Testing_Grounds_2.json");
+    //Tilesets de niveles y mapas de niveles
+    this.load.image("tilesBackgorund", "assets/Tilesets/background_layer.png");
+    this.load.image("tilesFront", "assets/Tilesets/front_layer.png");
+    this.load.image("tilesMain", "assets/Tilesets/main_layer.png");
+    this.load.image("tilesSecond", "assets/Tilesets/second_layer.png");
+    this.load.tilemapTiledJSON("map", "assets/Mapas/Level1.json");
 
 
     this.load.image('bullet1', 'assets/Sprites/Bullet/bullet1.png');
     this.load.image('bullet2', 'assets/Sprites/Bullet/bullet2.png');
     this.load.image('bullet3', 'assets/Sprites/Bullet/bullet3.png');
     this.load.image('missile', 'assets/Sprites/Bullet/missile.png');
+    this.load.image('lasser', 'assets/Sprites/Bullet/lasser.png');
     this.load.spritesheet('explodingBomb', 'assets/Sprites/Bomb/bomb_ss.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
     this.load.spritesheet('explosion2', 'assets/Sprites/Explosions/explosion-5.png', { frameWidth: 256, frameHeight: 256 });
@@ -192,7 +194,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.anims.create({
             key: 'dummy',
             frames: this.anims.generateFrameNumbers('dummy', { start: 0, end: 1 }),
-            frameRate: 0.5,
+            frameRate: 2,
             repeat: 0
         });
 

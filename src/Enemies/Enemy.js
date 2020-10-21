@@ -82,8 +82,6 @@ export default class Enemy extends FiniteStateMachine{
     //el "body" del enemigo se quita del array de cuerpos que interaccionan con balas
     this.scene.bulletInteracBodies[this.currentBodyIndex] = undefined;
     this.scene.enemyBodies[this.currentEnemyIndex] = undefined;
-    const xAux = this.sprite.x;
-    const yAux = this.sprite.y;
     this.sprite.destroy();
     //se emite un evento avisando a las balas que tienen a este enemigo como "target" para que cambien a un target nuevo
     this.scene.events.emit('noEnemy' + this.currentBodyIndex);
