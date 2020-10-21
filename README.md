@@ -157,9 +157,7 @@ nombre temporal es '*Vagrant's Tower'*. A continuación, se describirán
 todos los aspectos del juego, desde su concepto hasta sus detalles de
 implementación. Téngase en mente que este es un documento en constante
 evolución, y, por lo tanto, [todo lo aquí escrito está sujeto a
-cambios]{.ul}:
-
- {#section .list-paragraph}
+cambios]
 
 Elevator Pitch.
 ---------------
