@@ -29,10 +29,18 @@ export default class SceneExample extends Phaser.Scene {
     //var creditsScreen=this.add.image(0,0,'CreditsScreen').setOrigin(0,0).setScale(0.25);
     
     //Boton exit
-    this.btnExitCredits = this.add.image(480,455,'btnExitCredits').setScale(0.25);
+    this.btnExitCredits = this.add.image(480,455,'btnExitCredits').setScale(0.25).setAlpha(0.8);
 		this.btnExitCredits.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.exitCredits());
 
+    this.btnExitCredits.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+
+    this.btnExitCredits.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
+  
   }
 
   //Método que se ejecuta una vez por frame.
@@ -42,6 +50,8 @@ export default class SceneExample extends Phaser.Scene {
 
   exitCredits(){
     console.log("Se ha pulsado exit");
+
+    this.btnExitCredits.alpha=0.8;
 
     this.scene.sendToBack('SceneCredits');
 		this.scene.stop('SceneCredits');

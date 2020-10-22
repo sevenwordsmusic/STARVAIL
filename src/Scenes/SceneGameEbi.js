@@ -32,12 +32,20 @@ export default class SceneExample extends Phaser.Scene {
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
 
     //Options field
-    var ebi=this.add.image(0,0,'ebi').setOrigin(0,0).setScale(0.25);
+    //var ebi=this.add.image(0,0,'ebi').setOrigin(0,0).setScale(0.25);
 
     //Boton pause
-    this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25);
+    this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25).setAlpha(0.8);
 		this.botonPause.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.pauseGame());
+
+    this.botonPause.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+    
+    this.botonPause.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
 
     //Boton muerte
     this.botonMuerte = this.add.image(260,270,'btnMuerte').setScale(0.25);
@@ -57,6 +65,8 @@ export default class SceneExample extends Phaser.Scene {
 
   pauseGame(){
     console.log("Juego pausado");
+
+    this.botonPause.alpha=0.8;
     
     this.scene.run("ScenePause");
     this.scene.bringToTop("ScenePause");

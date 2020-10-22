@@ -32,19 +32,43 @@ export default class SceneExample extends Phaser.Scene {
     //var PauseScreen=this.add.image(0,0,'PauseScreen').setOrigin(0,0).setScale(0.25);
     
     //Boton resume
-    this.btnResumeGamePause = this.add.image(480,140,'btnResumeGamePause').setScale(0.25);
+    this.btnResumeGamePause = this.add.image(480,140,'btnResumeGamePause').setScale(0.25).setAlpha(0.8);
 		this.btnResumeGamePause.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.resumeGamePause());
 
+    this.btnResumeGamePause.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+    
+    this.btnResumeGamePause.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
+
     //Boton options
-    this.btnOptionsGame = this.add.image(480,270,'btnOptionsGame').setScale(0.25);
+    this.btnOptionsGame = this.add.image(480,270,'btnOptionsGame').setScale(0.25).setAlpha(0.8);
 		this.btnOptionsGame.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.viewOptions());
 
+    this.btnOptionsGame.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+    
+    this.btnOptionsGame.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
+
     //Boton exit
-    this.btnExitPause = this.add.image(480,400,'btnExitPause').setScale(0.25);
+    this.btnExitPause = this.add.image(480,400,'btnExitPause').setScale(0.25).setAlpha(0.8);
 		this.btnExitPause.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.exitGame());
+
+    this.btnExitPause.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+    
+    this.btnExitPause.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
   }
 
   //Método que se ejecuta una vez por frame.
@@ -54,6 +78,8 @@ export default class SceneExample extends Phaser.Scene {
 
   resumeGamePause(){
     console.log("Volviendo al juego desde el menu de pausa");
+
+    this.btnResumeGamePause.alpha=0.8;
 
     this.scene.sendToBack('ScenePause');
 		this.scene.stop('ScenePause');
@@ -66,6 +92,7 @@ export default class SceneExample extends Phaser.Scene {
   viewOptions(){
     console.log("Entrando a options");
 
+    this.btnOptionsGame.alpha=0.8;
     
     this.scene.run("SceneOptionsGame");
     this.scene.bringToTop("SceneOptionsGame");
@@ -73,6 +100,9 @@ export default class SceneExample extends Phaser.Scene {
   }
 
   exitGame(){
+
+    this.btnExitPause.alpha=0.8;
+
     this.scene.start("SceneMM");
     this.scene.bringToTop("SceneMM");
     this.scene.stop("SceneGameEbi");

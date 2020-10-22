@@ -30,14 +30,30 @@ export default class SceneExample extends Phaser.Scene {
     var GOScreen=this.add.image(0,0,'GOScreen').setOrigin(0,0).setScale(0.25);
     
     //Boton exit
-    this.btnExitGameOver = this.add.image(746,459,'btnExitGameOver').setScale(0.25);
+    this.btnExitGameOver = this.add.image(746,459,'btnExitGameOver').setScale(0.25).setAlpha(0.8);
 		this.btnExitGameOver.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.exitGameOver());
 
+    this.btnExitGameOver.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+    
+    this.btnExitGameOver.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
+
     //Boton play again
-    this.btnPlayAgainGameOver = this.add.image(237,460,'btnPlayAgainGameOver').setScale(0.25);
+    this.btnPlayAgainGameOver = this.add.image(237,460,'btnPlayAgainGameOver').setScale(0.25).setAlpha(0.8);
 		this.btnPlayAgainGameOver.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.playAgainGameOver());
+
+    this.btnPlayAgainGameOver.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+    
+    this.btnPlayAgainGameOver.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
   }
 
   //Método que se ejecuta una vez por frame.
@@ -48,6 +64,8 @@ export default class SceneExample extends Phaser.Scene {
   exitGameOver(){
     console.log("Se ha pulsado exit");
 
+    this.btnExitGameOver.alpha=0.8;
+
 		this.scene.stop('SceneGameOver');
     this.scene.start('SceneMM');
     this.scene.bringToTop("SceneMM");
@@ -56,6 +74,8 @@ export default class SceneExample extends Phaser.Scene {
   playAgainGameOver(){
 
     console.log("Se ha pulsado play again");
+
+    this.btnPlayAgainGameOver.alpha=0.8;
 
     this.scene.stop('SceneGameOver');
     
