@@ -103,16 +103,16 @@ export default class SceneTest_1 extends Phaser.Scene {
     frontlayer.depth = 25;
     const secondlayer = map.createDynamicLayer("Second_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
     secondlayer.depth = -25;
-    const background = map.createStaticLayer("Background_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    const background = map.createDynamicLayer("Background_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
     background.depth = -30;
     //Colisiones de las capas.
     mainlayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(mainlayer);
     //Sistema de cargado dinamico de colliders
     var tileBodyMatrix = [];
-    for (var i = 0; i < 240; i++) {
+    for (var i = 0; i < 91; i++) {
       tileBodyMatrix[i] = [];
-      for (var j = 0; j < 20; j++) {
+      for (var j = 0; j < 91; j++) {
         tileBodyMatrix[i][j] = undefined;
       }
     }
@@ -122,7 +122,7 @@ export default class SceneTest_1 extends Phaser.Scene {
       //tile.setSize
       if (tile.physics.matterBody != undefined) {
         const tileBody = tile.physics.matterBody.body;
-        if (tileBody.position.x < 2000 /*&& tileBody.position.x > 1856 && tileBody.position.y < 576 && tileBody.position.y > -512*/) {
+        if (tileBody.position.x < 1000 && tileBody.position.y > 2500) {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         } else {
@@ -132,27 +132,26 @@ export default class SceneTest_1 extends Phaser.Scene {
         this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
         counerAux++;
       }
-      tile.x += 120;
     }, this);
 
     this.tileBodyMatrix = new Proxy(tileBodyMatrix, {
       get(target, prop) {
-        return target[Math.max(0, prop)];
+        return target[Math.min(Math.max(0, prop),tileBodyMatrix[0].length-1)];
       }
     });
     this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
 
     //inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
-    map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
+    /*map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
       if(point.name === "zapper1")
         new ZapperGround(this, point.x, point.y);
       if(point.name === "zapper2")
         new ZapperAir(this, point.x, point.y);
-    });
+    });*/
     map.getObjectLayer("Chest_Layer").objects.forEach(point => {
       new InteractableEnergyOnce(this, point.x, point.y);
     });
-
+    new ZapperAir(this, 600, 600);
     new Player(this, 416, 2624);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 

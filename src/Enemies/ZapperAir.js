@@ -4,14 +4,24 @@ import DropableAirEnergy from "../Objects/Dropables/DropableAirEnergy.js"
 //enemigo que hereda de Enemy
 export default class ZapperAir extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'dummy', 10000);
+    super(scene, x, y, 'dummy', 100);
     this.sprite.setScale(0.4);
 
+    const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 40, 40, {chamfer: { radius: 8 } });
-    this.sprite.setExistingBody(body).setPosition(x, y).setFixedRotation();
-    console.log(this.sprite.body);
-    this.scene.bulletInteracBodies[this.currentBodyIndex] = this.sprite.body;
-    this.scene.enemyBodies[this.currentEnemyIndex] = this.sprite.body;
+    this.sensors = {
+      left:   Bodies.rectangle(-28, 0, 10, 20, { isSensor: true }),
+      right:  Bodies.rectangle(28, 0, 10, 20, { isSensor: true }),
+      top:    Bodies.rectangle(0, -28, 20, 10, { isSensor: true }),
+      bottom: Bodies.rectangle(0, 28, 20, 10, { isSensor: true })
+    };
+    const compoundBody = Body.create({
+      parts: [body, this.sensors.left, this.sensors.right, this.sensors.top, this.sensors.bottom]
+    });
+
+    this.sprite.setExistingBody(compoundBody).setPosition(x, y).setFixedRotation();
+    this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
+    this.scene.enemyBodies[this.currentEnemyIndex] = body;
     this.sprite.body.collisionFilter.group = -1;
 
     this.sprite.setIgnoreGravity(true);
@@ -26,12 +36,12 @@ export default class ZapperAir extends Enemy {
     this.patrolDir = new Phaser.Math.Vector2(0,0);
     this.patrolDistance = 1000;
     this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
-    this.stopper = 1;
+    this.stopper = false;
     //No Tocar
 
     //Ajustar estas
-    this.patrolRouteLength = 50*this.scene.matter.world.getDelta();  //al patrullar cuanto se desplaza antes de darse la vuelta
-    this.patrolSpeed = 1;                                             //velocidad al patrullar
+    this.patrolRouteLength = 100;  //al patrullar cuanto se desplaza antes de darse la vuelta
+    this.patrolSpeed = 3;                                             //velocidad al patrullar
     this.detectDistance = 100;                                        //distancia a la uqe detecta el jugador cuando esta patrullando
     this.detectSpeed = 2.5/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.hitDistance = 50;                                            //distancia de la cual se pone a golpear
@@ -42,6 +52,13 @@ export default class ZapperAir extends Enemy {
 
     //IA
     this.initializeAI(4);
+    this.stateOnStart(0, function(){
+      this.scene.matterCollision.addOnCollideStart({
+        objectA: [this.sensors.left, this.sensors.right, this.sensors.top, this.sensors.bottom],
+        callback: this.onSensorCollide,
+        context: this
+      });
+    })
     this.stateUpdate(0, function(){
       const velocityVec = new Phaser.Math.Vector2(this.scene.game.player.sprite.x - this.sprite.x, this.scene.game.player.sprite.y - this.sprite.y);
       const velLength = velocityVec.length();
@@ -51,26 +68,25 @@ export default class ZapperAir extends Enemy {
       }
     })
     this.stateOnStart(1, function(){
-      this.stopper = 0;
-      this.sprite.body.frictionAir = 0;
+      this.stopper = false;
       const distanceFromStart = (new Phaser.Math.Vector2(this.initPos.x - this.sprite.x, this.initPos.y - this.sprite.y)).length();
       this.velX = Phaser.Math.FloatBetween(this.patrolSpeed/2, this.patrolSpeed);
       this.velY = Phaser.Math.FloatBetween(this.patrolSpeed/2, this.patrolSpeed);
       if(distanceFromStart < this.patrolRouteLength){
-        this.patrolDir.x = Math.sign(this.velX);
-        this.patrolDir.y = Math.sign(this.velY);
+        this.patrolDir.x = (Math.random()<0.5)?-1:1;
+        this.patrolDir.y = (Math.random()<0.5)?-1:1;
       }
       else{
         this.patrolDir.x = Math.sign(this.initPos.x - this.sprite.x);
         this.patrolDir.y = Math.sign(this.initPos.y - this.sprite.y);
       }
-      this.patrolTimer = this.scene.time.addEvent({
+      this.patrolTimer1 = this.scene.time.addEvent({
         delay: 3000,
         callback: () => (this.resetState())
       },this);
-      this.patrolTimer = this.scene.time.addEvent({
+      this.patrolTimer2 = this.scene.time.addEvent({
         delay: 1000,
-        callback: () => (this.stopper = 1, this.sprite.body.frictionAir = 0.03)
+        callback: () => (this.stopper = true)
       },this);
     });
     this.stateUpdate(1, function(time, delta){
@@ -78,15 +94,17 @@ export default class ZapperAir extends Enemy {
       const velocityVec = new Phaser.Math.Vector2(this.scene.game.player.sprite.x - this.sprite.x,this.scene.game.player.sprite.y - this.sprite.y);
       const velLength = velocityVec.length()
       if(velLength > this.detectDistance){
-        this.sprite.setVelocityX(this.velX * this.patrolDir.x * this.stopper);
-        this.sprite.setVelocityY(this.velY * this.patrolDir.y * this.stopper);
+        if(!this.stopper){
+          this.sprite.setVelocityX(this.velX * this.patrolDir.x);
+          this.sprite.setVelocityY(this.velY * this.patrolDir.y);
+        }
       }else{
         this.goTo(2);
       }
     })
     this.stateOnEnd(1, function(){
-      this.patrolTimer.remove();
-      this.sprite.body.frictionAir = 0.06;
+      this.patrolTimer1.remove();
+      this.patrolTimer2.remove();
     });
 
     this.stateUpdate(2, function(time, delta){
@@ -118,6 +136,19 @@ export default class ZapperAir extends Enemy {
 
   update(time, delta){
       super.update(time, delta);
+  }
+
+  onSensorCollide({ bodyA, bodyB, pair }){
+    if (bodyB.isSensor) return;
+    console.log("s");
+    if (bodyA === this.sensors.right)
+      this.velX = -1;
+    else if (bodyA === this.sensors.left)
+      this.velX = 1;
+    else if (bodyA === this.sensors.top)
+      this.velY = 1;
+    else if (bodyA === this.sensors.bottom)
+      this.velY = -1;
   }
 
   inflictDamagePlayerArea(x1, y1, x2, y2){

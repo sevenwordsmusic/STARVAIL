@@ -123,7 +123,7 @@ export default class ZapperGround extends Enemy {
     if (bodyB.isSensor) return;
     if (bodyA === this.sensors.right)
       this.patrolDir = -1;
-    if (bodyA === this.sensors.left)
+    else if (bodyA === this.sensors.left)
       this.patrolDir = 1;
     this.traveledDistance = 0;
   }

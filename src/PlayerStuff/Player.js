@@ -78,7 +78,7 @@ export default class Player {
     //jet
     this.activatedJet = false;
     this.isTakingOf = false;
-    this.jetAumulator = 0;
+    this.jetAumulator = 1;
 
     //disparo y brazo de disparo
     this.fireCounterTap = 0;
@@ -223,7 +223,7 @@ export default class Player {
           //this.sprite.setVelocityY(this.scene.game.jetVelocity * this.scene.matter.world.getDelta());
           this.sprite.setIgnoreGravity(false);
           this.activatedJet = false;
-          this.jetAumulator = 0;
+          this.jetAumulator = 1;
       }
     }
     //if (bodyB.name == "interactableBody") return;     //ejemplo para cuerpo NO chocables
@@ -269,13 +269,19 @@ export default class Player {
         this.sprite.body.velocity.y = 0;
 
     if (this.cursors.right.isDown) {
-      if (!(this.isTouching.ground && this.isTouching.right)) {
-        this.sprite.setVelocityX(this.scene.game.moveVelocity * delta * this.rightMultiply * this.playerMoveForceX());
+      if (!this.isTouching.right) {
+        if(this.activatedJet)
+          this.sprite.setVelocityX(this.scene.game.moveVelocityAir * delta * this.rightMultiply * this.playerMoveForceX());
+        else
+          this.sprite.setVelocityX(this.scene.game.moveVelocity * delta * this.rightMultiply * this.playerMoveForceX());
       }
     }
     else if (this.cursors.left.isDown) {
-      if (!(this.isTouching.ground && this.isTouching.left)) {
-        this.sprite.setVelocityX(-this.scene.game.moveVelocity * delta * this.leftMultiply * this.playerMoveForceX());
+      if (!this.isTouching.left) {
+        if(this.activatedJet)
+          this.sprite.setVelocityX(-this.scene.game.moveVelocityAir * delta * this.leftMultiply * this.playerMoveForceX());
+        else
+          this.sprite.setVelocityX(-this.scene.game.moveVelocity * delta * this.leftMultiply * this.playerMoveForceX());
       }
     }
     this.movingArm.x = this.sprite.x;
@@ -328,7 +334,7 @@ export default class Player {
     }
     if(this.activatedJet){
       if(this.cursors.down.isDown){
-        this.sprite.setVelocityY(this.scene.game.jetVelocity * delta * this.playerMoveForceY());
+        this.sprite.setVelocityY(this.scene.game.jetVelocityDown * delta * this.playerMoveForceY());
       }
       else if(this.cursors.up.isDown && !this.isTakingOf){
         if(this.sprite.body.velocity.y >= this.braceVelocity){
@@ -338,12 +344,12 @@ export default class Player {
         }
       }
       if(this.energy > 0){
-        this.playerUseEnergy(this.scene.game.energyCostJetBeginning + this.jetAumulator);
-        this.jetAumulator += (this.scene.game.energyJetIncrease * delta/this.scene.matter.world.getDelta());  //posiblemente cambiar coste con descenso para ofrecer al jugador posibilidades si se equivoca y activa sin querer el jet
+        this.playerUseEnergy(this.scene.game.energyCostJetBeginning + this.jetAumulator - 1);
+        this.jetAumulator = this.jetAumulator * (1+((this.scene.game.energyJetIncrease-1) * delta/this.scene.matter.world.getDelta()));  //posiblemente cambiar coste con descenso para ofrecer al jugador posibilidades si se equivoca y activa sin querer el jet
       }else{
         this.playerUseEnergy(this.energy);
         this.offJet();
-        this.jetAumulator = 0;
+        this.jetAumulator = 1;
       }
     }else{
       if(this.energy < this.scene.game.totalPlayerEnergy){
@@ -682,13 +688,13 @@ export default class Player {
     let seekingNewEnemyX = false;
     //BOUNDRY
     this.advance32X += (this.sprite.body.position.x - this.earlyPos.x);
-    if(this.advance32X >= 32){
+    if(this.advance32X > 32){
       const layersX = Math.floor(this.advance32X/32);
       this.xFrontiers(1, 17, layersX);
       this.advance32X = this.advance32X - 32*layersX;
       this.seekPosibleClosestEnemy();
       seekingNewEnemyX = true
-    }else if (this.advance32X <= -32) {
+    }else if (this.advance32X < -32) {
       const layersX = Math.floor(Math.abs(this.advance32X/32));
       this.xFrontiers(-1, 17, layersX);
       this.advance32X = this.advance32X + 32*layersX;
@@ -696,13 +702,13 @@ export default class Player {
       seekingNewEnemyX = true
     }
     this.advance32Y += (this.sprite.body.position.y - this.earlyPos.y);
-    if(this.advance32Y >= 32){
+    if(this.advance32Y > 32){
       const layersY = Math.floor(this.advance32Y/32);
       this.yFrontiers(1, 17, layersY);
       this.advance32Y = this.advance32Y - 32*layersY;
       if(!seekingNewEnemyX)
         this.seekPosibleClosestEnemy();
-    }else if (this.advance32Y <= -32) {
+    }else if (this.advance32Y < -32) {
       const layersY = Math.floor(Math.abs(this.advance32Y/32));
       this.yFrontiers(-1, 17, layersY);
       this.advance32Y = this.advance32Y + 32*layersY;

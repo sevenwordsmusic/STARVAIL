@@ -345,7 +345,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('propellerLoop_00', 'assets/audio/SFX/propellerLoop_00.mp3');
         this.load.audio('engineLoop_00', 'assets/audio/SFX/engineLoop_00.mp3');
         //MUSIC LOOPS
-        this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
+        /*this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
         this.load.audio('loop0000enemies', 'assets/audio/BGM/loop0000enemies.mp3');
         this.load.audio('loop0000killing', 'assets/audio/BGM/loop0000killing.mp3');
         this.load.audio('loop0000flying', 'assets/audio/BGM/loop0000flying.mp3');
@@ -358,7 +358,24 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('loop0000weapon_04', 'assets/audio/BGM/loop0000weapon_04.mp3');
         this.load.audio('loop0000weapon_05', 'assets/audio/BGM/loop0000weapon_05.mp3');
         this.load.audio('loop0000weapon_06', 'assets/audio/BGM/loop0000weapon_06.mp3');
-        this.load.audio('loop0000weapon_07', 'assets/audio/BGM/loop0000weapon_07.mp3');
+        this.load.audio('loop0000weapon_07', 'assets/audio/BGM/loop0000weapon_07.mp3');*/
+
+        //cambio los archivos de musica mas grandes para que me cargue más rapidamente (simplemente decomenta la parte de arriba y comenta esto cuando testees audio)
+        this.load.audio('loop0000base', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000enemies', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000killing', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000flying', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000levitating', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000moving', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000weapon_00', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000weapon_01', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000weapon_02', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000weapon_03', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000weapon_04', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000weapon_05', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000weapon_06', 'assets/audio/nada.mp3');
+        this.load.audio('loop0000weapon_07', 'assets/audio/nada.mp3');
+
     }
     create() {
         //INIT AUDIO

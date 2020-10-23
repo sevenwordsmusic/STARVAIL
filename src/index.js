@@ -24,7 +24,7 @@ var config = {
     default: 'matter',
     matter: {
       gravity: { y: 0.98 },
-      debug: true
+      debug: false
     }
   },
   //escenas principales
@@ -51,15 +51,18 @@ var config = {
 var game = new Phaser.Game(config);
 
 //Declaramos variables globales del juego.
-game.moveVelocity = 0.215;
-game.jetVelocity = 0.215;
+game.moveVelocity = 0.215;            //velocidad horizontal en el suelo
+game.moveVelocityAir = 0.315;         //velocidad horizontal en el aire
+game.jetVelocity = 0.28;             //velocidad de ascenso
+game.jetVelocityDown = 0.215;         //velocidad de descenso
 game.totalPlayerHp = 100;
 game.hpRecoveryRate = 1;
 game.totalPlayerEnergy = 3000;
 game.energyRecoveryRate = 0.5;
-game.energyCostJetBeginning = 0.1;
-game.energyJetIncrease = 0.002  //velocidad con la que aumenta el coste del jet
-game.energyCostJetPropulsion = 5;
+game.energyCostJetBeginning = 0;      //energia por segundo que se gasta justo al empezar (es un valor base de coste)
+game.energyJetIncrease = 1.01         //velocidad con la que aumenta el coste del jet
+game.energyCostJetPropulsion = 5;     //energia de coste de propulsion, se gasta solo una vez al entrar en modo jet)
+
 game.airVelocityFraction = 0.3;   //Creo que no se usa
 
 game.currentBgAnimation = 0;
@@ -93,9 +96,7 @@ window.addEventListener("beforeunload", function (e) {
   SceneLoading.destroy();
   Audio.destroy();
   SceneTest_1.destroy();
-  SceneTest_2.destroy();
-  Joystick_test.destroy();
-  game.destroy();
+  game.destroy(true);
   document.destroy();
 
   (e || window.event).returnValue = confirmationMessage;
