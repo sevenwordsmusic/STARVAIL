@@ -140,14 +140,9 @@ export default class ZapperAir extends Enemy {
 
   onSensorCollide({ bodyA, bodyB, pair }){
     if (bodyB.isSensor) return;
-    console.log("s");
-    if (bodyA === this.sensors.right)
+    if (bodyA === this.sensors.right || bodyA === this.sensors.left)
       this.velX = -1;
-    else if (bodyA === this.sensors.left)
-      this.velX = 1;
-    else if (bodyA === this.sensors.top)
-      this.velY = 1;
-    else if (bodyA === this.sensors.bottom)
+    else if (bodyA === this.sensors.top || bodyA === this.sensors.bottom)
       this.velY = -1;
   }
 
@@ -169,6 +164,6 @@ export default class ZapperAir extends Enemy {
     const xAux = this.sprite.x;
     const yAux = this.sprite.y;
     super.enemyDead();
-    new DropableAirEnergy(this.scene, xAux, yAux, Math.sign(vXDmg), Math.sign(vYDmg),  50);
+    new DropableAirEnergy(this.scene, xAux, yAux, Math.sign(vXDmg), Math.sign(vYDmg),  200);
   }
 }

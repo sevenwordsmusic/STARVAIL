@@ -110,9 +110,9 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(mainlayer);
     //Sistema de cargado dinamico de colliders
     var tileBodyMatrix = [];
-    for (var i = 0; i < 91; i++) {
+    for (var i = 0; i < 300; i++) {
       tileBodyMatrix[i] = [];
-      for (var j = 0; j < 91; j++) {
+      for (var j = 0; j < 300; j++) {
         tileBodyMatrix[i][j] = undefined;
       }
     }
@@ -122,7 +122,7 @@ export default class SceneTest_1 extends Phaser.Scene {
       //tile.setSize
       if (tile.physics.matterBody != undefined) {
         const tileBody = tile.physics.matterBody.body;
-        if (tileBody.position.x < 1000 && tileBody.position.y > 2500) {
+        if (tileBody.position.x < 1000 && tileBody.position.y > 2000) {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         } else {
@@ -142,17 +142,17 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
 
     //inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
-    /*map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
+    map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
       if(point.name === "zapper1")
         new ZapperGround(this, point.x, point.y);
       if(point.name === "zapper2")
         new ZapperAir(this, point.x, point.y);
-    });*/
+    });
     map.getObjectLayer("Chest_Layer").objects.forEach(point => {
       new InteractableEnergyOnce(this, point.x, point.y);
     });
     new ZapperAir(this, 600, 600);
-    new Player(this, 416, 2624);
+    new Player(this, 416, 4320);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
     //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)

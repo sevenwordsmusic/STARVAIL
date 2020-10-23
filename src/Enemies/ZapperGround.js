@@ -63,6 +63,7 @@ export default class ZapperGround extends Enemy {
       });
     });
     this.stateUpdate(0, function(){
+      this.sprite.setIgnoreGravity(true);
       const velocityVec = new Phaser.Math.Vector2(this.scene.game.player.sprite.x - this.sprite.x, this.scene.game.player.sprite.y - this.sprite.y);
       const velLength = velocityVec.length()
       //console.log("w8ing");
@@ -71,6 +72,7 @@ export default class ZapperGround extends Enemy {
       }
     })
     this.stateUpdate(1, function(time, delta){
+      this.sprite.setIgnoreGravity(false);
       if(this.sprite.body === undefined)return;
       const velocityVec = new Phaser.Math.Vector2(this.scene.game.player.sprite.x - this.sprite.x,this.scene.game.player.sprite.y - this.sprite.y);
       const velLength = velocityVec.length()
@@ -129,13 +131,13 @@ export default class ZapperGround extends Enemy {
   }
 
   onSensorCollide2({ bodyA, bodyB, pair }){
-    if (bodyB.isSensor) return;
-    const bodyB32X = Math.floor(bodyB.position.x/32);
-    const bodyB32Y = Math.floor(bodyB.position.y/32);
-    if(this.scene.tileBodyMatrix[bodyB32X + 2*this.patrolDir][bodyB32Y] === undefined){
-      this.patrolDir = -this.patrolDir;
-      this.traveledDistance = 0;
-    }
+    // if (bodyB.isSensor) return;
+    // const bodyB32X = Math.floor(bodyB.position.x/32);
+    // const bodyB32Y = Math.floor(bodyB.position.y/32);
+    // if(this.scene.tileBodyMatrix[bodyB32X + 2*this.patrolDir][bodyB32Y] === undefined){
+    //   this.patrolDir = -this.patrolDir;
+    //   this.traveledDistance = 0;
+    // }
   }
 
   inflictDamagePlayerArea(x1, y1, x2, y2){
@@ -158,7 +160,7 @@ export default class ZapperGround extends Enemy {
       const yAux = this.sprite.y;
       new EnergyBall(this.scene, xAux, yAux, 14, 0.1, 15, new Phaser.Math.Vector2(-1,0), 1000);
       super.enemyDead();
-      new DropableGroundEnergy(this.scene, xAux, yAux, Math.sign(vXDmg),  23);
+      new DropableGroundEnergy(this.scene, xAux, yAux, Math.sign(vXDmg),  150);
     }
   }
 }
