@@ -50,6 +50,9 @@ export default class PlayerFireArm {
       }
   }
   fireBulletFast(spr, damage, bulletSpread, bulletSpeed, bulletExpireTime){
+      //AUDIO
+      Audio.play2Dinstance(21);
+      //
       this.armDir.normalize();
       const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
       this.armDir.x = Math.cos(this.armDir.angle() + addedRandomAngle);

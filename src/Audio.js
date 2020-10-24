@@ -17,10 +17,23 @@ export default class Audio extends Phaser.Scene {
     static volumeSFX = this.maxVolume;
     static load;
     static barTimer;
-    static maxSFXinstances=32;
+    static maxSFXinstances=28;
     static SFXinstance=0;
     static stingerKilling=false;
 
+    static createSFXinstance(name, num, load){
+        load.soundInstance[num]=[];
+        for(var i=0; i<Audio.maxSFXinstances; i++){
+            load.soundInstance[num][i] = load.sound.add(name);
+        }
+    }
+    static createSFXinstanceSub(name, num, sub, load){
+        load.soundInstance[num]=[];
+        load.soundInstance[num][sub]=[];
+        for(var i=0; i<Audio.maxSFXinstances; i++){
+            load.soundInstance[num][sub][i] = load.sound.add(name);
+        }
+    }
     static startAudioEngine(scene){
         Audio.barTimer = scene.time.addEvent({
             delay: Audio.barRateDiv[0],
@@ -371,128 +384,44 @@ export default class Audio extends Phaser.Scene {
         this.stingerMovement = false;
         this.stingerSurface = false;
         //IMPACTS
-        this.soundInstance[0]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[0][i] = this.sound.add('impact_00');
-        }
-        this.soundInstance[1]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[1][i] = this.sound.add('impact_01');
-        }
-        this.soundInstance[2]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[2][i] = this.sound.add('impact_02');
-        }
+        Audio.createSFXinstance('impact_00', 0, this);
+        Audio.createSFXinstance('impact_01', 1, this);
+        Audio.createSFXinstance('impact_02', 2, this);
         //SPECIAL
-        this.soundInstance[3]=[];
-        this.soundInstance[3][0]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[3][0][i] = this.sound.add('impact_03A');
-        }
-        this.soundInstance[3][1]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[3][1][i] = this.sound.add('impact_03B');
-        }
-        this.soundInstance[3][2]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[3][2][i] = this.sound.add('impact_03C');
-        }
-        this.soundInstance[3][3]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[3][3][i] = this.sound.add('impact_03D');
-        }
-        this.soundInstance[3][4]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[3][4][i] = this.sound.add('impact_03E');
-        }
+        Audio.createSFXinstanceSub('impact_03A', 3, 0, this);
+        Audio.createSFXinstanceSub('impact_03B', 3, 1, this);
+        Audio.createSFXinstanceSub('impact_03C', 3, 2, this);
+        Audio.createSFXinstanceSub('impact_03D', 3, 3, this);
+        Audio.createSFXinstanceSub('impact_03E', 3, 4, this);
         //
-        this.soundInstance[4]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[4][i] = this.sound.add('impact_04');
-        }
-        this.soundInstance[5]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[5][i] = this.sound.add('impact_05');
-        }
-        this.soundInstance[6]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[6][i] = this.sound.add('impact_06');
-        }
-        this.soundInstance[7]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[7][i] = this.sound.add('impact_07');
-        }
+        Audio.createSFXinstance('impact_04', 4, this);
+        Audio.createSFXinstance('impact_05', 5, this);
+        Audio.createSFXinstance('impact_06', 6, this);
+        Audio.createSFXinstance('impact_07', 7, this);
         //UI_monoinstance
         this.soundInstance[8]= this.sound.add('weaponChange_00');
         this.soundInstance[9]= this.sound.add('movingPart_00');
         this.soundInstance[10]= this.sound.add('trigger_00');
         this.soundInstance[11]= this.sound.add('propellerStop_00');
-        this.soundInstance[12]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[12][i] = this.sound.add('wick_00');
-        }
-        this.soundInstance[13]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[13][i] = this.sound.add('wick_00');
-        }
+        //EXTRA
+        Audio.createSFXinstance('wick_00', 12, this);
+        Audio.createSFXinstance('wick_00', 13, this);
         //EXPLOSION
-        this.soundInstance[14]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[14][i] = this.sound.add('explosion_00');
-        }
-        this.soundInstance[15]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[15][i] = this.sound.add('explosion_01');
-        }
-        this.soundInstance[16]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[16][i] = this.sound.add('explosion_02');
-        }
-        this.soundInstance[17]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[17][i] = this.sound.add('explosion_03');
-        }
-        this.soundInstance[18]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[18][i] = this.sound.add('explosion_04');
-        }
-        this.soundInstance[19]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[19][i] = this.sound.add('explosion_05');
-        }
+        Audio.createSFXinstance('explosion_00', 14, this);
+        Audio.createSFXinstance('explosion_01', 15, this);
+        Audio.createSFXinstance('explosion_02', 16, this);
+        Audio.createSFXinstance('explosion_03', 17, this);
+        Audio.createSFXinstance('explosion_04', 18, this);
+        Audio.createSFXinstance('explosion_05', 19, this);
         //SHOTS
-        this.soundInstance[20]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[20][i] = this.sound.add('shot_00');
-        }
-        this.soundInstance[21]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[21][i] = this.sound.add('shot_01');
-        }
-        this.soundInstance[22]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[22][i] = this.sound.add('shot_02');
-        }
-        this.soundInstance[23]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[23][i] = this.sound.add('shot_03');
-        }
-        this.soundInstance[24]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[24][i] = this.sound.add('shot_04');
-        }
-        this.soundInstance[25]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[25][i] = this.sound.add('shot_05');
-        }
-        this.soundInstance[26]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[26][i] = this.sound.add('shot_06');
-        }
-        this.soundInstance[27]=[];
-        for(var i=0; i<Audio.maxSFXinstances; i++){
-            this.soundInstance[27][i] = this.sound.add('shot_07');
-        }
+        Audio.createSFXinstance('shot_00', 20, this);
+        Audio.createSFXinstance('shot_01', 21, this);
+        Audio.createSFXinstance('shot_02', 22, this);
+        Audio.createSFXinstance('shot_03', 23, this);
+        Audio.createSFXinstance('shot_04', 24, this);
+        Audio.createSFXinstance('shot_05', 25, this);
+        Audio.createSFXinstance('shot_06', 26, this);
+        Audio.createSFXinstance('shot_07', 27, this);
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
             volume: this.volumeSFX,
