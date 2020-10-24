@@ -17,7 +17,7 @@ export default class Audio extends Phaser.Scene {
     static volumeSFX = this.maxVolume;
     static load;
     static barTimer;
-    static maxSFXinstances=28;
+    static maxSFXinstances=24;
     static SFXinstance=0;
     static stingerKilling=false;
 
