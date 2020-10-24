@@ -17,7 +17,7 @@ export default class Audio extends Phaser.Scene {
     static volumeSFX = this.maxVolume;
     static load;
     static barTimer;
-    static maxSFXinstances=24;
+    static maxSFXinstances=28;
     static SFXinstance=0;
     static stingerKilling=false;
 
@@ -28,7 +28,6 @@ export default class Audio extends Phaser.Scene {
         }
     }
     static createSFXinstanceSub(name, num, sub, load){
-        load.soundInstance[num]=[];
         load.soundInstance[num][sub]=[];
         for(var i=0; i<Audio.maxSFXinstances; i++){
             load.soundInstance[num][sub][i] = load.sound.add(name);
@@ -195,7 +194,7 @@ export default class Audio extends Phaser.Scene {
         return  instance;
     }
     static play3DinstanceRnd(scene, type, sub, bounces) {
-        var rnd= Math.floor(Math.random() * sub);
+        var rnd= Math.round(Math.random()*sub);
         var SFXinstance= Audio.SFXinstance;
         if (scene.distanceToPlayer() > this.vanishingPoint) {
             var distance = 0.0;
@@ -207,7 +206,7 @@ export default class Audio extends Phaser.Scene {
         this.load.soundInstance[type][rnd][SFXinstance].setRate(0.75 + (Math.random() * 0.25));
         this.load.soundInstance[type][rnd][SFXinstance].volume = (distance*bounces)*Audio.volumeSFX;
         this.load.soundInstance[type][rnd][SFXinstance].play();
-        if(Audio.SFXinstance==SFXinstance && SFXinstance<Audio.maxSFXinstances-1){
+        if(Audio.SFXinstance<Audio.maxSFXinstances-1){
             Audio.SFXinstance++;
         }else{
             Audio.SFXinstance=0;
@@ -388,11 +387,13 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('impact_01', 1, this);
         Audio.createSFXinstance('impact_02', 2, this);
         //SPECIAL
+        this.soundInstance[3]=[];
         Audio.createSFXinstanceSub('impact_03A', 3, 0, this);
         Audio.createSFXinstanceSub('impact_03B', 3, 1, this);
         Audio.createSFXinstanceSub('impact_03C', 3, 2, this);
         Audio.createSFXinstanceSub('impact_03D', 3, 3, this);
         Audio.createSFXinstanceSub('impact_03E', 3, 4, this);
+        console.log( this.soundInstance[3][2][Math.round(Math.random()*4)]);
         //
         Audio.createSFXinstance('impact_04', 4, this);
         Audio.createSFXinstance('impact_05', 5, this);
