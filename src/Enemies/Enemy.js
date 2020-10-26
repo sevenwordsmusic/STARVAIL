@@ -11,6 +11,7 @@ export default class Enemy extends FiniteStateMachine{
     this.sprite = scene.matter.add.sprite(x,y,sprtImg,0);
     this.sprite.parent = this;
     this.hp = hp;
+    this.dead = false;
 
     this.sprite.body.collisionFilter.group = -1;
     this.adjustedFriction = 10;
@@ -19,12 +20,10 @@ export default class Enemy extends FiniteStateMachine{
 
     //cada vez que se crea un enemigo se añade su "body" al arrya de cuerpos que interaccionan con las balas y al array de cuerpos de enemigos
 
-    if(this.scene.enemyBodies == undefined)
-      this.scene.enemyBodies = [];
     this.currentBodyIndex = this.scene.bulletInteracBodies.length;
     this.scene.bulletInteracBodies[this.currentBodyIndex] = this.sprite.body;
-    this.currentEnemyIndex = this.scene.enemyBodies.length;
-    this.scene.enemyBodies[this.currentEnemyIndex] = this.sprite.body;
+    this.currentEnemyIndex = this.scene.enemyController.enemyBodies.length;
+    this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = this.sprite.body;
 
     this.tween = this.scene.tweens.add({
       targets: this.sprite,
@@ -61,6 +60,17 @@ export default class Enemy extends FiniteStateMachine{
     }
   }
 
+  damageLaser(dmg, v){
+    this.hp -= dmg;
+    if(this.hp <= 0){
+      this.enemyDead(v.x, v.y);
+      return;
+    }
+    if(this.tween.progress == 1 || this.tween.progress == 0.13833333333333334){
+      this.tween.restart();
+    }
+  }
+
   damageAndKnock(dmg, knockback, v){
     this.knockVector.x = v.x;
     this.knockVector.y = v.y;
@@ -75,15 +85,11 @@ export default class Enemy extends FiniteStateMachine{
   }
 
   enemyDead(){
-    this.scene.events.off("update", this.update); //para que se ejecute el udate
-    //AUDIO
+    this.dead = true;
     Audio.stingerKilling=true;
-    //
-    //el "body" del enemigo se quita del array de cuerpos que interaccionan con balas
-    this.scene.bulletInteracBodies[this.currentBodyIndex] = undefined;
-    this.scene.enemyBodies[this.currentEnemyIndex] = undefined;
-    this.sprite.destroy();
-    //se emite un evento avisando a las balas que tienen a este enemigo como "target" para que cambien a un target nuevo
     this.scene.events.emit('noEnemy' + this.currentBodyIndex);
+    this.scene.enemyController.addToRemove(this)
+    //AUDIO
+    //se emite un evento avisando a las balas que tienen a este enemigo como "target" para que cambien a un target nuevo
   }
 }

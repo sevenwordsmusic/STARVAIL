@@ -8,13 +8,11 @@ export default class FiniteStateMachine {
     for(var i=0; i<numberStates; i++){
       this.states[i] = new State(this, i);
       this.states[i].turnOnState = function(){
-        if(this.update != undefined)
-          this.scene.events.on("update", this.update, this.parent);
+        this.parent.updateAI = this.update;
         this.onStart.call(this.parent);
       }
       this.states[i].turnOffState = function(){
-        if(this.update != undefined)
-          this.scene.events.off("update", this.update);
+        this.parent.updateAI = function(){};
         this.onEnd.call(this.parent);
       }
     }
@@ -66,7 +64,7 @@ class State{
     this.parent = parent
     this.scene = parent.scene;
     this.id = id;
-    this.update = undefined;
+    this.update = function(){};
     this.turnOffState = undefined;
     this.turnOnState = undefined;
     this.onStart = function(){};

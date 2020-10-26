@@ -39,7 +39,7 @@ export default class Missile extends Projectile {
     this.bombArmed1;
     //this.bombArmed2;
     this.comit = 1;
-    if(this.scene.game.player.closestEnemy != undefined){
+    if(this.scene.game.player.closestEnemy != undefined && this.scene.game.player.closestEnemy.sprite !== undefined && this.scene.game.player.closestEnemy.sprite.body !== undefined){
     const objectiveDirection3 = new Phaser.Math.Vector3(this.scene.game.player.closestEnemy.sprite.x - this.sprite.x,
                                                 this.scene.game.player.closestEnemy.sprite.y - this.sprite.y, 0);
     const currentDir3 = new Phaser.Math.Vector3(this.pVelocity.x ,this.pVelocity.y  , 0);
@@ -63,7 +63,7 @@ export default class Missile extends Projectile {
       const currentVel = new Phaser.Math.Vector2(this.sprite.body.velocity.x, this.sprite.body.velocity.y);
       const currentAngle = currentVel.angle();
 
-      if(this.scene.game.player.closestEnemy != undefined){
+      if(this.scene.game.player.closestEnemy !== undefined && this.scene.game.player.closestEnemy.sprite !== undefined && this.scene.game.player.closestEnemy.sprite.body !== undefined){
         const objectiveDirection = new Phaser.Math.Vector2(this.scene.game.player.closestEnemy.sprite.x - this.sprite.x,
                                                   this.scene.game.player.closestEnemy.sprite.y - this.sprite.y);
         const objectiveAngle = objectiveDirection.angle();
@@ -128,7 +128,7 @@ export default class Missile extends Projectile {
   }
 
   damageEnemiesArea(){
-    var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, this.scene.enemyBodies);
+    var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, this.scene.enemyController.enemyBodies);
     for(var i in damagedEnemies){
       if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
         damagedEnemies[i].gameObject.parent.damageAndKnock(this.dmg, this.knockback, new Phaser.Math.Vector2(damagedEnemies[i].gameObject.x - this.sprite.x, damagedEnemies[i].gameObject.y - this.sprite.y));

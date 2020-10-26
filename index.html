@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <title>Game</title>
-    <script src="src/jquery.min.js"></script>
+    <script>
+      console.log("Literalmente la primera linea de código, no deberia haber memoria usada");
+      console.log("Used Memory: " + (performance.memory.usedJSHeapSize/1024/1024) + " Mb");
+    </script>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.20.0/dist/phaser.js"></script>
     <script src="src/phaser-matter-collision-plugin.min.js"></script>
     <script src="src/index.js"  type="module"></script>

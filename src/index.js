@@ -55,12 +55,12 @@ game.moveVelocity = 0.22;            //velocidad horizontal en el suelo
 game.moveVelocityAir = 0.275;         //velocidad horizontal en el aire
 game.jetVelocity = 0.3;             //velocidad de ascenso
 game.jetVelocityDown = 0.3;         //velocidad de descenso
-game.totalPlayerHp = 1000;
+game.totalPlayerHp = 100;           //1000
 game.hpRecoveryRate = 1;
-game.totalPlayerEnergy = 1000;
+game.totalPlayerEnergy = 1000;     //1000
 game.energyRecoveryRate = 1;
 game.energyCostJetBeginning = 0;      //energia por segundo que se gasta justo al empezar (es un valor base de coste)
-game.energyJetIncrease = 1.009      //velocidad con la que aumenta el coste del jet
+game.energyJetIncrease = 1.00/*9   */   //velocidad con la que aumenta el coste del jet
 game.energyCostJetPropulsion = 5;     //energia de coste de propulsion, se gasta solo una vez al entrar en modo jet)
 
 game.airVelocityFraction = 0.3;   //Creo que no se usa
@@ -92,13 +92,7 @@ console.log("onPC:  " +game.onPC);
 
 //DESTRUCTOR GLOBAL AL SALIR
 window.addEventListener("beforeunload", function (e) {
-  Player.destroy();
-  SceneLoading.destroy();
-  Audio.destroy();
-  SceneTest_1.destroy();
-  game.destroy(true);
-  document.destroy();
-
+  game.destroy(true, true);
   (e || window.event).returnValue = confirmationMessage;
   return confirmationMessage;
 });

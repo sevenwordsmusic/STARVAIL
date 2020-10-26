@@ -42,17 +42,18 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image("tilesFront", "assets/Tilesets/front_layer.png");
     this.load.image("tilesMain", "assets/Tilesets/main_layer.png");
     this.load.image("tilesSecond", "assets/Tilesets/second_layer.png");
-    this.load.tilemapTiledJSON("map", "assets/Mapas/Level1.json");
+    //this.load.tilemapTiledJSON("map", "assets/Mapas/Level1.json");
+    this.load.tilemapTiledJSON("map", "assets/Mapas/Level1Simple.json");
 
 
     this.load.image('bullet1', 'assets/Sprites/Bullet/bullet1.png');
     this.load.image('bullet2', 'assets/Sprites/Bullet/bullet2.png');
     this.load.image('bullet3', 'assets/Sprites/Bullet/bullet3.png');
     this.load.image('missile', 'assets/Sprites/Bullet/missile.png');
-    this.load.image('lasser', 'assets/Sprites/Bullet/lasser.png');
+    this.load.spritesheet('laser', 'assets/Sprites/Bullet/laser.png', { frameWidth: 18, frameHeight: 600 });
     this.load.spritesheet('explodingBomb', 'assets/Sprites/Bomb/bomb_ss.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
-    this.load.spritesheet('explosion2', 'assets/Sprites/Explosions/explosion-5.png', { frameWidth: 256, frameHeight: 256 });
+    this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
 
     //preload del joystick
     this.load.plugin('rexvirtualjoystickplugin', 'src/rexvirtualjoystickplugin.min.js', true);
@@ -196,6 +197,21 @@ export default class SceneLoading extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('dummy', { start: 0, end: 1 }),
             frameRate: 2,
             repeat: 0
+        });
+
+    this.anims.create({
+            key: 'laser',
+            frames: this.anims.generateFrameNumbers('laser', { start: 0, end: 2 }),
+            frameRate: 8,
+            yoyo: true,
+            repeat: -1
+        });
+
+    this.anims.create({
+            key: 'smoke',
+            frames: this.anims.generateFrameNumbers('smoke', { start: 0, end: 20 }),
+            frameRate: 12,
+            repeat: -1
         });
 
     //transicion a siguiente escena

@@ -117,7 +117,7 @@ export default class Player {
       }, this);
       this.scene.input.on('pointerup', function(pointer){
         if(pointer == this.firingPointer){
-          this.fireCounterHold = 0;
+          this.deinitializeFire();
           this.firingPointer = undefined;
         }
       }, this);
@@ -166,7 +166,7 @@ export default class Player {
       }, this);
       this.scene.input.on('pointerup', function(pointer){
         if(pointer == this.firingPointer){
-          this.fireCounterHold = 0;
+          this.deinitializeFire();
           this.firingPointer = undefined;
         }else {
           this.movingPointer = undefined;
@@ -506,7 +506,7 @@ export default class Player {
     this.weapons[5] = {name: "BombMegaton", damage: 95, area: 68, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
     this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 1};
     this.weapons[7] = {name: "MissileMulti", damage: 10, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.6, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 3000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 1};
-    this.weapons[8] = {name: "Lasser", damage: 2, spread: 0, fireRate: 4 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 2000, energyCost: 0.03, energyRecoverProportion: 0, wSprite: "", chFrame: 0};
+    this.weapons[8] = {name: "Lasser", damage: 0.2, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 0.004, energyRecoverProportion: 0, wSprite: "", chFrame: 0};
   }
 
   initializeFire(){
@@ -523,6 +523,16 @@ export default class Player {
     //variable que controla la velocidad de disparo del armo si se esta continuamente presionando el ratón
     this.fireCounterHold = 0;
     this.crossCounter = 0;
+
+    if(this.weaponCounter == 8){
+      this.fireArm.engageLaser();
+    }
+  }
+  deinitializeFire(){
+    if(this.weaponCounter == 8){
+      this.fireArm.disengageLaser();
+    }
+    this.fireCounterHold = 0;
   }
   fireProjectile(){
     const currentWeapon = this.weapons[this.weaponCounter];
@@ -554,7 +564,7 @@ export default class Player {
           this.fireArm.fireMulti(currentWeapon.wSprite, currentWeapon.damage, currentWeapon.area, currentWeapon.knockback, currentWeapon.offsprings, currentWeapon.offspringScale, currentWeapon.projectileSpeed,  currentWeapon.expireTime);
         break;
         case 8:
-          this.fireArm.fireLasser(currentWeapon.damage, currentWeapon.projectileSpeed, currentWeapon.expireTime);
+          this.fireArm.fireLasser(currentWeapon.damage);
         break;
         default:
           console.log("no weapon");
@@ -569,9 +579,19 @@ export default class Player {
   }
   changeWeapon(){
     this.scene.game.anims.resumeAll();
+
+    if(this.weaponCounter == 8){
+      this.fireArm.disengageLaser();
+    }
+
     this.fireCounterHold = 0;
     this.weaponCounter = (this.weaponCounter+1)%this.weapons.length;
     this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame)
+
+    if(this.weaponCounter == 8 && this.firingPointer!== undefined && this.firingPointer.isDown){
+      this.fireArm.engageLaser();
+    }
+
     console.log(this.weapons[this.weaponCounter].name);
   }
 
@@ -632,88 +652,70 @@ export default class Player {
     */
   }
 
-  seekPosibleClosestEnemy(){
-    const closeseEnemyDistance = this.getClosestEnemyDistance();
-    for(var i=0; i<this.scene.enemyBodies.length; i++){
-      if(this.scene.enemyBodies[i] != undefined){
-        const distanceToEnemy = Math.sqrt(Math.pow(this.sprite.x - this.scene.enemyBodies[i].gameObject.x,2) + Math.pow(this.sprite.y - this.scene.enemyBodies[i].gameObject.y,2));
-        if(distanceToEnemy < closeseEnemyDistance){
-          this.scene.events.off('noEnemy' + this.closestEnemy.currentBodyIndex);
-          this.closestEnemy = this.scene.enemyBodies[i].gameObject.parent;
-          this.scene.events.once('noEnemy' + this.closestEnemy.currentBodyIndex, function(){
-            this.seekPosibleClosestAlive();
-          },this);
-          break;
-        }
-      }
-    }
-  }
-
   initPosibleClosestEnemy(){
     var closeseEnemyDistance = Number.MAX_SAFE_INTEGER;
-    for(var i=0; i<this.scene.enemyBodies.length; i++){
-      if(this.scene.enemyBodies[i] != undefined){
-        const distanceToEnemy = Math.sqrt(Math.pow(this.sprite.x - this.scene.enemyBodies[i].gameObject.x,2) + Math.pow(this.sprite.y - this.scene.enemyBodies[i].gameObject.y,2));
+    for(var i=0; i<this.scene.enemyController.enemyBodies.length; i++){
+      if(this.scene.enemyController.enemyBodies[i] != undefined){
+        const distanceToEnemy = Math.sqrt(Math.pow(this.sprite.x - this.scene.enemyController.enemyBodies[i].gameObject.x,2) + Math.pow(this.sprite.y - this.scene.enemyController.enemyBodies[i].gameObject.y,2));
         if(distanceToEnemy < closeseEnemyDistance){
-          this.closestEnemy = this.scene.enemyBodies[i].gameObject.parent;
+          this.closestEnemy = this.scene.enemyController.enemyBodies[i].gameObject.parent;
           closeseEnemyDistance = distanceToEnemy;
         }
       }
     }
-    if(closeseEnemyDistance != Number.MAX_SAFE_INTEGER){
+    /*if(closeseEnemyDistance != Number.MAX_SAFE_INTEGER){
       this.scene.events.once('noEnemy' + this.closestEnemy.currentBodyIndex, function(){
         this.seekPosibleClosestAlive();
       },this);
     }else{
       this.closestEnemy = undefined;
-    }
+    }*/
   }
 
-  seekPosibleClosestAlive(){
+  /*seekPosibleClosestAlive(){
     if(this.closestEnemy == undefined || this.closestEnemy.sprite.body == undefined){
       this.initPosibleClosestEnemy();
-    }else{
-      this.seekPosibleClosestEnemy();
     }
   }
-
+  */
   getClosestEnemyDistance(){
-    if(this.closestEnemy != undefined)
+    if(this.closestEnemy !== undefined && this.closestEnemy.sprite !== undefined && this.closestEnemy.sprite.body !== undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.closestEnemy.sprite.x,2) + Math.pow(this.sprite.y - this.closestEnemy.sprite.y,2));
     else
       return Number.MAX_SAFE_INTEGER;
   }
 
   updateBoundry(){
-    let seekingNewEnemyX = false;
+    //console.log(this.closestEnemy.sprite.x);
+    let newPlayerPos = false;
     //BOUNDRY
     this.advance32X += (this.sprite.body.position.x - this.earlyPos.x);
+    this.advance32Y += (this.sprite.body.position.y - this.earlyPos.y);
     if(this.advance32X > 32){
       const layersX = Math.floor(this.advance32X/32);
       this.xFrontiers(1, 17, layersX);
       this.advance32X = this.advance32X - 32*layersX;
-      this.seekPosibleClosestEnemy();
-      seekingNewEnemyX = true
+      //this.scene.enemyController.updatePlayerPosition();
+      newPlayerPos = true
     }else if (this.advance32X < -32) {
       const layersX = Math.floor(Math.abs(this.advance32X/32));
       this.xFrontiers(-1, 17, layersX);
       this.advance32X = this.advance32X + 32*layersX;
-      this.seekPosibleClosestEnemy();
-      seekingNewEnemyX = true
+      //this.scene.enemyController.updatePlayerPosition();
+      newPlayerPos = true
     }
-    this.advance32Y += (this.sprite.body.position.y - this.earlyPos.y);
     if(this.advance32Y > 32){
       const layersY = Math.floor(this.advance32Y/32);
       this.yFrontiers(1, 17, layersY);
       this.advance32Y = this.advance32Y - 32*layersY;
-      if(!seekingNewEnemyX)
-        this.seekPosibleClosestEnemy();
+      //if(!newPlayerPos)
+        //this.scene.enemyController.updatePlayerPosition();
     }else if (this.advance32Y < -32) {
       const layersY = Math.floor(Math.abs(this.advance32Y/32));
       this.yFrontiers(-1, 17, layersY);
       this.advance32Y = this.advance32Y + 32*layersY;
-      if(!seekingNewEnemyX)
-        this.seekPosibleClosestEnemy();
+      //if(!newPlayerPos)
+        //this.scene.enemyController.updatePlayerPosition();
     }
     this.earlyPos.x = this.sprite.body.position.x;
     this.earlyPos.y = this.sprite.body.position.y;

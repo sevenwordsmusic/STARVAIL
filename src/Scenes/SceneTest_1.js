@@ -20,6 +20,7 @@ Si así es, ya sabes lo que tenemos que hacer.`;
 
 //Imports en la escena.
 import Player from "../PlayerStuff/Player.js";
+import Blackboard from "../Enemies/Blackboard.js";
 import ZapperGround from "../Enemies/ZapperGround.js";
 import ZapperAir from "../Enemies/ZapperAir.js";
 import Dialog from "../Plugins/Dialog.js"
@@ -56,8 +57,8 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     //Camara.
     cam = this.cameras.main;
-    cam.setBackgroundColor('rgba(150, 174, 191, 1)');
-    this.matter.world.setBounds(0, -500, 10000, 10000);
+    cam.setBackgroundColor('#0b0c0d');
+    this.matter.world.setBounds(0, -500, 2600, 6000);
     cam.setBounds(0, -500, 10000, 10000);/*
     this.matter.world.setBounds(0, -500, 2900, 2800);
     cam.setBounds(0, -500, 2880, 2784);*/
@@ -110,9 +111,9 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(mainlayer);
     //Sistema de cargado dinamico de colliders
     var tileBodyMatrix = [];
-    for (var i = 0; i < 300; i++) {
+    for (var i = 0; i < 110; i++) {
       tileBodyMatrix[i] = [];
-      for (var j = 0; j < 300; j++) {
+      for (var j = 0; j < 152; j++) {
         tileBodyMatrix[i][j] = undefined;
       }
     }
@@ -122,7 +123,7 @@ export default class SceneTest_1 extends Phaser.Scene {
       //tile.setSize
       if (tile.physics.matterBody != undefined) {
         const tileBody = tile.physics.matterBody.body;
-        if (tileBody.position.x < 1000 && tileBody.position.y > 2000) {
+        if (tileBody.position.x < 1000 && tileBody.position.y > 3800) {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         } else {
@@ -141,19 +142,22 @@ export default class SceneTest_1 extends Phaser.Scene {
     });
     this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
 
+    this.enemyController = new Blackboard(this);
+
+
     //inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
     map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
-      if(point.name === "zapper1")
-        new ZapperGround(this, point.x, point.y);
-      if(point.name === "zapper2")
-        new ZapperAir(this, point.x, point.y);
+        if(point.name === "zapper1")
+          new ZapperGround(this, point.x, point.y);
+        if(point.name === "zapper2")
+          new ZapperAir(this, point.x, point.y);
     });
     map.getObjectLayer("Chest_Layer").objects.forEach(point => {
       new InteractableEnergyOnce(this, point.x, point.y);
     });
-    new ZapperAir(this, 600, 600);
     new Player(this, 416, 4320);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
+    //cam.setZoom(0.25);
 
     //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)
     new LevelEnd(this, 704, 64, 'star', 'testsec', SceneTest_2);
@@ -192,7 +196,6 @@ export default class SceneTest_1 extends Phaser.Scene {
       });
     }*/
 
-
     this.input.setDefaultCursor('none');
     /*var keyObj = this.input.keyboard.addKey('K');  // Get key object
     keyObj.on('down', function(event) { console.log("k presionada"); });*/
@@ -202,7 +205,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
-
+    //console.log(this.matter.world.localWorld.bodies.length);
   //AUDIO:
   Audio.audioUpdate(this);
 }

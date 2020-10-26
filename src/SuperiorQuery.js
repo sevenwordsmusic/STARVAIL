@@ -255,5 +255,7 @@ class ClosestBodyCollision{
     this.colSpecialObj = undefined;
     this.colX = 0.0;
     this.colY = 0.0;
+    //this.part = undefined;
+    //this.vertex = undefined;
   }
 }

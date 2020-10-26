@@ -2,11 +2,11 @@ import SuperiorQuery from "../SuperiorQuery.js";
 import Bullet from "../Objects/Projectiles/PlayerProjectiles/Bullet.js";
 import BulletBounce from "../Objects/Projectiles/PlayerProjectiles/BulletBounce.js";
 import BulletExplosive from "../Objects/Projectiles/PlayerProjectiles/BulletExplosive.js";
-import LasserBullet from "../Objects/Projectiles/PlayerProjectiles/LasserBullet.js";
 import Bomb from "../Objects/Projectiles/PlayerProjectiles/Bomb.js";
 import Megaton from "../Objects/Projectiles/PlayerProjectiles/Megaton.js";
 import MultiMissile from "../Objects/Projectiles/PlayerProjectiles/MultiMissile.js";
 import Missile from "../Objects/Projectiles/PlayerProjectiles/Missile.js";
+import Enemy from "../Enemies/Enemy.js";
 import Audio from "../Audio.js";
 
 export default class PlayerFireArm {
@@ -26,10 +26,21 @@ export default class PlayerFireArm {
       this.fireArmActive = false;
       this.sprite.setActive(false).setVisible(false);
 
-      //array de funciones de distintas armas
+      /*//array de funciones de distintas armas
       this.fireWeaponFunctions = [];
       this.fireWeaponFunctions[0] = this.fireBullet;
-      this.fireWeaponFunctions[1] = this.fireBomb;
+      this.fireWeaponFunctions[1] = this.fireBomb;*/
+
+      this.laser = scene.add.sprite(x,y, 'laser', 0);
+      this.laserHeight = this.laser.frame.height;
+      this.laser.setScale(0.65, 1).setOrigin(0.5, 0.01);
+      this.laser.anims.play('laser', true);
+
+      this.laserSmoke = scene.add.sprite(x,y, 'smoke', 0);
+      this.laserSmoke.setScale(0.6).setOrigin(0.5, 0.8);
+      this.laserSmoke.anims.play('smoke', true);
+
+      this.disengageLaser();
   }
 
   //cambiar speed a array de weapons
@@ -41,9 +52,9 @@ export default class PlayerFireArm {
       const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
       this.armDir.x = Math.cos(this.armDir.angle() + addedRandomAngle);
       this.armDir.y = Math.sin(this.armDir.angle() + addedRandomAngle);
-      var bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
+      const bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
       if(bulletCollision.collided){
-        var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
+        const bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
         new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed), bulletCollision, bulletDistance);
       }else{
         new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
@@ -57,9 +68,9 @@ export default class PlayerFireArm {
       const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
       this.armDir.x = Math.cos(this.armDir.angle() + addedRandomAngle);
       this.armDir.y = Math.sin(this.armDir.angle() + addedRandomAngle);
-      var bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 2, this.scene.bulletInteracBodies);
+      const bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 2, this.scene.bulletInteracBodies);
       if(bulletCollision.collided){
-        var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
+        const bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
         new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed) + 7, bulletCollision, bulletDistance);
       }else{
         new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
@@ -73,9 +84,9 @@ export default class PlayerFireArm {
       const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
       this.armDir.x = Math.cos(this.armDir.angle() + addedRandomAngle);
       this.armDir.y = Math.sin(this.armDir.angle() + addedRandomAngle);
-      var bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 16, this.scene.bulletInteracBodies);
+      const bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 16, this.scene.bulletInteracBodies);
       if(bulletCollision.collided){
-        var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
+        const bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
         new BulletExplosive(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, knockback, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed), bulletCollision, bulletDistance);
       }else{
         new BulletExplosive(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, knockback, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
@@ -89,26 +100,56 @@ export default class PlayerFireArm {
       const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
       this.armDir.x = Math.cos(this.armDir.angle() + addedRandomAngle);
       this.armDir.y = Math.sin(this.armDir.angle() + addedRandomAngle);
-      var bulletCollision = SuperiorQuery.superiorRayCastBounce(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
+      const bulletCollision = SuperiorQuery.superiorRayCastBounce(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
       if(bulletCollision.collided){
-        var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
+        const bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
         new BulletBounce(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bounce, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed), bulletCollision, bulletDistance);
       }else{
         new BulletBounce(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bounce, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
       }
   }
-  fireLasser(damage, bulletSpeed, bulletExpireTime){
-      //AUDIO
-      Audio.play2Dinstance(21);
-      //
+  fireLasser(damage){
+      this.laser.setVisible(true);
+      this.laser.angle = this.armDir.angle()*180/Math.PI - 90;
+      this.laser.x = this.sprite.x + this.armDir.x/2;
+      this.laser.y = this.sprite.y + this.armDir.y/2;
       this.armDir.normalize();
-      var bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
-      if(bulletCollision.collided){
-        var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
-        new LasserBullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, damage, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed), bulletCollision, bulletDistance);
+      this.laser.x += this.armDir.x * 30;
+      this.laser.y += this.armDir.y * 30;
+      var laserCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 14, this.scene.bulletInteracBodies);
+      if(laserCollision.collided){
+        const laserDistance = Math.sqrt(Math.pow(laserCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(laserCollision.colY - this.sprite.y - this.armDir.y * 30,2));
+
+        this.laserSmoke.x = laserCollision.colX - this.armDir.x*6;
+        this.laserSmoke.y = laserCollision.colY - this.armDir.y*6;
+
+        for(var i=0; i<this.laser.anims.currentAnim.frames.length; i++){
+          this.laser.anims.currentAnim.frames[i].frame.cutHeight = Math.min(laserDistance, this.laserHeight);
+          if(laserCollision.colSpecialObj !== undefined && Object.getPrototypeOf(laserCollision.colSpecialObj.constructor) === Enemy)
+            laserCollision.colSpecialObj.damageLaser(damage, this.armDir);
+        }
       }else{
-        new LasserBullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, damage, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
+        this.laserSmoke.x = -9999;
+        this.laserSmoke.y = -9999;
+
+        for(var i=0; i<this.laser.anims.currentAnim.frames.length; i++){
+          this.laser.anims.currentAnim.frames[i].frame.cutHeight = this.laserHeight;
+        }
       }
+  }
+  engageLaser(){
+      this.laserSmoke.anims.resume();
+      this.laser.setVisible(true);
+      this.laser.anims.resume();
+      this.laserSmoke.setVisible(true);
+  }
+  disengageLaser(){
+      this.laser.anims.pause();
+      this.laserSmoke.setVisible(false);
+      this.laserSmoke.anims.pause();
+      this.laser.setVisible(false);
+      this.laserSmoke.x = -9999
+      this.laserSmoke.y = -9999
   }
   fireBomb(spr, damage, bombArea, knockback, bombSpeed, bombExpireTime){
     //AUDIO_BOMBA_Shot
