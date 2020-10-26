@@ -17,7 +17,7 @@ export default class Audio extends Phaser.Scene {
     static volumeSFX = this.maxVolume;
     static load;
     static barTimer;
-    static maxSFXinstances=28;
+    static maxSFXinstances=32;
     static SFXinstance=0;
     static stingerKilling=false;
 
@@ -75,15 +75,14 @@ export default class Audio extends Phaser.Scene {
         }
                     scene.tweens.add({
                         targets: this.load.loopBase,
-                        volume: this.volumeBGM-distance,
+                        volume: this.volumeBGM-(this.volumeBGM*(distance/1)),
                         duration: this.barRateDiv[1],
                     });
                     scene.tweens.add({
                         targets: this.load.loopEnemies,
-                        volume: distance,
+                        volume: this.volumeBGM*(distance/1),
                         duration: this.barRateDiv[2],
                     });
-
     }
     static musicLayerKilling(scene) {
         if (Audio.stingerKilling && scene.game.isFiring) {
@@ -256,9 +255,8 @@ export default class Audio extends Phaser.Scene {
         if (scene.game.player.activatedJet && !this.stingerJet) {
             this.stingerJet = true;
         }
-        if (Math.floor(scene.game.player.earlyPos.x) != this.earlyPos && !scene.game.player.activatedJet && !this.stingerWalk) {
+        if (Math.floor(scene.game.player.earlyPos.x) != this.earlyPos && !scene.game.player.activatedJet && !this.stingerWalk && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown )) {
             this.stingerWalk = true;
-            this.load.walkLoop.setDetune(0.9 + scene.game.player.weaponCounter * 0.05);
             this.load.walkLoop.volume = Audio.volumeSFX;
             this.load.walkLoop.play();
 
@@ -270,9 +268,8 @@ export default class Audio extends Phaser.Scene {
             this.stingerWalk = false;
             this.load.walkLoop.stop();
         }
-        if (!this.stingerSurface && Math.floor(scene.game.player.earlyPos.x) != this.earlyPos && !scene.game.player.activatedJet && scene.game.player.isTouching.ground) {
+        if (!this.stingerSurface && Math.floor(scene.game.player.earlyPos.x) != this.earlyPos && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown )) {
             this.stingerSurface = true;
-            this.load.surfaceLoop.setDetune(0.9 + scene.game.player.weaponCounter * 0.05);
             this.load.surfaceLoop.volume = Audio.volumeSFX;
             this.load.surfaceLoop.play();
         }
@@ -322,7 +319,7 @@ export default class Audio extends Phaser.Scene {
             this.load.soundInstance[11].play();
             Audio.load.propellerLoop.stop();
             Audio.load.engineLoop.stop();
-            Audio.load.propellerLoop.setRate(0.001);
+            Audio.load.propellerLoop.setRate(0.0);
             Audio.load.propellerLoop.volume = 0.0;
         } else if (this.earlyPropeller) {
             scene.tweens.add({
@@ -489,7 +486,7 @@ export default class Audio extends Phaser.Scene {
         })
         //MUSIC LOOPS
         this.loopBase = this.sound.add('loop0000base', {
-            volume: this.volumeBGM,
+            volume: 0.0,
             loop: true
         })
         this.loopEnemies = this.sound.add('loop0000enemies', {
