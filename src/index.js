@@ -16,6 +16,7 @@ import SceneOptionsGame from "./Scenes/SceneOptionsGame.js"
 import SceneScore from "./Scenes/SceneScore.js"
 import SceneCreditsScore from "./Scenes/SceneCreditsScore.js"
 import SceneGameOver from "./Scenes/SceneGameOver.js"
+import SceneRanking from "./Scenes/SceneRanking.js"
 
 //Configuración de Phaser 3
 var config = {
@@ -47,6 +48,7 @@ var config = {
     SceneScore,
     SceneCreditsScore,
     SceneGameOver,
+    SceneRanking,
 
     SceneTest_1,
   ],

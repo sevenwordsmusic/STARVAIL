@@ -12,6 +12,7 @@ export default class SceneExample extends Phaser.Scene {
     this.load.image('ScoreScreen', 'assets/Score screen menu/Botones Score.png'); //field
     this.load.image('btnExitScore', 'assets/Score screen menu/btnExitScoreMenu.png'); //btn exit
     this.load.image('btnCreditsScore', 'assets/Score screen menu/btnCreditsScoreMenu.png'); //btn credits
+    this.load.image('btnRankingScore', 'assets/Score screen menu/btnRankingScoreMenu.png'); //btn ranking
 
     //Corners
     this.load.image('corners', 'assets/Menu corners.png');
@@ -55,6 +56,19 @@ export default class SceneExample extends Phaser.Scene {
     });
     
     this.btnExitScore.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
+
+    //Boton ranking
+    this.btnRankingScore = this.add.image(479,459,'btnRankingScore').setScale(0.25).setAlpha(0.8);
+		this.btnRankingScore.setInteractive({ useHandCursor: true  } )
+    .on('pointerdown', () => this.viewRankingScore());
+
+    this.btnRankingScore.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+    
+    this.btnRankingScore.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
 
@@ -106,5 +120,16 @@ export default class SceneExample extends Phaser.Scene {
    var SceneMMR = this.scene.get('SceneMM');
 
    SceneMMR.scene.restart();
+  }
+
+  viewRankingScore(){
+    console.log("Se ha pulsado Ranking");
+
+    this.btnRankingScore.alpha=0.8;
+
+    this.scene.run("SceneRanking");
+    this.scene.bringToTop("SceneRanking");
+    this.scene.pause("SceneScore");
+
   }
 }
