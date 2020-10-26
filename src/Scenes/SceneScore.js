@@ -79,9 +79,28 @@ export default class SceneExample extends Phaser.Scene {
     var totalTime=2; //considerado en minutos
     var totalKills=20;
     var specialEvents=1;
-    //var tipo de final
+    var tipoFinal="bueno";
 
-    finalScore= specialEvents*200+totalTime*50+totalKills*10; //ademas habria que sumarle el tipo de final (bueno=300; normal=0; malo=-300)
+    finalScore= specialEvents*3000+totalKills*50;
+
+    if(tipoFinal=="bueno"){
+      finalScore+=5000;
+    }else if(tipoFinal=="malo"){
+      finalScore-=5000;
+    }else{
+      finalScore+=1000;
+    }
+
+    if(totalTime<=5){
+      finalScore+=2000;
+    }else if(totalTime>5 && totalTime<=7){
+      finalScore+=1500;
+    }else if(totalTime>7 && totalTime<=10){
+      finalScore+=750;
+    }else{
+      finalScore+=300;
+    }
+
 
     //this.add.bitmapText(480,270,'font','0',100);
   
