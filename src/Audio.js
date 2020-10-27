@@ -6,6 +6,7 @@ export default class Audio extends Phaser.Scene {
     static earlyPos = 0.0;
     static earlyPropeller = false;
     static earlyWeapon = -1;
+    static tweenPropeller = false;
     static bpm = 104;
     static beat = 16;
     static barRate = 60*1000 / this.bpm * this.beat;
@@ -314,14 +315,16 @@ export default class Audio extends Phaser.Scene {
             this.load.soundInstance[9].play();
         } else if (!scene.game.player.activatedJet && this.earlyPropeller) {
             this.earlyPropeller = false;
+            this.propellerTween=false;
             this.load.soundInstance[11].volume = Audio.volumeSFX;
             this.load.soundInstance[11].setRate(0.9 + (Math.random() * 0.1));
             this.load.soundInstance[11].play();
             Audio.load.propellerLoop.stop();
             Audio.load.engineLoop.stop();
-            Audio.load.propellerLoop.setRate(0.0);
+            Audio.load.propellerLoop.setRate(0.001);
             Audio.load.propellerLoop.volume = 0.0;
-        } else if (this.earlyPropeller) {
+        } else if (this.earlyPropeller && !this.propellerTween) {
+            this.propellerTween=true;
             scene.tweens.add({
                 targets: Audio.load.propellerLoop,
                 volume: this.volumeSFX,
