@@ -63,7 +63,8 @@ export default class Megaton extends Projectile {
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
-    if(bodyB.gameObject.parent != undefined){
+    if(bodyB === undefined)return;
+    if(bodyB.gameObject.parent !== undefined){
       this.timer.remove();
       if(bodyB.gameObject.parent.constructor.name === "Megaton")
         this.itemExpire(this, true);

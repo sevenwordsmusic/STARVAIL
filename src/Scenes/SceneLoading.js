@@ -29,7 +29,16 @@ export default class SceneLoading extends Phaser.Scene {
 
     this.load.image('playerFireArm', 'assets/Sprites/Player/player_FireArm.png', { frameWidth: 32, frameHeight: 64 });
 
-    this.load.spritesheet('dummy', 'assets/Sprites/Enemies/dummy.png', { frameWidth: 175, frameHeight: 220 });
+    this.load.spritesheet('dummy', 'assets/Sprites/Enemies/dummy.png', { frameWidth: 35, frameHeight: 44 });
+
+    this.load.spritesheet('zapperGround', 'assets/Sprites/Enemies/DroidZapper/run.png', { frameWidth: 58, frameHeight: 41 });
+    this.load.spritesheet('hero', 'assets/Sprites/Enemies/DroidHero/Blue Sword Run.png', { frameWidth: 93, frameHeight: 63 });
+    this.load.spritesheet('mecha', 'assets/Sprites/Enemies/DroidMecha/mechNoGun.png', { frameWidth: 42, frameHeight: 60 }); //la cosa se pone interesante!
+    this.load.spritesheet('gun', 'assets/Sprites/Enemies/gun.png', { frameWidth: 37, frameHeight: 7 });
+
+    this.load.spritesheet('zapperAir', 'assets/Sprites/Enemies/DroidZapperAir/dronmove.png', { frameWidth: 91, frameHeight: 60 });
+    this.load.spritesheet('bomb', 'assets/Sprites/Enemies/DroidBomb/Homing.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('gunner', 'assets/Sprites/Enemies/DroidGunner/Gunner.png', { frameWidth: 60, frameHeight: 40 });
 
     this.load.image('bg_e', 'assets/Backgrounds/Sky/SkyBG.png');
     this.load.image('bg1_e', 'assets/Backgrounds/Sky/CloudsFar.png');

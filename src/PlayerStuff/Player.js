@@ -20,8 +20,8 @@ export default class Player {
     this.rightMultiply = 1;
 
     this.braceVelocity = 0.08;
-    this.falseGravity = this.scene.game.config.physics.matter.gravity.y/(this.scene.matter.world.getDelta() * 30);
-    this.falseVelocityY = 0;
+    //this.falseGravity = this.scene.game.config.physics.matter.gravity.y/(this.scene.matter.world.getDelta() * 30);
+    //this.falseVelocityY = 0;
 
     //generacion del cuerpo del personaje (cuerpo compuesto de 4 partes: una parte principal, 2 a cada lado y uno por debajo)
     //los 3 cuerpos que rodean al principal son sensores que detectan con que collisiona el personaje
@@ -259,6 +259,8 @@ export default class Player {
 
   update(time, delta) {
     if (!this.alive) { return; } //CAMBIAR ESPERA ACTIVA
+    //if(this.sprite.y > 5000)  this.sprite.y = 3000;
+    this.updateKnockback(time, delta);
     this.updateBoundry();
 
 
@@ -359,15 +361,15 @@ export default class Player {
           this.playerGainEnergy(this.scene.game.energyRecoveryRate*this.weapons[this.weaponCounter].energyRecoverProportion);
       }
     }
+    /*
     //gravedad falsa para el trhust inicial
     if(this.falseVelocityY < 0){
       this.sprite.y += (this.falseVelocityY * delta);
       this.falseVelocityY += (this.falseGravity * delta);
     }
     else
-      this.falseVelocityY = 0;
+      this.falseVelocityY = 0;*/
 
-    this.updateKnockback(time, delta);
     //JET
   }
   playAnimation(isFiring){
@@ -432,8 +434,8 @@ export default class Player {
       this.knockVector.y -= this.knockVecNomralized.y * this.adjustedFriction;
       this.sprite.x += this.knockVector.x * delta;
       this.sprite.y += this.knockVector.y * delta;
-      this.knockVector.x -= this.adjustedFriction*Math.sign(this.knockVector.x);
-      this.knockVector.y -= this.adjustedFriction*Math.sign(this.knockVector.y);
+      //this.knockVector.x -= this.adjustedFriction*Math.sign(this.knockVector.x);
+      //this.knockVector.y -= this.adjustedFriction*Math.sign(this.knockVector.y);
     }
   }
 
@@ -474,6 +476,8 @@ export default class Player {
     this.fireArm.destroyFireArm();
     this.movingArm.destroy();
     this.sprite.anims.play('death', true);
+  this.sprite.body.collisionFilter.mask = 0;
+    console.log(this.sprite.body);
 
     console.log("Te has Muerto...");
   }
@@ -498,10 +502,10 @@ export default class Player {
   initializeWeaponsArray(){
     //creacion de armas con nombre, "rate" de ataque (cuanto más grande más lento), velocidad de proyectil, tiempo de vida de proyectil, coste de energia por disparo,
     //cuanta proporción de "recovery de energía" hay al disparar (por ej: si es 0.5 recuperamos la mitad de energía que de normal cada update), el sprite del proyectil, el frame del crosshair.png que se usa
-    this.weapons[0] = {name: "BulletNormal", damage: 6, spread: 0.05, fireRate: 6 * this.scene.matter.world.getDelta(), projectileSpeed: 30, expireTime: 1000, energyCost: 0, energyRecoverProportion: 0, wSprite: "bullet1", chFrame: 0};
-    this.weapons[1] = {name: "BulletSuperSonic", damage: 6, spread: 0.05, fireRate: 3 * this.scene.matter.world.getDelta(), projectileSpeed: 40, expireTime: 1000, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet3", chFrame: 0};
-    this.weapons[2] = {name: "BulletExplosive", damage: 14, knockback: 1 / this.scene.matter.world.getDelta(),  spread: 0.1, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 1000, energyCost: 0.25, energyRecoverProportion: 0, wSprite: "bullet2", chFrame: 0};
-    this.weapons[3] = {name: "BulletBounce", damage: 10, bounce: 3, spread: 0.075, fireRate: 7 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 1000, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet1", chFrame: 0};
+    this.weapons[0] = {name: "BulletNormal", damage: 6, spread: 0.05, fireRate: 6 * this.scene.matter.world.getDelta(), projectileSpeed: 30, expireTime: 800, energyCost: 0, energyRecoverProportion: 0, wSprite: "bullet1", chFrame: 0};
+    this.weapons[1] = {name: "BulletSuperSonic", damage: 6, spread: 0.05, fireRate: 3 * this.scene.matter.world.getDelta(), projectileSpeed: 40, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet3", chFrame: 0};
+    this.weapons[2] = {name: "BulletExplosive", damage: 14, knockback: 1 / this.scene.matter.world.getDelta(),  spread: 0.1, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.25, energyRecoverProportion: 0, wSprite: "bullet2", chFrame: 0};
+    this.weapons[3] = {name: "BulletBounce", damage: 10, bounce: 3, spread: 0.075, fireRate: 7 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet1", chFrame: 0};
     this.weapons[4] = {name: "BombNormal", damage: 40, area: 45, knockback:  2 / this.scene.matter.world.getDelta(), fireRate: 25 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
     this.weapons[5] = {name: "BombMegaton", damage: 95, area: 68, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
     this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 1};
@@ -693,26 +697,26 @@ export default class Player {
     this.advance32Y += (this.sprite.body.position.y - this.earlyPos.y);
     if(this.advance32X > 32){
       const layersX = Math.floor(this.advance32X/32);
-      this.xFrontiers(1, 17, layersX);
+      this.xFrontiers(1, 25, layersX);
       this.advance32X = this.advance32X - 32*layersX;
       //this.scene.enemyController.updatePlayerPosition();
       newPlayerPos = true
     }else if (this.advance32X < -32) {
       const layersX = Math.floor(Math.abs(this.advance32X/32));
-      this.xFrontiers(-1, 17, layersX);
+      this.xFrontiers(-1, 25, layersX);
       this.advance32X = this.advance32X + 32*layersX;
       //this.scene.enemyController.updatePlayerPosition();
       newPlayerPos = true
     }
     if(this.advance32Y > 32){
       const layersY = Math.floor(this.advance32Y/32);
-      this.yFrontiers(1, 17, layersY);
+      this.yFrontiers(1, 25, layersY);
       this.advance32Y = this.advance32Y - 32*layersY;
       //if(!newPlayerPos)
         //this.scene.enemyController.updatePlayerPosition();
     }else if (this.advance32Y < -32) {
       const layersY = Math.floor(Math.abs(this.advance32Y/32));
-      this.yFrontiers(-1, 17, layersY);
+      this.yFrontiers(-1, 25, layersY);
       this.advance32Y = this.advance32Y + 32*layersY;
       //if(!newPlayerPos)
         //this.scene.enemyController.updatePlayerPosition();

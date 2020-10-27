@@ -10,6 +10,7 @@ export default class Dialog {
     //tiempo que pasará en milisegundos desde que acaba el dialogo hasta que se destruye si lo anterior es cierto, y configuración
     constructor(scene, x, y, destroyonEnd,timeToDestroy, config) {
         this.scene = scene;
+        scene.dialogManager = this;
 
         //Colores para el dialogo
         const COLOR_PRIMARY = 0x181818;

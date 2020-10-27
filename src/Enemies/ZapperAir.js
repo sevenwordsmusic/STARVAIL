@@ -4,8 +4,8 @@ import DropableAirEnergy from "../Objects/Dropables/DropableAirEnergy.js"
 //enemigo que hereda de Enemy
 export default class ZapperAir extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'dummy', 100);
-    this.sprite.setScale(0.4);
+    super(scene, x, y, 'zapperAir', 100);
+    this.sprite.setScale(2);
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 40, 40, {chamfer: { radius: 8 } });
@@ -34,10 +34,11 @@ export default class ZapperAir extends Enemy {
     //Variables de IA
     //No Tocar
     this.patrolDir = new Phaser.Math.Vector2(0,0);
-    this.standByReDistance = 520;
-    this.patrolDistance = 480;
+    this.standByReDistance = 700;
+    this.patrolDistance = 650;
     this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
     this.stopper = false;
+    this.playerVector = new Phaser.Math.Vector2(0, 0);
     //No Tocar
 
     //Ajustar estas
@@ -48,6 +49,7 @@ export default class ZapperAir extends Enemy {
     this.hitDistance = 50;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 0.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
     this.hitDamage = 15;                                              //daño al golpear
+    this.energyDrop = 50;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
     /*
@@ -104,10 +106,12 @@ export default class ZapperAir extends Enemy {
 
     this.stateUpdate(2, function(time, delta){
       if(this.sprite.body === undefined)return;
-      this.distanceToCheck = Math.sqrt( Math.pow(this.scene.game.player.sprite.x - this.sprite.x,2) +  Math.pow(this.scene.game.player.sprite.y - this.sprite.y,2));
+      this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
+      this.playerVector.y = this.scene.game.player.sprite.y - this.sprite.y;
+      this.distanceToCheck = Math.sqrt( Math.pow(this.playerVector.x ,2) +  Math.pow(this.playerVector.y,2));
       if(this.distanceToCheck > this.hitDistance){
-        this.sprite.setVelocityX((this.scene.game.player.sprite.x - this.sprite.x) *this.detectSpeed/this.distanceToCheck * delta);
-        this.sprite.setVelocityY((this.scene.game.player.sprite.y - this.sprite.y) *this.detectSpeed/this.distanceToCheck * delta);
+        this.sprite.setVelocityX((this.playerVector.x) *this.detectSpeed/this.distanceToCheck * delta);
+        this.sprite.setVelocityY((this.playerVector.y) *this.detectSpeed/this.distanceToCheck * delta);
         //console.log("persuing");
       }else{
         this.goTo(3);
@@ -155,21 +159,23 @@ export default class ZapperAir extends Enemy {
 
 
   damage(dmg, v){
-    if(this.currentStateId() < 2)
-      this.goTo(2);
-    super.damage(dmg, v);
+    if(this.currentStateId() == 1)
+      this.goTo( 2);
+    if(this.currentStateId() != 0)
+      super.damage(dmg, v);
   }
   damageLaser(dmg, v){
-    if(this.currentStateId() < 2)
+    if(this.currentStateId() == 1)
       this.goTo(2);
-    super.damageLaser(dmg, v);
+    if(this.currentStateId() != 0)
+      super.damageLaser(dmg, v);
   }
 
   enemyDead(vXDmg, vYDmg){
     this.goTo(0);
     if(!this.dead){
       super.enemyDead();
-      new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg), Math.sign(vYDmg),  200);
+      new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg), Math.sign(vYDmg),  this.energyDrop);
     }
   }
 

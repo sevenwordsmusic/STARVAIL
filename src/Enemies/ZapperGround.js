@@ -1,16 +1,15 @@
 import Enemy from "./Enemy.js";
 import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
-import EnergyBall from "../Objects/Projectiles/EnemyProjectiles/EnergyBall.js"
 
 //enemigo que hereda de Enemy
 export default class ZapperGround extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'dummy', 100);
-    this.sprite.setScale(0.4);
+    super(scene, x, y, 'zapperGround', 100);
+    this.sprite.setScale(2);
 
     //this.sprite.setBounce(1.01735).setFixedRotation().setFriction(0).setFrictionAir(0).setFrictionStatic(0);
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-    const body = Bodies.rectangle(0, 6, 30, 75);
+    const body = Bodies.rectangle(0, 0, 30, 60);
     /*this.sensors = {
       left: Bodies.rectangle(-25, 6, 10, 20, { isSensor: true }),
       right: Bodies.rectangle(25 , 6, 10, 20, { isSensor: true }),
@@ -21,7 +20,7 @@ export default class ZapperGround extends Enemy {
     });
 
     this.sprite.setExistingBody(compoundBody).setOrigin(0.52, 0.55).setPosition(x, y).setFixedRotation();*/
-    this.sprite.setExistingBody(body).setOrigin(0.52, 0.55).setPosition(x, y).setFixedRotation();
+    this.sprite.setExistingBody(body).setPosition(x, y).setFixedRotation();
     this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
     this.sprite.body.collisionFilter.group = -1;
@@ -32,10 +31,11 @@ export default class ZapperGround extends Enemy {
     //Variables de IA
     //No Tocar
     this.patrolDir = (Math.round(Math.random()) == 1)?1:-1;
-    this.standByReDistance = 520;
-    this.patrolDistance = 480;
+    this.standByReDistance = 700;
+    this.patrolDistance = 650;
     this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
     this.traveledDistance = 0;
+    this.playerVector = new Phaser.Math.Vector2(0, 0);
     //No Tocar
 
     //Ajustar estas
@@ -46,6 +46,7 @@ export default class ZapperGround extends Enemy {
     this.hitDistance = 50;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 0.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
     this.hitDamage = 15;                                              //daño al golpear
+    this.energyDrop = 50;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
 
@@ -69,6 +70,11 @@ export default class ZapperGround extends Enemy {
       this.sprite.setVelocityY(0);
       this.sprite.body.friction = 10;
     });
+    this.stateOnEnd(0,function(){
+      if(this.sprite.body === undefined)return;
+      this.sprite.body.friction = 0.1;
+      this.sprite.setIgnoreGravity(false);
+    })
     this.stateOnStart(1, function(){
       if(this.sprite.body === undefined)return;
       this.sprite.body.friction = 0.1;
@@ -87,10 +93,12 @@ export default class ZapperGround extends Enemy {
     })
     this.stateUpdate(2, function(time, delta){
       if(this.sprite.body === undefined)return;
-      this.distanceToCheck = Math.sqrt( Math.pow(this.scene.game.player.sprite.x - this.sprite.x,2) +  Math.pow(this.scene.game.player.sprite.y - this.sprite.y,2));
+      this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
+      this.playerVector.y = this.scene.game.player.sprite.y - this.sprite.y;
+      this.distanceToCheck = Math.sqrt( Math.pow(this.playerVector.x ,2) +  Math.pow(this.playerVector.y ,2));
       if(this.distanceToCheck > this.hitDistance){
-        if(Math.abs(this.scene.game.player.sprite.x - this.sprite.x) > this.hitDistance/2)
-          this.sprite.setVelocityX(this.detectSpeed * Math.sign(this.scene.game.player.sprite.x - this.sprite.x) * delta);
+        if(Math.abs(this.playerVector.x) > this.hitDistance/2)
+          this.sprite.setVelocityX(this.detectSpeed * Math.sign(this.playerVector.x) * delta);
         //console.log("persuing");
       }else{
         this.goTo(3)
@@ -153,22 +161,23 @@ export default class ZapperGround extends Enemy {
 
 
   damage(dmg, v){
-    if(this.currentStateId() < 2)
+    if(this.currentStateId() == 1)
       this.goTo( 2);
-    super.damage(dmg, v);
+    if(this.currentStateId() != 0)
+      super.damage(dmg, v);
   }
   damageLaser(dmg, v){
-    if(this.currentStateId() < 2)
+    if(this.currentStateId() == 1)
       this.goTo(2);
-    super.damageLaser(dmg, v);
+    if(this.currentStateId() != 0)
+      super.damageLaser(dmg, v);
   }
 
   enemyDead(vXDmg){
     this.goTo(0);
     if(!this.dead){
       super.enemyDead();
-      new EnergyBall(this.scene, this.sprite.x, this.sprite.y, 14, 0.1, 15, new Phaser.Math.Vector2(-1,0), 1000);
-      new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  150);
+      new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
     }
   }
 

@@ -37,6 +37,7 @@ export default class MultiMissile extends Projectile {
     this.pVelocity = velDir;
     this.pVelocity = this.pVelocity.normalize().scale(speed);
     this.sprite.setVelocity(this.pVelocity.x , this.pVelocity.y);
+    this.sprite.body.frictionAir = 0;
 
     this.sprite.body.restitution = 0.5;
 
@@ -62,6 +63,7 @@ export default class MultiMissile extends Projectile {
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
+    if(bodyB === undefined)return;
       //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
       if(this.scene.game.player.weaponCounter==7){
         if(this.touchDown==true && this.touchDelay<3){

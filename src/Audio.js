@@ -330,7 +330,7 @@ export default class Audio extends Phaser.Scene {
                 volume: this.volumeSFX,
                 rate: scene.game.player.energy / this.barRateDiv[1],
                 duration: this.barRateDiv[2],
-            });
+            });*/
         }
     }
     preload() {

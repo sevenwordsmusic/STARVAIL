@@ -24,7 +24,7 @@ var config = {
     default: 'matter',
     matter: {
       gravity: { y: 0.98 },
-      debug: false
+      debug: true
     }
   },
   //escenas principales
@@ -49,6 +49,7 @@ var config = {
 
 //Declaramos nuestro juego
 var game = new Phaser.Game(config);
+console.log(game);                      //el bug de exces memory podría deberse a que el explorador recuerda los recursos cargados en el cache del juego
 
 //Declaramos variables globales del juego.
 game.moveVelocity = 0.22;            //velocidad horizontal en el suelo
@@ -88,6 +89,8 @@ function mobileTabletChek() {
 };
 game.onPC = !mobileTabletChek();
 console.log("onPC:  " +game.onPC);
+
+window.gameDebug = game;
 
 
 //DESTRUCTOR GLOBAL AL SALIR

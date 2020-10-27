@@ -32,6 +32,7 @@ export default class Missile extends Projectile {
     this.pVelocity = velDir;
     this.pVelocity = this.pVelocity.normalize().scale(speed);
     this.sprite.setVelocity(this.pVelocity.x , this.pVelocity.y);
+    this.sprite.body.frictionAir = 0;
 
     this.sprite.body.restitution = 0.5;
 
@@ -101,6 +102,7 @@ export default class Missile extends Projectile {
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
+    if(bodyB === undefined)return;
     this.reachedTarget(this, bodyB, pair);
   }
 

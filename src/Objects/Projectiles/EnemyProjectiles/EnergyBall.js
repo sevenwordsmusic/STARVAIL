@@ -18,25 +18,33 @@ export default class EnergyBall extends Projectile {
     this.sprite.setExistingBody(body).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
     this.sprite.setDepth(5).setScale(0.5);
     this.sprite.setSensor(true).setIgnoreGravity(true);
+    this.sprite.body.frictionAir = 0;
 
     //se calcula la direccion y magnitud del vector de velocidad
     this.pVelocity = velDir;
-    this.pVelocity = this.pVelocity.normalize().scale(speed);
-    this.sprite.setVelocity(this.pVelocity.x, this.pVelocity.y);
+    this.pVelocity = this.pVelocity.normalize();
+    this.sprite.setVelocity(this.pVelocity.x * speed, this.pVelocity.y * speed);
 
     this.projectileArmed = this.scene.matterCollision.addOnCollideStart({
       objectA: this.sprite.body,
-      objectB: this.scene.game.player.mainBody,
       callback: this.onSensorCollide,
       context: this
     });
   }
 
   onSensorCollide({ bodyA, bodyB, pair }) {
-    if (bodyB.isSensor) return;
-    this.timer.remove();
-    this.scene.game.player.playerDamageKnockback(this.dmg, this.knockback, this.pVelocity);   //this.scene.game.player.playerDamage(this.dmg);
-    this.itemExpire(this);
+    if (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
+    if(bodyB === this.scene.game.player.mainBody){
+      this.projectileArmed();
+      this.timer.remove();
+      this.scene.game.player.playerDamageKnockback(this.dmg, this.knockback, this.pVelocity);   //this.scene.game.player.playerDamage(this.dmg);
+      this.itemExpire(this);
+    }
+    else if(bodyB.gameObject.parent == undefined){
+      this.projectileArmed();
+      this.timer.remove();
+      this.itemExpire(this);
+    }
   }
 
   itemExpire(proj){

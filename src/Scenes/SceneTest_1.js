@@ -22,7 +22,11 @@ Si así es, ya sabes lo que tenemos que hacer.`;
 import Player from "../PlayerStuff/Player.js";
 import Blackboard from "../Enemies/Blackboard.js";
 import ZapperGround from "../Enemies/ZapperGround.js";
+import SwordGround from "../Enemies/SwordGround.js";
+import Mecha from "../Enemies/Mecha.js";
 import ZapperAir from "../Enemies/ZapperAir.js";
+import BombAir from "../Enemies/BombAir.js";
+import GunnerAir from "../Enemies/GunnerAir.js";
 import Dialog from "../Plugins/Dialog.js"
 import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
@@ -57,7 +61,7 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     //Camara.
     cam = this.cameras.main;
-    cam.setBackgroundColor('#0b0c0d');
+    cam.setBackgroundColor('#dddddd');
     this.matter.world.setBounds(0, -500, 2600, 6000);
     cam.setBounds(0, -500, 10000, 10000);/*
     this.matter.world.setBounds(0, -500, 2900, 2800);
@@ -123,7 +127,7 @@ export default class SceneTest_1 extends Phaser.Scene {
       //tile.setSize
       if (tile.physics.matterBody != undefined) {
         const tileBody = tile.physics.matterBody.body;
-        if (tileBody.position.x < 1000 && tileBody.position.y > 3800) {
+        if (tileBody.position.x < 2000 && tileBody.position.y > 3800) {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         } else {
@@ -149,15 +153,25 @@ export default class SceneTest_1 extends Phaser.Scene {
     map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
         if(point.name === "zapper1")
           new ZapperGround(this, point.x, point.y);
-        if(point.name === "zapper2")
+        else if(point.name === "zapper2")
           new ZapperAir(this, point.x, point.y);
+        else if(point.name === "sword")
+          new SwordGround(this, point.x, point.y);
+        else if(point.name === "gunner")
+          new GunnerAir(this, point.x, point.y);
+        else if(point.name === "bomb")
+          new BombAir(this, point.x, point.y);
+        else if(point.name === "mecha")
+          new Mecha(this, point.x, point.y);
+        else if(point.name === "sith")
+          new Sith(this, point.x, point.y);
     });
     map.getObjectLayer("Chest_Layer").objects.forEach(point => {
       new InteractableEnergyOnce(this, point.x, point.y);
     });
     new Player(this, 416, 4320);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
-    //cam.setZoom(0.25);
+    //cam.setZoom(0.5);
 
     //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)
     new LevelEnd(this, 704, 64, 'star', 'testsec', SceneTest_2);
@@ -205,10 +219,29 @@ export default class SceneTest_1 extends Phaser.Scene {
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
-    //console.log(this.matter.world.localWorld.bodies.length);
   //AUDIO:
   Audio.audioUpdate(this);
-}
+  }
+
+  startDebugLoop(deltaLoop, memoryLoop){
+    if(deltaLoop)
+      this.events.on("update", this.printDelta, this);
+
+    if(memoryLoop)
+      this.events.on("update", this.printMemory, this);
+  }
+
+  stopDebugLoop(){
+    this.events.off("update", this.printDelta);
+    this.events.off("update", this.printMemory);
+  }
+
+  printDelta(time, delta){
+    console.log("Last Delta:  " + (Math.round(delta))+ " ms");
+  }
+  printMemory(time, delta){
+    console.log("Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
+  }
 }
 
 /*this.cameras.remove(this.cameras.main)
