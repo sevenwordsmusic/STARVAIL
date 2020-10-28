@@ -6,7 +6,7 @@ export default class Audio extends Phaser.Scene {
     static earlyPos = 0.0;
     static earlyPropeller = false;
     static earlyWeapon = -1;
-    static tweenPropeller = false;
+    static propellerTween = false;
     static bpm = 104;
     static beat = 16;
     static barRate = 60*1000 / this.bpm * this.beat;
@@ -14,11 +14,12 @@ export default class Audio extends Phaser.Scene {
     static maxVolume = 1.0;
     static vanishingPoint = this.barRateDiv[2]*this.maxVolume;
     static halfDistance = this.vanishingPoint / 2;
-    static volumeBGM = this.maxVolume;
+    static volumeBGM = 0.0;
     static volumeSFX = this.maxVolume;
     static load;
     static barTimer;
     static halfBarTimer;
+    static walkCycleTimer;
     static maxSFXinstances=32;
     static SFXinstance=0;
     static stingerKilling=false;
@@ -174,11 +175,20 @@ export default class Audio extends Phaser.Scene {
         }
     }
     static play2Dinstance(type) {
-        var SFXinstance= Audio.SFXinstance;
-        this.load.soundInstance[type][SFXinstance].setRate(0.75 + (Math.random() * 0.25));
-        this.load.soundInstance[type][SFXinstance].volume = Audio.volumeSFX;
-        this.load.soundInstance[type][SFXinstance].play();
-        if(Audio.SFXinstance==SFXinstance && SFXinstance<Audio.maxSFXinstances-1){
+        this.load.soundInstance[type][Audio.SFXinstance].setRate(0.75 + (Math.random() * 0.25));
+        this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
+        this.load.soundInstance[type][Audio.SFXinstance].play();
+        if(Audio.SFXinstance==Audio.SFXinstance && Audio.SFXinstance<Audio.maxSFXinstances-1){
+            Audio.SFXinstance++;
+        }else{
+            Audio.SFXinstance=0;
+        }
+    }
+    static play2DinstanceRate(type, rate) {
+        this.load.soundInstance[type][Audio.SFXinstance].setRate(rate);
+        this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
+        this.load.soundInstance[type][Audio.SFXinstance].play();
+        if(Audio.SFXinstance==Audio.SFXinstance && Audio.SFXinstance<Audio.maxSFXinstances-1){
             Audio.SFXinstance++;
         }else{
             Audio.SFXinstance=0;
@@ -254,9 +264,7 @@ export default class Audio extends Phaser.Scene {
     static audioUpdate(scene) {
         this.propellerFliying(scene);
         if (scene.game.isFiring && scene.game.player.energy==0.0 && !scene.game.player.activatedJet) {
-            this.load.soundInstance[10].setRate(0.9 + scene.game.player.weaponCounter * 0.05);
-            this.load.soundInstance[10].volume = Audio.volumeSFX;
-            this.load.soundInstance[10].play();
+            Audio.play2DinstanceRate(10,0.8 + scene.game.player.weaponCounter * 0.05);
         }
         if (scene.game.isFiring && !this.stingerShot) {
             this.stingerShot = true;
@@ -280,23 +288,24 @@ export default class Audio extends Phaser.Scene {
             this.stingerSurface = true;
             this.load.surfaceLoop.volume = Audio.volumeSFX;
             this.load.surfaceLoop.play();
-            this.clockWalk = new Date();
+            this.clockWalk= new Date().getTime();
         }
         if(this.stingerSurface && ( Math.floor(scene.game.player.earlyPos.x) == this.earlyPos || scene.game.player.activatedJet || !scene.game.player.isTouching.ground)){
-            if(((new Date().getTime()-this.clockWalk.getTime()) % 125)<50){
-                this.stingerSurface = false;
-                this.load.surfaceLoop.stop();
-                this.load.soundInstance[28].play();
-            }
+            var stopCycleDelay= (new Date().getTime()-this.clockWalk) % 140;
+            this.stingerSurface = false;
+            Audio.walkCycleTimer = scene.time.addEvent({
+                delay: stopCycleDelay,
+                callback: ()=>{
+                    this.load.surfaceLoop.stop();
+                    Audio.play2DinstanceRate(28,1.0);
+                },
+                loop: false,
+            });
         }
         if (scene.game.player.weaponCounter != this.earlyWeapon) {
             this.earlyWeapon = scene.game.player.weaponCounter;
-            this.load.soundInstance[8].setRate(0.9 + scene.game.player.weaponCounter * 0.05);
-            this.load.soundInstance[8].volume = Audio.volumeSFX;
-            this.load.soundInstance[8].play();
-            this.load.soundInstance[9].setRate(0.9 + scene.game.player.weaponCounter * 0.05);
-            this.load.soundInstance[9].volume = Audio.volumeSFX;
-            this.load.soundInstance[9].play();
+            Audio.play2DinstanceRate(8,0.8 + scene.game.player.weaponCounter * 0.05);
+            Audio.play2DinstanceRate(9,0.8 + scene.game.player.weaponCounter * 0.05);
         }
         if (Math.floor(scene.game.player.earlyPos.x) != this.earlyPos) {
             this.earlyPos = Math.floor(scene.game.player.earlyPos.x);
@@ -305,40 +314,23 @@ export default class Audio extends Phaser.Scene {
     }
     static propellerFliying(scene) {
         if (scene.game.player.activatedJet && !this.earlyPropeller) {
-            this.load.soundInstance[11].volume = 0.0;
             this.earlyPropeller = true;
             this.load.engineLoop.play();
-            scene.tweens.add({
-                targets: this.load.engineLoop,
-                volume: this.volumeSFX,
-                duration: this.barRateDiv[2],
-            });
             this.load.propellerLoop.play();
-            scene.tweens.add({
-                targets: this.load.propellerLoop,
-                volume: this.volumeSFX,
-                rate: scene.game.player.energy /  this.barRateDiv[3] + this.volumeSFX + this.volumeSFX,
-                duration: this.barRateDiv[3],
-            });
-            this.load.soundInstance[9].volume = Audio.volumeSFX;
-            this.load.soundInstance[9].setRate(0.4);
-            this.load.soundInstance[9].play();
+            Audio.play2DinstanceRate(9,0.4);
         } else if (!scene.game.player.activatedJet && this.earlyPropeller) {
             this.earlyPropeller = false;
             this.propellerTween=false;
-            this.load.soundInstance[11].volume = Audio.volumeSFX;
-            this.load.soundInstance[11].setRate(0.9 + (Math.random() * 0.1));
-            this.load.soundInstance[11].play();
+            Audio.play2Dinstance(11);
             Audio.load.propellerLoop.stop();
+            Audio.load.propellerLoop.setRate(1.0);
             Audio.load.engineLoop.stop();
-            Audio.load.propellerLoop.setRate(0.001);
-            Audio.load.propellerLoop.volume = 0.0;
         } else if (this.earlyPropeller && !this.propellerTween) {
             this.propellerTween=true;
             scene.tweens.add({
                 targets: Audio.load.propellerLoop,
                 volume: this.volumeSFX,
-                rate: scene.game.player.energy / this.barRateDiv[1],
+                rate: 0.4,
                 duration: this.barRateDiv[2],
             });
         }
@@ -431,13 +423,13 @@ export default class Audio extends Phaser.Scene {
     create() {
         //INIT AUDIO
         this.soundInstance=[];
-        this.clockWalk = new Date();
         //STINGERS
         this.stingerShot = false;
         this.stingerJet = false;
         this.stingerWalk = false;
         this.stingerMovement = false;
         this.stingerSurface = false;
+        this.clockWalk= new Date().getTime();
         //IMPACTS
         this.soundInstance[0]=[];
         Audio.createSFXinstanceSub('impact_00A', 0, 0, this);
@@ -460,10 +452,10 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('impact_06', 6, this);
         Audio.createSFXinstance('impact_07', 7, this);
         //UI_monoinstance
-        this.soundInstance[8]= this.sound.add('weaponChange_00');
-        this.soundInstance[9]= this.sound.add('movingPart_00');
-        this.soundInstance[10]= this.sound.add('trigger_00');
-        this.soundInstance[11]= this.sound.add('propellerStop_00');
+        Audio.createSFXinstance('weaponChange_00', 8, this);
+        Audio.createSFXinstance('movingPart_00', 9, this);
+        Audio.createSFXinstance('trigger_00', 10, this);
+        Audio.createSFXinstance('propellerStop_00', 11, this);
         //EXTRA
         Audio.createSFXinstance('wick_00', 12, this);
         Audio.createSFXinstance('wick_00', 13, this);
@@ -490,7 +482,7 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('shot_06', 26, this);
         Audio.createSFXinstance('shot_07', 27, this);
         //
-        this.soundInstance[28]= this.sound.add('walkStop_00');
+        Audio.createSFXinstance('walkStop_00', 28, this);
 
 
         //UI LOOPS
@@ -503,11 +495,11 @@ export default class Audio extends Phaser.Scene {
             loop: true
         })
         this.propellerLoop = this.sound.add('propellerLoop_00', {
-            volume: 0.0,
+            volume: this.volumeSFX,
             loop: true
         })
         this.engineLoop = this.sound.add('engineLoop_00', {
-            volume: 0.0,
+            volume: this.volumeSFX,
             loop: true
         })
         this.ambientLoop = this.sound.add('ambientLoop_00', {
