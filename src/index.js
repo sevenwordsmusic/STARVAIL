@@ -1,5 +1,14 @@
 "use strict";
 
+//DESTRUCTOR GLOBAL AL SALIR/REFRESCAR
+window.addEventListener("beforeunload", function (e) {
+  game.destroy(true, true);
+  localStorage.clear();
+  sessionStorage.clear();
+  (e || window.event).returnValue = confirmationMessage;
+  return confirmationMessage;
+});
+
 //todas las clases necesarias (incluyendo todas las escenas-modulos)
 import Player from "./PlayerStuff/Player.js";
 import SceneLoading from "./Scenes/SceneLoading.js";
@@ -91,11 +100,3 @@ game.onPC = !mobileTabletChek();
 console.log("onPC:  " +game.onPC);
 
 window.gameDebug = game;
-
-
-//DESTRUCTOR GLOBAL AL SALIR
-window.addEventListener("beforeunload", function (e) {
-  game.destroy(true, true);
-  (e || window.event).returnValue = confirmationMessage;
-  return confirmationMessage;
-});

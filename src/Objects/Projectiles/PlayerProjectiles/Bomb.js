@@ -75,7 +75,7 @@ export default class Bomb extends Projectile {
   }
   onBodyCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
-    //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
+    //AUDIO
       if(this.touchDown==true && this.touchDelay<3){
         this.touchDelay++;
         this.sfx.volume=Audio.play3Dinstance(this, 4).volume;
@@ -89,8 +89,8 @@ export default class Bomb extends Projectile {
   itemExpire(proj){
       this.bombArmed1();
       this.bombArmed2();
-      //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-        Audio.play3Dinstance(this,15);
+      //AUDIO
+      Audio.play3DinstanceSub(this,14);
         this.sfx.volume= 0.0;
       //
       const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");

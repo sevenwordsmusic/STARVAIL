@@ -35,8 +35,8 @@ export default class BulletExplosive extends Projectile {
     this.scene.events.off("update", this.update, this);
 
      //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
-      Audio.play3Dinstance(this, 2);
       Audio.play3DinstanceSub(this, 1);
+      Audio.play3Dinstance(this, 2);
       //
 
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)

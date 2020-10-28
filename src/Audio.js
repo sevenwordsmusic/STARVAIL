@@ -330,56 +330,62 @@ export default class Audio extends Phaser.Scene {
                 volume: this.volumeSFX,
                 rate: scene.game.player.energy / this.barRateDiv[1],
                 duration: this.barRateDiv[2],
-            });*/
+            });
         }
     }
     preload() {
         //LOAD AUDIO
+        //AMBIENT
+        this.load.audio('ambientLoop_00', 'assets/audio/SFX/ambientLoop_00.ogg');
         //IMPACTS
-        this.load.audio('impact_00A', 'assets/audio/SFX/impact_00A.mp3');
-        this.load.audio('impact_00B', 'assets/audio/SFX/impact_00B.mp3');
-        this.load.audio('impact_00C', 'assets/audio/SFX/impact_00C.mp3');
-        this.load.audio('impact_01A', 'assets/audio/SFX/impact_01A.mp3');
-        this.load.audio('impact_01B', 'assets/audio/SFX/impact_01B.mp3');
-        this.load.audio('impact_01C', 'assets/audio/SFX/impact_01C.mp3');
-        this.load.audio('impact_02', 'assets/audio/SFX/impact_02.mp3');
-        this.load.audio('impact_03A', 'assets/audio/SFX/impact_03A.mp3');
-        this.load.audio('impact_03B', 'assets/audio/SFX/impact_03B.mp3');
-        this.load.audio('impact_03C', 'assets/audio/SFX/impact_03C.mp3');
-        this.load.audio('impact_03D', 'assets/audio/SFX/impact_03D.mp3');
-        this.load.audio('impact_03E', 'assets/audio/SFX/impact_03E.mp3');
-        this.load.audio('impact_04', 'assets/audio/SFX/impact_04.mp3');
-        this.load.audio('impact_05', 'assets/audio/SFX/impact_05.mp3');
-        this.load.audio('impact_06', 'assets/audio/SFX/impact_06.mp3');
-        this.load.audio('impact_07', 'assets/audio/SFX/impact_07.mp3');
+        this.load.audio('impact_00A', 'assets/audio/SFX/impact_00A.ogg');
+        this.load.audio('impact_00B', 'assets/audio/SFX/impact_00B.ogg');
+        this.load.audio('impact_00C', 'assets/audio/SFX/impact_00C.ogg');
+        this.load.audio('impact_01A', 'assets/audio/SFX/impact_01A.ogg');
+        this.load.audio('impact_01B', 'assets/audio/SFX/impact_01B.ogg');
+        this.load.audio('impact_01C', 'assets/audio/SFX/impact_01C.ogg');
+        this.load.audio('impact_02', 'assets/audio/SFX/impact_02.ogg');
+        this.load.audio('impact_03A', 'assets/audio/SFX/impact_03A.ogg');
+        this.load.audio('impact_03B', 'assets/audio/SFX/impact_03B.ogg');
+        this.load.audio('impact_03C', 'assets/audio/SFX/impact_03C.ogg');
+        this.load.audio('impact_03D', 'assets/audio/SFX/impact_03D.ogg');
+        this.load.audio('impact_03E', 'assets/audio/SFX/impact_03E.ogg');
+        this.load.audio('impact_04', 'assets/audio/SFX/impact_04.ogg');
+        this.load.audio('impact_05', 'assets/audio/SFX/impact_05.ogg');
+        this.load.audio('impact_06', 'assets/audio/SFX/impact_06.ogg');
+        this.load.audio('impact_07', 'assets/audio/SFX/impact_07.ogg');
         //UI
-        this.load.audio('weaponChange_00', 'assets/audio/SFX/weaponChange_00.mp3');
-        this.load.audio('movingPart_00', 'assets/audio/SFX/movingPart_00.mp3');
-        this.load.audio('trigger_00', 'assets/audio/SFX/trigger_00.mp3');
-        this.load.audio('propellerStop_00', 'assets/audio/SFX/propellerStop_00.mp3');
-        this.load.audio('wick_00', 'assets/audio/SFX/wick_00.mp3');
+        this.load.audio('weaponChange_00', 'assets/audio/SFX/weaponChange_00.ogg');
+        this.load.audio('movingPart_00', 'assets/audio/SFX/movingPart_00.ogg');
+        this.load.audio('trigger_00', 'assets/audio/SFX/trigger_00.ogg');
+        this.load.audio('propellerStop_00', 'assets/audio/SFX/propellerStop_00.ogg');
+        this.load.audio('wick_00', 'assets/audio/SFX/wick_00.ogg');
         //EXPLOSION
-        this.load.audio('explosion_00', 'assets/audio/SFX/explosion_00.mp3');
-        this.load.audio('explosion_01', 'assets/audio/SFX/explosion_01.mp3');
-        this.load.audio('explosion_02', 'assets/audio/SFX/explosion_02.mp3');
-        this.load.audio('explosion_03', 'assets/audio/SFX/explosion_03.mp3');
-        this.load.audio('explosion_04', 'assets/audio/SFX/explosion_04.mp3');
-        this.load.audio('explosion_05', 'assets/audio/SFX/explosion_05.mp3');
+        this.load.audio('explosion_00A', 'assets/audio/SFX/explosion_00A.ogg');
+        this.load.audio('explosion_00B', 'assets/audio/SFX/explosion_00B.ogg');
+        this.load.audio('explosion_00C', 'assets/audio/SFX/explosion_00C.ogg');
+        this.load.audio('explosion_01A', 'assets/audio/SFX/explosion_01A.ogg');
+        this.load.audio('explosion_01B', 'assets/audio/SFX/explosion_01B.ogg');
+        this.load.audio('explosion_01C', 'assets/audio/SFX/explosion_01C.ogg');
+        this.load.audio('explosion_02', 'assets/audio/SFX/explosion_02.ogg');
+        this.load.audio('explosion_03', 'assets/audio/SFX/explosion_03.ogg');
+        this.load.audio('explosion_04', 'assets/audio/SFX/explosion_04.ogg');
+        this.load.audio('explosion_05', 'assets/audio/SFX/explosion_05.ogg');
         //SHOTS
-        this.load.audio('shot_00', 'assets/audio/SFX/shot_00.mp3');
-        this.load.audio('shot_01', 'assets/audio/SFX/shot_01.mp3');
-        this.load.audio('shot_02', 'assets/audio/SFX/shot_02.mp3');
-        this.load.audio('shot_03', 'assets/audio/SFX/shot_03.mp3');
-        this.load.audio('shot_04', 'assets/audio/SFX/shot_04.mp3');
-        this.load.audio('shot_05', 'assets/audio/SFX/shot_05.mp3');
-        this.load.audio('shot_06', 'assets/audio/SFX/shot_06.mp3');
-        this.load.audio('shot_07', 'assets/audio/SFX/shot_07.mp3');
+        this.load.audio('shot_00', 'assets/audio/SFX/shot_00.ogg');
+        this.load.audio('shot_01', 'assets/audio/SFX/shot_01.ogg');
+        this.load.audio('shot_02', 'assets/audio/SFX/shot_02.ogg');
+        this.load.audio('shot_03', 'assets/audio/SFX/shot_03.ogg');
+        this.load.audio('shot_04', 'assets/audio/SFX/shot_04.ogg');
+        this.load.audio('shot_05', 'assets/audio/SFX/shot_05.ogg');
+        this.load.audio('shot_06', 'assets/audio/SFX/shot_06.ogg');
+        this.load.audio('shot_07', 'assets/audio/SFX/shot_07.ogg');
         //UI LOOPS
-        this.load.audio('walkLoop_00', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('surfaceLoop_00', 'assets/audio/SFX/surfaceLoop_00.mp3');
-        this.load.audio('propellerLoop_00', 'assets/audio/SFX/propellerLoop_00.mp3');
-        this.load.audio('engineLoop_00', 'assets/audio/SFX/engineLoop_00.mp3');
-        this.load.audio('walkStop_00', 'assets/audio/SFX/walkStop_00.mp3');
+        this.load.audio('walkLoop_00', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('surfaceLoop_00', 'assets/audio/SFX/surfaceLoop_00.ogg');
+        this.load.audio('propellerLoop_00', 'assets/audio/SFX/propellerLoop_00.ogg');
+        this.load.audio('engineLoop_00', 'assets/audio/SFX/engineLoop_00.ogg');
+        this.load.audio('walkStop_00', 'assets/audio/SFX/walkStop_00.ogg');
         //MUSIC LOOPS
 
         this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
@@ -451,8 +457,14 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('wick_00', 12, this);
         Audio.createSFXinstance('wick_00', 13, this);
         //EXPLOSION
-        Audio.createSFXinstance('explosion_00', 14, this);
-        Audio.createSFXinstance('explosion_01', 15, this);
+        this.soundInstance[14]=[];
+        Audio.createSFXinstanceSub('explosion_00A', 14, 0, this);
+        Audio.createSFXinstanceSub('explosion_00B', 14, 1, this);
+        Audio.createSFXinstanceSub('explosion_00C', 14, 2, this);
+        this.soundInstance[15]=[];
+        Audio.createSFXinstanceSub('explosion_01A', 15, 0, this);
+        Audio.createSFXinstanceSub('explosion_01B', 15, 1, this);
+        Audio.createSFXinstanceSub('explosion_01C', 15, 2, this);
         Audio.createSFXinstance('explosion_02', 16, this);
         Audio.createSFXinstance('explosion_03', 17, this);
         Audio.createSFXinstance('explosion_04', 18, this);
@@ -485,6 +497,10 @@ export default class Audio extends Phaser.Scene {
         })
         this.engineLoop = this.sound.add('engineLoop_00', {
             volume: 0.0,
+            loop: true
+        })
+        this.ambientLoop = this.sound.add('ambientLoop_00', {
+            volume: this.volumeSFX,
             loop: true
         })
         //MUSIC LOOPS
@@ -557,6 +573,7 @@ export default class Audio extends Phaser.Scene {
         this.loopFliying.play();
         this.loopLevitating.play();
         this.loopMovement.play();
+        this.ambientLoop.play();
         this.bgmIfWeapon[0].play();
         this.bgmIfWeapon[1].play();
         this.bgmIfWeapon[2].play();
