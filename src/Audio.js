@@ -37,12 +37,12 @@ export default class Audio extends Phaser.Scene {
     }
     static startAudioEngine(scene){
         Audio.barTimer = scene.time.addEvent({
-            delay: Audio.barRateDiv[0],
+            delay: Audio.barRate,
             callback: ()=> Audio.musicBar(scene),
             loop: true,
         });
         Audio.halfBarTimer = scene.time.addEvent({
-            delay: Audio.barRateDiv[1],
+            delay: Audio.barRateDiv[0],
             callback: ()=> Audio.musicHalfBar(scene),
             loop: true,
         });
