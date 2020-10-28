@@ -14,10 +14,11 @@ export default class Audio extends Phaser.Scene {
     static maxVolume = 1.0;
     static vanishingPoint = this.barRateDiv[2]*this.maxVolume;
     static halfDistance = this.vanishingPoint / 2;
-    static volumeBGM = 0.0;
+    static volumeBGM = this.maxVolume;
     static volumeSFX = this.maxVolume;
     static load;
     static barTimer;
+    static halfBarTimer;
     static maxSFXinstances=32;
     static SFXinstance=0;
     static stingerKilling=false;
@@ -40,6 +41,11 @@ export default class Audio extends Phaser.Scene {
             callback: ()=> Audio.musicBar(scene),
             loop: true,
         });
+        Audio.halfBarTimer = scene.time.addEvent({
+            delay: Audio.barRateDiv[1],
+            callback: ()=> Audio.musicHalfBar(scene),
+            loop: true,
+        });
         console.log("AUDIO ENGINE STARTED.")
     }
     static musicBar(scene) {
@@ -47,6 +53,10 @@ export default class Audio extends Phaser.Scene {
         this.musicLayerShot(scene);
         this.musicLayerKilling(scene);
         this.musicLayerJet(scene);
+        this.musicLayerHeight(scene);
+    }
+    static musicHalfBar(scene) {
+        this.musicLayerEnemies(scene);
         this.musicLayerMovement(scene);
     }
     static volumeBGM(value){
@@ -56,7 +66,7 @@ export default class Audio extends Phaser.Scene {
         this.volumeSFX = value;
     }
     static musicLayerHeight(scene) {
-        var volumeNormalized = this.volumeBGM - (scene.game.player.earlyPos.y * (this.volumeBGM / 4800));
+        var volumeNormalized = this.volumeBGM-((scene.game.player.earlyPos.y/4800)*this.volumeBGM);
         if (volumeNormalized <= this.volumeBGM && volumeNormalized > 0.0) {
                     scene.tweens.add({
                         targets: this.load.loopFliying,
@@ -125,7 +135,7 @@ export default class Audio extends Phaser.Scene {
                     scene.tweens.add({
                         targets: this.load.bgmIfWeapon[i],
                         volume: 0.0,
-                        duration: this.barRate,
+                        duration: this.barRateDiv[0],
                     });
                 }
             }
@@ -242,8 +252,6 @@ export default class Audio extends Phaser.Scene {
         }
     }
     static audioUpdate(scene) {
-        this.musicLayerEnemies(scene);
-        this.musicLayerHeight(scene);
         this.propellerFliying(scene);
         if (scene.game.isFiring && scene.game.player.energy==0.0 && !scene.game.player.activatedJet) {
             this.load.soundInstance[10].setRate(0.9 + scene.game.player.weaponCounter * 0.05);
@@ -260,7 +268,6 @@ export default class Audio extends Phaser.Scene {
             this.stingerWalk = true;
             this.load.walkLoop.volume = Audio.volumeSFX;
             this.load.walkLoop.play();
-
         }
         if(this.stingerWalk && (scene.game.player.activatedJet || Math.floor(scene.game.player.earlyPos.x) == this.earlyPos)){
             this.stingerWalk = false;
@@ -273,11 +280,14 @@ export default class Audio extends Phaser.Scene {
             this.stingerSurface = true;
             this.load.surfaceLoop.volume = Audio.volumeSFX;
             this.load.surfaceLoop.play();
+            this.clockWalk = new Date();
         }
         if(this.stingerSurface && ( Math.floor(scene.game.player.earlyPos.x) == this.earlyPos || scene.game.player.activatedJet || !scene.game.player.isTouching.ground)){
-            this.stingerSurface = false;
-            this.load.surfaceLoop.stop();
-            this.load.soundInstance[28].play();
+            if(((new Date().getTime()-this.clockWalk.getTime()) % 125)<50){
+                this.stingerSurface = false;
+                this.load.surfaceLoop.stop();
+                this.load.soundInstance[28].play();
+            }
         }
         if (scene.game.player.weaponCounter != this.earlyWeapon) {
             this.earlyWeapon = scene.game.player.weaponCounter;
@@ -421,6 +431,7 @@ export default class Audio extends Phaser.Scene {
     create() {
         //INIT AUDIO
         this.soundInstance=[];
+        this.clockWalk = new Date();
         //STINGERS
         this.stingerShot = false;
         this.stingerJet = false;
