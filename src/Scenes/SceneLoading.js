@@ -155,7 +155,7 @@ export default class SceneLoading extends Phaser.Scene {
         });
 
     //transicion a siguiente escena
-    this.scene.start("SceneMM");
+    this.scene.start("SceneSplashScreen");
 
   }
 }
