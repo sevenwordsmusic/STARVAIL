@@ -41,6 +41,10 @@ export default class PlayerFireArm {
       this.laserSmoke.anims.play('smoke', true);
 
       this.disengageLaser();
+
+      //AUDIO
+      this.sfx;
+      //
   }
 
   //cambiar speed a array de weapons
@@ -128,6 +132,11 @@ export default class PlayerFireArm {
           if(laserCollision.colSpecialObj !== undefined && Object.getPrototypeOf(laserCollision.colSpecialObj.constructor) === Enemy)
             laserCollision.colSpecialObj.damageLaser(damage, this.armDir);
         }
+        //AUDIO
+          if(this.sfx!= undefined){
+            this.sfx.volume = Audio.volume2D(laserDistance);
+          }
+        //
       }else{
         this.laserSmoke.x = -9999;
         this.laserSmoke.y = -9999;
@@ -135,6 +144,12 @@ export default class PlayerFireArm {
         for(var i=0; i<this.laser.anims.currentAnim.frames.length; i++){
           this.laser.anims.currentAnim.frames[i].frame.cutHeight = this.laserHeight;
         }
+
+        //AUDIO
+          if(this.sfx!= undefined){
+            this.sfx.volume = 0.0;
+          }
+        //
       }
   }
   engageLaser(){
@@ -142,6 +157,9 @@ export default class PlayerFireArm {
       this.laser.setVisible(true);
       this.laser.anims.resume();
       this.laserSmoke.setVisible(true);
+      //AUDIO
+        this.sfx= Audio.lasserLoop(true);
+      //
   }
   disengageLaser(){
       this.laser.anims.pause();
@@ -150,6 +168,9 @@ export default class PlayerFireArm {
       this.laser.setVisible(false);
       this.laserSmoke.x = -9999
       this.laserSmoke.y = -9999
+      //AUDIO
+        Audio.lasserLoop(false);
+      //
   }
   fireBomb(spr, damage, bombArea, knockback, bombSpeed, bombExpireTime){
     //AUDIO
