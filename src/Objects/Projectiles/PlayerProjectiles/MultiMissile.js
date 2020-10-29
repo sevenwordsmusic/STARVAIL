@@ -42,11 +42,8 @@ export default class MultiMissile extends Projectile {
     this.bombArmed1;
     //this.bombArmed2;
 
-
     //AUDIO
-      this.sfx=Audio.play3Dinstance(this, 12);
-      this.touchDown=true;
-      this.touchDelay=0;
+      this.sfx=Audio.play3Dinstance(this, 30);
     //
   }
 
@@ -62,27 +59,13 @@ export default class MultiMissile extends Projectile {
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
     if(bodyB === undefined)return;
-      //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
-      if(this.scene.game.player.weaponCounter==7){
-        if(this.touchDown==true && this.touchDelay<3){
-          this.touchDelay++;
-          this.sfx.volume=Audio.play3Dinstance(this, 7).volume;
-        }else if(this.touchDown==true && this.touchDelay== 3){
-          this.touchDown=false;
-          this.touchDelay=0;
-        }
-      }
-      //
+
     this.reachedTarget(this, bodyB, pair);
   }
 
   reachedTarget(proj, bodyB, pair){
     if(this.sprite.body != undefined){
       this.bombArmed1();
-      //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-        Audio.play3Dinstance(this, 15);
-        this.sfx.volume= 0.0;
-      //
 
       var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //42
@@ -110,7 +93,7 @@ export default class MultiMissile extends Projectile {
         var offspring;
         for(var i=0; i<this.offsprings; i++){
           const angleVector = new Phaser.Math.Vector2(Math.cos(angle), Math.sin(angle))
-          offspring = new Bomb(this.scene, this.sprite.x, this.sprite.y, bombPreset.wSprite, bombPreset.damage * this.offspringScale, bombPreset.area * this.offspringScale, bombPreset.knockback * this.offspringScale, Phaser.Math.FloatBetween(5, 10), angleVector, (angleVector.x < 0)?-1:1, Phaser.Math.FloatBetween(1750, 2250));
+          offspring = new Bomb(this.scene, this.sprite.x, this.sprite.y, bombPreset.wSprite, bombPreset.damage * this.offspringScale, bombPreset.area * this.offspringScale, bombPreset.knockback * this.offspringScale, Phaser.Math.FloatBetween(5, 10), angleVector, (angleVector.x < 0)?-1:1, Phaser.Math.FloatBetween(1750, 2250),true);
           offspring.sprite.setScale(this.offspringScale);
           offspring.delayArmBomb(300);
           angle -= angleChangeRate;
@@ -119,7 +102,7 @@ export default class MultiMissile extends Projectile {
       }
       else{
         for(var i=0; i<this.offsprings; i++){
-          offspring = new Bomb(this.scene, this.sprite.x, this.sprite.y, bombPreset.wSprite, bombPreset.damage * this.offspringScale, bombPreset.area * this.offspringScale, bombPreset.knockback * this.offspringScale, 0, new Phaser.Math.Vector2(1, 1), 1, 2000);
+          offspring = new Bomb(this.scene, this.sprite.x, this.sprite.y, bombPreset.wSprite, bombPreset.damage * this.offspringScale, bombPreset.area * this.offspringScale, bombPreset.knockback * this.offspringScale, 0, new Phaser.Math.Vector2(1, 1), 1, 2000,true);
           offspring.sprite.setScale(this.offspringScale);
           offspring.delayArmBomb(300);
         }
@@ -129,6 +112,10 @@ export default class MultiMissile extends Projectile {
   }
 
   itemExpire(proj){
+      //AUDIO
+        Audio.play3DinstanceRnd(this,17);
+        this.sfx.volume= 0.0;
+      //
     super.itemExpire(proj);
   }
 

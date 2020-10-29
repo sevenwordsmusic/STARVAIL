@@ -72,7 +72,7 @@ export default class Megaton extends Projectile {
   }
   onBodyCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
-    //AUDIO_BOMBA
+    //AUDIO
       if(this.touchDown==true && this.touchDelay<3){
         this.touchDelay++;
         this.sfx.volume=Audio.play3Dinstance(this, 5).volume;
@@ -87,8 +87,9 @@ export default class Megaton extends Projectile {
     this.bombArmed1();
     this.bombArmed2();
     //AUDIO
-    Audio.play3Dinstance(this,15);
-    this.sfx.volume= 0.0;
+      Audio.play3DinstanceRnd(this,15);
+      Audio.play3DinstanceRnd(this,18);
+      this.sfx.stop();
     //
     var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
     if(!big){

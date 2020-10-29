@@ -35,9 +35,9 @@ export default class BulletBounce extends Projectile {
     //AUDIO_bounce
     if(this.bounce>0){
       Audio.play3DinstanceRnd(this, 3);
-      Audio.play3DinstanceSub(this, 0);
+      Audio.play3DinstanceRnd(this, 0);
     }else if(this.bounce==0){
-      Audio.play3DinstanceSub(this, 1);
+      Audio.play3DinstanceRnd(this, 1);
     }
     //
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)

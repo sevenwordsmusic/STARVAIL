@@ -152,17 +152,17 @@ export default class PlayerFireArm {
       this.laserSmoke.y = -9999
   }
   fireBomb(spr, damage, bombArea, knockback, bombSpeed, bombExpireTime){
-    //AUDIO_BOMBA_Shot
+    //AUDIO
     Audio.play2Dinstance(24);
     this.armDir.normalize();
     const xSpawn = this.sprite.x + this.armDir.x * 30;
     const ySpawn = this.sprite.y + this.armDir.y * 30;
     const dirVector = new Phaser.Math.Vector2(this.scene.input.activePointer.x + this.scene.cameras.main.scrollX -xSpawn, this.scene.input.activePointer.y + this.scene.cameras.main.scrollY-ySpawn);
-    var bombProjectile = new Bomb(this.scene, xSpawn, ySpawn, spr, damage, bombArea, knockback, bombSpeed, dirVector, (this.armDir.x < 0)?-1:1, bombExpireTime);
+    var bombProjectile = new Bomb(this.scene, xSpawn, ySpawn, spr, damage, bombArea, knockback, bombSpeed, dirVector, (this.armDir.x < 0)?-1:1, bombExpireTime, false);
     bombProjectile.armBomb();
   }
   fireMegaton(spr, damage, bombArea, knockback, extraEffect, bombSpeed, bombExpireTime){
-    //AUDIO_BOMBA_Shot
+    //AUDIO
     Audio.play2Dinstance(25);
     this.armDir.normalize();
     const xSpawn = this.sprite.x + this.armDir.x * 30;
@@ -173,7 +173,7 @@ export default class PlayerFireArm {
   }
 
   fireMissile(spr, damage, bombArea, knockback, autoAim, bombSpeed, bombExpireTime){
-    //AUDIO_BOMBA_Shot
+    //AUDIO
     Audio.play2Dinstance(26);
     this.armDir.normalize();
     const xSpawn = this.sprite.x + this.armDir.x * 30;
@@ -184,7 +184,7 @@ export default class PlayerFireArm {
   }
 
   fireMulti(spr, damage, bombArea, knockback, offsprings, offspringScale, bombSpeed, bombExpireTime){
-    //AUDIO_BOMBA_Shot
+    //AUDIO
     Audio.play2Dinstance(27);
     this.armDir.normalize();
     const xSpawn = this.sprite.x + this.armDir.x * 30;

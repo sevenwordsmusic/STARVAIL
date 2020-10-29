@@ -128,7 +128,7 @@ export default class Missile extends Projectile {
 
   itemExpire(proj){
       //AUDIO
-        Audio.play3DinstanceSub(this,16);
+        Audio.play3DinstanceRnd(this,16);
         this.sfx.volume= 0.0;
       //
     super.itemExpire(proj);

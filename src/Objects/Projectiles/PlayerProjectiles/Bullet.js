@@ -32,9 +32,9 @@ export default class Bullet extends Projectile {
 
      //AUDIO
       if(this.scene.game.player.weaponCounter==0){
-        Audio.play3DinstanceSub(this, 0);
+        Audio.play3DinstanceRnd(this, 0);
       }else{
-        Audio.play3DinstanceSub(this, 1);
+        Audio.play3DinstanceRnd(this, 1);
       }
       //
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)

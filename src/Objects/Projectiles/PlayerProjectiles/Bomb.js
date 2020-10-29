@@ -4,7 +4,7 @@ import Audio from "../../../Audio.js";
 
 //proyectil que hereda de Projectile
 export default class Bomb extends Projectile {
-  constructor(scene, x, y, spr, dmg, area, knockback, speed, velDir, dir, expTime){
+  constructor(scene, x, y, spr, dmg, area, knockback, speed, velDir, dir, expTime, isMini){
     super(scene, x, y, expTime);
     this.dmg = dmg;
     this.area = area;
@@ -39,7 +39,12 @@ export default class Bomb extends Projectile {
     this.bombArmed2;
 
     //AUDIO
-    this.sfx=Audio.play3Dinstance(this, 12);
+    this.isMini=isMini;
+    if(this.isMini){
+      this.sfx=Audio.play3Dinstance(this, 31); 
+    }else{
+      this.sfx=Audio.play3Dinstance(this, 12); 
+    }
     this.touchDown=true;
     this.touchDelay=0;
     //
@@ -77,7 +82,11 @@ export default class Bomb extends Projectile {
     //AUDIO
       if(this.touchDown==true && this.touchDelay<3){
         this.touchDelay++;
-        this.sfx.volume=Audio.play3Dinstance(this, 4).volume;
+        if(this.isMini){
+          this.sfx.volume=Audio.play3Dinstance(this, 6).volume;
+        }else{
+          this.sfx.volume=Audio.play3Dinstance(this, 4).volume;
+        }
       }else if(this.touchDown==true && this.touchDelay== 3){
         this.touchDown=false;
         this.touchDelay=0;
@@ -88,10 +97,14 @@ export default class Bomb extends Projectile {
   itemExpire(proj){
       this.bombArmed1();
       this.bombArmed2();
-      //AUDIO
-        Audio.play3DinstanceSub(this,14);
-        this.sfx.volume= 0.0;
-      //
+        //AUDIO
+          if(this.isMini){
+            Audio.play3DinstanceRnd(this,18);
+          }else{
+            Audio.play3DinstanceRnd(this,14);
+          }
+          this.sfx.stop();
+        //
       const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //45
       this.damageEnemiesArea();
