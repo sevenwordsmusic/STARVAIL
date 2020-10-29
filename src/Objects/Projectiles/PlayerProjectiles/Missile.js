@@ -53,9 +53,7 @@ export default class Missile extends Projectile {
     }
 
     //AUDIO
-      this.sfx=Audio.play3Dinstance(this, 12);
-      this.touchDown=true;
-      this.touchDelay=0;
+      this.sfx=Audio.play3Dinstance(this, 29);
     //
   }
 
@@ -89,6 +87,9 @@ export default class Missile extends Projectile {
         this.sprite.angle = (currentAngle - this.autoAim) * 180/Math.PI + 90;
       }
     }
+      //AUDIO
+        this.sfx.volume=Audio.volume3D(this)
+      //
   }
 
   armBomb(){
@@ -126,6 +127,10 @@ export default class Missile extends Projectile {
   }
 
   itemExpire(proj){
+      //AUDIO
+        Audio.play3DinstanceSub(this,16);
+        this.sfx.volume= 0.0;
+      //
     super.itemExpire(proj);
   }
 

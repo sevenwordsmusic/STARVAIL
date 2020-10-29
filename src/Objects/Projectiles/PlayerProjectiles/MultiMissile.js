@@ -7,8 +7,6 @@ import Audio from "../../../Audio.js";
 export default class MultiMissile extends Projectile {
   constructor(scene, x, y, spr, dmg, area, knockback, offsprings, offspringScale, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
-    //AUDIO:
-
     //inicializacion
     this.sprite = scene.matter.add.sprite(x,y,spr,0);
     this.sprite.parent = this;

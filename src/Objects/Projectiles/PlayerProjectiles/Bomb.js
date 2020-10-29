@@ -6,7 +6,6 @@ import Audio from "../../../Audio.js";
 export default class Bomb extends Projectile {
   constructor(scene, x, y, spr, dmg, area, knockback, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
-    //AUDIO:
     this.dmg = dmg;
     this.area = area;
     this.knockback = knockback;
@@ -90,7 +89,7 @@ export default class Bomb extends Projectile {
       this.bombArmed1();
       this.bombArmed2();
       //AUDIO
-      Audio.play3DinstanceSub(this,14);
+        Audio.play3DinstanceSub(this,14);
         this.sfx.volume= 0.0;
       //
       const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");

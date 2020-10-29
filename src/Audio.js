@@ -12,7 +12,7 @@ export default class Audio extends Phaser.Scene {
     static barRate = 60*1000 / this.bpm * this.beat;
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64, this.barRate / 128];
     static maxVolume = 1.0;
-    static vanishingPoint = this.barRateDiv[2]*this.maxVolume;
+    static vanishingPoint = 1080;
     static halfDistance = this.vanishingPoint / 2;
     static volumeBGM = 0.0;
     static volumeSFX = this.maxVolume;
@@ -20,7 +20,7 @@ export default class Audio extends Phaser.Scene {
     static barTimer;
     static halfBarTimer;
     static walkCycleTimer;
-    static maxSFXinstances=32;
+    static maxSFXinstances=64;
     static SFXinstance=0;
     static stingerKilling=false;
 
@@ -59,12 +59,6 @@ export default class Audio extends Phaser.Scene {
     static musicHalfBar(scene) {
         this.musicLayerEnemies(scene);
         this.musicLayerMovement(scene);
-    }
-    static volumeBGM(value){
-        this.volumeBGM = value;
-    }
-    static volumeSFX(value){
-        this.volumeSFX = value;
     }
     static musicLayerHeight(scene) {
         var volumeNormalized = this.volumeBGM-((scene.game.player.earlyPos.y/4800)*this.volumeBGM);
@@ -174,8 +168,31 @@ export default class Audio extends Phaser.Scene {
             });
         }
     }
+    static volume3D(scene) {
+        if (scene.distanceToPlayer() > this.vanishingPoint) {
+            var distance = 0.0;
+        } else if (scene.distanceToPlayer() < 0.0) {
+            var distance = Audio.volumeSFX;
+        } else {
+            var distance = (this.vanishingPoint - scene.distanceToPlayer()) / this.vanishingPoint;
+        }
+        if(distance*Audio.volumeSFX==Audio.volumeSFX){
+            return 0.0;
+        }
+        return  distance*Audio.volumeSFX;
+    }
+    static playUIinstance(type, rate) {
+        this.load.soundInstance[type][Audio.SFXinstance].setRate(rate);
+        this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
+        this.load.soundInstance[type][Audio.SFXinstance].play();
+        if(Audio.SFXinstance<Audio.maxSFXinstances-1){
+            Audio.SFXinstance++;
+        }else{
+            Audio.SFXinstance=0;
+        }
+    }
     static play2Dinstance(type) {
-        this.load.soundInstance[type][Audio.SFXinstance].setRate(0.75 + (Math.random() * 0.25));
+        this.load.soundInstance[type][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
         this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
         this.load.soundInstance[type][Audio.SFXinstance].play();
         if(Audio.SFXinstance==Audio.SFXinstance && Audio.SFXinstance<Audio.maxSFXinstances-1){
@@ -195,15 +212,8 @@ export default class Audio extends Phaser.Scene {
         }
     }
     static play3Dinstance(scene, type) {
-        if (scene.distanceToPlayer() > this.vanishingPoint) {
-            var distance = 0.0;
-        } else if (scene.distanceToPlayer() < 0.0) {
-            var distance = Audio.volumeSFX;
-        } else {
-            var distance = (this.vanishingPoint - scene.distanceToPlayer()) / this.vanishingPoint;
-        }
-        this.load.soundInstance[type][Audio.SFXinstance].setRate(0.85 + (Math.random() * 0.15));
-        this.load.soundInstance[type][Audio.SFXinstance].volume = distance*Audio.volumeSFX;
+        this.load.soundInstance[type][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
+        this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volume3D(scene);
         this.load.soundInstance[type][Audio.SFXinstance].play();
         var instance = this.load.soundInstance[type][Audio.SFXinstance];
         if(Audio.SFXinstance<Audio.maxSFXinstances-1){
@@ -214,16 +224,9 @@ export default class Audio extends Phaser.Scene {
         return  instance;
     }
     static play3DinstanceSub(scene, type) {
-        var rnd= [Math.round(Math.random()*2)];
-        if (scene.distanceToPlayer() > this.vanishingPoint) {
-            var distance = 0.0;
-        } else if (scene.distanceToPlayer() < 0.0) {
-            var distance = Audio.volumeSFX;
-        } else {
-            var distance = (this.vanishingPoint - scene.distanceToPlayer()) / this.vanishingPoint;
-        }
+        var rnd= [Math.floor(Math.random()*3)];
         this.load.soundInstance[type][rnd][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
-        this.load.soundInstance[type][rnd][Audio.SFXinstance].volume = distance*Audio.volumeSFX;
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].volume = Audio.volume3D(scene);;
         this.load.soundInstance[type][rnd][Audio.SFXinstance].play();
         if(Audio.SFXinstance<Audio.maxSFXinstances-1){
             Audio.SFXinstance++;
@@ -231,30 +234,11 @@ export default class Audio extends Phaser.Scene {
             Audio.SFXinstance=0;
         }
     }
-    static play3DinstanceRnd(scene, type, sub, bounces) {
-        var rnd= Math.round(Math.random()*sub);
-        var SFXinstance= Audio.SFXinstance;
-        if (scene.distanceToPlayer() > this.vanishingPoint) {
-            var distance = 0.0;
-        } else if (scene.distanceToPlayer() < 0.0) {
-            var distance = Audio.volumeSFX;
-        } else {
-            var distance = (this.vanishingPoint - scene.distanceToPlayer()) / this.vanishingPoint;
-        }
-        this.load.soundInstance[type][rnd][Audio.SFXinstance].setRate(0.75 + (Math.random() * 0.25));
-        this.load.soundInstance[type][rnd][Audio.SFXinstance].volume = (distance*bounces)*Audio.volumeSFX;
+    static play3DinstanceRnd(scene, type) {
+        var rnd= [Math.floor(Math.random()*5)];
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].volume = Audio.volume3D(scene);;
         this.load.soundInstance[type][rnd][Audio.SFXinstance].play();
-        if(Audio.SFXinstance<Audio.maxSFXinstances-1){
-            Audio.SFXinstance++;
-        }else{
-            Audio.SFXinstance=0;
-        }
-    }
-
-    static playUIinstance(type, rate) {
-        this.load.soundInstance[type][Audio.SFXinstance].setRate(rate);
-        this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
-        this.load.soundInstance[type][Audio.SFXinstance].play();
         if(Audio.SFXinstance<Audio.maxSFXinstances-1){
             Audio.SFXinstance++;
         }else{
@@ -362,14 +346,16 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('trigger_00', 'assets/audio/SFX/trigger_00.ogg');
         this.load.audio('propellerStop_00', 'assets/audio/SFX/propellerStop_00.ogg');
         this.load.audio('wick_00', 'assets/audio/SFX/wick_00.ogg');
+        this.load.audio('wick_01', 'assets/audio/SFX/wick_01.ogg');
+        this.load.audio('trace_00', 'assets/audio/SFX/trace_00.ogg');
         //EXPLOSION
         this.load.audio('explosion_00A', 'assets/audio/SFX/explosion_00A.ogg');
         this.load.audio('explosion_00B', 'assets/audio/SFX/explosion_00B.ogg');
         this.load.audio('explosion_00C', 'assets/audio/SFX/explosion_00C.ogg');
-        this.load.audio('explosion_01A', 'assets/audio/SFX/explosion_01A.ogg');
-        this.load.audio('explosion_01B', 'assets/audio/SFX/explosion_01B.ogg');
-        this.load.audio('explosion_01C', 'assets/audio/SFX/explosion_01C.ogg');
-        this.load.audio('explosion_02', 'assets/audio/SFX/explosion_02.ogg');
+        this.load.audio('explosion_01', 'assets/audio/SFX/explosion_01.ogg');
+        this.load.audio('explosion_02A', 'assets/audio/SFX/explosion_02A.ogg');
+        this.load.audio('explosion_02B', 'assets/audio/SFX/explosion_02B.ogg');
+        this.load.audio('explosion_02C', 'assets/audio/SFX/explosion_02C.ogg');
         this.load.audio('explosion_03', 'assets/audio/SFX/explosion_03.ogg');
         this.load.audio('explosion_04', 'assets/audio/SFX/explosion_04.ogg');
         this.load.audio('explosion_05', 'assets/audio/SFX/explosion_05.ogg');
@@ -389,7 +375,6 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('engineLoop_00', 'assets/audio/SFX/engineLoop_00.ogg');
         this.load.audio('walkStop_00', 'assets/audio/SFX/walkStop_00.ogg');
         //MUSIC LOOPS
-
         this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
         this.load.audio('loop0000enemies', 'assets/audio/BGM/loop0000enemies.mp3');
         this.load.audio('loop0000killing', 'assets/audio/BGM/loop0000killing.mp3');
@@ -458,17 +443,17 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('propellerStop_00', 11, this);
         //EXTRA
         Audio.createSFXinstance('wick_00', 12, this);
-        Audio.createSFXinstance('wick_00', 13, this);
+        Audio.createSFXinstance('wick_01', 13, this);
         //EXPLOSION
         this.soundInstance[14]=[];
         Audio.createSFXinstanceSub('explosion_00A', 14, 0, this);
         Audio.createSFXinstanceSub('explosion_00B', 14, 1, this);
         Audio.createSFXinstanceSub('explosion_00C', 14, 2, this);
-        this.soundInstance[15]=[];
-        Audio.createSFXinstanceSub('explosion_01A', 15, 0, this);
-        Audio.createSFXinstanceSub('explosion_01B', 15, 1, this);
-        Audio.createSFXinstanceSub('explosion_01C', 15, 2, this);
-        Audio.createSFXinstance('explosion_02', 16, this);
+        Audio.createSFXinstance('explosion_01', 15, this);
+        this.soundInstance[16]=[];
+        Audio.createSFXinstanceSub('explosion_02A', 16, 0, this);
+        Audio.createSFXinstanceSub('explosion_02B', 16, 1, this);
+        Audio.createSFXinstanceSub('explosion_02C', 16, 2, this);
         Audio.createSFXinstance('explosion_03', 17, this);
         Audio.createSFXinstance('explosion_04', 18, this);
         Audio.createSFXinstance('explosion_05', 19, this);
@@ -483,7 +468,7 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('shot_07', 27, this);
         //
         Audio.createSFXinstance('walkStop_00', 28, this);
-
+        Audio.createSFXinstance('trace_00', 29, this);
 
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {

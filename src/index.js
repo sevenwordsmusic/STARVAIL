@@ -5,8 +5,6 @@ window.addEventListener("beforeunload", function (e) {
   game.destroy(true, true);
   localStorage.clear();
   sessionStorage.clear();
-  (e || window.event).returnValue = confirmationMessage;
-  return confirmationMessage;
 });
 
 //todas las clases necesarias (incluyendo todas las escenas-modulos)

@@ -6,8 +6,6 @@ import Audio from "../../../Audio.js";
 export default class Megaton extends Projectile {
   constructor(scene, x, y, spr, dmg, area, knockback, extraEff, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
-    //AUDIO:
-
     //inicializacion
     this.sprite = scene.matter.add.sprite(x,y,spr,0);
     this.sprite.parent = this;
@@ -74,10 +72,10 @@ export default class Megaton extends Projectile {
   }
   onBodyCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
-    //AUDIO_BOMBA_Collision (esto se invoca cada vez que choca contra algo como el suelo)
+    //AUDIO_BOMBA
       if(this.touchDown==true && this.touchDelay<3){
         this.touchDelay++;
-        this.sfx.volume=Audio.play3Dinstance(this, 4).volume;
+        this.sfx.volume=Audio.play3Dinstance(this, 5).volume;
       }else if(this.touchDown==true && this.touchDelay== 3){
         this.touchDown=false;
         this.touchDelay=0;
@@ -88,8 +86,8 @@ export default class Megaton extends Projectile {
   itemExpire(proj, big = false){
     this.bombArmed1();
     this.bombArmed2();
-    //AUDIO_BOMBA_Explosion (aqui explotaria la bomba)
-    Audio.play3Dinstance(this,16);
+    //AUDIO
+    Audio.play3Dinstance(this,15);
     this.sfx.volume= 0.0;
     //
     var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
