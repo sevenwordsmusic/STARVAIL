@@ -15,7 +15,7 @@ export default class Audio extends Phaser.Scene {
     static vanishingPoint = 1080;
     static halfDistance = this.vanishingPoint / 2;
     static volumeBGM = 0.0;
-    static volumeSFX = 0.7;
+    static volumeSFX = 1.0;
     static load;
     static barTimer;
     static halfBarTimer;
@@ -167,6 +167,19 @@ export default class Audio extends Phaser.Scene {
             });
         }
     }
+    static volume2D(length) {
+        if (length > this.vanishingPoint) {
+            var distance = 0.0;
+        } else if (length < 0.0) {
+            var distance = Audio.volumeSFX;
+        } else {
+            var distance = (this.vanishingPoint - length) / this.vanishingPoint;
+        }
+        if (distance * Audio.volumeSFX == Audio.volumeSFX) {
+            return 0.0;
+        }
+        return distance * Audio.volumeSFX;
+    }
     static volume3D(scene) {
         if (scene.distanceToPlayer() > this.vanishingPoint) {
             var distance = 0.0;
@@ -232,6 +245,18 @@ export default class Audio extends Phaser.Scene {
         } else {
             Audio.SFXinstance = 0;
         }
+    }
+    static lasserLoop(on){
+        if(on){
+            Audio.play2Dinstance(32);
+            this.load.lasserLoop.play();
+            this.load.beamLoop.play();
+        }else{
+            Audio.play2Dinstance(33);
+            this.load.lasserLoop.stop();
+            this.load.beamLoop.stop();
+        }
+        return  this.load.beamLoop;
     }
     static audioUpdate(scene) {
         this.propellerFliying(scene);
@@ -338,6 +363,9 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('trace_00', 'assets/audio/SFX/trace_00.ogg');
         this.load.audio('trace_01', 'assets/audio/SFX/trace_01.ogg');
         this.load.audio('wick_02', 'assets/audio/SFX/wick_02.ogg');
+        this.load.audio('lasserStart_00', 'assets/audio/SFX/lasserStart_00.ogg');
+        this.load.audio('lasserStop_00', 'assets/audio/SFX/lasserStop_00.ogg');
+        this.load.audio('walkStop_00', 'assets/audio/SFX/walkStop_00.ogg');
         //EXPLOSION
         this.load.audio('explosion_00A', 'assets/audio/SFX/explosion_00A.ogg');
         this.load.audio('explosion_00B', 'assets/audio/SFX/explosion_00B.ogg');
@@ -369,7 +397,9 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('surfaceLoop_00', 'assets/audio/SFX/surfaceLoop_00.ogg');
         this.load.audio('propellerLoop_00', 'assets/audio/SFX/propellerLoop_00.ogg');
         this.load.audio('engineLoop_00', 'assets/audio/SFX/engineLoop_00.ogg');
-        this.load.audio('walkStop_00', 'assets/audio/SFX/walkStop_00.ogg');
+        this.load.audio('lasserLoop_00', 'assets/audio/SFX/lasserLoop_00.ogg');
+        this.load.audio('beamLoop_00', 'assets/audio/SFX/beamLoop_00.ogg');
+
         //MUSIC LOOPS
         this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
         this.load.audio('loop0000enemies', 'assets/audio/BGM/loop0000enemies.mp3');
@@ -475,6 +505,8 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('trace_00', 29, this);
         Audio.createSFXinstance('trace_01', 30, this);
         Audio.createSFXinstance('wick_02', 31, this);
+        Audio.createSFXinstance('lasserStart_00', 32, this);
+        Audio.createSFXinstance('lasserStop_00', 33, this);
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
             volume: this.volumeSFX,
@@ -493,6 +525,14 @@ export default class Audio extends Phaser.Scene {
             loop: true
         })
         this.ambientLoop = this.sound.add('ambientLoop_00', {
+            volume: this.volumeSFX,
+            loop: true
+        })
+        this.lasserLoop = this.sound.add('lasserLoop_00', {
+            volume: this.volumeSFX,
+            loop: true
+        })
+        this.beamLoop = this.sound.add('beamLoop_00', {
             volume: this.volumeSFX,
             loop: true
         })
