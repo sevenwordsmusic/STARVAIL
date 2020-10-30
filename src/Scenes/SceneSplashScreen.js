@@ -9,7 +9,7 @@ export default class SceneExample extends Phaser.Scene {
   preload(){
     
     //Splash menu
-    this.load.image('btnTitle', 'assets/Credits menu/btnExitCredits.png'); //btn titulo
+    this.load.image('btnTitle', 'assets/lowResLogo.png'); //btn titulo
 
     //Corners
     this.load.image('corners', 'assets/Menu corners.png');
@@ -26,15 +26,15 @@ export default class SceneExample extends Phaser.Scene {
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
 
     //Boton exit
-    this.btnTitle = this.add.image(480,455,'btnTitle').setScale(0.25).setAlpha(0);
+    this.btnTitle = this.add.image(480,270,'btnTitle').setScale(0.5).setAlpha(0);
 
     this.tweens.add({
       targets: this.btnTitle,
-      duration:1500,
+      duration:1000,
       alpha:1,
       yoyo:true,
       hold:2000,
-      delay:500,
+      delay:1000,
       completeDelay:500,
       onComplete:()=>this.startTheGame()
     })
@@ -47,6 +47,11 @@ export default class SceneExample extends Phaser.Scene {
 
   startTheGame(){
     console.log("Empezamos el juego");
+
+    this.arrayInt=Array.from("5678");
+    for(var i in this.arrayInt){
+      console.log(this.arrayInt[i]);
+    }
 
     this.scene.sendToBack('SceneSplashScreen');
 		this.scene.stop('SceneSplashScreen');

@@ -47,6 +47,11 @@ export default class SceneExample extends Phaser.Scene {
       this.alpha=0.8;
     });
 
+    //Pausa a traves de teclado
+    //Creamos la tecla correspondiente con ESCAPE
+    this.ESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.inPause=false;
+
     //Boton muerte
     this.botonMuerte = this.add.image(260,270,'btnMuerte').setScale(0.25);
 		this.botonMuerte.setInteractive({ useHandCursor: true  } )
@@ -61,6 +66,21 @@ export default class SceneExample extends Phaser.Scene {
   //Método que se ejecuta una vez por frame.
   update(){
 
+    console.log(this.inPause);
+
+    if (this.ESC.isDown){
+      if (!this.inPause) {
+        this.inPause = true;
+      }
+    }
+
+    
+    if (this.ESC.isUp) {
+      if (this.inPause){
+      this.inPause = false;
+      this.pauseGame();
+      }
+    }
   }
 
   pauseGame(){
