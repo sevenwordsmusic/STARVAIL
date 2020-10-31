@@ -152,20 +152,19 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     this.availableEnemiesGround = [];
     this.availableEnemiesGround[0] = {name: "zapper1", probability: 1};
-    this.availableEnemiesGround[1] = {name: "sword", probability: 1};
+    /*this.availableEnemiesGround[1] = {name: "sword", probability: 1};
     this.availableEnemiesGround[2] = {name: "mecha", probability: 1};
-    this.availableEnemiesGround[3] = {name: "sith", probability: 1};
+    this.availableEnemiesGround[3] = {name: "sith", probability: 1};*/
 
     this.availableEnemiesAir = [];
     this.availableEnemiesAir[0] = {name: "zapper2", probability: 0.75};
-    this.availableEnemiesAir[1] = {name: "gunner", probability: 1};
-    this.availableEnemiesAir[2] = {name: "bomb", probability: 1};
+    /*this.availableEnemiesAir[1] = {name: "gunner", probability: 1};
+    this.availableEnemiesAir[2] = {name: "bomb", probability: 1};*/
 
     function spawnEnemy(enemyName, scene, xPos, yPos){
       switch(enemyName){
         case "zapper1":
-
-        console.log(new ZapperGround(scene, xPos, yPos));
+          new ZapperGround(scene, xPos, yPos);
         break;
         case "zapper2":
           new ZapperAir(scene, xPos, yPos);
@@ -212,7 +211,9 @@ export default class SceneTest_1 extends Phaser.Scene {
         var enemiesToSpawn = Phaser.Math.Between(area.properties[1].value, area.properties[0].value);
         var currentEnemy;
         var randomSpawner;
-        while(enemiesToSpawn > 0){
+        var breaker = 0;
+        while(enemiesToSpawn > 0 && breaker < 100){   //por si acaso
+          breaker++;
           currentEnemy = Phaser.Math.Between(minCounter, maxCounter);
           randomSpawner = Math.random();
           if(randomSpawner <= enemiesToSpawnArray[currentEnemy].probability){
@@ -228,7 +229,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     });
     new Player(this, 416, 4320);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
-    cam.setZoom(0.5);
+    //cam.setZoom(0.5);
 
     //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)
     new LevelEnd(this, 704, 64, 'star', 'testsec', SceneTest_2);

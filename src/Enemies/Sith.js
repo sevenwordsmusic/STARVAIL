@@ -133,7 +133,7 @@ export default class Sith extends Enemy {
       //this.sprite.body.collisionFilter.group = -1;
       this.scene.time.addEvent({
         delay: 200,
-        callback: () => (this.sprite.x = this.scene.game.player.sprite.x, this.sprite.y = this.scene.game.player.sprite.y)
+        callback: () => (this.sprite.x = this.scene.game.player.sprite.x, this.sprite.y = this.scene.game.player.sprite.y, this.sprite.setVelocityY(0))
       },this);
       this.sprite.anims.play('dummy', true)
       /*this.sprite.once('animationcomplete', function(){
@@ -161,14 +161,14 @@ export default class Sith extends Enemy {
     this.scene.graphics.clear();
     this.scene.graphics.fillRect(this.sprite.x-50, this.sprite.y-50, 100, 100);
     if(super.playerHit(this.sprite.x-50, this.sprite.y-50, this.sprite.x+50, this.sprite.y+50))
-      this.scene.game.player.playerDamage(this.hitDamage);
+      this.scene.game.player.playerDamage(this.hitDamage, true);
   }
   inflictDamagePlayerArea2(position){
     if(this.sprite.body === undefined)return;
     this.scene.graphics.clear();
     this.scene.graphics.fillRect(this.sprite.x-50, this.sprite.y-50, 100, 100);
     if(super.playerHit(this.sprite.x-50, this.sprite.y-50, this.sprite.x+50, this.sprite.y+50))
-      this.scene.game.player.playerDamage(this.teleportHitDamage);
+      this.scene.game.player.playerDamage(this.teleportHitDamage, true);
   }
 
 

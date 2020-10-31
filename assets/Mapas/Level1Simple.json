@@ -30,15 +30,75 @@
          "objects":[
                 {
                  "height":0,
-                 "id":25,
+                 "id":83,
                  "name":"zapper1",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1991.66666666666,
-                 "y":4470.06060606061
+                 "x":1038,
+                 "y":4326
+                }, 
+                {
+                 "height":0,
+                 "id":84,
+                 "name":"zapper2",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1174,
+                 "y":4220
+                }, 
+                {
+                 "height":0,
+                 "id":85,
+                 "name":"gunner",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1410,
+                 "y":4380
+                }, 
+                {
+                 "height":0,
+                 "id":86,
+                 "name":"bomb",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1562,
+                 "y":4352
+                }, 
+                {
+                 "height":0,
+                 "id":87,
+                 "name":"mecha",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1690,
+                 "y":4494
+                }, 
+                {
+                 "height":0,
+                 "id":88,
+                 "name":"sith",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1904,
+                 "y":4540
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -52,7 +112,7 @@
          "name":"EnemySpawn_Layer",
          "objects":[
                 {
-                 "height":127,
+                 "height":138,
                  "id":81,
                  "name":"both",
                  "properties":[
@@ -69,9 +129,9 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":176.666666666667,
-                 "x":1440,
-                 "y":4415.66666666667
+                 "width":190.666666666667,
+                 "x":1923,
+                 "y":4375.66666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -159,7 +219,7 @@
          "y":0
         }],
  "nextlayerid":32,
- "nextobjectid":82,
+ "nextobjectid":89,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
