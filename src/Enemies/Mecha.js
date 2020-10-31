@@ -188,6 +188,7 @@ export default class Mecha extends Enemy {
     this.goTo(0);
     if(!this.dead){
       super.enemyDead();
+      this.gun.destroy();
       new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
     }
   }

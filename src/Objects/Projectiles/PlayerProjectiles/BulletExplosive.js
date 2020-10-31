@@ -39,11 +39,17 @@ export default class BulletExplosive extends Projectile {
       Audio.play3Dinstance(this, 2);
       //
 
-    if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)
+    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
+    bombExplosion.setDepth(10) //42
+    if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy){
       this.target.colSpecialObj.damageAndKnock(this.dmg, this.knockback, this.pVelocity);
 
-    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
-    bombExplosion.setDepth(10).setScale(1) //42
+      if(this.target.colSpecialObj.sprite.body !== undefined && this.target.colSpecialObj.sprite !== undefined){
+        bombExplosion.x += (this.target.colSpecialObj.sprite.body.velocity.x*8);
+        bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*8);
+      }
+    }
+
     //al completar su animacion de explsion, dicha instancia se autodestruye
     bombExplosion.on('animationcomplete', function(){
       bombExplosion.destroy();

@@ -7,17 +7,6 @@ var mouse;
 //var firstFollow;
 //var fadeOut;
 
-
-//Texto prueba para el dialogo
-var dialogTest;
-var content = `[b]D42K-H[/b]
-Así que [i]finalmente[/i] has venido
-
-[b]D42K-H[/b]
-4ULS82... Sabes que sólo hay una respuesta al dolor que sentimos por el mero hecho de [color=red][b]existir[/b][/color], ¿verdad?
-[b]D42K-H[/b]
-Si así es, ya sabes lo que tenemos que hacer.`;
-
 //Imports en la escena.
 import Player from "../PlayerStuff/Player.js";
 import Blackboard from "../Enemies/Blackboard.js";
@@ -29,6 +18,7 @@ import ZapperAir from "../Enemies/ZapperAir.js";
 import BombAir from "../Enemies/BombAir.js";
 import GunnerAir from "../Enemies/GunnerAir.js";
 import Dialog from "../Plugins/Dialog.js"
+import NPC_Test from "../NPCs/NPC_Test.js"
 import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
 import LevelEnd from "../Objects/LevelEnd.js";
@@ -57,6 +47,12 @@ export default class SceneTest_1 extends Phaser.Scene {
   create() {
     console.log(this);
 
+    new Dialog(this, 50, 400, false,5000, {
+      wrapWidth: 700,
+      fixedWidth: 700,
+      fixedHeight: 80,
+    });
+
     //game.matter.world.pause();
     mouse = this.input.activePointer;
 
@@ -71,15 +67,6 @@ export default class SceneTest_1 extends Phaser.Scene {
     cam.fadeIn(Audio.barRateDiv[2]);  //Constante de Audio para sincronía
     //fadeOut = false;
 
-    //TESTING DIALOG
-    /*dialogTest = new Dialog(this, 50, 400,true,5000, {
-      wrapWidth: 700,
-      fixedWidth: 700,
-      fixedHeight: 80,
-    });
-
-    dialogTest.textBox.start(content,10);*/
-
 
     //Backgrounds.
     //this.add.image(480, 270, 'bg_e').setScrollFactor(0).setDepth(-503);
@@ -87,6 +74,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     //this.add.image(1100, 320, 'bg2_e').setScale(2).setScrollFactor(0.5).setDepth(-501);
     //this.add.image(1200, 400, 'bg3_e').setScale(2).setScrollFactor(0.75).setDepth(-500);
 
+    this.moon = this.add.sprite(this.game.moonPos.x, this.game.moonPos.y, 'star', 0).setScrollFactor(0).setDepth(-400);
     this.timeBg = this.add.sprite(480, 100/*270*/, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
     this.timeBg.once('animationcomplete', function(){
       if(this.timeBg.anims.currentFrame != undefined)
@@ -229,10 +217,13 @@ export default class SceneTest_1 extends Phaser.Scene {
     });
     new Player(this, 416, 4320);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
+
+    new NPC_Test(this, 800, 4320);
+    new NPC_Test(this, 600, 4320);
     //cam.setZoom(0.5);
 
     //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)
-    new LevelEnd(this, 704, 64, 'star', 'testsec', SceneTest_2);
+    new LevelEnd(this, 300, 4000, 'star', 'testsec', SceneTest_2);
 
     //var sssd = new HealthBar(this, 400, 400, 300, 20, 0x00ff00, 0x000000, 0xffffff, 100);
     //Colisiones del escneario con el jugador
@@ -277,6 +268,8 @@ export default class SceneTest_1 extends Phaser.Scene {
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
+    this.moon.x += (delta/50);
+    this.game.moonPos.x = this.moon.x;
   //AUDIO:
   Audio.audioUpdate(this);
   }

@@ -4,7 +4,7 @@ import SuperiorQuery from "../../../SuperiorQuery.js";
 import Audio from "../../../Audio.js";
 
 //proyectil que hereda de Projectile
-export default class Bullet extends Projectile {
+export default class BulletFast extends Projectile {
   constructor(scene, x, y, spr, dmg, speed, velDirection, expTime, target, distanceToPlayer){
     super(scene, x, y,  expTime);
     //inicializacion
@@ -31,28 +31,28 @@ export default class Bullet extends Projectile {
     this.scene.events.off("update", this.update, this);
 
      //AUDIO
-    Audio.play3DinstanceRnd(this, 0);
+      Audio.play3DinstanceRnd(this, 1);
 
+      //
 
-    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "bulletImpact4");
-    bombExplosion.setDepth(10).setScale(0.9) //42
+    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "bulletImpact3");
+    bombExplosion.setDepth(10) //42
     bombExplosion.angle = Phaser.Math.Between(0,360);
 
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy){
       this.target.colSpecialObj.damage(this.dmg, this.pVelocity);
 
       if(this.target.colSpecialObj.sprite.body !== undefined && this.target.colSpecialObj.sprite !== undefined){
-        bombExplosion.x += (this.target.colSpecialObj.sprite.body.velocity.x*12);
-        bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*12);
+        bombExplosion.x += (this.target.colSpecialObj.sprite.body.velocity.x*5);
+        bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*5);
       }
     }
-
     //al completar su animacion de explsion, dicha instancia se autodestruye
     bombExplosion.on('animationcomplete', function(){
       bombExplosion.destroy();
     });
     //animacion de explosion
-    bombExplosion.anims.play('bulletImpact4', true);
+    bombExplosion.anims.play('bulletImpact3', true);
 
     super.itemExpire(proj);
   }

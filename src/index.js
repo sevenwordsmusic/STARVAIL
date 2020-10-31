@@ -73,6 +73,7 @@ game.energyCostJetPropulsion = 5;     //energia de coste de propulsion, se gasta
 
 game.airVelocityFraction = 0.3;   //Creo que no se usa
 
+game.moonPos = new Phaser.Math.Vector2(480, 100);
 game.currentBgAnimation = 0;
 game.transitionToScene = function(scene, keyNext, sceneNext){
   var SceneCurrentClass = eval(scene.constructor.name);
