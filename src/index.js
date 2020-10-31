@@ -79,7 +79,9 @@ game.transitionToScene = function(scene, keyNext, sceneNext){
   var SceneCurrentClass = eval(scene.constructor.name);
   var SceneNextClass = sceneNext;
   scene.cameras.main.once('camerafadeoutcomplete', function (camera) {
-    console.log(scene.scene.key);
+    //console.log(scene.scene.key);
+    scene.input.keyboard.shutdown();
+    scene.input.shutdown();
     scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());
     scene.game.scene.add('', new SceneNextClass(keyNext + ((SceneNextClass.getNumber()+ 1)%5)), true);
   }, scene);

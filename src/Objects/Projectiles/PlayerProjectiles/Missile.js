@@ -102,8 +102,7 @@ export default class Missile extends Projectile {
   }
 
   onSensorCollide({ bodyA, bodyB, pair }) {
-    if (bodyB.isSensor) return;
-    if(bodyB === undefined)return;
+    (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined)
     this.reachedTarget(this, bodyB, pair);
   }
 

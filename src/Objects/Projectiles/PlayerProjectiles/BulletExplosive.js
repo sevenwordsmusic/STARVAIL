@@ -44,7 +44,7 @@ export default class BulletExplosive extends Projectile {
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy){
       this.target.colSpecialObj.damageAndKnock(this.dmg, this.knockback, this.pVelocity);
 
-      if(this.target.colSpecialObj.sprite.body !== undefined && this.target.colSpecialObj.sprite !== undefined){
+      if(this.target.colSpecialObj.sprite.body !== undefined && this.target.colSpecialObj.sprite !== undefined && this.target.colSpecialObj !== undefined){
         bombExplosion.x += (this.target.colSpecialObj.sprite.body.velocity.x*8);
         bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*8);
       }
