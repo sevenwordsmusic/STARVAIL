@@ -1,4 +1,4 @@
-Vagrant's Tower (nombre temporal) - Game Design Document 
+Starvail - Game Design Document 
 ======
 <em>Documento redactado por Víctor Sierra Fernández</em>
 
