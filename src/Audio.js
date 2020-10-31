@@ -401,7 +401,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('beamLoop_00', 'assets/audio/SFX/beamLoop_00.ogg');
 
         //MUSIC LOOPS
-        this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
+        /*this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
         this.load.audio('loop0000enemies', 'assets/audio/BGM/loop0000enemies.mp3');
         this.load.audio('loop0000killing', 'assets/audio/BGM/loop0000killing.mp3');
         this.load.audio('loop0000flying', 'assets/audio/BGM/loop0000flying.mp3');
@@ -414,21 +414,21 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('loop0000weapon_04', 'assets/audio/BGM/loop0000weapon_04.mp3');
         this.load.audio('loop0000weapon_05', 'assets/audio/BGM/loop0000weapon_05.mp3');
         this.load.audio('loop0000weapon_06', 'assets/audio/BGM/loop0000weapon_06.mp3');
-        this.load.audio('loop0000weapon_07', 'assets/audio/BGM/loop0000weapon_07.mp3');
-        /*this.load.audio('loop0000base', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000enemies', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000killing', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000flying', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000levitating', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000moving', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000weapon_00', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000weapon_01', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000weapon_02', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000weapon_03', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000weapon_04', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000weapon_05', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000weapon_06', 'assets/audio/SFX/walkLoop_00.mp3');
-        this.load.audio('loop0000weapon_07', 'assets/audio/SFX/walkLoop_00.mp3');*/
+        this.load.audio('loop0000weapon_07', 'assets/audio/BGM/loop0000weapon_07.mp3');*/
+        this.load.audio('loop0000base', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000enemies', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000killing', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000flying', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000levitating', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000moving', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000weapon_00', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000weapon_01', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000weapon_02', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000weapon_03', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000weapon_04', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000weapon_05', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000weapon_06', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('loop0000weapon_07', 'assets/audio/SFX/walkLoop_00.ogg');
     }
     create() {
         //INIT AUDIO

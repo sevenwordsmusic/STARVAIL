@@ -37,68 +37,41 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1043.18181818181,
-                 "y":4342.78787878788
-                }, 
+                 "x":1991.66666666666,
+                 "y":4470.06060606061
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":31,
+         "name":"EnemySpawn_Layer",
+         "objects":[
                 {
-                 "height":0,
-                 "id":26,
-                 "name":"zapper2",
-                 "point":true,
+                 "height":127,
+                 "id":81,
+                 "name":"both",
+                 "properties":[
+                        {
+                         "name":"countMax",
+                         "type":"int",
+                         "value":6
+                        }, 
+                        {
+                         "name":"countMin",
+                         "type":"int",
+                         "value":3
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":0,
-                 "x":1525.27272727273,
-                 "y":4415.93939393939
-                }, 
-                {
-                 "height":0,
-                 "id":77,
-                 "name":"mecha",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1952,
-                 "y":4486
-                }, 
-                {
-                 "height":0,
-                 "id":78,
-                 "name":"bomb",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1352,
-                 "y":4300
-                }, 
-                {
-                 "height":0,
-                 "id":79,
-                 "name":"zapper2",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2106,
-                 "y":4286
-                }, 
-                {
-                 "height":0,
-                 "id":80,
-                 "name":"sword",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2186,
-                 "y":4470
+                 "width":176.666666666667,
+                 "x":1440,
+                 "y":4415.66666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -185,8 +158,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":31,
- "nextobjectid":81,
+ "nextlayerid":32,
+ "nextobjectid":82,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

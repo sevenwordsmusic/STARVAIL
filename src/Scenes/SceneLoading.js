@@ -35,6 +35,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('hero', 'assets/Sprites/Enemies/DroidHero/Blue Sword Run.png', { frameWidth: 93, frameHeight: 63 });
     this.load.spritesheet('mecha', 'assets/Sprites/Enemies/DroidMecha/mechNoGun.png', { frameWidth: 42, frameHeight: 60 }); //la cosa se pone interesante!
     this.load.spritesheet('gun', 'assets/Sprites/Enemies/gun.png', { frameWidth: 37, frameHeight: 7 });
+    this.load.spritesheet('sith', 'assets/Sprites/Enemies/assassin/sithIdle.png', { frameWidth: 40, frameHeight: 30 });
 
     this.load.spritesheet('zapperAir', 'assets/Sprites/Enemies/DroidZapperAir/dronmove.png', { frameWidth: 91, frameHeight: 60 });
     this.load.spritesheet('bomb', 'assets/Sprites/Enemies/DroidBomb/Homing.png', { frameWidth: 32, frameHeight: 32 });

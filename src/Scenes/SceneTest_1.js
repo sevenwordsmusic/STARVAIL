@@ -24,6 +24,7 @@ import Blackboard from "../Enemies/Blackboard.js";
 import ZapperGround from "../Enemies/ZapperGround.js";
 import SwordGround from "../Enemies/SwordGround.js";
 import Mecha from "../Enemies/Mecha.js";
+import Sith from "../Enemies/Sith.js";
 import ZapperAir from "../Enemies/ZapperAir.js";
 import BombAir from "../Enemies/BombAir.js";
 import GunnerAir from "../Enemies/GunnerAir.js";
@@ -149,29 +150,85 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.enemyController = new Blackboard(this);
 
 
+    this.availableEnemiesGround = [];
+    this.availableEnemiesGround[0] = {name: "zapper1", probability: 1};
+    this.availableEnemiesGround[1] = {name: "sword", probability: 1};
+    this.availableEnemiesGround[2] = {name: "mecha", probability: 1};
+    this.availableEnemiesGround[3] = {name: "sith", probability: 1};
+
+    this.availableEnemiesAir = [];
+    this.availableEnemiesAir[0] = {name: "zapper2", probability: 0.75};
+    this.availableEnemiesAir[1] = {name: "gunner", probability: 1};
+    this.availableEnemiesAir[2] = {name: "bomb", probability: 1};
+
+    function spawnEnemy(enemyName, scene, xPos, yPos){
+      switch(enemyName){
+        case "zapper1":
+
+        console.log(new ZapperGround(scene, xPos, yPos));
+        break;
+        case "zapper2":
+          new ZapperAir(scene, xPos, yPos);
+        break;
+        case "sword":
+          new SwordGround(scene, xPos, yPos);
+        break;
+        case "gunner":
+          new GunnerAir(scene, xPos, yPos);
+        break;
+        case "bomb":
+          new BombAir(scene, xPos, yPos);
+        break;
+        case "mecha":
+          new Mecha(scene, xPos, yPos);
+        break;
+        case "sith":
+          new Sith(scene, xPos, yPos);
+        break;
+        default:
+          console.log("Enemy does not exist");
+        break;
+      }
+    }
+
     //inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
     map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
-        if(point.name === "zapper1")
-          new ZapperGround(this, point.x, point.y);
-        else if(point.name === "zapper2")
-          new ZapperAir(this, point.x, point.y);
-        else if(point.name === "sword")
-          new SwordGround(this, point.x, point.y);
-        else if(point.name === "gunner")
-          new GunnerAir(this, point.x, point.y);
-        else if(point.name === "bomb")
-          new BombAir(this, point.x, point.y);
-        else if(point.name === "mecha")
-          new Mecha(this, point.x, point.y);
-        else if(point.name === "sith")
-          new Sith(this, point.x, point.y);
+        spawnEnemy(point.name, this, point.x, point.y);
     });
+
+    map.getObjectLayer("EnemySpawn_Layer").objects.forEach(area => {
+        var enemiesToSpawnArray;
+        if(area.name == "both"){
+          enemiesToSpawnArray = this.availableEnemiesGround.concat(this.availableEnemiesAir);
+        }else if(area.name == "ground"){
+          enemiesToSpawnArray = this.availableEnemiesGround;
+        }else if (area.name == "air") {
+          enemiesToSpawnArray =  this.availableEnemiesAir;
+        }else{
+          enemiesToSpawnArray = [];
+        }
+        const minCounter = 0;
+        const maxCounter = enemiesToSpawnArray.length - 1;
+        var enemiesToSpawn = Phaser.Math.Between(area.properties[1].value, area.properties[0].value);
+        var currentEnemy;
+        var randomSpawner;
+        while(enemiesToSpawn > 0){
+          currentEnemy = Phaser.Math.Between(minCounter, maxCounter);
+          randomSpawner = Math.random();
+          if(randomSpawner <= enemiesToSpawnArray[currentEnemy].probability){
+            enemiesToSpawn--;
+            spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
+          }
+        }
+    });
+
+
     map.getObjectLayer("Chest_Layer").objects.forEach(point => {
       new InteractableEnergyOnce(this, point.x, point.y);
     });
     new Player(this, 416, 4320);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
-    //cam.setZoom(0.5);
+    cam.setZoom(0.5);
 
     //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)
     new LevelEnd(this, 704, 64, 'star', 'testsec', SceneTest_2);

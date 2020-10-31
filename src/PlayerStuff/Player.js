@@ -510,7 +510,7 @@ export default class Player {
     this.weapons[5] = {name: "BombMegaton", damage: 95, area: 68, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
     this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 1};
     this.weapons[7] = {name: "MissileMulti", damage: 10, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.6, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 3000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 1};
-    this.weapons[8] = {name: "Lasser", damage: 0.2, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 0.004, energyRecoverProportion: 0, wSprite: "", chFrame: 0};
+    this.weapons[8] = {name: "Lasser", damage: 0.4, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 0.004, energyRecoverProportion: 0, wSprite: "", chFrame: 0};
   }
 
   initializeFire(){
