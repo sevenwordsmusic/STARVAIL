@@ -136,7 +136,7 @@ export default class Missile extends Projectile {
 
   damageEnemiesArea(){
     var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, this.scene.enemyController.enemyBodies);
-    if(damagedEnemies.length > 0){//AUDIO ENEMIGO DAÑADO}
+    if(damagedEnemies.length > 0){/*AUDIO ENEMIGO DAÑADO*/}
     for(var i in damagedEnemies){
       if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
         damagedEnemies[i].gameObject.parent.damageAndKnock(this.dmg, this.knockback, new Phaser.Math.Vector2(damagedEnemies[i].gameObject.x - this.sprite.x, damagedEnemies[i].gameObject.y - this.sprite.y));

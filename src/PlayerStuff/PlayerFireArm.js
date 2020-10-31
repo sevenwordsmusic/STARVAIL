@@ -131,9 +131,9 @@ export default class PlayerFireArm {
 
         for(var i=0; i<this.laser.anims.currentAnim.frames.length; i++){
           this.laser.anims.currentAnim.frames[i].frame.cutHeight = Math.min(laserDistance, this.laserHeight);
-          if(laserCollision.colSpecialObj !== undefined && Object.getPrototypeOf(laserCollision.colSpecialObj.constructor) === Enemy)
-            laserCollision.colSpecialObj.damageLaser(damage, this.armDir);
         }
+        if(laserCollision.colSpecialObj !== undefined && Object.getPrototypeOf(laserCollision.colSpecialObj.constructor) === Enemy)
+          laserCollision.colSpecialObj.damageLaser(damage, this.armDir);
         //AUDIO
           if(this.sfx!= undefined){
             this.sfx.volume = Audio.volume2D(laserDistance);
