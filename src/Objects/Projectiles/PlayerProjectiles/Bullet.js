@@ -45,6 +45,8 @@ export default class Bullet extends Projectile {
         bombExplosion.x += (this.target.colSpecialObj.sprite.body.velocity.x*12);
         bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*12);
       }
+
+      //AUDIO ENEMIGO DAÑADO}
     }
 
     //al completar su animacion de explsion, dicha instancia se autodestruye

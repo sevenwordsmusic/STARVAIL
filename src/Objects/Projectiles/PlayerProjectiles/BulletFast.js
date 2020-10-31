@@ -46,6 +46,8 @@ export default class BulletFast extends Projectile {
         bombExplosion.x += (this.target.colSpecialObj.sprite.body.velocity.x*5);
         bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*5);
       }
+
+      //AUDIO ENEMIGO DAÑADO}
     }
     //al completar su animacion de explsion, dicha instancia se autodestruye
     bombExplosion.on('animationcomplete', function(){

@@ -41,9 +41,9 @@ export default class Bomb extends Projectile {
     //AUDIO
     this.isMini=isMini;
     if(this.isMini){
-      this.sfx=Audio.play3Dinstance(this, 31); 
+      this.sfx=Audio.play3Dinstance(this, 31);
     }else{
-      this.sfx=Audio.play3Dinstance(this, 12); 
+      this.sfx=Audio.play3Dinstance(this, 12);
     }
     this.touchDown=true;
     this.touchDelay=0;
@@ -120,6 +120,7 @@ export default class Bomb extends Projectile {
 
   damageEnemiesArea(){
     var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, this.scene.enemyController.enemyBodies);
+    if(damagedEnemies.length > 0){//AUDIO ENEMIGO DAÑADO}
     for(var i in damagedEnemies){
       if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
         damagedEnemies[i].gameObject.parent.damageAndKnock(this.dmg, this.knockback, new Phaser.Math.Vector2(damagedEnemies[i].gameObject.x - this.sprite.x, damagedEnemies[i].gameObject.y - this.sprite.y));
