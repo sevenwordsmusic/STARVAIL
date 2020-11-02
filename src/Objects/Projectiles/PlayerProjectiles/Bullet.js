@@ -30,8 +30,6 @@ export default class Bullet extends Projectile {
   itemExpire(proj){
     this.scene.events.off("update", this.update, this);
 
-     //AUDIO
-    Audio.play3DinstanceRnd(this, 0);
 
 
     const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "bulletImpact4");
@@ -45,8 +43,13 @@ export default class Bullet extends Projectile {
         bombExplosion.x += (this.target.colSpecialObj.sprite.body.velocity.x*12);
         bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*12);
       }
-
-      //AUDIO ENEMIGO DAÑADO}
+      //AUDIO ENEMIGO DAÑADO
+        Audio.play3DinstanceRnd(this,36);
+      //
+    }else{
+      //AUDIO
+        Audio.play3DinstanceRnd(this, 0);
+      //
     }
 
     //al completar su animacion de explsion, dicha instancia se autodestruye

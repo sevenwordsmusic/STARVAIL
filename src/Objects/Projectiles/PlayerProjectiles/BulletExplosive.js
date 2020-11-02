@@ -35,7 +35,6 @@ export default class BulletExplosive extends Projectile {
     this.scene.events.off("update", this.update, this);
 
      //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
-      Audio.play3DinstanceRnd(this, 1);
       Audio.play3Dinstance(this, 2);
       //
 
@@ -49,7 +48,13 @@ export default class BulletExplosive extends Projectile {
         bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*8);
       }
 
-      //AUDIO ENEMIGO DAÑADO}
+      //AUDIO ENEMIGO DAÑADO
+        Audio.play3DinstanceRnd(this,39);
+      //
+    }else{
+      //AUDIO
+        Audio.play3DinstanceRnd(this, 1);
+      //
     }
 
     //al completar su animacion de explsion, dicha instancia se autodestruye

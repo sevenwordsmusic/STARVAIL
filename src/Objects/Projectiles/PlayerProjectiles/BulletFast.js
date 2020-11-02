@@ -30,11 +30,6 @@ export default class BulletFast extends Projectile {
   itemExpire(proj){
     this.scene.events.off("update", this.update, this);
 
-     //AUDIO
-      Audio.play3DinstanceRnd(this, 1);
-
-      //
-
     const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "bulletImpact3");
     bombExplosion.setDepth(10) //42
     bombExplosion.angle = Phaser.Math.Between(0,360);
@@ -47,7 +42,13 @@ export default class BulletFast extends Projectile {
         bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*5);
       }
 
-      //AUDIO ENEMIGO DAÑADO}
+      //AUDIO ENEMIGO DAÑADO
+        Audio.play3DinstanceRnd(this,38);
+      //
+    }else{
+      //AUDIO
+        Audio.play3DinstanceRnd(this, 1);
+      //
     }
     //al completar su animacion de explsion, dicha instancia se autodestruye
     bombExplosion.on('animationcomplete', function(){

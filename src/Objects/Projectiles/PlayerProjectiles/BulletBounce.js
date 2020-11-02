@@ -32,14 +32,7 @@ export default class BulletBounce extends Projectile {
   itemExpire(proj){
     this.scene.events.off("update", this.update, this);
 
-    //AUDIO_bounce
-    if(this.bounce>0){
-      Audio.play3DinstanceRnd(this, 3);
-      Audio.play3DinstanceRnd(this, 0);
-    }else if(this.bounce==0){
-      Audio.play3DinstanceRnd(this, 1);
-    }
-    //
+
     const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "bulletImpact");
     bombExplosion.setDepth(10).setFlipX(true) //42
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy){
@@ -50,7 +43,22 @@ export default class BulletBounce extends Projectile {
         bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*12);
       }
 
-      //AUDIO ENEMIGO DAÑADO}
+      //AUDIO ENEMIGO DAÑADO
+      if(this.bounce>0){
+        Audio.play3DinstanceRnd(this,37);
+      }else if(this.bounce==0){
+        Audio.play3DinstanceRnd(this,38);
+      }
+      //
+    }else{
+      //AUDIO
+      if(this.bounce>0){
+        Audio.play3DinstanceRnd(this, 3);
+        Audio.play3DinstanceRnd(this, 0);
+      }else if(this.bounce==0){
+        Audio.play3DinstanceRnd(this, 1);
+      }
+      //
     }
 
 
