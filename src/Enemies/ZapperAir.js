@@ -214,10 +214,15 @@ export default class ZapperAir extends Enemy {
           this.goTo(0);
       break;
       case 2:
+        //AUDIO
+        this.sfx.rate=((Audio.volume2D(dist)/2)+1.0);
+        //
         if(dist > this.standByReDistance){
+          //AUDIO
           this.stateChanged=false;
           this.sfx.stop();
           this.sfx=Audio.play3DenemyInstance(this, 34);
+          //
           this.goTo(0);
         }
       break;
@@ -228,6 +233,7 @@ export default class ZapperAir extends Enemy {
     }
     //AUDIO
       this.sfx.volume=Audio.volume2D(dist);
+      this.sfx.rate=((Audio.volume2D(dist)/2)+0.75);
     //
   }
   distanceToPlayer(){

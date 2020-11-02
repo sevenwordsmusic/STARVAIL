@@ -1,6 +1,7 @@
 import Enemy from "./Enemy.js";
 import DropableAirEnergy from "../Objects/Dropables/DropableAirEnergy.js"
 import EnergyBall from "../Objects/Projectiles/EnemyProjectiles/EnergyBall.js"
+import Audio from "../Audio.js";
 
 //enemigo que hereda de Enemy
 export default class ZapperAir extends Enemy {
@@ -143,6 +144,11 @@ export default class ZapperAir extends Enemy {
     });
     this.startAI();
     //IA
+
+    //AUDIO
+      this.sfx=Audio.play3DenemyInstance(this, 40);
+      this.stateChanged=false;
+    //
   }
 
   update(time, delta){
@@ -164,26 +170,36 @@ export default class ZapperAir extends Enemy {
 
 
   damage(dmg, v){
-    if(this.currentStateId() == 1)
+    if(this.currentStateId() == 1){
+      //AUDIO
+        this.soundChangeState();
+      //
       this.goTo( 2);
+    }
     if(this.currentStateId() != 0)
       super.damage(dmg, v);
   }
   damageLaser(dmg, v){
     if(this.currentStateId() == 1)
+      //AUDIO
+        this.soundChangeState();
+      //
       this.goTo(2);
     if(this.currentStateId() != 0)
       super.damageLaser(dmg, v);
   }
 
-  enemyDead(vXDmg, vYDmg){
+  enemyDead(vXDmg, vYDmg, drop = true){
     this.goTo(0);
     if(!this.dead){
+      //AUDIO
+          this.sfx.stop();
+      //
       super.enemyDead();
-      new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg), Math.sign(vYDmg),  this.energyDrop);
+      if(drop)
+        new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg), Math.sign(vYDmg),  this.energyDrop);
     }
   }
-
   updatePlayerPosition(dist){
     switch (this.currentStateId()) {
       case 0:
@@ -193,19 +209,51 @@ export default class ZapperAir extends Enemy {
           this.goTo(0);
       break;
       case 1:
-        if(dist <= this.detectDistance)
+        if(dist <= this.detectDistance){
+          //AUDIO
+            this.soundChangeState();
+          //
           this.goTo(2);
+        }
         if(dist > this.standByReDistance)
           this.goTo(0);
       break;
       case 2:
-        if(dist > this.standByReDistance)
+        //AUDIO
+        this.sfx.rate=((Audio.volume2D(dist)/2)+1.0);
+        //
+        if(dist > this.standByReDistance){
+          //AUDIO
+          this.stateChanged=false;
+          this.sfx.stop();
+          this.sfx=Audio.play3DenemyInstance(this, 40);
+          //
           this.goTo(0);
+        }
       break;
       case 3:
         if(dist > this.standByReDistance)
           this.goTo(0);
       break;
     }
+    //AUDIO
+      this.sfx.volume=Audio.volume2D(dist);
+    //
   }
+  distanceToPlayer(){
+    if(this.sprite.body != undefined)
+      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    else
+      return 1000;    //ARREGLAR ESTO
+  }
+
+  //AUDIO
+  soundChangeState(){
+    if(!this.stateChanged){
+      this.sfx.stop();
+      this.sfx=Audio.play3DenemyInstance(this, 41);
+      this.stateChanged=true;
+    }
+  }
+  //
 }
