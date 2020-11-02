@@ -133,6 +133,12 @@ export default class SwordGround extends Enemy {
     });
     this.startAI();
     //IA
+
+    //AUDIO
+      this.sfx=Audio.play3DenemyInstance(this, 48);
+      this.sfxDetect=undefined;
+      this.stateChanged=false;
+    //
   }
 
   update(time, delta){
@@ -173,13 +179,20 @@ export default class SwordGround extends Enemy {
           Audio.play3DinstanceRnd(this,44);
         }
       //
-    if(this.currentStateId() == 1)
+    if(this.currentStateId() == 1){
+      //AUDIO
+        this.soundChangeState();
+      //
       this.goTo( 2);
+    }
     if(this.currentStateId() != 0)
       super.damage(dmg, v);
   }
   damageLaser(dmg, v){
     if(this.currentStateId() == 1)
+      //AUDIO
+        this.soundChangeState();
+      //
       this.goTo(2);
     if(this.currentStateId() != 0)
       super.damageLaser(dmg, v);
@@ -188,6 +201,10 @@ export default class SwordGround extends Enemy {
   enemyDead(vXDmg){
     this.goTo(0);
     if(!this.dead){
+      //AUDIO
+          this.sfx.stop();
+          this.sfxDetect.stop();  
+      //
       super.enemyDead();
       new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
     }
@@ -202,26 +219,50 @@ export default class SwordGround extends Enemy {
           this.goTo(0);
       break;
       case 1:
-        if(dist <= this.detectDistance)
+        if(dist <= this.detectDistance){
+          //AUDIO
+            this.soundChangeState();
+          //
           this.goTo(2);
+        }
         if(dist > this.standByReDistance)
           this.goTo(0);
       break;
       case 2:
-        if(dist > this.standByReDistance)
+        //AUDIO
+        this.sfxDetect.rate=(Audio.volume2D(dist)+0.75);
+        this.sfxDetect.volume=Audio.volume2D(dist);
+        //
+        if(dist > this.standByReDistance){
+          //AUDIO
+          this.stateChanged=false;
+          this.sfxDetect.stop();
+          //
           this.goTo(0);
+        }
       break;
       case 3:
         if(dist > this.standByReDistance)
           this.goTo(0);
       break;
     }
+    //AUDIO
+      this.sfx.volume=Audio.volume2D(dist);
+    //
   }
-
   distanceToPlayer(){
     if(this.sprite.body != undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
     else
       return 1000;    //ARREGLAR ESTO
   }
+
+  //AUDIO
+  soundChangeState(){
+    if(!this.stateChanged){
+      this.sfxDetect=Audio.play3DenemyInstance(this, 49);
+      this.stateChanged=true;
+    }
+  }
+  //
 }

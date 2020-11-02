@@ -243,7 +243,7 @@ export default class BombAir extends Enemy {
   //AUDIO
   soundChangeState(){
     if(!this.stateChanged){
-      this.sfxDetect= Audio.play3DenemyInstance(this, 43);
+      this.sfxDetect=Audio.play3DenemyInstance(this, 43);
       this.stateChanged=true;
     }
   }
