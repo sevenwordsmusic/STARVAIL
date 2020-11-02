@@ -171,6 +171,13 @@ export default class ZapperAir extends Enemy {
 
 
   damage(dmg, v){
+      //AUDIO
+        if(Math.random()>0.3){
+          Audio.play3DinstanceRnd(this,45);
+        }else{
+          Audio.play3DinstanceRnd(this,44);
+        }
+      //
     if(this.currentStateId() == 1){
       //AUDIO
         this.soundChangeState();

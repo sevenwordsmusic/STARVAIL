@@ -313,7 +313,7 @@ export default class Audio extends Phaser.Scene {
             this.clockWalk = new Date().getTime();
         }
         if (this.stingerSurface && (Math.floor(scene.game.player.earlyPos.x) == this.earlyPos || scene.game.player.activatedJet || !scene.game.player.isTouching.ground)) {
-            var stopCycleDelay = (new Date().getTime() - this.clockWalk) % 140;
+            var stopCycleDelay = (new Date().getTime() - this.clockWalk) % 125;
             this.stingerSurface = false;
             Audio.walkCycleTimer = scene.time.addEvent({
                 delay: stopCycleDelay,
@@ -443,7 +443,12 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('gunnerLoopDetect', 'assets/audio/SFX/enemies/gunnerLoopDetect.ogg');
         this.load.audio('homingLoop', 'assets/audio/SFX/enemies/homingLoop.ogg');
         this.load.audio('homingLoopDetect', 'assets/audio/SFX/enemies/homingLoopDetect.ogg');
-
+        this.load.audio('hit_00A', 'assets/audio/SFX/enemies/hit_00A.ogg');
+        this.load.audio('hit_00B', 'assets/audio/SFX/enemies/hit_00B.ogg');
+        this.load.audio('hit_00C', 'assets/audio/SFX/enemies/hit_00C.ogg');
+        this.load.audio('hit_01A', 'assets/audio/SFX/enemies/hit_01A.ogg');
+        this.load.audio('hit_01B', 'assets/audio/SFX/enemies/hit_01B.ogg');
+        this.load.audio('hit_01C', 'assets/audio/SFX/enemies/hit_01C.ogg');
         //MUSIC LOOPS
         /*this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
         this.load.audio('loop0000enemies', 'assets/audio/BGM/loop0000enemies.mp3');
@@ -574,7 +579,14 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXloopInstance('gunnerLoopDetect', 41, this);
         Audio.createSFXloopInstance('homingLoop', 42, this);
         Audio.createSFXloopInstance('homingLoopDetect', 43, this);
-
+        this.soundInstance[44] = [];
+        Audio.createSFXinstanceSub('hit_00A', 44, 0, this);
+        Audio.createSFXinstanceSub('hit_00B', 44, 1, this);
+        Audio.createSFXinstanceSub('hit_00C', 44, 2, this);
+        this.soundInstance[45] = [];
+        Audio.createSFXinstanceSub('hit_01A', 45, 0, this);
+        Audio.createSFXinstanceSub('hit_01B', 45, 1, this);
+        Audio.createSFXinstanceSub('hit_01C', 45, 2, this);
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
             volume: this.volumeSFX,

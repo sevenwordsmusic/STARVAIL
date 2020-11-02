@@ -1,6 +1,7 @@
 import Enemy from "./Enemy.js";
 import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
 import EnemyGun from "./EnemyGun.js";
+import Audio from "../Audio.js";
 
 //enemigo que hereda de Enemy
 export default class Mecha extends Enemy {
@@ -172,6 +173,13 @@ export default class Mecha extends Enemy {
 
 
   damage(dmg, v){
+      //AUDIO
+        if(Math.random()>0.5){
+          Audio.play3DinstanceRnd(this,45);
+        }else{
+          Audio.play3DinstanceRnd(this,44);
+        }
+      //
     if(this.currentStateId() == 1)
       this.goTo( 2);
     if(this.currentStateId() != 0)
@@ -216,5 +224,12 @@ export default class Mecha extends Enemy {
           this.goTo(0);
       break;
     }
+  }
+
+  distanceToPlayer(){
+    if(this.sprite.body != undefined)
+      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    else
+      return 1000;    //ARREGLAR ESTO
   }
 }
