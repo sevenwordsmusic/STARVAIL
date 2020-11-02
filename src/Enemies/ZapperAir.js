@@ -139,6 +139,7 @@ export default class ZapperAir extends Enemy {
 
     //AUDIO
       this.sfx=Audio.play3DenemyInstance(this, 34);
+      this.sfxDetect=undefined;
       this.stateChanged=false;
     //
   }
@@ -189,6 +190,7 @@ export default class ZapperAir extends Enemy {
     if(!this.dead){
       //AUDIO
           this.sfx.stop();
+          this.sfxDetect.stop();  
       //
       super.enemyDead();
       new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg), Math.sign(vYDmg),  this.energyDrop);
@@ -215,13 +217,13 @@ export default class ZapperAir extends Enemy {
       break;
       case 2:
         //AUDIO
-        this.sfx.rate=((Audio.volume2D(dist)/2)+1.0);
+        this.sfxDetect.rate=((Audio.volume2D(dist)/2)+0.75);
+        this.sfxDetect.volume=Audio.volume2D(dist);
         //
         if(dist > this.standByReDistance){
           //AUDIO
           this.stateChanged=false;
-          this.sfx.stop();
-          this.sfx=Audio.play3DenemyInstance(this, 34);
+          this.sfxDetect.stop();
           //
           this.goTo(0);
         }
@@ -233,7 +235,6 @@ export default class ZapperAir extends Enemy {
     }
     //AUDIO
       this.sfx.volume=Audio.volume2D(dist);
-      this.sfx.rate=((Audio.volume2D(dist)/2)+0.75);
     //
   }
   distanceToPlayer(){
@@ -246,8 +247,7 @@ export default class ZapperAir extends Enemy {
   //AUDIO
   soundChangeState(){
     if(!this.stateChanged){
-      this.sfx.stop();
-      this.sfx=Audio.play3DenemyInstance(this, 35);
+      this.sfxDetect=Audio.play3DenemyInstance(this, 35);
       this.stateChanged=true;
     }
   }
