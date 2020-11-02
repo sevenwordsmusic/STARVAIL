@@ -443,6 +443,8 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('gunnerLoopDetect', 'assets/audio/SFX/enemies/gunnerLoopDetect.ogg');
         this.load.audio('homingLoop', 'assets/audio/SFX/enemies/homingLoop.ogg');
         this.load.audio('homingLoopDetect', 'assets/audio/SFX/enemies/homingLoopDetect.ogg');
+        this.load.audio('zapperLoop', 'assets/audio/SFX/enemies/zapperLoop.ogg');
+        this.load.audio('zapperLoopDetect', 'assets/audio/SFX/enemies/zapperLoopDetect.ogg');
         this.load.audio('hit_00A', 'assets/audio/SFX/enemies/hit_00A.ogg');
         this.load.audio('hit_00B', 'assets/audio/SFX/enemies/hit_00B.ogg');
         this.load.audio('hit_00C', 'assets/audio/SFX/enemies/hit_00C.ogg');
@@ -587,6 +589,8 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('hit_01A', 45, 0, this);
         Audio.createSFXinstanceSub('hit_01B', 45, 1, this);
         Audio.createSFXinstanceSub('hit_01C', 45, 2, this);
+        Audio.createSFXloopInstance('zapperLoop', 46, this);
+        Audio.createSFXloopInstance('zapperLoopDetect', 47, this);
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
             volume: this.volumeSFX,

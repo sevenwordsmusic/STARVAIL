@@ -44,8 +44,15 @@ export default class MultiMissile extends Projectile {
 
     //AUDIO
       this.sfx=Audio.play3Dinstance(this, 30);
+      this.scene.events.on("update", this.update, this);
     //
   }
+
+  //AUDIO
+  update(time, delta){
+    this.sfx.volume=Audio.volume3D(this)
+  }
+  //
 
   armBomb(){
     this.sprite.body.collisionFilter.group = 0;
