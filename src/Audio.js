@@ -270,11 +270,13 @@ export default class Audio extends Phaser.Scene {
         this.load.soundInstance[type][rnd][Audio.SFXinstance].setDetune(-100 + (Math.random() * 200));
         this.load.soundInstance[type][rnd][Audio.SFXinstance].volume = Audio.volume3D(scene);
         this.load.soundInstance[type][rnd][Audio.SFXinstance].play();
+        var instance = this.load.soundInstance[type][rnd][Audio.SFXinstance];
         if (Audio.SFXinstance < Audio.maxSFXinstances - 1) {
             Audio.SFXinstance++;
         } else {
             Audio.SFXinstance = 0;
         }
+        return instance;
     }
     static lasserLoop(on){
         if(on){
@@ -480,6 +482,8 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('airDeath_00C', 'assets/audio/SFX/enemies/airDeath_00C.ogg');
         this.load.audio('shot', 'assets/audio/SFX/enemies/shot.ogg');
         this.load.audio('lasserSufferingLoop', 'assets/audio/SFX/enemies/lasserSufferingLoop.ogg');
+        this.load.audio('zap', 'assets/audio/SFX/enemies/zap.ogg');
+        this.load.audio('zapAir', 'assets/audio/SFX/enemies/zapAir.ogg');
         //MUSIC LOOPS
         /*this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
         this.load.audio('loop0000enemies', 'assets/audio/BGM/loop0000enemies.mp3');
@@ -629,10 +633,9 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('airDeath_00B', 52, 1, this);
         Audio.createSFXinstanceSub('airDeath_00C', 52, 2, this);
         Audio.createSFXloopInstance('shot', 53, this);
-
-
         Audio.createSFXinstance('null', 54, this);
-
+        Audio.createSFXinstance('zap', 55, this);
+        Audio.createSFXinstance('zapAir', 56, this);
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
             volume: this.volumeSFX,

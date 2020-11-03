@@ -157,10 +157,11 @@ export default class BombAir extends Enemy {
   damage(dmg, v){
       //AUDIO
         if(Math.random()>0.4){
-          Audio.play3DinstanceRnd(this,45);
+          var auxSfx=Audio.play3DinstanceRnd(this,45);
         }else{
-          Audio.play3DinstanceRnd(this,44);
+         var auxSfx=Audio.play3DinstanceRnd(this,44);
         }
+          auxSfx.setDetune(auxSfx.detune+50);
       //
     if(this.currentStateId() == 1){
       //AUDIO

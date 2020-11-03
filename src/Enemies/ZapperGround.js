@@ -162,14 +162,19 @@ export default class ZapperGround extends Enemy {
     if(this.sprite.body === undefined)return;
     this.scene.graphics.clear();
     this.scene.graphics.fillRect(this.sprite.x-50, this.sprite.y-50, 100, 100);
-    if(super.playerHit(this.sprite.x-50, this.sprite.y-50, this.sprite.x+50, this.sprite.y+50))
+    if(super.playerHit(this.sprite.x-50, this.sprite.y-50, this.sprite.x+50, this.sprite.y+50)){
+      //AUDIO
+          Audio.play3Dinstance(this,55);
+      //
       this.scene.game.player.playerDamage(this.hitDamage, true);
+    }
   }
 
 
   damage(dmg, v){
       //AUDIO
-          Audio.play3DinstanceRnd(this,45);
+          var auxSfx=Audio.play3DinstanceRnd(this,45);
+          auxSfx.setDetune(auxSfx.detune+250);
       //
     if(this.currentStateId() == 1){
       //AUDIO
