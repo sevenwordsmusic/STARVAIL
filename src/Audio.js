@@ -28,11 +28,11 @@ export default class Audio extends Phaser.Scene {
 
     static chat(words, scene, personality){
         if(personality==0){
-            var genre=0;
-            var size=0.7;
-            var weight=0.7;
+            Chatter.letsTalk(words, scene, 0, 0.7, 0.8);
+        }else {
+            Chatter.letsTalk(words, scene, 0, 0.3, 0.2);
         }
-        Chatter.letsTalk(words, scene, genre, size, weight);
+
     }
 
     static createSFXinstance(name, num, load) {
