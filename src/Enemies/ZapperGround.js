@@ -132,7 +132,7 @@ export default class ZapperGround extends Enemy {
 
     //AUDIO
       this.sfx=Audio.play3DenemyInstance(this, 46);
-      this.sfxDetect=undefined;
+      this.sfxDetect=Audio.play2Dinstance(54);
       this.stateChanged=false;
     //
   }

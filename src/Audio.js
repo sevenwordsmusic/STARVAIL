@@ -225,6 +225,7 @@ export default class Audio extends Phaser.Scene {
         } else {
             Audio.SFXinstance = 0;
         }
+        return this.load.soundInstance[type][Audio.SFXinstance];
     }
     static play2DinstanceRate(type, rate) {
         this.load.soundInstance[type][Audio.SFXinstance].setRate(rate);
@@ -282,6 +283,14 @@ export default class Audio extends Phaser.Scene {
             this.load.beamLoop.stop();
         }
         return  this.load.beamLoop;
+    }
+    static lasserSufferingLoop(on){
+        if(on){
+            this.load.lasserSufferingLoop.play();
+        }else{
+            this.load.lasserSufferingLoop.stop();
+        }
+        return  this.load.lasserSufferingLoop;
     }
     static audioUpdate(scene) {
         this.propellerFliying(scene);
@@ -379,6 +388,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('impact_06', 'assets/audio/SFX/impact_06.ogg');
         this.load.audio('impact_07', 'assets/audio/SFX/impact_07.ogg');
         //UI
+        this.load.audio('null', 'assets/audio/SFX/null.ogg');
         this.load.audio('weaponChange_00', 'assets/audio/SFX/weaponChange_00.ogg');
         this.load.audio('movingPart_00', 'assets/audio/SFX/movingPart_00.ogg');
         this.load.audio('trigger_00', 'assets/audio/SFX/trigger_00.ogg');
@@ -455,6 +465,11 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('hit_01A', 'assets/audio/SFX/enemies/hit_01A.ogg');
         this.load.audio('hit_01B', 'assets/audio/SFX/enemies/hit_01B.ogg');
         this.load.audio('hit_01C', 'assets/audio/SFX/enemies/hit_01C.ogg');
+        this.load.audio('airDeath_00A', 'assets/audio/SFX/enemies/airDeath_00A.ogg');
+        this.load.audio('airDeath_00B', 'assets/audio/SFX/enemies/airDeath_00B.ogg');
+        this.load.audio('airDeath_00C', 'assets/audio/SFX/enemies/airDeath_00C.ogg');
+        this.load.audio('shot', 'assets/audio/SFX/enemies/shot.ogg');
+        this.load.audio('lasserSufferingLoop', 'assets/audio/SFX/enemies/lasserSufferingLoop.ogg');
         //MUSIC LOOPS
         /*this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
         this.load.audio('loop0000enemies', 'assets/audio/BGM/loop0000enemies.mp3');
@@ -599,6 +614,14 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXloopInstance('swordLoopDetect', 49, this);
         Audio.createSFXloopInstance('mechaLoop', 50, this);
         Audio.createSFXloopInstance('mechaLoopDetect', 51, this);
+        this.soundInstance[52] = [];
+        Audio.createSFXinstanceSub('airDeath_00A', 52, 0, this);
+        Audio.createSFXinstanceSub('airDeath_00B', 52, 1, this);
+        Audio.createSFXinstanceSub('airDeath_00C', 52, 2, this);
+        Audio.createSFXloopInstance('shot', 53, this);
+
+
+        Audio.createSFXinstance('null', 54, this);
 
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
@@ -627,6 +650,10 @@ export default class Audio extends Phaser.Scene {
         })
         this.beamLoop = this.sound.add('beamLoop_00', {
             volume: this.volumeSFX,
+            loop: true
+        })
+        this.lasserSufferingLoop = this.sound.add('lasserSufferingLoop', {
+            volume: 0.0,
             loop: true
         })
         //MUSIC LOOPS

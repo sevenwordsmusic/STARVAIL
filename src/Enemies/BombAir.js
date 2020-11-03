@@ -128,7 +128,7 @@ export default class BombAir extends Enemy {
 
     //AUDIO
       this.sfx=Audio.play3DenemyInstance(this, 42);
-      this.sfxDetect=undefined;
+      this.sfxDetect=Audio.play2Dinstance(54);
       this.stateChanged=false;
     //
   }
@@ -185,6 +185,7 @@ export default class BombAir extends Enemy {
     this.goTo(0);
     if(!this.dead){
       //AUDIO
+          Audio.play3DinstanceRnd(this, 52);
           this.sfx.stop();
           this.sfxDetect.stop();  
       //

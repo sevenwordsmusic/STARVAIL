@@ -136,7 +136,7 @@ export default class SwordGround extends Enemy {
 
     //AUDIO
       this.sfx=Audio.play3DenemyInstance(this, 48);
-      this.sfxDetect=undefined;
+      this.sfxDetect=Audio.play2Dinstance(54);
       this.stateChanged=false;
     //
   }
