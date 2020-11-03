@@ -1,3 +1,5 @@
+import Chatter from "./Chatter.js";
+
 export default class Audio extends Phaser.Scene {
     constructor() {
         super("Audio");
@@ -9,7 +11,7 @@ export default class Audio extends Phaser.Scene {
     static propellerTween = false;
     static bpm = 104;
     static beat = 16;
-    static barRate = 60 * 500 / this.bpm * this.beat;
+    static barRate = 60 * 1000 / this.bpm * this.beat;
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64, this.barRate / 128];
     static maxVolume = 0.7;
     static vanishingPoint = 1080;
@@ -20,10 +22,18 @@ export default class Audio extends Phaser.Scene {
     static barTimer;
     static halfBarTimer;
     static walkCycleTimer;
-    static maxSFXinstances = 32;
+    static maxSFXinstances = 28;
     static SFXinstance = 0;
     static stingerKilling = false;
 
+    static chat(words, scene, personality){
+        if(personality==0){
+            var genre=0;
+            var size=0.7;
+            var weight=0.7;
+        }
+        Chatter.letsTalk(words, scene, genre, size, weight);
+    }
 
     static createSFXinstance(name, num, load) {
         load.soundInstance[num] = [];
@@ -737,6 +747,6 @@ export default class Audio extends Phaser.Scene {
         Audio.load = this;
         console.log("AUDIO LOADED: everything went better than expected :D !!!");
         //Let's go motherfuckers~
-        this.scene.start("SceneLoading");
+        this.scene.start("Chatter");
     }
 }

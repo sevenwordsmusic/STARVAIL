@@ -47,6 +47,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   create() {
     console.log(this);
 
+
     new Dialog(this, 50, 400, false,5000, {
       wrapWidth: 700,
       fixedWidth: 700,

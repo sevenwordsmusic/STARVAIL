@@ -34,6 +34,9 @@ export default class NPC_Test extends FiniteStateMachine{
 
     this.sprite.on('pointerdown', function() {
       if(!this.isTalking){
+        //AUDIO (número de palabras, escena, personaje);
+            Audio.chat(5, scene, 0);
+         //
         this.isTalking = true;
         this.scene.dialogManager.setCurrentSpeaker(this);
         this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
@@ -46,7 +49,7 @@ export default class NPC_Test extends FiniteStateMachine{
     //this.initializeAI(4);
     this.initializeAI(3);
     this.stateOnStart(0, function(){
-      this.currentDialog = 0;
+    this.currentDialog = 0;
     });
     this.stateOnStart(1, function(){
       this.currentDialog = 1;
