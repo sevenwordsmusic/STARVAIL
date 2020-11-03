@@ -196,6 +196,9 @@ export default class Mecha extends Enemy {
       super.damage(dmg, v);
   }
   damageLaser(dmg, v){
+    //AUDIO
+      Audio.load.lasserSufferingLoop.setDetune(-200);
+    //
     if(this.currentStateId() == 1)
       //AUDIO
         this.soundChangeState();
@@ -267,7 +270,7 @@ export default class Mecha extends Enemy {
   //AUDIO
   soundChangeState(){
     if(!this.stateChanged){
-      this.sfxDetect=Audio.play3DenemyInstance(this, 51);
+      this.sfxDetect=Audio.play3Dinstance(this, 51);
       this.stateChanged=true;
     }
   }

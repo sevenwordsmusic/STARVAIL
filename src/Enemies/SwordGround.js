@@ -189,6 +189,9 @@ export default class SwordGround extends Enemy {
       super.damage(dmg, v);
   }
   damageLaser(dmg, v){
+    //AUDIO
+      Audio.load.lasserSufferingLoop.setDetune(0);
+    //
     if(this.currentStateId() == 1)
       //AUDIO
         this.soundChangeState();
@@ -260,7 +263,7 @@ export default class SwordGround extends Enemy {
   //AUDIO
   soundChangeState(){
     if(!this.stateChanged){
-      this.sfxDetect=Audio.play3DenemyInstance(this, 49);
+      this.sfxDetect=Audio.play3Dinstance(this, 49);
       this.stateChanged=true;
     }
   }

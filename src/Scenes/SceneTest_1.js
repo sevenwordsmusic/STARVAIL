@@ -216,7 +216,6 @@ export default class SceneTest_1 extends Phaser.Scene {
       new InteractableEnergyOnce(this, point.x, point.y);
     });
     new Player(this, 416, 4320);
-    new SwordGround(this, 800, 4320);
 
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 

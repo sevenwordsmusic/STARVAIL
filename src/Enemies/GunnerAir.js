@@ -188,6 +188,9 @@ export default class ZapperAir extends Enemy {
       super.damage(dmg, v);
   }
   damageLaser(dmg, v){
+    //AUDIO
+      Audio.load.lasserSufferingLoop.setDetune(-100);
+    //
     if(this.currentStateId() == 1)
       //AUDIO
         this.soundChangeState();
@@ -260,7 +263,7 @@ export default class ZapperAir extends Enemy {
   //AUDIO
   soundChangeState(){
     if(!this.stateChanged){
-      this.sfxDetect=Audio.play3DenemyInstance(this, 41);
+      this.sfxDetect=Audio.play3Dinstance(this, 41);
       this.stateChanged=true;
     }
   }

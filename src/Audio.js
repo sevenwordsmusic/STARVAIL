@@ -9,7 +9,7 @@ export default class Audio extends Phaser.Scene {
     static propellerTween = false;
     static bpm = 104;
     static beat = 16;
-    static barRate = 60 * 1000 / this.bpm * this.beat;
+    static barRate = 60 * 500 / this.bpm * this.beat;
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64, this.barRate / 128];
     static maxVolume = 0.7;
     static vanishingPoint = 1080;
@@ -206,18 +206,9 @@ export default class Audio extends Phaser.Scene {
         }
         return distance * Audio.volumeSFX;
     }
-    static playUIinstance(type, rate) {
-        this.load.soundInstance[type][Audio.SFXinstance].setRate(rate);
-        this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
-        this.load.soundInstance[type][Audio.SFXinstance].play();
-        if (Audio.SFXinstance < Audio.maxSFXinstances - 1) {
-            Audio.SFXinstance++;
-        } else {
-            Audio.SFXinstance = 0;
-        }
-    }
     static play2Dinstance(type) {
         this.load.soundInstance[type][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
+        this.load.soundInstance[type][Audio.SFXinstance].setDetune(-50 + (Math.random() * 100));
         this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
         this.load.soundInstance[type][Audio.SFXinstance].play();
         if (Audio.SFXinstance == Audio.SFXinstance && Audio.SFXinstance < Audio.maxSFXinstances - 1) {
@@ -239,6 +230,7 @@ export default class Audio extends Phaser.Scene {
     }
     static play3Dinstance(scene, type) {
         this.load.soundInstance[type][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
+        this.load.soundInstance[type][Audio.SFXinstance].setDetune(-100 + (Math.random() * 200));
         this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volume3D(scene);
         this.load.soundInstance[type][Audio.SFXinstance].play();
         var instance = this.load.soundInstance[type][Audio.SFXinstance];
@@ -251,6 +243,7 @@ export default class Audio extends Phaser.Scene {
     }
     static play3DenemyInstance(scene, type) {
         this.load.soundInstance[type][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
+        this.load.soundInstance[type][Audio.SFXinstance].setDetune(-100 + (Math.random() * 200));
         this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
         this.load.soundInstance[type][Audio.SFXinstance].play();
         var instance = this.load.soundInstance[type][Audio.SFXinstance];
@@ -264,6 +257,7 @@ export default class Audio extends Phaser.Scene {
     static play3DinstanceRnd(scene, type) {
         var rnd = [Math.floor(Math.random() * this.load.soundInstance[type].length)];
         this.load.soundInstance[type][rnd][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].setDetune(-100 + (Math.random() * 200));
         this.load.soundInstance[type][rnd][Audio.SFXinstance].volume = Audio.volume3D(scene);
         this.load.soundInstance[type][rnd][Audio.SFXinstance].play();
         if (Audio.SFXinstance < Audio.maxSFXinstances - 1) {
@@ -275,7 +269,9 @@ export default class Audio extends Phaser.Scene {
     static lasserLoop(on){
         if(on){
             Audio.play2Dinstance(32);
+            this.load.lasserLoop.setDetune(-50 + (Math.random() * 100));
             this.load.lasserLoop.play();
+            this.load.beamLoop.setDetune(-50 + (Math.random() * 100));
             this.load.beamLoop.play();
         }else{
             Audio.play2Dinstance(33);
@@ -306,6 +302,7 @@ export default class Audio extends Phaser.Scene {
         if (Math.floor(scene.game.player.earlyPos.x) != this.earlyPos && !scene.game.player.activatedJet && !this.stingerWalk && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
             this.stingerWalk = true;
             this.load.walkLoop.volume = Audio.volumeSFX;
+            this.load.walkLoop.setDetune(-25 + (Math.random() * 50));
             this.load.walkLoop.play();
         }
         if (this.stingerWalk && (scene.game.player.activatedJet || Math.floor(scene.game.player.earlyPos.x) == this.earlyPos)) {
@@ -318,6 +315,7 @@ export default class Audio extends Phaser.Scene {
         if (!this.stingerSurface && Math.floor(scene.game.player.earlyPos.x) != this.earlyPos && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
             this.stingerSurface = true;
             this.load.surfaceLoop.volume = Audio.volumeSFX;
+            this.load.surfaceLoop.setDetune(-25 + (Math.random() * 50));
             this.load.surfaceLoop.play();
             this.clockWalk = new Date().getTime();
         }
@@ -346,7 +344,9 @@ export default class Audio extends Phaser.Scene {
     static propellerFliying(scene) {
         if (scene.game.player.activatedJet && !this.earlyPropeller) {
             this.earlyPropeller = true;
+            this.load.engineLoop.setDetune(-25 + (Math.random() * 50));
             this.load.engineLoop.play();
+            this.load.propellerLoop.setDetune(-25 + (Math.random() * 50));
             this.load.propellerLoop.play();
             Audio.play2DinstanceRate(9, 0.4);
         } else if (!scene.game.player.activatedJet && this.earlyPropeller) {

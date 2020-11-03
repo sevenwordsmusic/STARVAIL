@@ -181,6 +181,9 @@ export default class ZapperGround extends Enemy {
       super.damage(dmg, v);
   }
   damageLaser(dmg, v){
+    //AUDIO
+      Audio.load.lasserSufferingLoop.setDetune(50);
+    //
     if(this.currentStateId() == 1)
       //AUDIO
         this.soundChangeState();
@@ -252,7 +255,7 @@ export default class ZapperGround extends Enemy {
   //AUDIO
   soundChangeState(){
     if(!this.stateChanged){
-      this.sfxDetect=Audio.play3DenemyInstance(this, 47);
+      this.sfxDetect=Audio.play3Dinstance(this, 47);
       this.stateChanged=true;
     }
   }
