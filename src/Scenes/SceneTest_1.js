@@ -293,8 +293,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     console.log(this.matter.world.localWorld.bodies.length);
     console.log("   ");*/
 
-    /*this.maxMemory = Math.max(this.maxMemory, Math.round((performance.memory.usedJSHeapSize/1024/1024)));
-    console.log(this.maxMemory + "    " + Math.round((performance.memory.usedJSHeapSize/1024/1024)));*/
+    this.maxMemory = Math.max(this.maxMemory, Math.round((performance.memory.usedJSHeapSize/1024/1024)));
+    console.log(this.maxMemory + "    " + Math.round((performance.memory.usedJSHeapSize/1024/1024)));
     /*const usedHeap = performance.memory.usedJSHeapSize/1024/1024;
     if(usedHeap > 90){
       console.log("USING TOO MUCH MEMORY:  " + usedHeap);

@@ -93,7 +93,7 @@ export default class Player {
 
     this.buttons = [5];
     for(var i=0; i<5;i++){
-      this.buttons[i] = this.scene.add.sprite(200 + i*100, 450, 'square',0).setScale(0.75).setInteractive();
+      this.buttons[i] = this.scene.add.sprite(700 + i*50, 450, 'square',0).setScale(0.75).setInteractive();
       this.buttons[i].setScrollFactor(0).setDepth(100);
       this.buttons[i].playerInteractable = true;
     }
@@ -267,7 +267,7 @@ export default class Player {
   }
 
   solveBoundry(){
-    if(this.updateBoundryCounterX > 0)
+    /*if(this.updateBoundryCounterX > 0)
       this.xFrontiers(1, 25);
     if(this.updateBoundryCounterX < 0)
       this.xFrontiers(-1, 25);
@@ -277,7 +277,15 @@ export default class Player {
       this.yFrontiers(1, 25);
     if(this.updateBoundryCounterY < 0)
       this.yFrontiers(-1, 25);
-    this.updateBoundryCounterY = 0;
+    this.updateBoundryCounterY = 0;*/
+    if(this.sprite.body.position.x - this.earlyPos.x > 0)
+      this.xFrontiers(1, 25)
+    else if(this.sprite.body.position.x - this.earlyPos.x < 0)
+      this.xFrontiers(-1, 25)
+    if(this.sprite.body.position.y - this.earlyPos.y > 0)
+      this.yFrontiers(1, 25)
+    else if(this.sprite.body.position.y - this.earlyPos.y < 0)
+      this.yFrontiers(-1, 25)
   }
 
   playerMoveForceX(){
@@ -293,8 +301,7 @@ export default class Player {
     if (!this.alive) { return; } //CAMBIAR ESPERA ACTIVA
     //if(this.sprite.y > 5000)  this.sprite.y = 3000;
     this.updateKnockback(time, delta);
-    this.updateBoundry();
-
+    //this.updateBoundry();
 
     if(this.sprite.body.velocity.x > -0.01 && this.sprite.body.velocity.x < 0.01)
       this.sprite.body.velocity.x = 0;
@@ -748,7 +755,7 @@ export default class Player {
       return Number.MAX_SAFE_INTEGER;
   }
 
-  updateBoundry(){
+  /*updateBoundry(){
     //console.log(this.closestEnemy.sprite.x);
     let newPlayerPos = false;
     //BOUNDRY
@@ -783,7 +790,7 @@ export default class Player {
     this.earlyPos.x = this.sprite.body.position.x;
     this.earlyPos.y = this.sprite.body.position.y;
     //BOUNDRY
-  }
+  }*/
   xFrontiers(dir, boundry){
     const xBoundry = boundry*dir;
     const yBoundry = boundry + 1; //7+2
