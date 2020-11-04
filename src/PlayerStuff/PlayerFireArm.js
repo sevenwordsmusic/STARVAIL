@@ -1,5 +1,6 @@
 import SuperiorQuery from "../SuperiorQuery.js";
 import Bullet from "../Objects/Projectiles/PlayerProjectiles/Bullet.js";
+import BulletFast from "../Objects/Projectiles/PlayerProjectiles/BulletFast.js";
 import BulletBounce from "../Objects/Projectiles/PlayerProjectiles/BulletBounce.js";
 import BulletExplosive from "../Objects/Projectiles/PlayerProjectiles/BulletExplosive.js";
 import Bomb from "../Objects/Projectiles/PlayerProjectiles/Bomb.js";
@@ -32,6 +33,7 @@ export default class PlayerFireArm {
       this.fireWeaponFunctions[1] = this.fireBomb;*/
 
       this.laser = scene.add.sprite(x,y, 'laser', 0);
+      this.laser.setTint('0x19b6ff');
       this.laserHeight = this.laser.frame.height;
       this.laser.setScale(0.65, 1).setOrigin(0.5, 0.01);
       this.laser.anims.play('laser', true);
@@ -44,6 +46,7 @@ export default class PlayerFireArm {
 
       //AUDIO
       this.sfx;
+      this.sfxLasser;
       //
   }
 
@@ -72,12 +75,12 @@ export default class PlayerFireArm {
       const addedRandomAngle = (2*Math.random() - 1) * bulletSpread;
       this.armDir.x = Math.cos(this.armDir.angle() + addedRandomAngle);
       this.armDir.y = Math.sin(this.armDir.angle() + addedRandomAngle);
-      const bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 2, this.scene.bulletInteracBodies);
+      const bulletCollision = SuperiorQuery.superiorRayCast(this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, this.armDir, 4, this.scene.bulletInteracBodies);
       if(bulletCollision.collided){
         const bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - this.sprite.x - this.armDir.x * 30,2) + Math.pow(bulletCollision.colY - this.sprite.y - this.armDir.y * 30,2));
-        new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed) + 7, bulletCollision, bulletDistance);
+        new BulletFast(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, Math.min(bulletExpireTime,(bulletDistance * this.scene.matter.world.getDelta())/bulletSpeed) + 7, bulletCollision, bulletDistance);
       }else{
-        new Bullet(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
+        new BulletFast(this.scene, this.sprite.x + this.armDir.x * 30, this.sprite.y + this.armDir.y * 30, spr, damage, bulletSpeed, this.armDir, bulletExpireTime, bulletCollision, -1);
       }
   }
   fireBulletExplosive(spr, damage, knockback, bulletSpread, bulletSpeed, bulletExpireTime){
@@ -129,8 +132,20 @@ export default class PlayerFireArm {
 
         for(var i=0; i<this.laser.anims.currentAnim.frames.length; i++){
           this.laser.anims.currentAnim.frames[i].frame.cutHeight = Math.min(laserDistance, this.laserHeight);
-          if(laserCollision.colSpecialObj !== undefined && Object.getPrototypeOf(laserCollision.colSpecialObj.constructor) === Enemy)
-            laserCollision.colSpecialObj.damageLaser(damage, this.armDir);
+        }
+        if(laserCollision.colSpecialObj !== undefined && Object.getPrototypeOf(laserCollision.colSpecialObj.constructor) === Enemy){
+          laserCollision.colSpecialObj.damageLaser(damage, this.armDir);
+          //AUDIO
+            if(this.sfxLasser!= undefined){
+              this.sfxLasser.volume = Audio.volume2D(laserDistance);
+            }
+          //
+        }else{
+          //AUDIO
+            if(this.sfxLasser!= undefined){
+            this.sfxLasser.volume = 0.0;
+            }
+          //
         }
         //AUDIO
           if(this.sfx!= undefined){
@@ -159,6 +174,7 @@ export default class PlayerFireArm {
       this.laserSmoke.setVisible(true);
       //AUDIO
         this.sfx= Audio.lasserLoop(true);
+        this.sfxLasser= Audio.lasserSufferingLoop(true);
       //
   }
   disengageLaser(){
@@ -170,6 +186,7 @@ export default class PlayerFireArm {
       this.laserSmoke.y = -9999
       //AUDIO
         Audio.lasserLoop(false);
+        Audio.lasserSufferingLoop(false);
       //
   }
   fireBomb(spr, damage, bombArea, knockback, bombSpeed, bombExpireTime){

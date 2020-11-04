@@ -7,27 +7,18 @@ var mouse;
 //var firstFollow;
 //var fadeOut;
 
-
-//Texto prueba para el dialogo
-var dialogTest;
-var content = `[b]D42K-H[/b]
-Así que [i]finalmente[/i] has venido
-
-[b]D42K-H[/b]
-4ULS82... Sabes que sólo hay una respuesta al dolor que sentimos por el mero hecho de [color=red][b]existir[/b][/color], ¿verdad?
-[b]D42K-H[/b]
-Si así es, ya sabes lo que tenemos que hacer.`;
-
 //Imports en la escena.
 import Player from "../PlayerStuff/Player.js";
 import Blackboard from "../Enemies/Blackboard.js";
 import ZapperGround from "../Enemies/ZapperGround.js";
 import SwordGround from "../Enemies/SwordGround.js";
 import Mecha from "../Enemies/Mecha.js";
+import Sith from "../Enemies/Sith.js";
 import ZapperAir from "../Enemies/ZapperAir.js";
 import BombAir from "../Enemies/BombAir.js";
 import GunnerAir from "../Enemies/GunnerAir.js";
 import Dialog from "../Plugins/Dialog.js"
+import Mentor from "../NPCs/Mentor.js"
 import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
 import LevelEnd from "../Objects/LevelEnd.js";
@@ -56,6 +47,18 @@ export default class SceneTest_1 extends Phaser.Scene {
   create() {
     console.log(this);
 
+    //this.playerStartX = 128;
+    //this.playerStartY = 2560;
+    this.playerStartX = 416;
+    this.playerStartY = 4320;
+
+
+    new Dialog(this, 50, 400, false,5000, {
+      wrapWidth: 700,
+      fixedWidth: 700,
+      fixedHeight: 80,
+    });
+
     //game.matter.world.pause();
     mouse = this.input.activePointer;
 
@@ -70,15 +73,6 @@ export default class SceneTest_1 extends Phaser.Scene {
     cam.fadeIn(Audio.barRateDiv[2]);  //Constante de Audio para sincronía
     //fadeOut = false;
 
-    //TESTING DIALOG
-    /*dialogTest = new Dialog(this, 50, 400,true,5000, {
-      wrapWidth: 700,
-      fixedWidth: 700,
-      fixedHeight: 80,
-    });
-
-    dialogTest.textBox.start(content,10);*/
-
 
     //Backgrounds.
     //this.add.image(480, 270, 'bg_e').setScrollFactor(0).setDepth(-503);
@@ -86,6 +80,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     //this.add.image(1100, 320, 'bg2_e').setScale(2).setScrollFactor(0.5).setDepth(-501);
     //this.add.image(1200, 400, 'bg3_e').setScale(2).setScrollFactor(0.75).setDepth(-500);
 
+    this.moon = this.add.sprite(this.game.moonPos.x, this.game.moonPos.y, 'star', 0).setScrollFactor(0).setDepth(-400);
     this.timeBg = this.add.sprite(480, 100/*270*/, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
     this.timeBg.once('animationcomplete', function(){
       if(this.timeBg.anims.currentFrame != undefined)
@@ -115,9 +110,9 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(mainlayer);
     //Sistema de cargado dinamico de colliders
     var tileBodyMatrix = [];
-    for (var i = 0; i < 110; i++) {
+    for (var i = 0; i < 120; i++) {
       tileBodyMatrix[i] = [];
-      for (var j = 0; j < 152; j++) {
+      for (var j = 0; j < 150; j++) {
         tileBodyMatrix[i][j] = undefined;
       }
     }
@@ -127,7 +122,7 @@ export default class SceneTest_1 extends Phaser.Scene {
       //tile.setSize
       if (tile.physics.matterBody != undefined) {
         const tileBody = tile.physics.matterBody.body;
-        if (tileBody.position.x < 2000 && tileBody.position.y > 3800) {
+        if (tileBody.position.x > this.playerStartX - 32*26 && tileBody.position.x < this.playerStartX + 32*26 && tileBody.position.y > this.playerStartY - 32*26 && tileBody.position.y < this.playerStartY + 32*26) {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         } else {
@@ -149,32 +144,92 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.enemyController = new Blackboard(this);
 
 
-    //inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
+    this.availableEnemiesGround = [];
+    this.availableEnemiesGround[0] = {name: "zapper1", probability: 1};
+    /*this.availableEnemiesGround[1] = {name: "sword", probability: 1};
+    this.availableEnemiesGround[2] = {name: "mecha", probability: 1};
+    this.availableEnemiesGround[3] = {name: "sith", probability: 1};*/
+
+    this.availableEnemiesAir = [];
+    this.availableEnemiesAir[0] = {name: "zapper2", probability: 0.75};
+    /*this.availableEnemiesAir[1] = {name: "gunner", probability: 1};
+    this.availableEnemiesAir[2] = {name: "bomb", probability: 1};*/
+
+    function spawnEnemy(enemyName, scene, xPos, yPos){
+      switch(enemyName){
+        case "zapper1":
+          new ZapperGround(scene, xPos, yPos);
+        break;
+        case "zapper2":
+          new ZapperAir(scene, xPos, yPos);
+        break;
+        case "sword":
+          new SwordGround(scene, xPos, yPos);
+        break;
+        case "gunner":
+          new GunnerAir(scene, xPos, yPos);
+        break;
+        case "bomb":
+          new BombAir(scene, xPos, yPos);
+        break;
+        case "mecha":
+          new Mecha(scene, xPos, yPos);
+        break;
+        case "sith":
+          new Sith(scene, xPos, yPos);
+        break;
+        default:
+          console.log("Enemy does not exist");
+        break;
+      }
+    }
+
+    /*//inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
     map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
-        if(point.name === "zapper1")
-          new ZapperGround(this, point.x, point.y);
-        else if(point.name === "zapper2")
-          new ZapperAir(this, point.x, point.y);
-        else if(point.name === "sword")
-          new SwordGround(this, point.x, point.y);
-        else if(point.name === "gunner")
-          new GunnerAir(this, point.x, point.y);
-        else if(point.name === "bomb")
-          new BombAir(this, point.x, point.y);
-        else if(point.name === "mecha")
-          new Mecha(this, point.x, point.y);
-        else if(point.name === "sith")
-          new Sith(this, point.x, point.y);
+        spawnEnemy(point.name, this, point.x, point.y);
     });
+
+    map.getObjectLayer("EnemySpawn_Layer").objects.forEach(area => {
+        var enemiesToSpawnArray;
+        if(area.name == "both"){
+          enemiesToSpawnArray = this.availableEnemiesGround.concat(this.availableEnemiesAir);
+        }else if(area.name == "ground"){
+          enemiesToSpawnArray = this.availableEnemiesGround;
+        }else if (area.name == "air") {
+          enemiesToSpawnArray =  this.availableEnemiesAir;
+        }else{
+          enemiesToSpawnArray = [];
+        }
+        const minCounter = 0;
+        const maxCounter = enemiesToSpawnArray.length - 1;
+        var enemiesToSpawn = Phaser.Math.Between(area.properties[1].value, area.properties[0].value);
+        var currentEnemy;
+        var randomSpawner;
+        var breaker = 0;
+        while(enemiesToSpawn > 0 && breaker < 100){   //por si acaso
+          breaker++;
+          currentEnemy = Phaser.Math.Between(minCounter, maxCounter);
+          randomSpawner = Math.random();
+          if(randomSpawner <= enemiesToSpawnArray[currentEnemy].probability){
+            enemiesToSpawn--;
+            spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
+          }
+        }
+    });
+
+
     map.getObjectLayer("Chest_Layer").objects.forEach(point => {
       new InteractableEnergyOnce(this, point.x, point.y);
-    });
-    new Player(this, 416, 4320);
+    });*/
+    new Player(this, this.playerStartX, this.playerStartY);
+
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
-    //cam.setZoom(0.5);
+
+    new Mentor(this, this.playerStartX+400, this.playerStartY-20);
+    cam.setZoom(0.5);
 
     //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)
-    new LevelEnd(this, 704, 64, 'star', 'testsec', SceneTest_2);
+    new LevelEnd(this, 300, 4000, 'star', 'testsec', SceneTest_2);
 
     //var sssd = new HealthBar(this, 400, 400, 300, 20, 0x00ff00, 0x000000, 0xffffff, 100);
     //Colisiones del escneario con el jugador
@@ -216,9 +271,24 @@ export default class SceneTest_1 extends Phaser.Scene {
 
   //AUDIO:
    Audio.startAudioEngine(this);
+   this.maxMemory = 0;
+   console.log(this.matter);
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
+    this.moon.x += (delta/50);
+    this.game.moonPos.x = this.moon.x;
+
+    /*console.log(Phaser.Physics.Matter.Matter.Composite.allBodies(this.matter.world.localWorld).length);
+    console.log(this.matter.world.localWorld.bodies.length);
+    console.log("   ");*/
+
+    this.maxMemory = Math.max(this.maxMemory, Math.round((performance.memory.usedJSHeapSize/1024/1024)));
+    console.log(this.maxMemory + "    " + Math.round((performance.memory.usedJSHeapSize/1024/1024)));
+    /*const usedHeap = performance.memory.usedJSHeapSize/1024/1024;
+    if(usedHeap > 90){
+      console.log("USING TOO MUCH MEMORY:  " + usedHeap);
+    }*/
   //AUDIO:
   Audio.audioUpdate(this);
   }

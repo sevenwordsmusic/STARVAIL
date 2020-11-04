@@ -12,6 +12,7 @@ export default class Player {
 
     scene.matter.world.on("beforeupdate", this.resetTouching, this);
     this.scene.events.on("update", this.update, this);  //para que el update funcione
+    this.scene.events.on("render", this.solveBoundry, this);  //para que el update funcione
 
     this.crossCounter = 0;
 
@@ -58,6 +59,8 @@ export default class Player {
     this.earlyPos = new Phaser.Math.Vector2(this.sprite.body.position.x, this.sprite.body.position.y);
     this.advance32X = 0;
     this.advance32Y = 0;
+    this.updateBoundryCounterX = 0;
+    this.updateBoundryCounterY = 0;
 
     //vida, energía y sus barras correspondientes
     this.alive = true;
@@ -248,6 +251,20 @@ export default class Player {
     this.earlyPos.y = this.sprite.body.position.y;
   }
 
+  solveBoundry(){
+    if(this.updateBoundryCounterX > 0)
+      this.xFrontiers(1, 25);
+    if(this.updateBoundryCounterX < 0)
+      this.xFrontiers(-1, 25);
+    this.updateBoundryCounterX = 0;
+
+    if(this.updateBoundryCounterY > 0)
+      this.yFrontiers(1, 25);
+    if(this.updateBoundryCounterY < 0)
+      this.yFrontiers(-1, 25);
+    this.updateBoundryCounterY = 0;
+  }
+
   playerMoveForceX(){
     if(!this.scene.game.onPC) return Math.abs(Math.min(Math.max(this.joyStick.forceX/100, -1), 1));
     else return 1;
@@ -267,8 +284,8 @@ export default class Player {
     if(this.sprite.body.velocity.x > -0.01 && this.sprite.body.velocity.x < 0.01)
       this.sprite.body.velocity.x = 0;
 
-      if(this.sprite.body.velocity.y > -0.01 && this.sprite.body.velocity.y < 0.01)
-        this.sprite.body.velocity.y = 0;
+    if(this.sprite.body.velocity.y > -0.01 && this.sprite.body.velocity.y < 0.01)
+      this.sprite.body.velocity.y = 0;
 
     if (this.cursors.right.isDown) {
       if (!this.isTouching.right) {
@@ -504,13 +521,13 @@ export default class Player {
     //cuanta proporción de "recovery de energía" hay al disparar (por ej: si es 0.5 recuperamos la mitad de energía que de normal cada update), el sprite del proyectil, el frame del crosshair.png que se usa
     this.weapons[0] = {name: "BulletNormal", damage: 6, spread: 0.05, fireRate: 6 * this.scene.matter.world.getDelta(), projectileSpeed: 30, expireTime: 800, energyCost: 0, energyRecoverProportion: 0, wSprite: "bullet1", chFrame: 0};
     this.weapons[1] = {name: "BulletSuperSonic", damage: 6, spread: 0.05, fireRate: 3 * this.scene.matter.world.getDelta(), projectileSpeed: 40, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet3", chFrame: 0};
-    this.weapons[2] = {name: "BulletExplosive", damage: 14, knockback: 1 / this.scene.matter.world.getDelta(),  spread: 0.1, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.25, energyRecoverProportion: 0, wSprite: "bullet2", chFrame: 0};
-    this.weapons[3] = {name: "BulletBounce", damage: 10, bounce: 3, spread: 0.075, fireRate: 7 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet1", chFrame: 0};
+    this.weapons[2] = {name: "BulletExplosive", damage: 14, knockback: 2 / this.scene.matter.world.getDelta(),  spread: 0.1, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.25, energyRecoverProportion: 0, wSprite: "bullet2", chFrame: 0};
+    this.weapons[3] = {name: "BulletBounce", damage: 10, bounce: 3, spread: 0.075, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet1", chFrame: 0};
     this.weapons[4] = {name: "BombNormal", damage: 40, area: 45, knockback:  2 / this.scene.matter.world.getDelta(), fireRate: 25 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
     this.weapons[5] = {name: "BombMegaton", damage: 95, area: 68, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
-    this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 1};
-    this.weapons[7] = {name: "MissileMulti", damage: 10, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.6, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 3000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 1};
-    this.weapons[8] = {name: "Lasser", damage: 0.2, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 0.004, energyRecoverProportion: 0, wSprite: "", chFrame: 0};
+    this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 2};
+    this.weapons[7] = {name: "MissileMulti", damage: 10, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.6, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 3000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 2};
+    this.weapons[8] = {name: "Lasser", damage: 0.82, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 0.004, energyRecoverProportion: 0, wSprite: "", chFrame: 3};
   }
 
   initializeFire(){
@@ -697,26 +714,26 @@ export default class Player {
     this.advance32Y += (this.sprite.body.position.y - this.earlyPos.y);
     if(this.advance32X > 32){
       const layersX = Math.floor(this.advance32X/32);
-      this.xFrontiers(1, 25, layersX);
+      this.updateBoundryCounterX++;
       this.advance32X = this.advance32X - 32*layersX;
       //this.scene.enemyController.updatePlayerPosition();
       newPlayerPos = true
     }else if (this.advance32X < -32) {
       const layersX = Math.floor(Math.abs(this.advance32X/32));
-      this.xFrontiers(-1, 25, layersX);
+      this.updateBoundryCounterX--;
       this.advance32X = this.advance32X + 32*layersX;
       //this.scene.enemyController.updatePlayerPosition();
       newPlayerPos = true
     }
     if(this.advance32Y > 32){
       const layersY = Math.floor(this.advance32Y/32);
-      this.yFrontiers(1, 25, layersY);
+      this.updateBoundryCounterY++;
       this.advance32Y = this.advance32Y - 32*layersY;
       //if(!newPlayerPos)
         //this.scene.enemyController.updatePlayerPosition();
     }else if (this.advance32Y < -32) {
       const layersY = Math.floor(Math.abs(this.advance32Y/32));
-      this.yFrontiers(-1, 25, layersY);
+      this.updateBoundryCounterY--;
       this.advance32Y = this.advance32Y + 32*layersY;
       //if(!newPlayerPos)
         //this.scene.enemyController.updatePlayerPosition();
@@ -725,7 +742,7 @@ export default class Player {
     this.earlyPos.y = this.sprite.body.position.y;
     //BOUNDRY
   }
-  xFrontiers(dir, boundry, layers = 1){
+  xFrontiers(dir, boundry){
     const xBoundry = boundry*dir;
     const yBoundry = boundry + 1; //7+2
     const xNormalized = Math.floor(this.sprite.x/32);
@@ -733,32 +750,37 @@ export default class Player {
     var bodyWAdd;
     var bodyWRemove;
 
-    for(var i=0; i<layers; i++){
-      const xAdd = xNormalized + xBoundry + i*dir;
-      const xRemove = xNormalized - xBoundry - 2*dir - i*dir;
-      for(var j=-yBoundry; j<yBoundry+1; j++){
-        bodyWAdd = this.scene.tileBodyMatrix[xAdd][yNormalized +j];
-        bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized +j];
-        if(bodyWAdd != undefined && !bodyWAdd.active){ //9-1 bugfix ya que el bounding box que elimina tiles es 2 casillas mas grande
-          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
-          bodyWAdd.active = true;
-        }
-        if(bodyWRemove != undefined && bodyWRemove.active){
-          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-          bodyWRemove.active = false;
-        }
+    const xAdd = xNormalized + xBoundry;
+    const xRemove = xNormalized - xBoundry - 2*dir;
+    for(var j=-yBoundry; j<yBoundry+1; j++){
+      bodyWAdd = this.scene.tileBodyMatrix[xAdd][yNormalized +j];
+      bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized +j];
+      if(bodyWAdd != undefined && !bodyWAdd.active){ //9-1 bugfix ya que el bounding box que elimina tiles es 2 casillas mas grande
+        //this.scene.game.transferBody(this.scene.matter.world.localWorld.bodies, bodyWAdd.body)
+        //Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
+        this.scene.matter.world.localWorld.bodies.push(bodyWAdd.body);
+        bodyWAdd.active = true;
       }
-      bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  - yBoundry - 1];
       if(bodyWRemove != undefined && bodyWRemove.active){
-        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        bodyWRemove.active = false;
-      }
-      bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  + yBoundry + 1];
-      if(bodyWRemove != undefined && bodyWRemove.active){
-        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
         bodyWRemove.active = false;
       }
     }
+    bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  - yBoundry - 1];
+    if(bodyWRemove != undefined && bodyWRemove.active){
+      //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+      this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+      bodyWRemove.active = false;
+    }
+    bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  + yBoundry + 1];
+    if(bodyWRemove != undefined && bodyWRemove.active){
+      //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+      this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+      bodyWRemove.active = false;
+    }
+    bodyWAdd = undefined;
+    bodyWRemove = undefined;
   }
   yFrontiers(dir, boundry, layers = 1){
     const xBoundry = boundry + 1; //7+2
@@ -769,31 +791,35 @@ export default class Player {
     var bodyWRemove;
 
     for(var i=-xBoundry; i<xBoundry+1; i++){
-      const yAdd = yNormalized + yBoundry + j*dir;
-      const yRemove = yNormalized - yBoundry - 2*dir - j*dir;
-      for(var j=0; j<layers; j++){
-        bodyWAdd = this.scene.tileBodyMatrix[xNormalized + i][yAdd];
-        bodyWRemove = this.scene.tileBodyMatrix[xNormalized + i][yRemove];
-        if(bodyWAdd != null && !bodyWAdd.active){
-          Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
-          bodyWAdd.active = true;
-        }
-        if(bodyWRemove != null && bodyWRemove.active){
-          Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-          bodyWRemove.active = false;
-        }
+      const yAdd = yNormalized + yBoundry;
+      const yRemove = yNormalized - yBoundry - 2*dir;
+      bodyWAdd = this.scene.tileBodyMatrix[xNormalized + i][yAdd];
+      bodyWRemove = this.scene.tileBodyMatrix[xNormalized + i][yRemove];
+      if(bodyWAdd != null && !bodyWAdd.active){
+        //Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
+        this.scene.matter.world.localWorld.bodies.push(bodyWAdd.body);
+        bodyWAdd.active = true;
+      }
+      if(bodyWRemove != null && bodyWRemove.active){
+        //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+        bodyWRemove.active = false;
       }
       bodyWRemove = this.scene.tileBodyMatrix[xNormalized - xBoundry - 1][yRemove];
       if(bodyWRemove != null && bodyWRemove.active){
-        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
         bodyWRemove.active = false;
       }
       bodyWRemove = this.scene.tileBodyMatrix[xNormalized + xBoundry + 1][yRemove];
       if(bodyWRemove != null && bodyWRemove.active){
-        Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
+        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
         bodyWRemove.active = false;
       }
     }
+    bodyWAdd = undefined;
+    bodyWRemove = undefined;
   }
 
 }

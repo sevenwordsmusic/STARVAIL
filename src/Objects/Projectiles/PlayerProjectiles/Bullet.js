@@ -27,35 +27,45 @@ export default class Bullet extends Projectile {
   }
 
   //se para el update y si se trata de un enemigo, este recibe daño
-  itemExpire(proj){
+  itemExpire(){
     this.scene.events.off("update", this.update, this);
 
-     //AUDIO
-      if(this.scene.game.player.weaponCounter==0){
-        Audio.play3DinstanceRnd(this, 0);
-      }else{
-        Audio.play3DinstanceRnd(this, 1);
-      }
-      //
-    if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)
+    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "bulletImpact4");
+    bombExplosion.setDepth(10).setScale(0.9) //42
+    bombExplosion.angle = Phaser.Math.Between(0,360);
+
+    if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy){
       this.target.colSpecialObj.damage(this.dmg, this.pVelocity);
 
-    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
-    bombExplosion.setDepth(10).setScale(1) //42
+      if(this.target.colSpecialObj.sprite.body !== undefined && this.target.colSpecialObj.sprite !== undefined && this.target.colSpecialObj !== undefined){
+        bombExplosion.x += (this.target.colSpecialObj.sprite.body.velocity.x*12);
+        bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*12);
+      }
+      //AUDIO ENEMIGO DAÑADO
+        Audio.play3DinstanceRnd(this,36);
+      //
+    }else{
+      //AUDIO
+        Audio.play3DinstanceRnd(this, 0);
+      //
+    }
+
     //al completar su animacion de explsion, dicha instancia se autodestruye
     bombExplosion.on('animationcomplete', function(){
       bombExplosion.destroy();
     });
     //animacion de explosion
-    bombExplosion.anims.play('explosion', true);
+    bombExplosion.anims.play('bulletImpact4', true);
 
-    super.itemExpire(proj);
+    super.itemExpire();
   }
 
   //update (al no tratarse de un cuerpo fisico, las posiciones nuevas se calculan "a mano")
   update(time, delta){
-    this.sprite.x += (this.pVelocity.x * delta);
-    this.sprite.y += (this.pVelocity.y * delta);
+    if(this.sprite != undefined){
+      this.sprite.x += (this.pVelocity.x * delta);
+      this.sprite.y += (this.pVelocity.y * delta);
+    }
   }
 
   //funcion especial para balas dirigidas hacia enemigos que podrían morir antes de que estas lleguen
@@ -70,7 +80,7 @@ export default class Bullet extends Projectile {
       this.distAcumulator += bulletDistance;
       this.timer.reset({
         delay: this.expTime,
-        callback: () => (this.itemExpire(this))
+        callback: () => (this.itemExpire())
       });
     },this);
     //mejorar esto si las balas hacen mucho daño

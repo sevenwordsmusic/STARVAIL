@@ -35,6 +35,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('hero', 'assets/Sprites/Enemies/DroidHero/Blue Sword Run.png', { frameWidth: 93, frameHeight: 63 });
     this.load.spritesheet('mecha', 'assets/Sprites/Enemies/DroidMecha/mechNoGun.png', { frameWidth: 42, frameHeight: 60 }); //la cosa se pone interesante!
     this.load.spritesheet('gun', 'assets/Sprites/Enemies/gun.png', { frameWidth: 37, frameHeight: 7 });
+    this.load.spritesheet('sith', 'assets/Sprites/Enemies/assassin/sithIdle.png', { frameWidth: 40, frameHeight: 30 });
 
     this.load.spritesheet('zapperAir', 'assets/Sprites/Enemies/DroidZapperAir/dronmove.png', { frameWidth: 91, frameHeight: 60 });
     this.load.spritesheet('bomb', 'assets/Sprites/Enemies/DroidBomb/Homing.png', { frameWidth: 32, frameHeight: 32 });
@@ -52,7 +53,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image("tilesMain", "assets/Tilesets/main_layer.png");
     this.load.image("tilesSecond", "assets/Tilesets/second_layer.png");
     //this.load.tilemapTiledJSON("map", "assets/Mapas/Level1.json");
-    this.load.tilemapTiledJSON("map", "assets/Mapas/Level1Simple.json");
+    this.load.tilemapTiledJSON("map", "assets/Mapas/Level1.json");
 
 
     this.load.image('bullet1', 'assets/Sprites/Bullet/bullet1.png');
@@ -61,6 +62,10 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('missile', 'assets/Sprites/Bullet/missile.png');
     this.load.spritesheet('laser', 'assets/Sprites/Bullet/laser.png', { frameWidth: 18, frameHeight: 600 });
     this.load.spritesheet('explodingBomb', 'assets/Sprites/Bomb/bomb_ss.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('bulletImpact', 'assets/Sprites/Impacts/expansive_100x100px.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('bulletImpact2', 'assets/Sprites/Impacts/big_directional_100x100px.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('bulletImpact3', 'assets/Sprites/Impacts/fast_100x100px.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('bulletImpact4', 'assets/Sprites/Impacts/full_100x100px.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
     this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
 
@@ -198,6 +203,31 @@ export default class SceneLoading extends Phaser.Scene {
             key: 'explosion2',
             frames: this.anims.generateFrameNumbers('explosion2', { start: 0, end: 6 }),
             frameRate: 10,
+            repeat: 0
+        });
+
+    this.anims.create({
+            key: 'bulletImpact',
+            frames: this.anims.generateFrameNumbers('bulletImpact', { start: 0, end: 13 }),
+            frameRate: 1000,
+            repeat: 0
+        });
+    this.anims.create({
+            key: 'bulletImpact2',
+            frames: this.anims.generateFrameNumbers('bulletImpact2', { start: 0, end: 27 }),
+            frameRate: 1000,
+            repeat: 0
+        });
+    this.anims.create({
+            key: 'bulletImpact3',
+            frames: this.anims.generateFrameNumbers('bulletImpact3', { start: 0, end: 15 }),
+            frameRate: 1000,
+            repeat: 0
+        });
+    this.anims.create({
+            key: 'bulletImpact4',
+            frames: this.anims.generateFrameNumbers('bulletImpact4', { start: 0, end: 26 }),
+            frameRate: 1000,
             repeat: 0
         });
 

@@ -30,6 +30,9 @@ export default class EnergyBall extends Projectile {
       callback: this.onSensorCollide,
       context: this
     });
+    //AUDIO
+      //Audio.play3Dinstance(this,53);
+    //
   }
 
   onSensorCollide({ bodyA, bodyB, pair }) {
@@ -60,5 +63,11 @@ export default class EnergyBall extends Projectile {
     //animacion de explosion
     bombExplosion.anims.play('explosion', true);
     super.itemExpire(proj);
+  }
+  distanceToPlayer(){
+    if(this.sprite.body != undefined)
+      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    else
+      return 1000;    //ARREGLAR ESTO
   }
 }

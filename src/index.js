@@ -11,6 +11,7 @@ window.addEventListener("beforeunload", function (e) {
 import Player from "./PlayerStuff/Player.js";
 import SceneLoading from "./Scenes/SceneLoading.js";
 import Audio from "./Audio.js";
+import Chatter from "./Chatter.js";
 import SceneTest_1 from "./Scenes/SceneTest_1.js";
 import SceneTest_2 from "./Scenes/SceneTest_2.js";
 import Joystick_test from "./Scenes/Joystick_test.js";
@@ -37,6 +38,7 @@ var config = {
   //escenas principales
   scene: [
     Audio,
+    Chatter,
     SceneLoading,
     SceneTest_1,
     Joystick_test
@@ -73,17 +75,25 @@ game.energyCostJetPropulsion = 5;     //energia de coste de propulsion, se gasta
 
 game.airVelocityFraction = 0.3;   //Creo que no se usa
 
+game.moonPos = new Phaser.Math.Vector2(480, 100);
 game.currentBgAnimation = 0;
 game.transitionToScene = function(scene, keyNext, sceneNext){
   var SceneCurrentClass = eval(scene.constructor.name);
   var SceneNextClass = sceneNext;
   scene.cameras.main.once('camerafadeoutcomplete', function (camera) {
-    console.log(scene.scene.key);
+    //console.log(scene.scene.key);
+    scene.input.keyboard.shutdown();
+    scene.input.shutdown();
     scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());
     scene.game.scene.add('', new SceneNextClass(keyNext + ((SceneNextClass.getNumber()+ 1)%5)), true);
   }, scene);
   scene.cameras.main.fadeOut(1000);
 }
+/*game.transferComposite = Phaser.Physics.Matter.Matter.Composite.create();
+game.transferBody = function(bodies1, bodies2, body){
+  bodies1.push(body);
+  bodies2.splice(bodies2.indexOf(body), 1);
+}*/
 game.bulletInteracBodies = [];
 game.enemyBodies = [];
 
@@ -96,5 +106,6 @@ function mobileTabletChek() {
 };
 game.onPC = !mobileTabletChek();
 console.log("onPC:  " +game.onPC);
+
 
 window.gameDebug = game;

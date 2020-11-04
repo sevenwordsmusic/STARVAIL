@@ -22,4 +22,7 @@ export default class EnemyGun {
   shoot(){
     new EnergyBall(this.scene, this.sprite.x + this.aimVector.x*70, this.sprite.y + this.aimVector.y*70, this.dmg, 0.1, 15, this.aimVector, 2000);
   }
+  destroy(){
+    this.sprite.destroy();
+  }
 }

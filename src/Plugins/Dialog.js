@@ -43,7 +43,9 @@ export default class Dialog {
                 bottom: 20,
                 icon: 10,
                 text: 10,
-            }
+            },
+
+            currentSpeaker: undefined
 
         })
             .setOrigin(0)
@@ -57,7 +59,18 @@ export default class Dialog {
                 if (this.isTyping) {
                     this.stop(true);
                 } else {
-                    this.typeNextPage();
+                    if(this.isLastPage){
+                      this.setVisible(false);
+                      for(var i=0; i<this.children.length; i++){
+                        this.children[i].setVisible(false);
+                      }
+                      if(this.currentSpeaker !== undefined){
+                        this.currentSpeaker.finishedDialog();
+                        this.currentSpeaker = undefined;
+                      }
+                    }
+                    else
+                      this.typeNextPage();
                 }
             }, this.textBox)
             .on('pageend', function () {
@@ -94,6 +107,7 @@ export default class Dialog {
 
         this.textBox.setScrollFactor(0).setDepth(101);
         this.textBox.playerInteractable = true;
+        this.hideDialogBox();
     }
 
      getBuiltInText (wrapWidth, fixedWidth, fixedHeight) {
@@ -119,6 +133,24 @@ export default class Dialog {
           },
           maxLines: 3
         })
+      }
+
+      showDialogBox(){
+        this.textBox.setVisible(true);
+        for(var i=0; i<this.textBox.children.length; i++){
+          this.textBox.children[i].setVisible(true);
+        }
+      }
+      hideDialogBox(){
+        this.textBox.setVisible(false);
+        for(var i=0; i<this.textBox.children.length; i++){
+          this.textBox.children[i].setVisible(false);
+        }
+      }
+      setCurrentSpeaker(speaker){
+        if(this.textBox.currentSpeaker !== undefined)
+          this.textBox.currentSpeaker.isTalking = false;
+        this.textBox.currentSpeaker = speaker;
       }
 
 

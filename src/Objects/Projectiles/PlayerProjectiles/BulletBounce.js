@@ -29,32 +29,51 @@ export default class BulletBounce extends Projectile {
     this.scene.events.on("update", this.update, this); //para que se ejecute el udate
   }
   //se para el update y si se trata de un enemigo, este recibe daño
-  itemExpire(proj){
+  itemExpire(){
     this.scene.events.off("update", this.update, this);
 
-    //AUDIO_bounce
-    if(this.bounce>0){
-      Audio.play3DinstanceRnd(this, 3);
-      Audio.play3DinstanceRnd(this, 0);
-    }else if(this.bounce==0){
-      Audio.play3DinstanceRnd(this, 1);
-    }
-    //
-    if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy)
+
+    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "bulletImpact");
+    bombExplosion.setDepth(10).setFlipX(true) //42
+    if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy){
       this.target.colSpecialObj.damage(this.dmg, this.pVelocity);
 
-    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "exprosion");
-    bombExplosion.setDepth(10).setScale(1) //42
+      if(this.target.colSpecialObj.sprite.body !== undefined && this.target.colSpecialObj.sprite !== undefined && this.target.colSpecialObj !== undefined){
+        bombExplosion.x += (this.target.colSpecialObj.sprite.body.velocity.x*12);
+        bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*12);
+      }
+
+      //AUDIO ENEMIGO DAÑADO
+      if(this.bounce>0){
+        Audio.play3DinstanceRnd(this, 3);
+        Audio.play3DinstanceRnd(this,37);
+      }else if(this.bounce==0){
+        Audio.play3DinstanceRnd(this,38);
+      }
+      //
+    }else{
+      //AUDIO
+      if(this.bounce>0){
+        Audio.play3DinstanceRnd(this, 3);
+        Audio.play3DinstanceRnd(this, 0);
+      }else if(this.bounce==0){
+        Audio.play3DinstanceRnd(this, 1);
+      }
+      //
+    }
+
+
     //al completar su animacion de explsion, dicha instancia se autodestruye
     bombExplosion.on('animationcomplete', function(){
       bombExplosion.destroy();
     });
 
     //animacion de explosion
-    bombExplosion.anims.play('explosion', true);
+    bombExplosion.anims.play('bulletImpact', true);
     const xAux = this.sprite.x;
     const yAux = this.sprite.y;
-    super.itemExpire(proj);
+    const spriteTextureAux = this.sprite.texture;
+    super.itemExpire();
 
 
     if(this.bounce > 0 && this.target.body != undefined){
@@ -62,26 +81,34 @@ export default class BulletBounce extends Projectile {
       const vertices = this.target.body.parts[this.target.part].vertices;
       const currentVertex = vertices[this.target.vertex];
       const nextVertex = vertices[(this.target.vertex+1) % vertices.length];
-      var normalVector = new Phaser.Math.Vector2(nextVertex.y - currentVertex.y, currentVertex.x - nextVertex.x );
-      normalVector.normalize();
-      const randNormalAngle = normalVector.angle() + Phaser.Math.FloatBetween(- Math.PI/3, Math.PI/3);
-      normalVector.x = Math.cos(randNormalAngle);
-      normalVector.y = Math.sin(randNormalAngle);
+      const normalVector = new Phaser.Math.Vector2(currentVertex.x - nextVertex.x , currentVertex.y - nextVertex.y );
+      const newAngle = 2*normalVector.angle() - this.pVelocity.angle();
+      const directionVector = new Phaser.Math.Vector2(Math.cos(newAngle), Math.sin(newAngle) );
+      bombExplosion.angle = newAngle * 180/Math.PI + 180;
 
-      var bulletCollision = SuperiorQuery.superiorRayCastBounce(xAux + normalVector.x * 48, yAux + normalVector.y * 48, normalVector, 14 ,this.scene.bulletInteracBodies);
+      /*const randNormalAngle = reflectionVector.angle() + Phaser.Math.FloatBetween(- Math.PI/3, Math.PI/3);
+      normalVector.x = Math.cos(randNormalAngle);
+      normalVector.y = Math.sin(randNormalAngle);*/
+
+      var bulletCollision = SuperiorQuery.superiorRayCastBounce(xAux + directionVector.x * 48, yAux + directionVector.y * 48, directionVector, 14 ,this.scene.bulletInteracBodies);
       if(bulletCollision.collided){
-        var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - (xAux + normalVector.x * 14),2) + Math.pow(bulletCollision.colY - (yAux + normalVector.y * 14),2));
-        return new BulletBounce(this.scene, xAux + normalVector.x * 14, yAux + normalVector.y * 14, this.sprite.texture, this.dmg, this.bounce, this.speed, normalVector, Math.min(1000,(bulletDistance * this.scene.matter.world.getDelta())/this.speed), bulletCollision, bulletDistance);
+        var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - (xAux + directionVector.x * 14),2) + Math.pow(bulletCollision.colY - (yAux + directionVector.y * 14),2));
+        return new BulletBounce(this.scene, xAux + directionVector.x * 14, yAux + directionVector.y * 14, spriteTextureAux, this.dmg, this.bounce, this.speed, directionVector, Math.min(1000,(bulletDistance * this.scene.matter.world.getDelta())/this.speed), bulletCollision, bulletDistance);
       }else{
-        return new BulletBounce(this.scene, xAux + normalVector.x * 14, yAux + normalVector.y * 14, this.sprite.texture, this.dmg, this.bounce, this.speed, normalVector, 1000, bulletCollision, -1);
+        return new BulletBounce(this.scene, xAux + directionVector.x * 14, yAux + directionVector.y * 14, spriteTextureAux, this.dmg, this.bounce, this.speed, directionVector, 1000, bulletCollision, -1);
       }
+    }else{
+      bombExplosion.angle = this.pVelocity.angle() * 180/Math.PI;
     }
+
   }
 
   //update (al no tratarse de un cuerpo fisico, las posiciones nuevas se calculan "a mano")
   update(time, delta){
-    this.sprite.x += (this.pVelocity.x * delta);
-    this.sprite.y += (this.pVelocity.y * delta);
+    if(this.sprite != undefined){
+      this.sprite.x += (this.pVelocity.x * delta);
+      this.sprite.y += (this.pVelocity.y * delta);
+    }
   }
 
   //funcion especial para balas dirigidas hacia enemigos que podrían morir antes de que estas lleguen
@@ -96,7 +123,7 @@ export default class BulletBounce extends Projectile {
       this.distAcumulator += bulletDistance;
       this.timer.reset({
         delay: this.expTime,
-        callback: () => (this.itemExpire(this))
+        callback: () => (this.itemExpire())
       });
     },this);
     //mejorar esto si las balas hacen mucho daño
