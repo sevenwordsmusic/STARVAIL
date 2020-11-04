@@ -109,4 +109,4 @@ game.onPC = !mobileTabletChek();
 console.log("onPC:  " +game.onPC);
 
 
-//window.gameDebug = game;
+window.gameDebug = game;

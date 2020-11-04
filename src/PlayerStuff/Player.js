@@ -189,6 +189,11 @@ export default class Player {
       callback: this.onSensorCollide,
       context: this
     });
+    scene.matterCollision.addOnCollideStart({
+      objectA: this.mainBody,
+      callback: this.onBodyCollide,
+      context: this
+    });
 
     this.closestEnemy = undefined;
     this.initPosibleClosestEnemy();
@@ -242,6 +247,14 @@ export default class Player {
       this.isTouching.left = true;
       this.leftMultiply = 0;
       if (pair.separation > 2) { this.sprite.x += 0.1 }
+    }
+  }
+
+  onBodyCollide({ gameObjectB }){
+    if (!gameObjectB || !(gameObjectB instanceof Phaser.Tilemaps.Tile)) return;
+    const tile = gameObjectB;
+    if (tile.properties.Lethal) {
+      this.playerDamageKnockback(20, 0.2, new Phaser.Math.Vector2(-this.sprite.body.velocity.x, -this.sprite.body.velocity.y));
     }
   }
 

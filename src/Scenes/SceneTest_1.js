@@ -50,8 +50,8 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     //this.playerStartX = 128;
     //this.playerStartY = 2560;
-    this.playerStartX = 416;
-    this.playerStartY = 2460;
+    this.playerStartX = 704;
+    this.playerStartY = 4512;
 
 
     new Dialog(this, 50, 400, false,5000, {
@@ -66,8 +66,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     //Camara.
     cam = this.cameras.main;
     cam.setBackgroundColor('#dddddd');
-    this.matter.world.setBounds(0, -500, 2600, 6000);
-    cam.setBounds(0, -500, 10000, 10000);/*
+    this.matter.world.setBounds(0, -500, 4000, 6000);
+    cam.setBounds(0, -500, 4000, 6000);/*
     this.matter.world.setBounds(0, -500, 2900, 2800);
     cam.setBounds(0, -500, 2880, 2784);*/
 
@@ -90,30 +90,36 @@ export default class SceneTest_1 extends Phaser.Scene {
     },this);
 
     //Inicializacion y creacion de mapa de tiles.
-    const map = this.make.tilemap({ key: "map" });
-    const tileset1 = map.addTilesetImage("background_layer", "tilesBackgorund", 32, 32, 0, 0);
-    const tileset2 = map.addTilesetImage("front_layer", "tilesFront", 32, 32, 0, 0);
-    const tileset3 = map.addTilesetImage("main_layer", "tilesMain", 32, 32, 0, 0);
-    const tileset4 = map.addTilesetImage("second_layer", "tilesSecond", 32, 32, 0, 0);
+    const map = this.make.tilemap({ key: "map1" });
+    const tileset1 = map.addTilesetImage("background_layer", "tilesBackgorund1", 32, 32, 0, 0);
+    const tileset2 = map.addTilesetImage("front_layer", "tilesFront1", 32, 32, 0, 0);
+    const tileset3 = map.addTilesetImage("main_layer", "tilesMain1", 32, 32, 0, 0);
+    const tileset4 = map.addTilesetImage("second_layer", "tilesSecond1", 32, 32, 0, 0);
+    const tileset5 = map.addTilesetImage("animated_layer", "tilesAnimated", 32, 32, 0, 0);
     //Capas de tiles.
 
-    const mainlayer = map.createDynamicLayer("Main_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
-    console.log(mainlayer);
+    const mainlayer = map.createDynamicLayer("Main_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     mainlayer.depth = -5;
-    const frontlayer = map.createDynamicLayer("Front_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    const lethallayer = map.createDynamicLayer("Lethal_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    lethallayer.depth = -10;
+    const frontlayer = map.createDynamicLayer("Front_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     frontlayer.depth = 25;
-    const secondlayer = map.createDynamicLayer("Second_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    const secondlayer = map.createDynamicLayer("Second_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     secondlayer.depth = -25;
-    const background = map.createDynamicLayer("Background_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    const background = map.createDynamicLayer("Background_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     background.depth = -30;
     //Colisiones de las capas.
     mainlayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(mainlayer);
+
+    lethallayer.setCollisionByProperty({ Collides: true });
+    this.matter.world.convertTilemapLayer(lethallayer);
+
     //Sistema de cargado dinamico de colliders
     var tileBodyMatrix = [];
-    for (var i = 0; i < 120; i++) {
+    for (var i = 0; i < 145; i++) {
       tileBodyMatrix[i] = [];
-      for (var j = 0; j < 150; j++) {
+      for (var j = 0; j < 155; j++) {
         tileBodyMatrix[i][j] = undefined;
       }
     }
@@ -137,7 +143,7 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     this.tileBodyMatrix = new Proxy(tileBodyMatrix, {
       get(target, prop) {
-        return target[Math.min(Math.max(0, prop),tileBodyMatrix[0].length-1)];
+        return target[Math.max(0, prop)];
       }
     });
     this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
@@ -178,7 +184,7 @@ export default class SceneTest_1 extends Phaser.Scene {
       }
     }
 
-    /*//inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
+    //inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
     map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
         spawnEnemy(point.name, this, point.x, point.y);
     });
@@ -218,14 +224,14 @@ export default class SceneTest_1 extends Phaser.Scene {
 
           }
         }
-    });*/
+    });
 
 
     map.getObjectLayer("Chest_Layer").objects.forEach(point => {
       new InteractableEnergyOnce(this, point.x, point.y);
     });
     new Player(this, this.playerStartX, this.playerStartY);
-    new Mentor(this, this.playerStartX + 400, this.playerStartY)
+    //new Mentor(this, this.playerStartX + 400, this.playerStartY)
 
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
@@ -287,8 +293,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     console.log(this.matter.world.localWorld.bodies.length);
     console.log("   ");*/
 
-    this.maxMemory = Math.max(this.maxMemory, Math.round((performance.memory.usedJSHeapSize/1024/1024)));
-    console.log(this.maxMemory + "    " + Math.round((performance.memory.usedJSHeapSize/1024/1024)));
+    /*this.maxMemory = Math.max(this.maxMemory, Math.round((performance.memory.usedJSHeapSize/1024/1024)));
+    console.log(this.maxMemory + "    " + Math.round((performance.memory.usedJSHeapSize/1024/1024)));*/
     /*const usedHeap = performance.memory.usedJSHeapSize/1024/1024;
     if(usedHeap > 90){
       console.log("USING TOO MUCH MEMORY:  " + usedHeap);
