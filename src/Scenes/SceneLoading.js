@@ -53,7 +53,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image("tilesMain", "assets/Tilesets/main_layer.png");
     this.load.image("tilesSecond", "assets/Tilesets/second_layer.png");
     //this.load.tilemapTiledJSON("map", "assets/Mapas/Level1.json");
-    this.load.tilemapTiledJSON("map", "assets/Mapas/Level1.json");
+    this.load.tilemapTiledJSON("map", "assets/Mapas/Tutorial.json");
 
 
     this.load.image('bullet1', 'assets/Sprites/Bullet/bullet1.png');

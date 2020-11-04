@@ -748,6 +748,7 @@ export default class Audio extends Phaser.Scene {
         this.bgmIfWeapon[4].play();*/
         //THE LOAD.
         Audio.load = this;
+        console.log(this);
         console.log("AUDIO LOADED: everything went better than expected :D !!!");
         //Let's go motherfuckers~
         this.scene.start("Chatter");

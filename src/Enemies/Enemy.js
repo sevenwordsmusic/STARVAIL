@@ -13,6 +13,8 @@ export default class Enemy extends FiniteStateMachine{
     this.hp = hp;
     this.dead = false;
 
+    this.encounterNPC = undefined;
+
     this.sprite.body.collisionFilter.group = -1;
     this.adjustedFriction = 10;
     this.knockVector = new Phaser.Math.Vector2(0,0);
@@ -88,8 +90,11 @@ export default class Enemy extends FiniteStateMachine{
     this.dead = true;
     Audio.stingerKilling=true;
     this.scene.events.emit('noEnemy' + this.currentBodyIndex);
-    this.scene.enemyController.addToRemove(this)
+    this.scene.enemyController.addToRemove(this);
     //AUDIO
     //se emite un evento avisando a las balas que tienen a este enemigo como "target" para que cambien a un target nuevo
+
+    if(this.encounterNPC !== undefined)
+      this.encounterNPC.enemyKilled();
   }
 }

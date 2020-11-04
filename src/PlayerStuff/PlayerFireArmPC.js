@@ -12,7 +12,7 @@ export default class PlayerFireArmPC extends PlayerFireArm{
     this.graphics = this.scene.add.graphics({ fillStyle: { color: 0x666666}});
     this.chLine = new Phaser.Geom.Line(this.sprite.x, this.sprite.y, this.scene.input.activePointer.x + this.cam.scrollX, this.scene.input.activePointer.y + this.cam.scrollY);
     this.crosshairSpr = this.scene.add.sprite(this.scene.input.activePointer.x + this.cam.scrollX, this.scene.input.activePointer.y + this.cam.scrollY, 'crosshair', 0);
-    this.crosshairSpr.setDepth(90);
+    this.crosshairSpr.setDepth(110);
     this.crosshairSpr.tint = 0x666666;
 
     this.scene.events.on("update", this.update, this);  //para que el update funcione

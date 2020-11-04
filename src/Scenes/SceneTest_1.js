@@ -19,6 +19,7 @@ import BombAir from "../Enemies/BombAir.js";
 import GunnerAir from "../Enemies/GunnerAir.js";
 import Dialog from "../Plugins/Dialog.js"
 import Mentor from "../NPCs/Mentor.js"
+import NPC_Droid from "../NPCs/NPC_Droid.js"
 import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
 import LevelEnd from "../Objects/LevelEnd.js";
@@ -50,7 +51,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     //this.playerStartX = 128;
     //this.playerStartY = 2560;
     this.playerStartX = 416;
-    this.playerStartY = 4320;
+    this.playerStartY = 2460;
 
 
     new Dialog(this, 50, 400, false,5000, {
@@ -158,29 +159,22 @@ export default class SceneTest_1 extends Phaser.Scene {
     function spawnEnemy(enemyName, scene, xPos, yPos){
       switch(enemyName){
         case "zapper1":
-          new ZapperGround(scene, xPos, yPos);
-        break;
+          return new ZapperGround(scene, xPos, yPos);
         case "zapper2":
-          new ZapperAir(scene, xPos, yPos);
-        break;
+          return new ZapperAir(scene, xPos, yPos);
         case "sword":
-          new SwordGround(scene, xPos, yPos);
-        break;
+          return new SwordGround(scene, xPos, yPos);
         case "gunner":
-          new GunnerAir(scene, xPos, yPos);
-        break;
+          return new GunnerAir(scene, xPos, yPos);
         case "bomb":
-          new BombAir(scene, xPos, yPos);
-        break;
+          return new BombAir(scene, xPos, yPos);
         case "mecha":
-          new Mecha(scene, xPos, yPos);
-        break;
+          return new Mecha(scene, xPos, yPos);
         case "sith":
-          new Sith(scene, xPos, yPos);
-        break;
+          return new Sith(scene, xPos, yPos);
         default:
           console.log("Enemy does not exist");
-        break;
+          return null;
       }
     }
 
@@ -188,6 +182,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
         spawnEnemy(point.name, this, point.x, point.y);
     });
+
+    this.encounterNPC = new NPC_Droid(this, this.playerStartX+400, this.playerStartY-20);
 
     map.getObjectLayer("EnemySpawn_Layer").objects.forEach(area => {
         var enemiesToSpawnArray;
@@ -212,21 +208,29 @@ export default class SceneTest_1 extends Phaser.Scene {
           randomSpawner = Math.random();
           if(randomSpawner <= enemiesToSpawnArray[currentEnemy].probability){
             enemiesToSpawn--;
-            spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
+            if(area.properties[1].value){
+              var enemyAux = spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
+              enemyAux.encounterNPC = this.encounterNPC;
+              this.encounterNPC.enemiesLeft++;
+            }else {
+              spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
+            }
+
           }
         }
-    });
+    });*/
 
 
     map.getObjectLayer("Chest_Layer").objects.forEach(point => {
       new InteractableEnergyOnce(this, point.x, point.y);
-    });*/
+    });
     new Player(this, this.playerStartX, this.playerStartY);
+    new Mentor(this, this.playerStartX + 400, this.playerStartY)
 
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
-    new Mentor(this, this.playerStartX+400, this.playerStartY-20);
-    cam.setZoom(0.5);
+    //new Mentor(this, this.playerStartX+400, this.playerStartY-20);
+    //cam.setZoom(0.5);
 
     //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)
     new LevelEnd(this, 300, 4000, 'star', 'testsec', SceneTest_2);

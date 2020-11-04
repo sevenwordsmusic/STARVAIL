@@ -2,6 +2,7 @@
 
 //DESTRUCTOR GLOBAL AL SALIR/REFRESCAR
 window.addEventListener("beforeunload", function (e) {
+  game.cache.destroy();
   game.destroy(true, true);
   localStorage.clear();
   sessionStorage.clear();
@@ -32,7 +33,7 @@ var config = {
     default: 'matter',
     matter: {
       gravity: { y: 0.98 },
-      debug: true
+      debug: false
     }
   },
   //escenas principales
@@ -108,4 +109,4 @@ game.onPC = !mobileTabletChek();
 console.log("onPC:  " +game.onPC);
 
 
-window.gameDebug = game;
+//window.gameDebug = game;

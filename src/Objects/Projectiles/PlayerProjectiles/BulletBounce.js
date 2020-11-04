@@ -115,6 +115,7 @@ export default class BulletBounce extends Projectile {
   prepareBullet(index, x, y, targetX, targetY, speed){
     //evento especial que espera a ver si el target desaparece y recalcula la nueva collision de la bala
     this.scene.events.once('noEnemy' + index, function(){
+      if(this.sprite == undefined)return;
       var auxDir = new Phaser.Math.Vector2(this.pVelocity.x, this.pVelocity.y);
       auxDir.normalize();
       this.target = SuperiorQuery.superiorRayCastBounce(x, y, auxDir, 14 ,this.scene.bulletInteracBodies);

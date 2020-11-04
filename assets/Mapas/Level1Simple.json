@@ -102,7 +102,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -125,13 +125,18 @@
                          "name":"countMin",
                          "type":"int",
                          "value":3
+                        }, 
+                        {
+                         "name":"encounter",
+                         "type":"bool",
+                         "value":true
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":190.666666666667,
-                 "x":1923,
-                 "y":4375.66666666667
+                 "x":1010.33333333333,
+                 "y":4211.66666666667
                 }],
          "opacity":1,
          "type":"objectgroup",

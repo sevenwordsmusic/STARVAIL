@@ -108,14 +108,15 @@ export default class Megaton extends Projectile {
     //animacion de explosion
     bombExplosion.anims.play('explosion', true);
 
+    this.mainBody = undefined;
+    this.sensor = undefined;
     super.itemExpire();
 
     this.pVelocity = undefined;
-    this.mainBody = undefined;
-    this.sensor = undefined;
     this.bombArmed1 = undefined;
     this.bombArmed2 = undefined;
     this.sfx = undefined;
+    this.scene = undefined
   }
 
   damageEnemiesArea(){

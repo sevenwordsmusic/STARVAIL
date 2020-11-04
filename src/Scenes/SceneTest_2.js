@@ -18,7 +18,6 @@ import ZapperAir from "../Enemies/ZapperAir.js";
 import BombAir from "../Enemies/BombAir.js";
 import GunnerAir from "../Enemies/GunnerAir.js";
 import Dialog from "../Plugins/Dialog.js"
-import NPC_Test from "../NPCs/NPC_Test.js"
 import Joystick_test from "./Joystick_test.js"
 import LevelEnd from "../Objects/LevelEnd.js";
 import Audio from "../Audio.js";

@@ -3,7 +3,7 @@ import FiniteStateMachine from "../FiniteStateMachine.js"
 import Dialog from "../Plugins/Dialog.js"
 
 //Clase padre de todos los enemigos
-export default class NPC_Test extends FiniteStateMachine{
+export default class NPC_Droid extends FiniteStateMachine{
   constructor(scene, x, y){
     super();
     //inicializacion
@@ -12,23 +12,17 @@ export default class NPC_Test extends FiniteStateMachine{
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
     this.isTalking = false;
+    this.enemiesLeft = 0;
+
+    this.weaponToGive = 5;
 
 
     this.dialogArray = [];
-    this.dialogArray[0] = `[b]D42K-H[/b]
-    Así que [i]finalmente[/i] has venido
-    [b]D42K-H[/b]
-    4ULS82... Sabes que sólo hay una respuesta al dolor que sentimos por el mero hecho de [color=red][b]existir[/b][/color], ¿verdad?
-    [b]D42K-H[/b]
-    Si así es, ya sabes lo que tenemos que hacer.`;
+    this.dialogArray[0] = `Ayuda, Ayuda!!!`;
 
-    this.dialogArray[1] = `[b]asd[/b]
-    blb bla bla bla
-    [b]dasdas[/b]
-    nmrnmortnmfgknmfknflgnmflkmnlfkgmnflkgnmflkmglkf`;
+    this.dialogArray[1] = `Gracias por ayudarme, toma arma`;
 
-    this.dialogArray[2] = `[b]hhhhhhhhhhhhhhhhhhhhhhh[/b]
-    hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh`;
+    this.dialogArray[2] = `...`;
 
     this.currentDialog = -1;
 
@@ -41,7 +35,6 @@ export default class NPC_Test extends FiniteStateMachine{
         this.scene.dialogManager.setCurrentSpeaker(this);
         this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
         this.scene.dialogManager.showDialogBox();
-        this.goTo((this.currentStateId() + 1)%this.numberOfStates());
       }
     }, this);
 
@@ -63,6 +56,16 @@ export default class NPC_Test extends FiniteStateMachine{
   }
   finishedDialog(){
     this.isTalking = false;
-    console.log("finished talking");
+    if(this.currentStateId()==1){
+      this.scene.game.player.recieveWeapon(this.weaponToGive);
+      console.log("arma conseguida");
+      this.goTo(2);
+    }
+  }
+
+  enemyKilled(){
+    this.enemiesLeft --;
+    if(this.enemiesLeft<=0)
+      this.goTo(1);
   }
 }

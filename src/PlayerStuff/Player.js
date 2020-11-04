@@ -91,6 +91,14 @@ export default class Player {
     //this.weapons[2] = {name: "Ejemplo", fireRate: 10 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 1000, energyCost: 10 , chFrame: 1};
     this.weaponCounter = 0;
 
+    this.buttons = [5];
+    for(var i=0; i<5;i++){
+      this.buttons[i] = this.scene.add.sprite(200 + i*100, 450, 'square',0).setScale(0.75).setInteractive();
+      this.buttons[i].setScrollFactor(0).setDepth(100);
+      this.buttons[i].playerInteractable = true;
+    }
+    this.nextButton = 0;
+
     if(this.scene.game.onPC){
       this.cursors = this.scene.input.keyboard.addKeys({
       'up': Phaser.Input.Keyboard.KeyCodes.W,
@@ -145,19 +153,11 @@ export default class Player {
       this.joyStick.thumb.playerInteractable = true;
       this.cursors = this.joyStick.createCursorKeys();
 
-      this.button = this.scene.add.sprite(858, 450, 'weaponsHUD',0).setScale(0.75).setInteractive();
-      this.button.setScrollFactor(0).setDepth(100);
-      this.button.playerInteractable = true;
-
       this.fireArm = new PlayerFireArmMobile(this.scene, x, y);
       this.firingPointer = undefined;
       this.movingPointer = undefined;
 
       //EVENTOS
-      this.button.on('pointerdown', function () {
-        this.changeWeapon();
-      }, this);
-
       //DISPARO
       this.scene.input.on('pointerdown', function(pointer, gameObject){
         if(gameObject[0] != undefined && gameObject[0].playerInteractable === true){
@@ -209,6 +209,8 @@ export default class Player {
       repeat: 0,
       yoyo: true
     })
+
+    this.recieveWeapon(0);
 
     console.log(this);
   }
@@ -614,6 +616,33 @@ export default class Player {
     }
 
     console.log(this.weapons[this.weaponCounter].name);
+  }
+
+  setWeapon(num){
+    this.scene.game.anims.resumeAll();
+    if(this.weaponCounter == 8){
+      this.fireArm.disengageLaser();
+    }
+
+    this.fireCounterHold = 0;
+    this.weaponCounter = num;
+    this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame)
+
+    if(this.weaponCounter == 8 && this.firingPointer!== undefined && this.firingPointer.isDown){
+      this.fireArm.engageLaser();
+    }
+
+    console.log(this.weapons[this.weaponCounter].name);
+  }
+
+  recieveWeapon(id){
+    const aux = this.nextButton;
+    this.buttons[aux].on('pointerdown', function () {
+      this.setWeapon(id);
+    }, this);
+    this.scene.add.image(this.buttons[aux].x, this.buttons[aux].y, this.weapons[id].wSprite,0).setScrollFactor(0).setDepth(101).setScale(2);
+
+    this.nextButton++;
   }
 
   respawn() {
