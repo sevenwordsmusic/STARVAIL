@@ -29,7 +29,7 @@ export default class BulletBounce extends Projectile {
     this.scene.events.on("update", this.update, this); //para que se ejecute el udate
   }
   //se para el update y si se trata de un enemigo, este recibe daño
-  itemExpire(proj){
+  itemExpire(){
     this.scene.events.off("update", this.update, this);
 
 
@@ -72,7 +72,8 @@ export default class BulletBounce extends Projectile {
     bombExplosion.anims.play('bulletImpact', true);
     const xAux = this.sprite.x;
     const yAux = this.sprite.y;
-    super.itemExpire(proj);
+    const spriteTextureAux = this.sprite.texture;
+    super.itemExpire();
 
 
     if(this.bounce > 0 && this.target.body != undefined){
@@ -92,19 +93,22 @@ export default class BulletBounce extends Projectile {
       var bulletCollision = SuperiorQuery.superiorRayCastBounce(xAux + directionVector.x * 48, yAux + directionVector.y * 48, directionVector, 14 ,this.scene.bulletInteracBodies);
       if(bulletCollision.collided){
         var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - (xAux + directionVector.x * 14),2) + Math.pow(bulletCollision.colY - (yAux + directionVector.y * 14),2));
-        return new BulletBounce(this.scene, xAux + directionVector.x * 14, yAux + directionVector.y * 14, this.sprite.texture, this.dmg, this.bounce, this.speed, directionVector, Math.min(1000,(bulletDistance * this.scene.matter.world.getDelta())/this.speed), bulletCollision, bulletDistance);
+        return new BulletBounce(this.scene, xAux + directionVector.x * 14, yAux + directionVector.y * 14, spriteTextureAux, this.dmg, this.bounce, this.speed, directionVector, Math.min(1000,(bulletDistance * this.scene.matter.world.getDelta())/this.speed), bulletCollision, bulletDistance);
       }else{
-        return new BulletBounce(this.scene, xAux + directionVector.x * 14, yAux + directionVector.y * 14, this.sprite.texture, this.dmg, this.bounce, this.speed, directionVector, 1000, bulletCollision, -1);
+        return new BulletBounce(this.scene, xAux + directionVector.x * 14, yAux + directionVector.y * 14, spriteTextureAux, this.dmg, this.bounce, this.speed, directionVector, 1000, bulletCollision, -1);
       }
     }else{
       bombExplosion.angle = this.pVelocity.angle() * 180/Math.PI;
     }
+
   }
 
   //update (al no tratarse de un cuerpo fisico, las posiciones nuevas se calculan "a mano")
   update(time, delta){
-    this.sprite.x += (this.pVelocity.x * delta);
-    this.sprite.y += (this.pVelocity.y * delta);
+    if(this.sprite != undefined){
+      this.sprite.x += (this.pVelocity.x * delta);
+      this.sprite.y += (this.pVelocity.y * delta);
+    }
   }
 
   //funcion especial para balas dirigidas hacia enemigos que podrían morir antes de que estas lleguen
@@ -119,7 +123,7 @@ export default class BulletBounce extends Projectile {
       this.distAcumulator += bulletDistance;
       this.timer.reset({
         delay: this.expTime,
-        callback: () => (this.itemExpire(this))
+        callback: () => (this.itemExpire())
       });
     },this);
     //mejorar esto si las balas hacen mucho daño

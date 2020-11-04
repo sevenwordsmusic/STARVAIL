@@ -13,9 +13,11 @@ export default class Projectile {
   }
 
   //funcion que destruye al proyectil
-  itemExpire(proj){
+  itemExpire(){
     //console.log("item expired");
-    proj.sprite.destroy();
-    proj = undefined;
+    this.sprite.destroy();
+    this.timer.remove();
+    this.timer = undefined;
+    this.sprite = undefined;
   }
 }

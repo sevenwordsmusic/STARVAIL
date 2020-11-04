@@ -75,7 +75,7 @@ export default class Bomb extends Projectile {
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
     this.timer.remove();
-    this.itemExpire(this);
+    this.itemExpire();
   }
   onBodyCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
@@ -94,7 +94,7 @@ export default class Bomb extends Projectile {
     //
   }
 
-  itemExpire(proj){
+  itemExpire(){
       this.bombArmed1();
       this.bombArmed2();
         //AUDIO
@@ -105,7 +105,7 @@ export default class Bomb extends Projectile {
           }
           this.sfx.stop();
         //
-      const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
+      let bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //45
       this.damageEnemiesArea();
       //al completar su animacion de explsion, dicha instancia se autodestruye
@@ -115,7 +115,14 @@ export default class Bomb extends Projectile {
       //animacion de explosion
       bombExplosion.anims.play('explosion', true);
 
-      super.itemExpire(proj);
+      super.itemExpire();
+
+      this.pVelocity = undefined;
+      this.mainBody = undefined;
+      this.sensor = undefined;
+      this.bombArmed1 = undefined;
+      this.bombArmed2 = undefined;
+      this.sfx = undefined;
   }
 
   damageEnemiesArea(){
@@ -131,6 +138,6 @@ export default class Bomb extends Projectile {
     if(this.sprite.body != undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
     else
-      return 1000;    //ARREGLAR ESTO
+      return 5000;    //ARREGLAR ESTO
   }
 }

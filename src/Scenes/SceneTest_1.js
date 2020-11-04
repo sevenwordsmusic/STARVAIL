@@ -18,7 +18,7 @@ import ZapperAir from "../Enemies/ZapperAir.js";
 import BombAir from "../Enemies/BombAir.js";
 import GunnerAir from "../Enemies/GunnerAir.js";
 import Dialog from "../Plugins/Dialog.js"
-import NPC_Test from "../NPCs/NPC_Test.js"
+import Mentor from "../NPCs/Mentor.js"
 import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
 import LevelEnd from "../Objects/LevelEnd.js";
@@ -46,6 +46,11 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
+
+    //this.playerStartX = 128;
+    //this.playerStartY = 2560;
+    this.playerStartX = 416;
+    this.playerStartY = 4320;
 
 
     new Dialog(this, 50, 400, false,5000, {
@@ -105,9 +110,9 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(mainlayer);
     //Sistema de cargado dinamico de colliders
     var tileBodyMatrix = [];
-    for (var i = 0; i < 110; i++) {
+    for (var i = 0; i < 120; i++) {
       tileBodyMatrix[i] = [];
-      for (var j = 0; j < 152; j++) {
+      for (var j = 0; j < 150; j++) {
         tileBodyMatrix[i][j] = undefined;
       }
     }
@@ -117,7 +122,7 @@ export default class SceneTest_1 extends Phaser.Scene {
       //tile.setSize
       if (tile.physics.matterBody != undefined) {
         const tileBody = tile.physics.matterBody.body;
-        if (tileBody.position.x < 2000 && tileBody.position.y > 3800) {
+        if (tileBody.position.x > this.playerStartX - 32*26 && tileBody.position.x < this.playerStartX + 32*26 && tileBody.position.y > this.playerStartY - 32*26 && tileBody.position.y < this.playerStartY + 32*26) {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         } else {
@@ -179,7 +184,7 @@ export default class SceneTest_1 extends Phaser.Scene {
       }
     }
 
-    //inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
+    /*//inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
     map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
         spawnEnemy(point.name, this, point.x, point.y);
     });
@@ -215,14 +220,13 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     map.getObjectLayer("Chest_Layer").objects.forEach(point => {
       new InteractableEnergyOnce(this, point.x, point.y);
-    });
-    new Player(this, 416, 4320);
+    });*/
+    new Player(this, this.playerStartX, this.playerStartY);
 
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
-    new NPC_Test(this, 800, 4320);
-    new NPC_Test(this, 600, 4320);
-    //cam.setZoom(0.5);
+    new Mentor(this, this.playerStartX+400, this.playerStartY-20);
+    cam.setZoom(0.5);
 
     //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)
     new LevelEnd(this, 300, 4000, 'star', 'testsec', SceneTest_2);
@@ -267,11 +271,24 @@ export default class SceneTest_1 extends Phaser.Scene {
 
   //AUDIO:
    Audio.startAudioEngine(this);
+   this.maxMemory = 0;
+   console.log(this.matter);
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
     this.moon.x += (delta/50);
     this.game.moonPos.x = this.moon.x;
+
+    /*console.log(Phaser.Physics.Matter.Matter.Composite.allBodies(this.matter.world.localWorld).length);
+    console.log(this.matter.world.localWorld.bodies.length);
+    console.log("   ");*/
+
+    this.maxMemory = Math.max(this.maxMemory, Math.round((performance.memory.usedJSHeapSize/1024/1024)));
+    console.log(this.maxMemory + "    " + Math.round((performance.memory.usedJSHeapSize/1024/1024)));
+    /*const usedHeap = performance.memory.usedJSHeapSize/1024/1024;
+    if(usedHeap > 90){
+      console.log("USING TOO MUCH MEMORY:  " + usedHeap);
+    }*/
   //AUDIO:
   Audio.audioUpdate(this);
   }

@@ -50,7 +50,8 @@ export default class MultiMissile extends Projectile {
 
   //AUDIO
   update(time, delta){
-    this.sfx.volume=Audio.volume3D(this)
+    if(this.sprite!= undefined && this.sprite.body != undefined)
+      this.sfx.volume=Audio.volume3D(this)
   }
   //
 
@@ -64,7 +65,7 @@ export default class MultiMissile extends Projectile {
   }
 
   onSensorCollide({ bodyA, bodyB, pair }) {
-    (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined)
+    if(bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined)return;
 
     this.reachedTarget(this, bodyB, pair);
   }
@@ -73,7 +74,7 @@ export default class MultiMissile extends Projectile {
     if(this.sprite.body != undefined){
       this.bombArmed1();
 
-      var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
+      const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //42
       this.damageEnemiesArea();
 
@@ -113,16 +114,23 @@ export default class MultiMissile extends Projectile {
           offspring.delayArmBomb(300);
         }
       }
-      this.itemExpire(proj);
+      this.itemExpire();
     }
   }
 
-  itemExpire(proj){
+  itemExpire(){
+    this.scene.events.off("update", this.update, this);
       //AUDIO
         Audio.play3DinstanceRnd(this,17);
         this.sfx.volume= 0.0;
       //
-    super.itemExpire(proj);
+    super.itemExpire();
+
+    this.pVelocity = undefined;
+    this.sensor = undefined;
+    this.bombArmed1 = undefined;
+    this.sfx = undefined;
+    thid.sprite = undefined;
   }
 
   damageEnemiesArea(){
@@ -135,9 +143,9 @@ export default class MultiMissile extends Projectile {
   }
 
   distanceToPlayer(){
-    if(this.sprite.body != undefined)
+    if(this.sprite != undefined && this.sprite.body != undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
     else
-      return 1000;    //ARREGLAR ESTO
+      return 5000;    //ARREGLAR ESTO
   }
 }

@@ -89,6 +89,11 @@ game.transitionToScene = function(scene, keyNext, sceneNext){
   }, scene);
   scene.cameras.main.fadeOut(1000);
 }
+/*game.transferComposite = Phaser.Physics.Matter.Matter.Composite.create();
+game.transferBody = function(bodies1, bodies2, body){
+  bodies1.push(body);
+  bodies2.splice(bodies2.indexOf(body), 1);
+}*/
 game.bulletInteracBodies = [];
 game.enemyBodies = [];
 
@@ -101,5 +106,6 @@ function mobileTabletChek() {
 };
 game.onPC = !mobileTabletChek();
 console.log("onPC:  " +game.onPC);
+
 
 window.gameDebug = game;

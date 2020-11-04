@@ -47,7 +47,7 @@ export default class Audio extends Phaser.Scene {
                 load.soundInstance[num][i]= load.sound.add(name, {
                 volume: this.volumeSFX,
                 loop: true
-            })   
+            })
         }
     }
     static createSFXinstanceSub(name, num, sub, load) {

@@ -58,7 +58,7 @@ export default class Missile extends Projectile {
   }
 
   update(time, delta){
-    if(this.sprite.body != undefined){
+    if(this.sprite!= undefined && this.sprite.body != undefined){
       const currentVel = new Phaser.Math.Vector2(this.sprite.body.velocity.x, this.sprite.body.velocity.y);
       const currentAngle = currentVel.angle();
 
@@ -86,10 +86,10 @@ export default class Missile extends Projectile {
         this.sprite.setVelocity(currentVel.x, currentVel.y);
         this.sprite.angle = (currentAngle - this.autoAim) * 180/Math.PI + 90;
       }
-    }
       //AUDIO
         this.sfx.volume=Audio.volume3D(this)
       //
+    }
   }
 
   armBomb(){
@@ -102,7 +102,7 @@ export default class Missile extends Projectile {
   }
 
   onSensorCollide({ bodyA, bodyB, pair }) {
-    (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined)
+    if(bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
     this.reachedTarget(this, bodyB, pair);
   }
 
@@ -110,7 +110,7 @@ export default class Missile extends Projectile {
     if(this.sprite.body != undefined){
       this.bombArmed1();
 
-      var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
+      const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //42
       this.damageEnemiesArea();
 
@@ -121,16 +121,23 @@ export default class Missile extends Projectile {
       //animacion de explosion
       bombExplosion.anims.play('explosion', true);
 
-      this.itemExpire(proj);
+      this.itemExpire();
     }
   }
 
-  itemExpire(proj){
+  itemExpire(){
+    this.scene.events.off("update", this.update, this);
       //AUDIO
         Audio.play3DinstanceRnd(this,16);
         this.sfx.volume= 0.0;
       //
-    super.itemExpire(proj);
+    super.itemExpire();
+
+    this.pVelocity = undefined;
+    this.sensor = undefined;
+    this.bombArmed1 = undefined;
+    this.sfx = undefined;
+    thid.sprite = undefined;
   }
 
   damageEnemiesArea(){
@@ -143,9 +150,9 @@ export default class Missile extends Projectile {
   }
 
   distanceToPlayer(){
-    if(this.sprite.body != undefined)
+    if(this.sprite != undefined && this.sprite.body != undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
     else
-      return 1000;    //ARREGLAR ESTO
+      return 5000;    //ARREGLAR ESTO
   }
 }

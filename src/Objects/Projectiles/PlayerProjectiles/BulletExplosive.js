@@ -31,7 +31,7 @@ export default class BulletExplosive extends Projectile {
   }
 
   //se para el update y si se trata de un enemigo, este recibe daño
-  itemExpire(proj){
+  itemExpire(){
     this.scene.events.off("update", this.update, this);
 
      //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
@@ -64,13 +64,15 @@ export default class BulletExplosive extends Projectile {
     //animacion de explosion
     bombExplosion.anims.play('explosion', true);
 
-    super.itemExpire(proj);
+    super.itemExpire();
   }
 
   //update (al no tratarse de un cuerpo fisico, las posiciones nuevas se calculan "a mano")
   update(time, delta){
-    this.sprite.x += (this.pVelocity.x * delta);
-    this.sprite.y += (this.pVelocity.y * delta);
+    if(this.sprite != undefined){
+      this.sprite.x += (this.pVelocity.x * delta);
+      this.sprite.y += (this.pVelocity.y * delta);
+    }
   }
 
   //funcion especial para balas dirigidas hacia enemigos que podrían morir antes de que estas lleguen
@@ -85,7 +87,7 @@ export default class BulletExplosive extends Projectile {
       this.distAcumulator += bulletDistance;
       this.timer.reset({
         delay: this.expTime,
-        callback: () => (this.itemExpire(this))
+        callback: () => (this.itemExpire())
       });
     },this);
     //mejorar esto si las balas hacen mucho daño

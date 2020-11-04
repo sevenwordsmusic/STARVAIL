@@ -60,13 +60,13 @@ export default class Megaton extends Projectile {
   }
 
   onSensorCollide({ bodyA, bodyB, pair }) {
-    (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined)
+    if(bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
     if(bodyB.gameObject.parent != undefined){
       this.timer.remove();
       if(bodyB.gameObject.parent.constructor.name === "Megaton")
-        this.itemExpire(this, true);
+        this.itemExpire(true);
       else
-        this.itemExpire(this, false);
+        this.itemExpire(false);
     }
   }
   onBodyCollide({ bodyA, bodyB, pair }) {
@@ -82,7 +82,7 @@ export default class Megaton extends Projectile {
     //
   }
 
-  itemExpire(proj, big = false){
+  itemExpire(big = false){
     this.bombArmed1();
     this.bombArmed2();
     //AUDIO
@@ -108,7 +108,14 @@ export default class Megaton extends Projectile {
     //animacion de explosion
     bombExplosion.anims.play('explosion', true);
 
-    super.itemExpire(proj);
+    super.itemExpire();
+
+    this.pVelocity = undefined;
+    this.mainBody = undefined;
+    this.sensor = undefined;
+    this.bombArmed1 = undefined;
+    this.bombArmed2 = undefined;
+    this.sfx = undefined;
   }
 
   damageEnemiesArea(){
@@ -133,6 +140,6 @@ export default class Megaton extends Projectile {
     if(this.sprite.body != undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
     else
-      return 1000;    //ARREGLAR ESTO
+      return 5000;    //ARREGLAR ESTO
   }
 }
