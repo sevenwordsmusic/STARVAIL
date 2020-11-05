@@ -19,6 +19,8 @@ import SceneGameOver from "./Scenes/SceneGameOver.js"
 import SceneRanking from "./Scenes/SceneRanking.js"
 import SceneSplashScreen from "./Scenes/SceneSplashScreen.js"
 
+import Audio from "./Audio.js";
+
 //Configuración de Phaser 3
 var config = {
   type: Phaser.AUTO,
@@ -39,7 +41,10 @@ var config = {
   },
   //escenas principales
   scene: [
+    Audio,
+
     SceneLoading,
+
     SceneMainMenu,
     SceneCredits,
     SceneOptions,
