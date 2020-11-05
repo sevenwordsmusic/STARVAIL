@@ -199,14 +199,16 @@ export default class ZapperGround extends Enemy {
   }
 
   enemyDead(vXDmg){
+    const xPos = this.sprite.x;
+    const yPos = this.sprite.y;
     this.goTo(0);
     if(!this.dead){
       //AUDIO
           this.sfx.stop();
-          this.sfxDetect.stop();  
+          this.sfxDetect.stop();
       //
       super.enemyDead();
-      new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
+      new DropableGroundEnergy(this.scene, xPos, yPos, Math.sign(vXDmg),  this.energyDrop);
     }
   }
 

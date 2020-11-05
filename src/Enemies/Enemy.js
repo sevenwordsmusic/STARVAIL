@@ -97,4 +97,10 @@ export default class Enemy extends FiniteStateMachine{
     if(this.encounterNPC !== undefined)
       this.encounterNPC.enemyKilled();
   }
+  destroy(){
+    this.tween.remove();
+    this.sprite.destroy();
+    this.sprite.parent = undefined;
+    this.sprite = undefined;
+  } //incompleto, cada enemigo deberia eliminar sus cuerpos y objetos adicionales adicionales
 }

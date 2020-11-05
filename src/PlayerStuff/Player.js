@@ -12,7 +12,7 @@ export default class Player {
 
     scene.matter.world.on("beforeupdate", this.resetTouching, this);
     this.scene.events.on("update", this.update, this);  //para que el update funcione
-    this.scene.events.on("render", this.solveBoundry, this);  //para que el update funcione
+    //this.scene.events.on("render", this.solveBoundry, this);  //para que el update funcione
 
     this.crossCounter = 0;
 
@@ -74,7 +74,7 @@ export default class Player {
       delay: 100
     });
 
-    this.adjustedFriction = 0.2/this.scene.matter.world.getDelta();
+    this.adjustedFriction = 1.2/this.scene.matter.world.getDelta();
     this.knockVector = new Phaser.Math.Vector2(0,0);
     this.knockVecNomralized = new Phaser.Math.Vector2(0,0);
 
@@ -254,7 +254,7 @@ export default class Player {
     if (!gameObjectB || !(gameObjectB instanceof Phaser.Tilemaps.Tile)) return;
     const tile = gameObjectB;
     if (tile.properties.Lethal) {
-      this.playerDamageKnockback(20, 0.2, new Phaser.Math.Vector2(-this.sprite.body.velocity.x, -this.sprite.body.velocity.y));
+      this.playerDamageKnockback(20, 0.8, new Phaser.Math.Vector2(-this.sprite.body.velocity.x, -this.sprite.body.velocity.y));
     }
   }
 
@@ -278,14 +278,7 @@ export default class Player {
     if(this.updateBoundryCounterY < 0)
       this.yFrontiers(-1, 25);
     this.updateBoundryCounterY = 0;*/
-    if(this.sprite.body.position.x - this.earlyPos.x > 0)
-      this.xFrontiers(1, 25)
-    else if(this.sprite.body.position.x - this.earlyPos.x < 0)
-      this.xFrontiers(-1, 25)
-    if(this.sprite.body.position.y - this.earlyPos.y > 0)
-      this.yFrontiers(1, 25)
-    else if(this.sprite.body.position.y - this.earlyPos.y < 0)
-      this.yFrontiers(-1, 25)
+
   }
 
   playerMoveForceX(){
@@ -298,10 +291,18 @@ export default class Player {
   }
 
   update(time, delta) {
-    if (!this.alive) { return; } //CAMBIAR ESPERA ACTIVA
-    //if(this.sprite.y > 5000)  this.sprite.y = 3000;
+    if (!this.alive) { return; } 
+
     this.updateKnockback(time, delta);
     //this.updateBoundry();
+    if(this.sprite.body.position.x - this.earlyPos.x > 0.005)
+      this.xFrontiers(1, 25)
+    else if(this.sprite.body.position.x - this.earlyPos.x < -0.005)
+      this.xFrontiers(-1, 25)
+    if(this.sprite.body.position.y - this.earlyPos.y > 0.005)
+      this.yFrontiers(1, 25)
+    else if(this.sprite.body.position.y - this.earlyPos.y < -0.005)
+      this.yFrontiers(-1, 25)
 
     if(this.sprite.body.velocity.x > -0.01 && this.sprite.body.velocity.x < 0.01)
       this.sprite.body.velocity.x = 0;
@@ -807,25 +808,26 @@ export default class Player {
       if(bodyWAdd != undefined && !bodyWAdd.active){ //9-1 bugfix ya que el bounding box que elimina tiles es 2 casillas mas grande
         //this.scene.game.transferBody(this.scene.matter.world.localWorld.bodies, bodyWAdd.body)
         //Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
-        this.scene.matter.world.localWorld.bodies.push(bodyWAdd.body);
+        //this.scene.matter.world.localWorld.bodies.push(bodyWAdd.body);
+        bodyWAdd.body.collisionFilter.mask = 4294967295;
+        bodyWAdd.body.isSleeping = false;
         bodyWAdd.active = true;
       }
       if(bodyWRemove != undefined && bodyWRemove.active){
         //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+        //this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+        bodyWRemove.body.collisionFilter.mask = 0;
         bodyWRemove.active = false;
       }
     }
     bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  - yBoundry - 1];
     if(bodyWRemove != undefined && bodyWRemove.active){
-      //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-      this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+      bodyWRemove.body.collisionFilter.mask = 0;
       bodyWRemove.active = false;
     }
     bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  + yBoundry + 1];
     if(bodyWRemove != undefined && bodyWRemove.active){
-      //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-      this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+      bodyWRemove.body.collisionFilter.mask = 0;
       bodyWRemove.active = false;
     }
     bodyWAdd = undefined;
@@ -845,25 +847,22 @@ export default class Player {
       bodyWAdd = this.scene.tileBodyMatrix[xNormalized + i][yAdd];
       bodyWRemove = this.scene.tileBodyMatrix[xNormalized + i][yRemove];
       if(bodyWAdd != null && !bodyWAdd.active){
-        //Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
-        this.scene.matter.world.localWorld.bodies.push(bodyWAdd.body);
+        bodyWAdd.body.collisionFilter.mask = 4294967295;
+        bodyWAdd.body.isSleeping = false;
         bodyWAdd.active = true;
       }
       if(bodyWRemove != null && bodyWRemove.active){
-        //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+        bodyWRemove.body.collisionFilter.mask = 0;
         bodyWRemove.active = false;
       }
       bodyWRemove = this.scene.tileBodyMatrix[xNormalized - xBoundry - 1][yRemove];
       if(bodyWRemove != null && bodyWRemove.active){
-        //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+        bodyWRemove.body.collisionFilter.mask = 0;
         bodyWRemove.active = false;
       }
       bodyWRemove = this.scene.tileBodyMatrix[xNormalized + xBoundry + 1][yRemove];
       if(bodyWRemove != null && bodyWRemove.active){
-        //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+        bodyWRemove.body.collisionFilter.mask = 0;
         bodyWRemove.active = false;
       }
     }

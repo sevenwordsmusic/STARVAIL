@@ -9,6 +9,7 @@ export default class Blackboard{
     this.playerPos = new Phaser.Math.Vector2(0, 0);
     this.enemyCounter = 0;
     this.scene.events.on("update", this.update, this); //para que se ejecute el udate
+    this.noUpdate = false;
   }
 
   /*updatePlayerPosition(){
@@ -31,6 +32,7 @@ export default class Blackboard{
   }
 
   update(time, delta){
+    if(this.noUpdate){return;}
     for(var i=0; i<this.removeBodies.length; i++){
       //el "body" del enemigo se quita del array de cuerpos que interaccionan con balas
       this.scene.bulletInteracBodies[this.removeBodies[i].currentBodyIndex] = undefined;
@@ -53,7 +55,34 @@ export default class Blackboard{
           this.scene.game.player.closestEnemy = this.enemyBodies[this.enemyCounter].gameObject.parent;
       }
     }
-
     this.enemyCounter = (this.enemyCounter+1)%this.enemyBodies.length;
+
+    if(this.enemyBodies[this.enemyCounter] !== undefined){
+      const distToPlayer = Math.sqrt(Math.pow(this.scene.game.player.sprite.x - this.enemyBodies[this.enemyCounter].gameObject.x,2) + Math.pow(this.scene.game.player.sprite.y - this.enemyBodies[this.enemyCounter].gameObject.y,2));
+      this.enemyBodies[this.enemyCounter].gameObject.parent.updatePlayerPosition(distToPlayer);
+      if(this.enemyBodies[this.enemyCounter].gameObject.parent != this.scene.game.player.closestEnemy){
+        if(distToPlayer < this.scene.game.player.getClosestEnemyDistance())
+          this.scene.game.player.closestEnemy = this.enemyBodies[this.enemyCounter].gameObject.parent;
+      }
+    }
+    this.enemyCounter = (this.enemyCounter+1)%this.enemyBodies.length;
+  }
+
+  destroy(){
+    this.noUpdate = true;
+    for(var i=0; i<this.removeBodies.length; i++){
+      //el "body" del enemigo se quita del array de cuerpos que interaccionan con balas
+      this.scene.bulletInteracBodies[this.removeBodies[i].currentBodyIndex] = undefined;
+      this.scene.enemyController.enemyBodies[this.removeBodies[i].currentEnemyIndex] = undefined;
+      this.removeBodies[i].sprite.destroy();
+    }
+    for(var i=0; i<this.enemyBodies.length; i++){
+      if(this.enemyBodies[i] !== undefined){
+        this.enemyBodies[i].gameObject.parent.destroy();
+      }
+    }
+    this.removeBodies.length = 0;
+    this.enemyBodies.length = 0;
+    this.scene.events.off("update", this.update);
   }
 }
