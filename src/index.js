@@ -47,6 +47,18 @@ import SceneTest_2 from "./Scenes/SceneTest_2.js";
 import Joystick_test from "./Scenes/Joystick_test.js";
 import AnimatedTiles from "./Plugins/tileAnimator.js"
 
+import SceneMainMenu from "./Scenes/SceneMainMenu.js"
+import SceneCredits from "./Scenes/SceneCredits.js"
+import SceneOptions from "./Scenes/SceneOptionsMM.js"
+import SceneGameEbi from "./Scenes/SceneGameEbi.js"
+import ScenePause from "./Scenes/ScenePause.js"
+import SceneOptionsGame from "./Scenes/SceneOptionsGame.js"
+import SceneScore from "./Scenes/SceneScore.js"
+import SceneCreditsScore from "./Scenes/SceneCreditsScore.js"
+import SceneGameOver from "./Scenes/SceneGameOver.js"
+import SceneRanking from "./Scenes/SceneRanking.js"
+import SceneSplashScreen from "./Scenes/SceneSplashScreen.js"
+
 //Configuración de Phaser 3
 var config = {
   type: Phaser.AUTO,
@@ -71,6 +83,19 @@ var config = {
     Audio,
     Chatter,
     SceneLoading,
+
+    SceneMainMenu,
+    SceneCredits,
+    SceneOptions,
+    SceneGameEbi,
+    ScenePause,
+    SceneOptionsGame,
+    SceneScore,
+    SceneCreditsScore,
+    SceneGameOver,
+    SceneRanking,
+    SceneSplashScreen,
+
     SceneTest_1,
     Joystick_test
   ],

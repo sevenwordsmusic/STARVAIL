@@ -174,9 +174,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     });
     this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
 
-
-    //this.animatedTiles.init(this.map);
-
+    this.animatedTiles.init(this.map);
 
     this.enemyController = new Blackboard(this);
 
