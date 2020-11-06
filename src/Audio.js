@@ -569,7 +569,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('loop0000flying', 'assets/audio/BGM/loop0000flying.mp3');
         this.load.audio('loop0000levitating', 'assets/audio/BGM/loop0000levitating.mp3');
         this.load.audio('loop0000moving', 'assets/audio/BGM/loop0000moving.mp3');
-        this.load.audio('loop0000weapon', 'assets/audio/BGM/loop0000weapon.mp3');
+        this.load.audio('loop0000chill', 'assets/audio/BGM/loop0000chill.ogg');
           /*this.load.audio('loop0000base', 'assets/audio/SFX/walkLoop_00.ogg');
         this.load.audio('loop0000enemies', 'assets/audio/SFX/walkLoop_00.ogg');
         this.load.audio('loop0000killing', 'assets/audio/SFX/walkLoop_00.ogg');
@@ -770,11 +770,10 @@ export default class Audio extends Phaser.Scene {
             volume: 0.0,
             loop: true
         })
-        /*
-        this.loopChill = this.sound.add('loop0000weapon', {
+        this.loopChill = this.sound.add('loop0000chill', {
             volume: 0.0,
             loop: true
-        })*/
+        })
         this.ambientLoop.play();
         //INIT PLAY LEVEL0000
         this.loopBase.play();
@@ -784,7 +783,7 @@ export default class Audio extends Phaser.Scene {
         this.loopLevitating.play();
         this.loopMovement.play();
         this.bgmIfWeapon.play();
-        //this.loopChill.play();
+        this.loopChill.play();
         //THE LOAD.
         Audio.load = this;
         console.log("AUDIO LOADED: everything went better than expected :D !!!");
