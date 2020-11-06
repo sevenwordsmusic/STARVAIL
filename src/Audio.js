@@ -162,7 +162,7 @@ export default class Audio extends Phaser.Scene {
                 duration: this.barRateDiv[2],
             });
             scene.tweens.add({
-                targets: this.load.bgmIfWeapon,
+                targets: this.load.loopWeapon,
                 volume: 0.0,
                 duration: this.barRateDiv[2],
             });
@@ -210,7 +210,7 @@ export default class Audio extends Phaser.Scene {
                 duration: this.barRateDiv[2],
             });
             scene.tweens.add({
-                targets: this.load.bgmIfWeapon,
+                targets: this.load.loopWeapon,
                 volume: this.volumeBGM,
                 duration: this.barRateDiv[2],
             });
@@ -221,13 +221,13 @@ export default class Audio extends Phaser.Scene {
         if (this.stingerShot && scene.game.player.getClosestEnemyDistance() < this.halfDistance) {
             this.stingerShot = false;
                     scene.tweens.add({
-                        targets: this.load.bgmIfWeapon,
+                        targets: this.load.loopWeapon,
                         volume: this.volumeBGM,
                         duration: this.barRateDiv[2],
                     });
         } else {
                     scene.tweens.add({
-                        targets: this.load.bgmIfWeapon,
+                        targets: this.load.loopWeapon,
                         volume: 0.0,
                         duration: this.barRateDiv[0],
                     });
@@ -569,6 +569,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('loop0000flying', 'assets/audio/BGM/loop0000flying.mp3');
         this.load.audio('loop0000levitating', 'assets/audio/BGM/loop0000levitating.mp3');
         this.load.audio('loop0000moving', 'assets/audio/BGM/loop0000moving.mp3');
+        this.load.audio('loop0000weapon', 'assets/audio/BGM/loop0000weapon.mp3');
         this.load.audio('loop0000chill', 'assets/audio/BGM/loop0000chill.ogg');
           /*this.load.audio('loop0000base', 'assets/audio/SFX/walkLoop_00.ogg');
         this.load.audio('loop0000enemies', 'assets/audio/SFX/walkLoop_00.ogg');
@@ -766,7 +767,7 @@ export default class Audio extends Phaser.Scene {
             volume: 0.0,
             loop: true
         })
-        this.bgmIfWeapon = this.sound.add('loop0000weapon', {
+        this.loopWeapon = this.sound.add('loop0000weapon', {
             volume: 0.0,
             loop: true
         })
@@ -782,7 +783,7 @@ export default class Audio extends Phaser.Scene {
         this.loopFliying.play();
         this.loopLevitating.play();
         this.loopMovement.play();
-        this.bgmIfWeapon.play();
+        this.loopWeapon.play();
         this.loopChill.play();
         //THE LOAD.
         Audio.load = this;
