@@ -18,6 +18,8 @@ export default class DropableGround extends Dropable{
       callback:() => (this.dropablePicked(this)),
       context: this
     });
+
+    this.sprite.body.collisionFilter.group = -2;
   }
 
   bounce(spreadX, dir, speed, speedVar){

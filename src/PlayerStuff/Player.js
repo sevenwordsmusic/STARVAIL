@@ -291,7 +291,7 @@ export default class Player {
   }
 
   update(time, delta) {
-    if (!this.alive) { return; } 
+    if (!this.alive) { return; }
 
     this.updateKnockback(time, delta);
     //this.updateBoundry();
@@ -516,8 +516,7 @@ export default class Player {
     this.fireArm.destroyFireArm();
     this.movingArm.destroy();
     this.sprite.anims.play('death', true);
-  this.sprite.body.collisionFilter.mask = 0;
-    console.log(this.sprite.body);
+    //this.sprite.body.collisionFilter.mask = 0;
 
     console.log("Te has Muerto...");
   }
@@ -721,6 +720,14 @@ export default class Player {
     }
     function destroyDebree(debree) { debree.destroy() }
     */
+  }
+
+  inRoom(){
+    if(this.scene.encounterNPC == undefined || this.sprite == undefined) return false;
+    if(Math.sqrt(Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2) + Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2)) < 500) //ajustate la distancia si quieres
+      return true;
+    else
+      return false;
   }
 
   initPosibleClosestEnemy(){

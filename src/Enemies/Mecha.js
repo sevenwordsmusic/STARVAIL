@@ -1,6 +1,6 @@
 import Enemy from "./Enemy.js";
 import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
-import EnemyGun from "./EnemyGun.js";
+import MechGun from "./MechGun.js";
 import Audio from "../Audio.js";
 
 //enemigo que hereda de Enemy
@@ -57,7 +57,7 @@ export default class Mecha extends Enemy {
     //Ajustar estas
     //Variables de IA
 
-    this.gun = new EnemyGun(scene, this.sprite.x, this.sprite.y, this.hitDamage);
+    this.gun = new MechGun(scene, this.sprite.x, this.sprite.y, this.hitDamage);
 
 
     /*this.scene.matterCollision.addOnCollideStart({
@@ -214,10 +214,11 @@ export default class Mecha extends Enemy {
     if(!this.dead){
       //AUDIO
           this.sfx.stop();
-          this.sfxDetect.stop();  
+          this.sfxDetect.stop();
       //
       super.enemyDead();
       new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
+      this.gun.destroy();
     }
   }
 

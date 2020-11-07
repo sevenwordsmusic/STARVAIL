@@ -55,9 +55,10 @@ export default class Blackboard{
           this.scene.game.player.closestEnemy = this.enemyBodies[this.enemyCounter].gameObject.parent;
       }
     }
-    this.enemyCounter = (this.enemyCounter+1)%this.enemyBodies.length;
+    if(this.enemyBodies.length != 0)
+      this.enemyCounter = (this.enemyCounter+1)%this.enemyBodies.length;
 
-    if(this.enemyBodies[this.enemyCounter] !== undefined){
+    /*if(this.enemyBodies[this.enemyCounter] !== undefined){
       const distToPlayer = Math.sqrt(Math.pow(this.scene.game.player.sprite.x - this.enemyBodies[this.enemyCounter].gameObject.x,2) + Math.pow(this.scene.game.player.sprite.y - this.enemyBodies[this.enemyCounter].gameObject.y,2));
       this.enemyBodies[this.enemyCounter].gameObject.parent.updatePlayerPosition(distToPlayer);
       if(this.enemyBodies[this.enemyCounter].gameObject.parent != this.scene.game.player.closestEnemy){
@@ -65,7 +66,7 @@ export default class Blackboard{
           this.scene.game.player.closestEnemy = this.enemyBodies[this.enemyCounter].gameObject.parent;
       }
     }
-    this.enemyCounter = (this.enemyCounter+1)%this.enemyBodies.length;
+    this.enemyCounter = (this.enemyCounter+1)%this.enemyBodies.length;*/
   }
 
   destroy(){

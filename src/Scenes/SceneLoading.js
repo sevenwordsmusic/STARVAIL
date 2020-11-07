@@ -65,6 +65,8 @@ export default class SceneLoading extends Phaser.Scene {
 
     this.load.image("animatedLayer1", "assets/Tilesets/animated_layer.png");
 
+    /*implementar variaciones de nivel aqui*/
+
     this.load.tilemapTiledJSON("map1", "assets/Mapas/Level1.json");
     this.load.tilemapTiledJSON("map2", "assets/Mapas/Level2.json");
     this.load.tilemapTiledJSON("map3", "assets/Mapas/Level3.json");
@@ -84,6 +86,9 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('bulletImpact4', 'assets/Sprites/Impacts/full_100x100px.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
     this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
+
+    this.load.spritesheet('laserNonLethal', 'assets/Sprites/Bullet/laser_nonletal.png', { frameWidth: 960, frameHeight: 32 }); //62
+    this.load.spritesheet('laserLethal', 'assets/Sprites/Bullet/laser_letal.png', { frameWidth: 960, frameHeight: 32 }); //42*/
 
     //preload del joystick
     this.load.plugin('rexvirtualjoystickplugin', 'src/rexvirtualjoystickplugin.min.js', true);
@@ -269,6 +274,18 @@ export default class SceneLoading extends Phaser.Scene {
             repeat: -1
         });
 
+    this.anims.create({
+        key: 'laserNonLethal',
+        frames: this.anims.generateFrameNumbers('laserNonLethal', { start: 0, end: 12}),
+        frameRate: 8,
+        repeat: 1
+    });
+    this.anims.create({
+        key: 'laserLethal',
+        frames: this.anims.generateFrameNumbers('laserLethal', { start: 0, end: 16 }),
+        frameRate: 15,
+        repeat: 1
+    });
     //transicion a siguiente escena
     this.scene.start("test1");
 

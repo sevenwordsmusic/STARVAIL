@@ -28,6 +28,7 @@ import NPC_Droid_6 from "../NPCs/NPC_Droid_6.js"
 import NPC_Droid_7 from "../NPCs/NPC_Droid_7.js"
 import NPC_Droid_8 from "../NPCs/NPC_Droid_8.js"
 import NPC_Droid_Default from "../NPCs/NPC_Droid_Default.js"
+import BossBefore from "../NPCs/BossBefore.js"
 import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
 import LevelEnd from "../Objects/LevelEnd.js";
@@ -61,6 +62,10 @@ export default class SceneTest_1 extends Phaser.Scene {
     //this.playerStartY = 2560;
     this.playerStartX = 704;
     this.playerStartY = 4512;
+
+    //final = 448 , 1184
+    //tutorial = 128 , 2560
+    //nivel 1 = 704 , 4512
 
 
     new Dialog(this, 50, 400, false,5000, {
@@ -218,8 +223,9 @@ export default class SceneTest_1 extends Phaser.Scene {
     });
 
     this.map.getObjectLayer("SpecialEvent_Layer").objects.forEach(point => {
-        const randNumber = Math.floor(Math.random()*8) + 1;
-        switch(randNumber){
+        const randNumber = Math.floor(Math.random()*this.game.npcArray.length) + 1;
+        const npcNumber = this.game.npcArray[randNumber];
+        switch(npcNumber){
           case 1:
             this.encounterNPC =new NPC_Droid_1(this, point.x, point.y);
           break;
@@ -248,6 +254,7 @@ export default class SceneTest_1 extends Phaser.Scene {
             this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
           break
         }
+        this.game.npcArray.splice(randNumber,1);
     });
 
     this.map.getObjectLayer("EnemySpawn_Layer").objects.forEach(area => {
@@ -289,6 +296,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.map.getObjectLayer("Chest_Layer").objects.forEach(point => {
       new InteractableEnergyOnce(this, point.x, point.y);
     });
+    //new BossBefore(this, 3010, 980);
     new Player(this, this.playerStartX, this.playerStartY);
     //new Mentor(this, this.playerStartX + 400, this.playerStartY)
 

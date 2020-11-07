@@ -3,7 +3,7 @@ import SuperiorQuery from "../../../SuperiorQuery.js";
 import Audio from "../../../Audio.js";
 
 //proyectil que hereda de Projectile
-export default class BossMisile extends Projectile {
+export default class BossBullet extends Projectile {
   constructor(scene, x, y, dmg, knockback, speed, velDir, expTime){
     super(scene, x, y, expTime);
 
@@ -11,7 +11,7 @@ export default class BossMisile extends Projectile {
     this.knockback = knockback;
 
     //inicializacion
-    this.sprite = scene.matter.add.sprite(x,y,'missile',0);
+    this.sprite = scene.matter.add.sprite(x,y,'bullet1',0);
 
     const body = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,6);
 
@@ -38,7 +38,7 @@ export default class BossMisile extends Projectile {
     if(bodyB === this.scene.game.player.mainBody){
       this.projectileArmed();
       this.timer.remove();
-      this.scene.game.player.playerDamageKnockback(this.dmg, this.knockback, this.pVelocity);   //this.scene.game.player.playerDamage(this.dmg);
+      this.scene.game.player.playerDamage(this.dmg, this.pVelocity);   //this.scene.game.player.playerDamage(this.dmg);
       this.itemExpire(this);
     }
     else if(bodyB.gameObject.parent == undefined){
@@ -51,15 +51,16 @@ export default class BossMisile extends Projectile {
   itemExpire(proj){
     this.projectileArmed();
 
-    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
-    bombExplosion.setDepth(10).setScale(2)
+    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "bulletImpact4");
+    bombExplosion.setDepth(10).setScale(0.9) //42
+    bombExplosion.angle = Phaser.Math.Between(0,360);
 
     //al completar su animacion de explsion, dicha instancia se autodestruye
     bombExplosion.on('animationcomplete', function(){
       bombExplosion.destroy();
     });
     //animacion de explosion
-    bombExplosion.anims.play('explosion', true);
+    bombExplosion.anims.play('bulletImpact4', true);
     super.itemExpire(proj);
   }
 }

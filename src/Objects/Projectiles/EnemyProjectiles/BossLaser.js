@@ -3,32 +3,56 @@ import SuperiorQuery from "../../../SuperiorQuery.js";
 import Audio from "../../../Audio.js";
 
 //proyectil que hereda de Projectile
-export default class BossLaser extends Projectile {
-  constructor(scene, x, y, expTime){
-    super(scene, x, y, expTime);
+export default class BossLaser {
+  constructor(scene, x, y, dirVec){
+    this.scene = scene;
+    this.parent = this;
+    this.lethal = false;
 
     //inicializacion
-    this.sprite = scene.matter.add.sprite(x,y,'explodingBomb',0);
-    bombExplosion.anims.play('explosion', true);
+    this.sprite = scene.matter.add.sprite(x,y,'laserNonLethal',0);
 
-    this.sprite.setDepth(5);
-    this.sprite.setStatic(true).setSensor(true).setIgnoreGravity(true);
+    const { Body, Bodies } = Phaser.Physics.Matter.Matter;
+    const { width: w, height: h } = this.sprite
+    const body = Bodies.rectangle(0, 0, w, h);
+    this.sprite.setExistingBody(body).setPosition(x, y);
 
-    this.projectileArmed = this.scene.matterCollision.addOnCollideStart({
-      objectA: this.sprite.body,
-      objectB: this.scene.game.player.mainBody,
-      callback: this.onSensorCollide,
-      context: this
-    });
+    this.sprite.setDepth(5).setScale(4,0.75);
+    this.sprite.setSensor(true).setIgnoreGravity(true);
+    this.sprite.angle = dirVec.angle() * 180/Math.PI;
+
+    this.sprite.anims.play('laserNonLethal', true);
+
+   this.sprite.once('animationcomplete', function(){
+      this.scene.boss.lethalLaser = true;
+      this.sprite.anims.play('laserLethal', true);
+      this.projectileArmed = this.scene.matterCollision.addOnCollideActive({
+        objectA: this.sprite.body,
+        objectB: this.scene.game.player.mainBody,
+        callback: this.onSensorCollide,
+        context: this
+      });
+      this.sprite.once('animationcomplete', function(){
+        this.scene.boss.goTo(0);
+        this.projectileArmed();
+        this.itemExpire(this);
+        this.scene.boss.lethalLaser = false;
+      },this);
+    },this);
   }
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
-      this.scene.game.player.playerDamageKnockback(10000, true);
+      this.scene.game.player.playerDamage(10000, true);
   }
 
   itemExpire(proj){
-    this.projectileArmed();
-    super.itemExpire(proj);
+    this.scene.boss.gun.laser = undefined;
+    this.sprite.destroy();
+    this.sprite = undefined;
   }
+
+  /*adjust(angle){
+      this.sprite.angle = angle;
+  }*/
 }

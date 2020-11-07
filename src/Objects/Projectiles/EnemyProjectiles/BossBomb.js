@@ -17,13 +17,13 @@ export default class BossBomb extends Projectile {
     const body = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,6);
 
     this.sprite.setExistingBody(body).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
-    this.sprite.setDepth(5);
+    this.sprite.setDepth(5).setScale(0.75);
     this.sprite.body.frictionAir = 0;
 
     //se calcula la direccion y magnitud del vector de velocidad
     this.pVelocity = velDir;
     this.pVelocity = this.pVelocity.normalize();
-    this.sprite.setVelocity(this.pVelocity.x * speed, this.pVelocity.y * speed);
+    this.sprite.setVelocity(this.pVelocity.x * speed, this.pVelocity.y * speed - 2);
 
     this.projectileArmed = this.scene.matterCollision.addOnCollideStart({
       objectA: this.sprite.body,
@@ -42,11 +42,9 @@ export default class BossBomb extends Projectile {
 
   itemExpire(proj){
     this.projectileArmed();
-    var damagedPlayer = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, this.scene.game.player.mainBody);
-    for(var i in damagedEnemies){
-      if(damagedPlayer[0] != undefined && damagedPlayer[i].gameObject != null)
-        this.scene.game.player.playerDamageKnockback(this.dmg, this.knockback, this.pVelocity);
-      }
+    var damagedPlayer = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, [this.scene.game.player.mainBody]);
+    if(damagedPlayer != undefined && damagedPlayer[0] != undefined && damagedPlayer[0].gameObject != null)
+      this.scene.game.player.playerDamageKnockback(this.dmg, this.knockback, this.pVelocity);
 
     const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
     bombExplosion.setDepth(10).setScale(this.area/15)

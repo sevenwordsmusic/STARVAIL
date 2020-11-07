@@ -136,6 +136,21 @@ game.energyCostJetPropulsion = 5;     //energia de coste de propulsion, se gasta
 
 game.airVelocityFraction = 0.3;   //Creo que no se usa
 
+game.levelVariants = [3];
+game.levelVariants[0] = 1;
+game.levelVariants[1] = 1;
+game.levelVariants[2] = 1;
+
+game.chosenLevels = [3];
+for(var i=0; i<game.levelVariants.length; i++){
+  game.chosenLevels[i] = Math.random()*game.levelVariants[i] + 1;
+}
+
+game.npcArray = [8];
+for(var i=0; i<8; i++){
+  game.npcArray[i] = i;
+}
+
 game.moonPos = new Phaser.Math.Vector2(480, 100);
 game.currentBgAnimation = 0;
 game.transitionToScene = function(scene, keyNext, sceneNext){

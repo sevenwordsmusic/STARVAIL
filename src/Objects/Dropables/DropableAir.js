@@ -14,6 +14,7 @@ export default class DropableAir extends Dropable{
       callback:() => (this.dropablePicked(this)),
       context: this
     });
+    this.sprite.body.collisionFilter.group = -2;
   }
 
   bounce(spreadVelX, dirX, spreadVelY, dirY){
