@@ -48,12 +48,28 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('animatedBg', 'assets/animatedBgTest.png', { frameWidth: 631, frameHeight: 148 });
 
     //Tilesets de niveles y mapas de niveles
-    this.load.image("tilesBackgorund", "assets/Tilesets/background_layer.png");
-    this.load.image("tilesFront", "assets/Tilesets/front_layer.png");
-    this.load.image("tilesMain", "assets/Tilesets/main_layer.png");
-    this.load.image("tilesSecond", "assets/Tilesets/second_layer.png");
-    //this.load.tilemapTiledJSON("map", "assets/Mapas/Level1.json");
-    this.load.tilemapTiledJSON("map", "assets/Mapas/Level1.json");
+    this.load.image("tilesBackgorund1", "assets/Tilesets/level1_tiles/background_layer.png");
+    this.load.image("tilesFront1", "assets/Tilesets/level1_tiles/front_layer.png");
+    this.load.image("tilesMain1", "assets/Tilesets/level1_tiles/main_layer.png");
+    this.load.image("tilesSecond1", "assets/Tilesets/level1_tiles/second_layer.png");
+
+    this.load.image("tilesBackgorund2", "assets/Tilesets/level2_tiles/background_layer.png");
+    this.load.image("tilesFront2", "assets/Tilesets/level2_tiles/front_layer.png");
+    this.load.image("tilesMain2", "assets/Tilesets/level2_tiles/main_layer.png");
+    this.load.image("tilesSecond2", "assets/Tilesets/level2_tiles/second_layer.png");
+
+    this.load.image("tilesBackgorund3", "assets/Tilesets/level3_tiles/background_layer.png");
+    this.load.image("tilesFront3", "assets/Tilesets/level3_tiles/front_layer.png");
+    this.load.image("tilesMain3", "assets/Tilesets/level3_tiles/main_layer.png");
+    this.load.image("tilesSecond3", "assets/Tilesets/level3_tiles/second_layer.png");
+
+    this.load.image("animatedLayer1", "assets/Tilesets/animated_layer.png");
+
+    this.load.tilemapTiledJSON("map1", "assets/Mapas/Level1.json");
+    this.load.tilemapTiledJSON("map2", "assets/Mapas/Level2.json");
+    this.load.tilemapTiledJSON("map3", "assets/Mapas/Level3.json");
+    this.load.tilemapTiledJSON("map4", "assets/Mapas/FinalLevel.json");
+    this.load.tilemapTiledJSON("map0", "assets/Mapas/Tutorial.json");
 
 
     this.load.image('bullet1', 'assets/Sprites/Bullet/bullet1.png');

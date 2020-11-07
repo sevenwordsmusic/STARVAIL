@@ -19,6 +19,15 @@ import BombAir from "../Enemies/BombAir.js";
 import GunnerAir from "../Enemies/GunnerAir.js";
 import Dialog from "../Plugins/Dialog.js"
 import Mentor from "../NPCs/Mentor.js"
+import NPC_Droid_1 from "../NPCs/NPC_Droid_1.js"
+import NPC_Droid_2 from "../NPCs/NPC_Droid_2.js"
+import NPC_Droid_3 from "../NPCs/NPC_Droid_3.js"
+import NPC_Droid_4 from "../NPCs/NPC_Droid_4.js"
+import NPC_Droid_5 from "../NPCs/NPC_Droid_5.js"
+import NPC_Droid_6 from "../NPCs/NPC_Droid_6.js"
+import NPC_Droid_7 from "../NPCs/NPC_Droid_7.js"
+import NPC_Droid_8 from "../NPCs/NPC_Droid_8.js"
+import NPC_Droid_Default from "../NPCs/NPC_Droid_Default.js"
 import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
 import LevelEnd from "../Objects/LevelEnd.js";
@@ -41,6 +50,7 @@ export default class SceneTest_1 extends Phaser.Scene {
   }
   preload(){
     Dialog.preloadToScene(this);
+    //this.load.scenePlugin('AnimatedTiles', 'AnimatedTiles.js', 'animatedTiles', 'animatedTiles');
   }
 
   //Función create, que crea los elementos del propio juego.
@@ -49,8 +59,8 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     //this.playerStartX = 128;
     //this.playerStartY = 2560;
-    this.playerStartX = 416;
-    this.playerStartY = 4320;
+    this.playerStartX = 704;
+    this.playerStartY = 4512;
 
 
     new Dialog(this, 50, 400, false,5000, {
@@ -65,8 +75,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     //Camara.
     cam = this.cameras.main;
     cam.setBackgroundColor('#dddddd');
-    this.matter.world.setBounds(0, -500, 2600, 6000);
-    cam.setBounds(0, -500, 10000, 10000);/*
+    this.matter.world.setBounds(0, -500, 4000, 6000);
+    cam.setBounds(0, -500, 4000, 6000);/*
     this.matter.world.setBounds(0, -500, 2900, 2800);
     cam.setBounds(0, -500, 2880, 2784);*/
 
@@ -88,31 +98,47 @@ export default class SceneTest_1 extends Phaser.Scene {
       this.game.transitionToScene(this, 'Joystick', Joystick_test)
     },this);
 
+    console.log("a: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     //Inicializacion y creacion de mapa de tiles.
-    const map = this.make.tilemap({ key: "map" });
-    const tileset1 = map.addTilesetImage("background_layer", "tilesBackgorund", 32, 32, 0, 0);
-    const tileset2 = map.addTilesetImage("front_layer", "tilesFront", 32, 32, 0, 0);
-    const tileset3 = map.addTilesetImage("main_layer", "tilesMain", 32, 32, 0, 0);
-    const tileset4 = map.addTilesetImage("second_layer", "tilesSecond", 32, 32, 0, 0);
+    this.map = this.make.tilemap({ key: "map1" });
+    console.log("b: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
+    const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund1", 32, 32, 0, 0);
+    const tileset2 = this.map.addTilesetImage("front_layer", "tilesFront1", 32, 32, 0, 0);
+    const tileset3 = this.map.addTilesetImage("main_layer", "tilesMain1", 32, 32, 0, 0);
+    const tileset4 = this.map.addTilesetImage("second_layer", "tilesSecond1", 32, 32, 0, 0);
+    const tileset5 = this.map.addTilesetImage("animated_layer", "animatedLayer1", 32, 32, 0, 0);
+    console.log("c: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     //Capas de tiles.
 
-    const mainlayer = map.createDynamicLayer("Main_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
-    console.log(mainlayer);
+    const mainlayer = this.map.createDynamicLayer("Main_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     mainlayer.depth = -5;
-    const frontlayer = map.createDynamicLayer("Front_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    const lethallayer = this.map.createDynamicLayer("Lethal_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
+    lethallayer.depth = -10;
+    const frontlayer = this.map.createDynamicLayer("Front_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     frontlayer.depth = 25;
-    const secondlayer = map.createDynamicLayer("Second_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    const secondlayer = this.map.createDynamicLayer("Second_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     secondlayer.depth = -25;
-    const background = map.createDynamicLayer("Background_Layer", [tileset1, tileset2, tileset3, tileset4], 0, 0);
+    const background = this.map.createDynamicLayer("Background_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     background.depth = -30;
     //Colisiones de las capas.
     mainlayer.setCollisionByProperty({ Collides: true });
+    console.log("1: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     this.matter.world.convertTilemapLayer(mainlayer);
+    console.log("2: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
+
+    lethallayer.setCollisionByProperty({ Collides: true });
+    this.matter.world.convertTilemapLayer(lethallayer);
+
+    lethallayer.forEachTile(function (tile) {
+      if(tile.physics.matterBody != undefined)
+        tile.physics.matterBody.body.isSensor = true;
+    }, this);
+
     //Sistema de cargado dinamico de colliders
     var tileBodyMatrix = [];
-    for (var i = 0; i < 120; i++) {
+    for (var i = 0; i < 145; i++) {
       tileBodyMatrix[i] = [];
-      for (var j = 0; j < 150; j++) {
+      for (var j = 0; j < 155; j++) {
         tileBodyMatrix[i][j] = undefined;
       }
     }
@@ -127,7 +153,14 @@ export default class SceneTest_1 extends Phaser.Scene {
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         } else {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, false);
-          Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
+          tileBody.collisionFilter.group = 0;
+          tileBody.collisionFilter.mask = 0;
+          tileBody.isSleeping = true;
+          tileBody.ignoreGravity = true;
+          tileBody.ignorePointer = true;
+          tileBody.original = undefined;
+          //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
+
         }
         this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
         counerAux++;
@@ -136,10 +169,14 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     this.tileBodyMatrix = new Proxy(tileBodyMatrix, {
       get(target, prop) {
-        return target[Math.min(Math.max(0, prop),tileBodyMatrix[0].length-1)];
+        return target[Math.max(0, prop)];
       }
     });
     this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
+
+
+    //this.animatedTiles.init(this.map);
+
 
     this.enemyController = new Blackboard(this);
 
@@ -158,38 +195,64 @@ export default class SceneTest_1 extends Phaser.Scene {
     function spawnEnemy(enemyName, scene, xPos, yPos){
       switch(enemyName){
         case "zapper1":
-          new ZapperGround(scene, xPos, yPos);
-        break;
+          return new ZapperGround(scene, xPos, yPos);
         case "zapper2":
-          new ZapperAir(scene, xPos, yPos);
-        break;
+          return new ZapperAir(scene, xPos, yPos);
         case "sword":
-          new SwordGround(scene, xPos, yPos);
-        break;
+          return new SwordGround(scene, xPos, yPos);
         case "gunner":
-          new GunnerAir(scene, xPos, yPos);
-        break;
+          return new GunnerAir(scene, xPos, yPos);
         case "bomb":
-          new BombAir(scene, xPos, yPos);
-        break;
+          return new BombAir(scene, xPos, yPos);
         case "mecha":
-          new Mecha(scene, xPos, yPos);
-        break;
+          return new Mecha(scene, xPos, yPos);
         case "sith":
-          new Sith(scene, xPos, yPos);
-        break;
+          return new Sith(scene, xPos, yPos);
         default:
           console.log("Enemy does not exist");
-        break;
+          return null;
       }
     }
 
-    /*//inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
-    map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
+    //inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
+    this.map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
         spawnEnemy(point.name, this, point.x, point.y);
     });
 
-    map.getObjectLayer("EnemySpawn_Layer").objects.forEach(area => {
+    this.map.getObjectLayer("SpecialEvent_Layer").objects.forEach(point => {
+        const randNumber = Math.floor(Math.random()*8) + 1;
+        switch(randNumber){
+          case 1:
+            this.encounterNPC =new NPC_Droid_1(this, point.x, point.y);
+          break;
+          case 2:
+            this.encounterNPC =new NPC_Droid_2(this, point.x, point.y);
+          break;
+          case 3:
+            this.encounterNPC =new NPC_Droid_3(this, point.x, point.y);
+          break;
+          case 4:
+            this.encounterNPC =new NPC_Droid_4(this, point.x, point.y);
+          break;
+          case 5:
+            this.encounterNPC =new NPC_Droid_5(this, point.x, point.y);
+          break;
+          case 6:
+            this.encounterNPC =new NPC_Droid_6(this, point.x, point.y);
+          break;
+          case 7:
+            this.encounterNPC =new NPC_Droid_7(this, point.x, point.y);
+          break;
+          case 8:
+            this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
+          break;
+          default:
+            this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
+          break
+        }
+    });
+
+    this.map.getObjectLayer("EnemySpawn_Layer").objects.forEach(area => {
         var enemiesToSpawnArray;
         if(area.name == "both"){
           enemiesToSpawnArray = this.availableEnemiesGround.concat(this.availableEnemiesAir);
@@ -212,21 +275,29 @@ export default class SceneTest_1 extends Phaser.Scene {
           randomSpawner = Math.random();
           if(randomSpawner <= enemiesToSpawnArray[currentEnemy].probability){
             enemiesToSpawn--;
-            spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
+            if(area.properties[2].value){
+              var enemyAux = spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
+              enemyAux.encounterNPC = this.encounterNPC;
+              this.encounterNPC.enemiesLeft++;
+            }else {
+              spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
+            }
+
           }
         }
     });
 
 
-    map.getObjectLayer("Chest_Layer").objects.forEach(point => {
+    this.map.getObjectLayer("Chest_Layer").objects.forEach(point => {
       new InteractableEnergyOnce(this, point.x, point.y);
-    });*/
+    });
     new Player(this, this.playerStartX, this.playerStartY);
+    //new Mentor(this, this.playerStartX + 400, this.playerStartY)
 
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
-    new Mentor(this, this.playerStartX+400, this.playerStartY-20);
-    cam.setZoom(0.5);
+    //new Mentor(this, this.playerStartX+400, this.playerStartY-20);
+    //cam.setZoom(0.5);
 
     //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)
     new LevelEnd(this, 300, 4000, 'star', 'testsec', SceneTest_2);
@@ -272,7 +343,6 @@ export default class SceneTest_1 extends Phaser.Scene {
   //AUDIO:
    Audio.startAudioEngine(this);
    this.maxMemory = 0;
-   console.log(this.matter);
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
@@ -283,8 +353,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     console.log(this.matter.world.localWorld.bodies.length);
     console.log("   ");*/
 
-    this.maxMemory = Math.max(this.maxMemory, Math.round((performance.memory.usedJSHeapSize/1024/1024)));
-    console.log(this.maxMemory + "    " + Math.round((performance.memory.usedJSHeapSize/1024/1024)));
+    /*this.maxMemory = Math.max(this.maxMemory, Math.round((performance.memory.usedJSHeapSize/1024/1024)));
+    console.log(this.maxMemory + "    " + Math.round((performance.memory.usedJSHeapSize/1024/1024)));*/
     /*const usedHeap = performance.memory.usedJSHeapSize/1024/1024;
     if(usedHeap > 90){
       console.log("USING TOO MUCH MEMORY:  " + usedHeap);

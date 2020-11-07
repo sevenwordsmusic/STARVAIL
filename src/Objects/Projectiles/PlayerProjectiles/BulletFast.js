@@ -37,7 +37,7 @@ export default class BulletFast extends Projectile {
     if(this.target.collided && this.target.colSpecialObj != undefined && Object.getPrototypeOf(this.target.colSpecialObj.constructor) === Enemy){
       this.target.colSpecialObj.damage(this.dmg, this.pVelocity);
 
-      if(this.target.colSpecialObj.sprite.body !== undefined && this.target.colSpecialObj.sprite !== undefined && this.target.colSpecialObj !== undefined){
+      if(this.target.colSpecialObj.sprite != undefined && this.target.colSpecialObj.sprite.body != undefined){
         bombExplosion.x += (this.target.colSpecialObj.sprite.body.velocity.x*5);
         bombExplosion.y += (this.target.colSpecialObj.sprite.body.velocity.y*5);
       }
@@ -72,6 +72,7 @@ export default class BulletFast extends Projectile {
   prepareBullet(index, x, y, targetX, targetY, speed){
     //evento especial que espera a ver si el target desaparece y recalcula la nueva collision de la bala
     this.scene.events.once('noEnemy' + index, function(){
+      if(this.sprite == undefined)return;
       var auxDir = new Phaser.Math.Vector2(this.pVelocity.x, this.pVelocity.y);
       auxDir.normalize();
       this.target = SuperiorQuery.superiorRayCast(x, y, auxDir, 14 ,this.scene.bulletInteracBodies);

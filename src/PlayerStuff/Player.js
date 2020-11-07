@@ -12,7 +12,7 @@ export default class Player {
 
     scene.matter.world.on("beforeupdate", this.resetTouching, this);
     this.scene.events.on("update", this.update, this);  //para que el update funcione
-    this.scene.events.on("render", this.solveBoundry, this);  //para que el update funcione
+    //this.scene.events.on("render", this.solveBoundry, this);  //para que el update funcione
 
     this.crossCounter = 0;
 
@@ -74,7 +74,7 @@ export default class Player {
       delay: 100
     });
 
-    this.adjustedFriction = 0.2/this.scene.matter.world.getDelta();
+    this.adjustedFriction = 1.2/this.scene.matter.world.getDelta();
     this.knockVector = new Phaser.Math.Vector2(0,0);
     this.knockVecNomralized = new Phaser.Math.Vector2(0,0);
 
@@ -90,6 +90,14 @@ export default class Player {
     this.initializeWeaponsArray();
     //this.weapons[2] = {name: "Ejemplo", fireRate: 10 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 1000, energyCost: 10 , chFrame: 1};
     this.weaponCounter = 0;
+
+    this.buttons = [5];
+    for(var i=0; i<5;i++){
+      this.buttons[i] = this.scene.add.sprite(700 + i*50, 450, 'square',0).setScale(0.75).setInteractive();
+      this.buttons[i].setScrollFactor(0).setDepth(100);
+      this.buttons[i].playerInteractable = true;
+    }
+    this.nextButton = 0;
 
     if(this.scene.game.onPC){
       this.cursors = this.scene.input.keyboard.addKeys({
@@ -145,19 +153,11 @@ export default class Player {
       this.joyStick.thumb.playerInteractable = true;
       this.cursors = this.joyStick.createCursorKeys();
 
-      this.button = this.scene.add.sprite(858, 450, 'weaponsHUD',0).setScale(0.75).setInteractive();
-      this.button.setScrollFactor(0).setDepth(100);
-      this.button.playerInteractable = true;
-
       this.fireArm = new PlayerFireArmMobile(this.scene, x, y);
       this.firingPointer = undefined;
       this.movingPointer = undefined;
 
       //EVENTOS
-      this.button.on('pointerdown', function () {
-        this.changeWeapon();
-      }, this);
-
       //DISPARO
       this.scene.input.on('pointerdown', function(pointer, gameObject){
         if(gameObject[0] != undefined && gameObject[0].playerInteractable === true){
@@ -189,6 +189,11 @@ export default class Player {
       callback: this.onSensorCollide,
       context: this
     });
+    scene.matterCollision.addOnCollideStart({
+      objectA: this.mainBody,
+      callback: this.onBodyCollide,
+      context: this
+    });
 
     this.closestEnemy = undefined;
     this.initPosibleClosestEnemy();
@@ -209,6 +214,8 @@ export default class Player {
       repeat: 0,
       yoyo: true
     })
+
+    this.recieveWeapon(0);
 
     console.log(this);
   }
@@ -243,6 +250,14 @@ export default class Player {
     }
   }
 
+  onBodyCollide({ gameObjectB }){
+    if (!gameObjectB || !(gameObjectB instanceof Phaser.Tilemaps.Tile)) return;
+    const tile = gameObjectB;
+    if (tile.properties.Lethal) {
+      this.playerDamageKnockback(20, 0.8, new Phaser.Math.Vector2(-this.sprite.body.velocity.x, -this.sprite.body.velocity.y));
+    }
+  }
+
   resetTouching() {
     this.isTouching.left = false;
     this.isTouching.right = false;
@@ -252,7 +267,7 @@ export default class Player {
   }
 
   solveBoundry(){
-    if(this.updateBoundryCounterX > 0)
+    /*if(this.updateBoundryCounterX > 0)
       this.xFrontiers(1, 25);
     if(this.updateBoundryCounterX < 0)
       this.xFrontiers(-1, 25);
@@ -262,7 +277,8 @@ export default class Player {
       this.yFrontiers(1, 25);
     if(this.updateBoundryCounterY < 0)
       this.yFrontiers(-1, 25);
-    this.updateBoundryCounterY = 0;
+    this.updateBoundryCounterY = 0;*/
+
   }
 
   playerMoveForceX(){
@@ -275,11 +291,18 @@ export default class Player {
   }
 
   update(time, delta) {
-    if (!this.alive) { return; } //CAMBIAR ESPERA ACTIVA
-    //if(this.sprite.y > 5000)  this.sprite.y = 3000;
-    this.updateKnockback(time, delta);
-    this.updateBoundry();
+    if (!this.alive) { return; } 
 
+    this.updateKnockback(time, delta);
+    //this.updateBoundry();
+    if(this.sprite.body.position.x - this.earlyPos.x > 0.005)
+      this.xFrontiers(1, 25)
+    else if(this.sprite.body.position.x - this.earlyPos.x < -0.005)
+      this.xFrontiers(-1, 25)
+    if(this.sprite.body.position.y - this.earlyPos.y > 0.005)
+      this.yFrontiers(1, 25)
+    else if(this.sprite.body.position.y - this.earlyPos.y < -0.005)
+      this.yFrontiers(-1, 25)
 
     if(this.sprite.body.velocity.x > -0.01 && this.sprite.body.velocity.x < 0.01)
       this.sprite.body.velocity.x = 0;
@@ -616,6 +639,33 @@ export default class Player {
     console.log(this.weapons[this.weaponCounter].name);
   }
 
+  setWeapon(num){
+    this.scene.game.anims.resumeAll();
+    if(this.weaponCounter == 8){
+      this.fireArm.disengageLaser();
+    }
+
+    this.fireCounterHold = 0;
+    this.weaponCounter = num;
+    this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame)
+
+    if(this.weaponCounter == 8 && this.firingPointer!== undefined && this.firingPointer.isDown){
+      this.fireArm.engageLaser();
+    }
+
+    console.log(this.weapons[this.weaponCounter].name);
+  }
+
+  recieveWeapon(id){
+    const aux = this.nextButton;
+    this.buttons[aux].on('pointerdown', function () {
+      this.setWeapon(id);
+    }, this);
+    this.scene.add.image(this.buttons[aux].x, this.buttons[aux].y, this.weapons[id].wSprite,0).setScrollFactor(0).setDepth(101).setScale(2);
+
+    this.nextButton++;
+  }
+
   respawn() {
     /* POR SI QUEREMOS PARPADEO
     this.sprite.setDepth(1);
@@ -706,7 +756,7 @@ export default class Player {
       return Number.MAX_SAFE_INTEGER;
   }
 
-  updateBoundry(){
+  /*updateBoundry(){
     //console.log(this.closestEnemy.sprite.x);
     let newPlayerPos = false;
     //BOUNDRY
@@ -741,7 +791,7 @@ export default class Player {
     this.earlyPos.x = this.sprite.body.position.x;
     this.earlyPos.y = this.sprite.body.position.y;
     //BOUNDRY
-  }
+  }*/
   xFrontiers(dir, boundry){
     const xBoundry = boundry*dir;
     const yBoundry = boundry + 1; //7+2
@@ -758,25 +808,26 @@ export default class Player {
       if(bodyWAdd != undefined && !bodyWAdd.active){ //9-1 bugfix ya que el bounding box que elimina tiles es 2 casillas mas grande
         //this.scene.game.transferBody(this.scene.matter.world.localWorld.bodies, bodyWAdd.body)
         //Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
-        this.scene.matter.world.localWorld.bodies.push(bodyWAdd.body);
+        //this.scene.matter.world.localWorld.bodies.push(bodyWAdd.body);
+        bodyWAdd.body.collisionFilter.mask = 4294967295;
+        bodyWAdd.body.isSleeping = false;
         bodyWAdd.active = true;
       }
       if(bodyWRemove != undefined && bodyWRemove.active){
         //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+        //this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+        bodyWRemove.body.collisionFilter.mask = 0;
         bodyWRemove.active = false;
       }
     }
     bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  - yBoundry - 1];
     if(bodyWRemove != undefined && bodyWRemove.active){
-      //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-      this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+      bodyWRemove.body.collisionFilter.mask = 0;
       bodyWRemove.active = false;
     }
     bodyWRemove = this.scene.tileBodyMatrix[xRemove][yNormalized  + yBoundry + 1];
     if(bodyWRemove != undefined && bodyWRemove.active){
-      //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-      this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+      bodyWRemove.body.collisionFilter.mask = 0;
       bodyWRemove.active = false;
     }
     bodyWAdd = undefined;
@@ -796,25 +847,22 @@ export default class Player {
       bodyWAdd = this.scene.tileBodyMatrix[xNormalized + i][yAdd];
       bodyWRemove = this.scene.tileBodyMatrix[xNormalized + i][yRemove];
       if(bodyWAdd != null && !bodyWAdd.active){
-        //Phaser.Physics.Matter.Matter.Composite.addBody(this.scene.matter.world.localWorld, bodyWAdd.body);
-        this.scene.matter.world.localWorld.bodies.push(bodyWAdd.body);
+        bodyWAdd.body.collisionFilter.mask = 4294967295;
+        bodyWAdd.body.isSleeping = false;
         bodyWAdd.active = true;
       }
       if(bodyWRemove != null && bodyWRemove.active){
-        //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+        bodyWRemove.body.collisionFilter.mask = 0;
         bodyWRemove.active = false;
       }
       bodyWRemove = this.scene.tileBodyMatrix[xNormalized - xBoundry - 1][yRemove];
       if(bodyWRemove != null && bodyWRemove.active){
-        //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+        bodyWRemove.body.collisionFilter.mask = 0;
         bodyWRemove.active = false;
       }
       bodyWRemove = this.scene.tileBodyMatrix[xNormalized + xBoundry + 1][yRemove];
       if(bodyWRemove != null && bodyWRemove.active){
-        //Phaser.Physics.Matter.Matter.Composite.removeBody(this.scene.matter.world.localWorld, bodyWRemove.body);
-        this.scene.matter.world.localWorld.bodies.splice(this.scene.matter.world.localWorld.bodies.indexOf(bodyWRemove.body), 1);
+        bodyWRemove.body.collisionFilter.mask = 0;
         bodyWRemove.active = false;
       }
     }

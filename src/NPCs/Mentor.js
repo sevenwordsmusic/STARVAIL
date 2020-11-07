@@ -66,19 +66,6 @@ export default class Mentor extends FiniteStateMachine{
     this.dialogArray[2] = `prueba3`;
     this.currentDialog = -1;
 
-    this.sprite.on('pointerdown', function() {
-      if(!this.isTalking){
-        //AUDIO (número de palabras, escena, personaje);
-            Audio.chat(5, scene, 0);
-         //
-        this.isTalking = true;
-        this.scene.dialogManager.setCurrentSpeaker(this);
-        this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
-        this.scene.dialogManager.showDialogBox();
-        this.goTo((this.currentStateId() + 1)%this.numberOfStates());
-      }
-    }, this);
-
     //IA
     //this.initializeAI(4);
     this.initializeAI(4);

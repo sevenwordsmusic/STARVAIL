@@ -131,13 +131,13 @@ export default class Missile extends Projectile {
         Audio.play3DinstanceRnd(this,16);
         this.sfx.volume= 0.0;
       //
+    this.sensor = undefined;
     super.itemExpire();
 
     this.pVelocity = undefined;
-    this.sensor = undefined;
     this.bombArmed1 = undefined;
     this.sfx = undefined;
-    thid.sprite = undefined;
+    this.scene = undefined
   }
 
   damageEnemiesArea(){

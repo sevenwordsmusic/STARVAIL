@@ -2,6 +2,36 @@
 
 //DESTRUCTOR GLOBAL AL SALIR/REFRESCAR
 window.addEventListener("beforeunload", function (e) {
+  /*game.player.alive = false;
+  //console.log(scene.scene.key);
+  game.player.scene.input.keyboard.shutdown();
+  scene.input.shutdown();
+  if(scene.enemyController != undefined)
+    scene.enemyController.destroy();
+
+  for(var i=0; i<scene.tileBodyMatrix.length; i++){
+    Phaser.Physics.Matter.Matter.World.remove(scene.matter.world.localWorld, scene.tileBodyMatrix[i].body);
+    scene.tileBodyMatrix[i].body = undefined;
+    scene.tileBodyMatrix = undefined;
+  }
+  scene.tileBodyMatrix = [];
+  for(var i=0; i<this.matter.world.localWorld.bodies.length; i++){
+    this.matter.world.localWorld.bodies[i] = undefined;
+  }
+  this.matter.world.localWorld.bodies = [];
+
+  this.map.destroy();
+  this.map = undefined;
+
+  for(var i=0; i<this.make.displayList.list.length; i++){
+    this.make.displayList.list[i] = undefined;
+  }
+  this.make.displayList.list = [];
+
+
+  scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());*/
+
+  game.cache.destroy();
   game.destroy(true, true);
   localStorage.clear();
   sessionStorage.clear();
@@ -15,6 +45,7 @@ import Chatter from "./Chatter.js";
 import SceneTest_1 from "./Scenes/SceneTest_1.js";
 import SceneTest_2 from "./Scenes/SceneTest_2.js";
 import Joystick_test from "./Scenes/Joystick_test.js";
+import AnimatedTiles from "./Plugins/tileAnimator.js"
 
 //Configuración de Phaser 3
 var config = {
@@ -32,7 +63,7 @@ var config = {
     default: 'matter',
     matter: {
       gravity: { y: 0.98 },
-      debug: true
+      debug: false
     }
   },
   //escenas principales
@@ -51,6 +82,11 @@ var config = {
         plugin: PhaserMatterCollisionPlugin,
         key: "matterCollision",
         mapping: "matterCollision"
+      },
+      {
+        plugin: AnimatedTiles,
+        key: "animatedTiles",
+        mapping: "animatedTiles"
       }
     ]
   }
@@ -81,11 +117,35 @@ game.transitionToScene = function(scene, keyNext, sceneNext){
   var SceneCurrentClass = eval(scene.constructor.name);
   var SceneNextClass = sceneNext;
   scene.cameras.main.once('camerafadeoutcomplete', function (camera) {
+    game.player.alive = false;
     //console.log(scene.scene.key);
     scene.input.keyboard.shutdown();
     scene.input.shutdown();
+    if(scene.enemyController != undefined)
+      scene.enemyController.destroy();
+
+    for(var i=0; i<scene.tileBodyMatrix.length; i++){
+      Phaser.Physics.Matter.Matter.World.remove(scene.matter.world.localWorld, scene.tileBodyMatrix[i].body);
+      scene.tileBodyMatrix[i].body = undefined;
+      scene.tileBodyMatrix = undefined;
+    }
+    scene.tileBodyMatrix = [];
+    for(var i=0; i<scene.matter.world.localWorld.bodies.length; i++){
+      scene.matter.world.localWorld.bodies[i] = undefined;
+    }
+    scene.matter.world.localWorld.bodies = [];
+
+    scene.map.destroy();
+    scene.map = undefined;
+
+    for(var i=0; i<scene.make.displayList.list.length; i++){
+      scene.make.displayList.list[i] = undefined;
+    }
+    scene.make.displayList.list = [];
+
+
     scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());
-    scene.game.scene.add('', new SceneNextClass(keyNext + ((SceneNextClass.getNumber()+ 1)%5)), true);
+    game.scene.add('', new SceneNextClass(keyNext + ((SceneNextClass.getNumber()+ 1)%5)) , true);
   }, scene);
   scene.cameras.main.fadeOut(1000);
 }

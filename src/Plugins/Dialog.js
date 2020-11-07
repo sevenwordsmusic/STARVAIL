@@ -105,7 +105,7 @@ export default class Dialog {
         //})
 
 
-        this.textBox.setScrollFactor(0).setDepth(101);
+        this.textBox.setScrollFactor(0).setDepth(105);
         this.textBox.playerInteractable = true;
         this.hideDialogBox();
     }
