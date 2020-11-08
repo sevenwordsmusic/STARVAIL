@@ -135,7 +135,7 @@ export default class Boss extends Enemy {
       },this);
       this.laserTimer = this.scene.time.addEvent({
         delay: Phaser.Math.Between(this.laserFire - this.laserFireRand, this.laserFire + this.laserFireRand),
-        callback: () => (this.goTo(1))
+        callback: () => (this.goTo(1), this.laserTimer.remove())
       },this);
     })
 

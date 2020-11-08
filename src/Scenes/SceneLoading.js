@@ -6,6 +6,65 @@ export default class SceneLoading extends Phaser.Scene {
 
   preload(){
     //IMAGES, SPRITES, SPRITESHEETS
+
+    //MENUS
+    //Splash menu
+    this.load.image('btnTitle', 'assets/lowResLogo.png');
+    this.load.image('corners', 'assets/Menu corners.png');
+
+    //Score menu
+    this.load.image('ScoreScreen', 'assets/Score screen menu/Botones Score.png'); //field
+    this.load.image('btnExitScore', 'assets/Score screen menu/btnExitScoreMenu.png'); //btn exit
+    this.load.image('btnCreditsScore', 'assets/Score screen menu/btnCreditsScoreMenu.png'); //btn credits
+    this.load.image('btnRankingScore', 'assets/Score screen menu/btnRankingScoreMenu.png'); //btn ranking
+
+    //Credits menu
+    this.load.image('RankingScreen', 'assets/Ranking menu/Botones Ranking.png'); //field
+    this.load.image('btnExitRanking', 'assets/Ranking menu/btnExitRanking.png'); //btn exit
+
+    //Pause menu
+    this.load.image('PauseScreen', 'assets/Pause menu/Botones Mpausa.png'); //field
+    this.load.image('btnResumeGamePause', 'assets/Pause menu/btnResumePauseMenu.png'); //btn resume
+    this.load.image('btnOptionsGame', 'assets/Pause menu/btnOptionsPauseMenu.png'); //btn options
+    this.load.image('btnExitPause', 'assets/Pause menu/btnExitPauseMenu.png'); //btn exit
+
+    //Options menu
+    this.load.image('OptionsScreen', 'assets/Options menu/OMScreen.png'); //field
+    this.load.image('btnExitOptionsMM', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
+    this.load.image('btnMinus', 'assets/Options menu/btnMinusOptionsMenu.png'); //btn minus
+    this.load.image('btnMusic', 'assets/Options menu/btnMusicOptionsMenu.png'); //btn music
+    this.load.image('btnPlus', 'assets/Options menu/btnPlusOptionsMenu.png'); //btn plus
+    this.load.image('btnSFX', 'assets/Options menu/btnSFXOptionsMenu.png'); //btn sfx
+
+    //Options menu
+    this.load.image('OptionsScreenGame', 'assets/Options menu/OMScreen.png'); //field
+    this.load.image('btnExitOptionsGame', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
+
+    //Main menu
+    this.load.image('MMScreen', 'assets/Main menu/MMScreen.png'); //field
+    this.load.image('btnStart', 'assets/Main menu/btnStartMainMenu.png'); //btn start
+    this.load.image('btnCredits', 'assets/Main menu/btnCreditsMainMenu.png'); //btn credits
+    this.load.image('btnOptions', 'assets/Main menu/btnOptionsMainMenu.png'); //btn options
+
+    //Credits menu
+    this.load.image('CreditsScreen', 'assets/Credits menu/CMScreen.png'); //field
+    this.load.image('btnExitCredits', 'assets/Credits menu/btnExitCredits.png'); //btn exit
+    this.load.image('btnLinkedin', 'assets/Credits menu/Boton linkedin.png'); //btn linkedin
+
+    //Credits menu
+    this.load.image('CreditsScoreScreen', 'assets/Credits menu/CMScreen.png'); //field
+    this.load.image('btnExitCreditsScore', 'assets/Credits menu/btnExitCredits.png'); //btn exit
+    this.load.image('btnLinkedinScore', 'assets/Credits menu/Boton linkedin.png'); //btn linkedin
+
+    //Game over menu
+    this.load.image('GOScreen', 'assets/Game over menu/GOScreen.png'); //field
+    this.load.image('btnExitGameOver', 'assets/Game over menu/btnExitGameOver.png'); //btn exit
+    this.load.image('btnPlayAgainGameOver','assets/Game over menu/btnPlayAgainGameOver.png'); //btn play again
+
+    this.load.image('btnPause', 'assets/BtnPauseGame.png'); //btn pause
+    //MENUS
+
+
     this.load.image('square', 'assets/square.jpg');
     this.load.image('star', 'assets/star.png');
     this.load.spritesheet('crosshair', 'assets/HUD/crosshair.png', { frameWidth: 64, frameHeight: 64 });
@@ -78,6 +137,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('bullet2', 'assets/Sprites/Bullet/bullet2.png');
     this.load.image('bullet3', 'assets/Sprites/Bullet/bullet3.png');
     this.load.image('missile', 'assets/Sprites/Bullet/missile.png');
+    this.load.spritesheet('bullets', 'assets/Sprites/Bullet/bullets.png', { frameWidth: 15, frameHeight: 15 });
     this.load.spritesheet('laser', 'assets/Sprites/Bullet/laser.png', { frameWidth: 18, frameHeight: 600 });
     this.load.spritesheet('explodingBomb', 'assets/Sprites/Bomb/bomb_ss.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('bulletImpact', 'assets/Sprites/Impacts/expansive_100x100px.png', { frameWidth: 100, frameHeight: 100 });
@@ -287,6 +347,7 @@ export default class SceneLoading extends Phaser.Scene {
         repeat: 1
     });
     //transicion a siguiente escena
+    //this.scene.start("SceneSplashScreen");
     this.scene.start("test1");
 
   }

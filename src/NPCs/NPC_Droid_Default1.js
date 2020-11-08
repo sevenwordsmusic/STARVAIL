@@ -3,7 +3,7 @@ import FiniteStateMachine from "../FiniteStateMachine.js"
 import Dialog from "../Plugins/Dialog.js"
 
 //Clase padre de todos los enemigos
-export default class NPC_Droid_Default extends FiniteStateMachine{
+export default class NPC_Droid_Default1 extends FiniteStateMachine{
   constructor(scene, x, y){
     super();
     //inicializacion
@@ -12,17 +12,6 @@ export default class NPC_Droid_Default extends FiniteStateMachine{
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
     this.isTalking = false;
-    /*
-    0 - balas normales
-    1 - balas rapidas
-    2 - balas explosivas
-    3 - balas rebotantes
-    4 - bombas normales
-    5 - bombas megaton
-    6 - misiles
-    7 - misiles que se separan en bombas
-    8 - laser
-    */
 
     this.dialogArray = [];
     this.dialogArray[0] = `Dialogo defecto`;

@@ -4,19 +4,6 @@ export default class SceneExample extends Phaser.Scene {
     super("SceneCreditsScore");
   }
 
-
-  //Se carga antes de ejecutar la escena. En este sitio se asignan las variables, se buscan los assets que se van a usar, se llama a los plugins, etc.
-  preload(){
-
-    //Credits menu
-    this.load.image('CreditsScoreScreen', 'assets/Credits menu/CMScreen.png'); //field
-    this.load.image('btnExitCreditsScore', 'assets/Credits menu/btnExitCredits.png'); //btn exit
-    this.load.image('btnLinkedinScore', 'assets/Credits menu/Boton linkedin.png'); //btn linkedin
-
-    //Corners
-    this.load.image('corners', 'assets/Menu corners.png');
-  }
-
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
 
@@ -28,7 +15,7 @@ export default class SceneExample extends Phaser.Scene {
 
     //Credits field
     var CreditsScoreScreen=this.add.image(0,0,'CreditsScoreScreen').setOrigin(0,0).setScale(0.25).setAlpha(0.8);
-    
+
     //Boton exit
     this.btnExitCreditsScore = this.add.image(480,455,'btnExitCreditsScore').setScale(0.25).setAlpha(0.8);
 		this.btnExitCreditsScore.setInteractive({ useHandCursor: true  } )
@@ -80,7 +67,7 @@ export default class SceneExample extends Phaser.Scene {
     this.btnLinkedinScoreAlberto.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
-  
+
     //Boton linkedin Nikola
     this.btnLinkedinScoreNikola = this.add.image(525,293,'btnLinkedinScore').setScale(0.25).setAlpha(0.8);
 		this.btnLinkedinScoreNikola.setInteractive({ useHandCursor: true  } )
@@ -126,7 +113,7 @@ export default class SceneExample extends Phaser.Scene {
 
   irAlLink(urllink){
     //window.location.href = 'https://www.youtube.com/watch?v=5XjcUvaDTK4&t=408s&ab_channel=gammafp';
-  
+
     this.url = urllink;
     window.open(this.url);
   }

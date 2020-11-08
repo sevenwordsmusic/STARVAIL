@@ -85,7 +85,10 @@ export default class Mentor extends FiniteStateMachine{
       this.scene.dialogManager.showDialogBox();
     })
     this.stateOnStart(2, function(){
-      this.moveTo(this.tutorialPositions[this.currentDialog]);
+      if(this.currentDialog < this.tutorialPositions.length)
+        this.moveTo(this.tutorialPositions[this.currentDialog]);
+      else
+        this.goTo(1);
     })
     this.stateUpdate(2, function(time, delta){
       if(this.touchingGround){

@@ -27,7 +27,8 @@ import NPC_Droid_5 from "../NPCs/NPC_Droid_5.js"
 import NPC_Droid_6 from "../NPCs/NPC_Droid_6.js"
 import NPC_Droid_7 from "../NPCs/NPC_Droid_7.js"
 import NPC_Droid_8 from "../NPCs/NPC_Droid_8.js"
-import NPC_Droid_Default from "../NPCs/NPC_Droid_Default.js"
+import NPC_Droid_Default1 from "../NPCs/NPC_Droid_Default1.js"
+import NPC_Droid_Default2 from "../NPCs/NPC_Droid_Default2.js"
 import BossBefore from "../NPCs/BossBefore.js"
 import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
@@ -58,15 +59,30 @@ export default class SceneTest_1 extends Phaser.Scene {
   create() {
     console.log(this);
 
-    //this.playerStartX = 128;
-    //this.playerStartY = 2560;
-    this.playerStartX = 704;
-    this.playerStartY = 4512;
+    //INTERFAZ
 
-    //final = 448 , 1184
-    //tutorial = 128 , 2560
-    //nivel 1 = 704 , 4512
+    //Options field
+    //var ebi=this.add.image(0,0,'ebi').setOrigin(0,0).setScale(0.25);
 
+    //Boton pause
+    this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0);
+		this.botonPause.setInteractive({ useHandCursor: true  } )
+    .on('pointerdown', () => this.pauseGame());
+
+    this.botonPause.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+
+    this.botonPause.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
+
+    //Pausa a traves de teclado
+    //Creamos la tecla correspondiente con ESCAPE
+    this.ESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.inPause=false;
+
+    //INTERFAZ
 
     new Dialog(this, 50, 400, false,5000, {
       wrapWidth: 700,
@@ -104,8 +120,9 @@ export default class SceneTest_1 extends Phaser.Scene {
     },this);
 
     console.log("a: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
+
     //Inicializacion y creacion de mapa de tiles.
-    this.map = this.make.tilemap({ key: "map1" });
+    this.map = this.make.tilemap({ key: "map0" });
     console.log("b: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund1", 32, 32, 0, 0);
     const tileset2 = this.map.addTilesetImage("front_layer", "tilesFront1", 32, 32, 0, 0);
@@ -113,8 +130,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     const tileset4 = this.map.addTilesetImage("second_layer", "tilesSecond1", 32, 32, 0, 0);
     const tileset5 = this.map.addTilesetImage("animated_layer", "animatedLayer1", 32, 32, 0, 0);
     console.log("c: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
-    //Capas de tiles.
 
+    //Capas de tiles.
     const mainlayer = this.map.createDynamicLayer("Main_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     mainlayer.depth = -5;
     const lethallayer = this.map.createDynamicLayer("Lethal_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
@@ -125,6 +142,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     secondlayer.depth = -25;
     const background = this.map.createDynamicLayer("Background_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
     background.depth = -30;
+
     //Colisiones de las capas.
     mainlayer.setCollisionByProperty({ Collides: true });
     console.log("1: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
@@ -134,12 +152,75 @@ export default class SceneTest_1 extends Phaser.Scene {
     lethallayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(lethallayer);
 
+    //capa letal pasa a ser un senosr
     lethallayer.forEachTile(function (tile) {
       if(tile.physics.matterBody != undefined)
         tile.physics.matterBody.body.isSensor = true;
     }, this);
 
-    //Sistema de cargado dinamico de colliders
+    //inicializamos el controlador de enemigos
+    this.enemyController = new Blackboard(this);
+
+    //se crean objetos esenciales de cada nivel como el player, los npcs, el boss....
+    this.map.getObjectLayer("Special_Layer").objects.forEach(point => {
+      if(point.name == "player"){
+        this.playerStartX = point.x;
+        this.playerStartY = point.y;
+      }
+      else if(point.name == "goal"){
+        this.goalX = point.x;
+        this.goalY = point.y;
+      }
+      else if(point.name == "boss"){
+        new BossBefore(this, point.x, point.y);
+      }
+      else if(point.name == "NPC1"){
+        new NPC_Droid_Default1(this, point.x, point.y);
+      }
+      else if(point.name == "NPC2"){
+        new NPC_Droid_Default2(this, point.x, point.y);
+      }
+      else if(point.name == "goal"){
+        this.goalX = point.x;
+        this.goalY = point.y;
+      }
+      else if(point.name == "NPC"){
+        const randNumber = Math.floor(Math.random()*this.game.npcArray.length) + 1;
+        const npcNumber = this.game.npcArray[randNumber];
+        switch(npcNumber){
+          case 1:
+            this.encounterNPC =new NPC_Droid_1(this, point.x, point.y);
+          break;
+          case 2:
+            this.encounterNPC =new NPC_Droid_2(this, point.x, point.y);
+          break;
+          case 3:
+            this.encounterNPC =new NPC_Droid_3(this, point.x, point.y);
+          break;
+          case 4:
+            this.encounterNPC =new NPC_Droid_4(this, point.x, point.y);
+          break;
+          case 5:
+            this.encounterNPC =new NPC_Droid_5(this, point.x, point.y);
+          break;
+          case 6:
+            this.encounterNPC =new NPC_Droid_6(this, point.x, point.y);
+          break;
+          case 7:
+            this.encounterNPC =new NPC_Droid_7(this, point.x, point.y);
+          break;
+          case 8:
+            this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
+          break;
+          default:
+            this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
+          break
+        }
+        this.game.npcArray.splice(randNumber,1);
+      }
+    });
+
+    //Sistema dinámico de modificacion de collisiones
     var tileBodyMatrix = [];
     for (var i = 0; i < 145; i++) {
       tileBodyMatrix[i] = [];
@@ -179,11 +260,10 @@ export default class SceneTest_1 extends Phaser.Scene {
     });
     this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
 
+    //animacion de tiles de la capa de tiels animada
     this.animatedTiles.init(this.map);
 
-    this.enemyController = new Blackboard(this);
-
-
+    //arrays de enemigos de tierra/aire disponibles
     this.availableEnemiesGround = [];
     this.availableEnemiesGround[0] = {name: "zapper1", probability: 1};
     /*this.availableEnemiesGround[1] = {name: "sword", probability: 1};
@@ -195,6 +275,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     /*this.availableEnemiesAir[1] = {name: "gunner", probability: 1};
     this.availableEnemiesAir[2] = {name: "bomb", probability: 1};*/
 
+    //funcion crear enemigo
     function spawnEnemy(enemyName, scene, xPos, yPos){
       switch(enemyName){
         case "zapper1":
@@ -217,134 +298,77 @@ export default class SceneTest_1 extends Phaser.Scene {
       }
     }
 
-    //inicialización de enemigos y cofres de capa de enemigos (SIEMPRE POR ENCIMA DEL JUGADOR!)
-    this.map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
-        spawnEnemy(point.name, this, point.x, point.y);
-    });
+    //inicialización de enemigos y cofres de capa de enemigos
+    if(this.map.getObjectLayer("Enemy_Layer") != null)
+      this.map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
+          spawnEnemy(point.name, this, point.x, point.y);
+      });
 
-    this.map.getObjectLayer("SpecialEvent_Layer").objects.forEach(point => {
-        const randNumber = Math.floor(Math.random()*this.game.npcArray.length) + 1;
-        const npcNumber = this.game.npcArray[randNumber];
-        switch(npcNumber){
-          case 1:
-            this.encounterNPC =new NPC_Droid_1(this, point.x, point.y);
-          break;
-          case 2:
-            this.encounterNPC =new NPC_Droid_2(this, point.x, point.y);
-          break;
-          case 3:
-            this.encounterNPC =new NPC_Droid_3(this, point.x, point.y);
-          break;
-          case 4:
-            this.encounterNPC =new NPC_Droid_4(this, point.x, point.y);
-          break;
-          case 5:
-            this.encounterNPC =new NPC_Droid_5(this, point.x, point.y);
-          break;
-          case 6:
-            this.encounterNPC =new NPC_Droid_6(this, point.x, point.y);
-          break;
-          case 7:
-            this.encounterNPC =new NPC_Droid_7(this, point.x, point.y);
-          break;
-          case 8:
-            this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
-          break;
-          default:
-            this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
-          break
-        }
-        this.game.npcArray.splice(randNumber,1);
-    });
-
-    this.map.getObjectLayer("EnemySpawn_Layer").objects.forEach(area => {
-        var enemiesToSpawnArray;
-        if(area.name == "both"){
-          enemiesToSpawnArray = this.availableEnemiesGround.concat(this.availableEnemiesAir);
-        }else if(area.name == "ground"){
-          enemiesToSpawnArray = this.availableEnemiesGround;
-        }else if (area.name == "air") {
-          enemiesToSpawnArray =  this.availableEnemiesAir;
-        }else{
-          enemiesToSpawnArray = [];
-        }
-        const minCounter = 0;
-        const maxCounter = enemiesToSpawnArray.length - 1;
-        var enemiesToSpawn = Phaser.Math.Between(area.properties[1].value, area.properties[0].value);
-        var currentEnemy;
-        var randomSpawner;
-        var breaker = 0;
-        while(enemiesToSpawn > 0 && breaker < 100){   //por si acaso
-          breaker++;
-          currentEnemy = Phaser.Math.Between(minCounter, maxCounter);
-          randomSpawner = Math.random();
-          if(randomSpawner <= enemiesToSpawnArray[currentEnemy].probability){
-            enemiesToSpawn--;
-            if(area.properties[2].value){
-              var enemyAux = spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
-              enemyAux.encounterNPC = this.encounterNPC;
-              this.encounterNPC.enemiesLeft++;
-            }else {
-              spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
-            }
-
+    if(this.map.getObjectLayer("EnemySpawn_Layer") != null)
+      this.map.getObjectLayer("EnemySpawn_Layer").objects.forEach(area => {
+          var enemiesToSpawnArray;
+          if(area.name == "both"){
+            enemiesToSpawnArray = this.availableEnemiesGround.concat(this.availableEnemiesAir);
+          }else if(area.name == "ground"){
+            enemiesToSpawnArray = this.availableEnemiesGround;
+          }else if (area.name == "air") {
+            enemiesToSpawnArray =  this.availableEnemiesAir;
+          }else{
+            enemiesToSpawnArray = [];
           }
-        }
-    });
+          const minCounter = 0;
+          const maxCounter = enemiesToSpawnArray.length - 1;
+          var enemiesToSpawn = Phaser.Math.Between(area.properties[1].value, area.properties[0].value);
+          var currentEnemy;
+          var randomSpawner;
+          var breaker = 0;
+          while(enemiesToSpawn > 0 && breaker < 100){   //por si acaso
+            breaker++;
+            currentEnemy = Phaser.Math.Between(minCounter, maxCounter);
+            randomSpawner = Math.random();
+            if(randomSpawner <= enemiesToSpawnArray[currentEnemy].probability){
+              enemiesToSpawn--;
+              if(area.properties[2].value){
+                var enemyAux = spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
+                enemyAux.encounterNPC = this.encounterNPC;
+                this.encounterNPC.enemiesLeft++;
+              }else {
+                spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
+              }
 
+            }
+          }
+      });
 
-    this.map.getObjectLayer("Chest_Layer").objects.forEach(point => {
-      new InteractableEnergyOnce(this, point.x, point.y);
-    });
-    //new BossBefore(this, 3010, 980);
+    if(this.map.getObjectLayer("Chest_Layer") != null)
+      this.map.getObjectLayer("Chest_Layer").objects.forEach(point => {
+        new InteractableEnergyOnce(this, point.x, point.y);
+      });
+
+    if(this.map.getObjectLayer("Waypoint_Layer") != null)
+      this.map.getObjectLayer("Waypoint_Layer").objects.forEach(point => {
+        if(point.name == "01")
+          this.mentor = new Mentor(this, point.x, point.y);
+
+        /*array de posiciones aqui
+          var arrayPuntos = []
+          ...
+          ...
+          this.mentor.tutorialPositions = arrayPuntos;
+          //por ultimo modifica el array de dialogos de Mentor.js
+        */
+      });
+
+    //jugador
     new Player(this, this.playerStartX, this.playerStartY);
     //new Mentor(this, this.playerStartX + 400, this.playerStartY)
 
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
-    //new Mentor(this, this.playerStartX+400, this.playerStartY-20);
-    //cam.setZoom(0.5);
-
-    //inicialización de meta (SIEMPRE POR DEBAJO DEL JUGADOR!)
-    new LevelEnd(this, 300, 4000, 'star', 'testsec', SceneTest_2);
-
-    //var sssd = new HealthBar(this, 400, 400, 300, 20, 0x00ff00, 0x000000, 0xffffff, 100);
-    //Colisiones del escneario con el jugador
-    /*this.matterCollision.addOnCollideStart({
-      objectA: this.game.player.mainBody,
-      callback: lethalCollide,
-      context: this.game.player
-    });
-
-    //Función lethalCollide, que comprueba si la colisión con los pinchos ha sido letal.
-    function lethalCollide({ gameObjectB }) {
-      if (!gameObjectB || !(gameObjectB instanceof Phaser.Tilemaps.Tile)) return;
-      const tile = gameObjectB;
-      if (tile.properties.lethal) {
-        //this.damaged(new Phaser.Math.Vector2(this.sprite.x - gameObjectB.x, -(this.sprite.y - gameObjectB.y)), 60);
-        console.log("damage");
-      }
-    }*/
-
-    /*
-    //Colisiones con los jugadores androides.
-    for (var i = 0; i < orangeRays.length; i++) {
-      //Cambiamos el collider.
-      orangeRays[i].setRectangle(16, 32);
-      if (i >= 11)
-        orangeRays[i].setAngle(90);
-      orangeRays[i].setStatic(true).setSensor(true);
-      this.matterCollision.addOnCollideStart({
-        objectA: this.game.player.mainBody,
-        objectB: orangeRays[i],
-        callback: inflictDamage,
-        context: this.game.player
-      });
-    }*/
+    //inicialización de meta
+    new LevelEnd(this, this.goalX, this.goalY, 'star', 'testsec', SceneTest_2);
 
     this.input.setDefaultCursor('none');
-    /*var keyObj = this.input.keyboard.addKey('K');  // Get key object
-    keyObj.on('down', function(event) { console.log("k presionada"); });*/
 
   //AUDIO:
    Audio.startAudioEngine(this);
@@ -352,8 +376,25 @@ export default class SceneTest_1 extends Phaser.Scene {
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
+    //AUDIO:
+    Audio.audioUpdate(this);
+
     this.moon.x += (delta/50);
     this.game.moonPos.x = this.moon.x;
+
+
+    if (this.ESC.isDown){
+      if (!this.inPause) {
+        this.inPause = true;
+      }
+    }
+
+    if (this.ESC.isUp) {
+      if (this.inPause){
+      this.inPause = false;
+      this.pauseGame();
+      }
+    }
 
     /*console.log(Phaser.Physics.Matter.Matter.Composite.allBodies(this.matter.world.localWorld).length);
     console.log(this.matter.world.localWorld.bodies.length);
@@ -365,8 +406,16 @@ export default class SceneTest_1 extends Phaser.Scene {
     if(usedHeap > 90){
       console.log("USING TOO MUCH MEMORY:  " + usedHeap);
     }*/
-  //AUDIO:
-  Audio.audioUpdate(this);
+  }
+
+  pauseGame(){
+    console.log("Juego pausado");
+
+    this.botonPause.alpha=0.8;
+
+    this.scene.run("ScenePause");
+    this.scene.bringToTop("ScenePause");
+    this.scene.pause('test' + (SceneTest_1.getNumber()));
   }
 
   startDebugLoop(deltaLoop, memoryLoop){
@@ -390,110 +439,6 @@ export default class SceneTest_1 extends Phaser.Scene {
   }
 }
 
-/*this.cameras.remove(this.cameras.main)
-cam = new CameraTest(0,0);
-cam.setScene(this);
-this.cameras.addExisting(cam);*/
-/*class CameraTest extends Phaser.Cameras.Scene2D.Camera{
-  constructor(x,y){
-    super(x,y,960,540);
-  }
-  preRender(resolution){
-    var width = this.width;
-    var height = this.height;
-
-    var halfWidth = width * 0.5;
-    var halfHeight = height * 0.5;
-
-    var zoom = this.zoom * resolution;
-    var matrix = this.matrix;
-
-    var originX = width * this.originX;
-    var originY = height * this.originY;
-
-    var follow = this._follow;
-    var deadzone = this.deadzone;
-
-    var sx = this.scrollX;
-    var sy = this.scrollY;
-
-    if (deadzone)
-    {
-        CenterOn(deadzone, this.midPoint.x, this.midPoint.y);
-    }
-
-    if (follow && !this.panEffect.isRunning)
-    {
-        var fx = (follow.x - this.followOffset.x);
-        var fy = (follow.y - this.followOffset.y);
-
-        if (deadzone)
-        {
-            if (fx < deadzone.x)
-            {
-                sx = Phaser.Math.Linear(sx, sx - (deadzone.x - fx), this.lerp.x);
-            }
-            else if (fx > deadzone.right)
-            {
-                sx = Phaser.Math.Linear(sx, sx + (fx - deadzone.right), this.lerp.x);
-            }
-
-            if (fy < deadzone.y)
-            {
-                sy = Phaser.Math.Linear(sy, sy - (deadzone.y - fy), this.lerp.y);
-            }
-            else if (fy > deadzone.bottom)
-            {
-                sy = Phaser.Math.Linear(sy, sy + (fy - deadzone.bottom), this.lerp.y);
-            }
-        }
-        else
-        {
-            sx = Phaser.Math.Linear(sx, fx - originX, this.lerp.x);
-            sy = Phaser.Math.Linear(sy, fy - originY, this.lerp.y);
-        }
-    }
-
-    if (this.useBounds)
-    {
-        sx = this.clampX(sx);
-        sy = this.clampY(sy);
-    }
-
-    if (this.roundPixels)
-    {
-        originX = Math.round(originX);
-        originY = Math.round(originY);
-    }
-
-    //  Values are in pixels and not impacted by zooming the Camera
-    this.scrollX = sx;
-    this.scrollY = sy;
-
-    var midX = sx + halfWidth;
-    var midY = sy + halfHeight;
-
-    //  The center of the camera, in world space, so taking zoom into account
-    //  Basically the pixel value of what it's looking at in the middle of the cam
-    this.midPoint.set(midX, midY);
-
-    var displayWidth = width / zoom;
-    var displayHeight = height / zoom;
-
-    this.worldView.setTo(
-        midX - (displayWidth / 2),
-        midY - (displayHeight / 2),
-        displayWidth,
-        displayHeight
-    );
-
-    matrix.applyITRS(this.x + originX, this.y + originY, this.rotation, zoom, zoom);
-    matrix.translate(-originX, -originY);
-
-    this.shakeEffect.preRender();
-  }
-
-}*/
 
 class BodyWrapper {
   constructor(body, active) {

@@ -508,17 +508,24 @@ export default class Player {
   }
 
   playerDeath(){
-    this.alive = false;
-    this.offJet();
-    this.scene.input.off('pointerdown');
-    this.scene.input.off('pointerup');
-    if(this.weaponChange != undefined) {this.weaponChange.destroy();}
-    this.fireArm.destroyFireArm();
-    this.movingArm.destroy();
-    this.sprite.anims.play('death', true);
-    //this.sprite.body.collisionFilter.mask = 0;
+    if(this.alive){
+      this.alive = false;
 
-    console.log("Te has Muerto...");
+      if(this.scene.boss != undefined)
+        this.scene.boss.goTo(5);
+
+      this.offJet();
+      this.scene.input.off('pointerdown');
+      this.scene.input.off('pointerup');
+      if(this.weaponChange != undefined) {this.weaponChange.destroy();}
+      this.fireArm.destroyFireArm();
+      this.movingArm.destroy();
+      this.sprite.anims.play('death', true);
+      //this.sprite.body.collisionFilter.mask = 0;
+
+      console.log("Te has Muerto...");
+      this.scene.game.changeScene(this.scene, "SceneGameOver");
+    }
   }
 
   playerUseEnergy(num){
@@ -541,14 +548,14 @@ export default class Player {
   initializeWeaponsArray(){
     //creacion de armas con nombre, "rate" de ataque (cuanto más grande más lento), velocidad de proyectil, tiempo de vida de proyectil, coste de energia por disparo,
     //cuanta proporción de "recovery de energía" hay al disparar (por ej: si es 0.5 recuperamos la mitad de energía que de normal cada update), el sprite del proyectil, el frame del crosshair.png que se usa
-    this.weapons[0] = {name: "BulletNormal", damage: 6, spread: 0.05, fireRate: 6 * this.scene.matter.world.getDelta(), projectileSpeed: 30, expireTime: 800, energyCost: 0, energyRecoverProportion: 0, wSprite: "bullet1", chFrame: 0};
-    this.weapons[1] = {name: "BulletSuperSonic", damage: 6, spread: 0.05, fireRate: 3 * this.scene.matter.world.getDelta(), projectileSpeed: 40, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet3", chFrame: 0};
-    this.weapons[2] = {name: "BulletExplosive", damage: 14, knockback: 2 / this.scene.matter.world.getDelta(),  spread: 0.1, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.25, energyRecoverProportion: 0, wSprite: "bullet2", chFrame: 0};
-    this.weapons[3] = {name: "BulletBounce", damage: 10, bounce: 3, spread: 0.075, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullet1", chFrame: 0};
+    this.weapons[0] = {name: "BulletNormal", damage: 6, spread: 0.05, fireRate: 6 * this.scene.matter.world.getDelta(), projectileSpeed: 30, expireTime: 800, energyCost: 0, energyRecoverProportion: 0, wSprite: "bullets", chFrame: 0};
+    this.weapons[1] = {name: "BulletSuperSonic", damage: 6, spread: 0.05, fireRate: 3 * this.scene.matter.world.getDelta(), projectileSpeed: 40, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullets", chFrame: 0};
+    this.weapons[2] = {name: "BulletExplosive", damage: 14, knockback: 2 / this.scene.matter.world.getDelta(),  spread: 0.1, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.25, energyRecoverProportion: 0, wSprite: "bullets", chFrame: 0};
+    this.weapons[3] = {name: "BulletBounce", damage: 10, bounce: 3, spread: 0.075, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullets", chFrame: 0};
     this.weapons[4] = {name: "BombNormal", damage: 40, area: 45, knockback:  2 / this.scene.matter.world.getDelta(), fireRate: 25 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
-    this.weapons[5] = {name: "BombMegaton", damage: 95, area: 68, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
-    this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 2};
-    this.weapons[7] = {name: "MissileMulti", damage: 10, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.6, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 3000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "missile", chFrame: 2};
+    this.weapons[5] = {name: "BombMegaton", damage: 95, area: 68, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "bullets", chFrame: 1};
+    this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "bullets", chFrame: 2};
+    this.weapons[7] = {name: "MissileMulti", damage: 10, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.6, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 3000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "bullets", chFrame: 2};
     this.weapons[8] = {name: "Lasser", damage: 0.82, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 0.004, energyRecoverProportion: 0, wSprite: "", chFrame: 3};
   }
 

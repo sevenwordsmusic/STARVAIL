@@ -96,8 +96,7 @@ var config = {
     SceneRanking,
     SceneSplashScreen,
 
-    SceneTest_1,
-    Joystick_test
+    SceneTest_1
   ],
     plugins: {
 
@@ -189,6 +188,46 @@ game.transitionToScene = function(scene, keyNext, sceneNext){
   }, scene);
   scene.cameras.main.fadeOut(1000);
 }
+
+game.changeScene = function(scene, nextId){
+  var SceneCurrentClass = eval(scene.constructor.name);
+  scene.cameras.main.once('camerafadeoutcomplete', function (camera) {
+    game.player.alive = false;
+    //console.log(scene.scene.key);
+    scene.input.keyboard.shutdown();
+    scene.input.shutdown();
+    if(scene.enemyController != undefined)
+      scene.enemyController.destroy();
+
+    for(var i=0; i<scene.tileBodyMatrix.length; i++){
+      Phaser.Physics.Matter.Matter.World.remove(scene.matter.world.localWorld, scene.tileBodyMatrix[i].body);
+      scene.tileBodyMatrix[i].body = undefined;
+      scene.tileBodyMatrix = undefined;
+    }
+    scene.tileBodyMatrix = [];
+    for(var i=0; i<scene.matter.world.localWorld.bodies.length; i++){
+      scene.matter.world.localWorld.bodies[i] = undefined;
+    }
+    scene.matter.world.localWorld.bodies = [];
+
+    if(scene.map != undefined){
+      scene.map.destroy();
+      scene.map = undefined;
+    }
+
+    for(var i=0; i<scene.make.displayList.list.length; i++){
+      scene.make.displayList.list[i] = undefined;
+    }
+    scene.make.displayList.list = [];
+
+
+    scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());
+    game.scene.run(nextId);
+    game.scene.bringToTop(nextId);
+  }, scene);
+  scene.cameras.main.fadeOut(1000);
+}
+
 /*game.transferComposite = Phaser.Physics.Matter.Matter.Composite.create();
 game.transferBody = function(bodies1, bodies2, body){
   bodies1.push(body);

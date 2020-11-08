@@ -8,7 +8,7 @@ export default class BulletExplosive extends Projectile {
   constructor(scene, x, y, spr, dmg, knockback, speed, velDirection, expTime, target, distanceToPlayer){
     super(scene, x, y,  expTime);
     //inicializacion
-    this.sprite = scene.add.sprite(x,y,spr,0);
+    this.sprite = scene.add.sprite(x,y,spr,3);
     this.target = target;
     this.dmg = dmg;
     this.knockback = knockback;
@@ -26,7 +26,7 @@ export default class BulletExplosive extends Projectile {
       this.prepareBullet(this.target.colSpecialObj.currentBodyIndex, x, y, this.scene.input.activePointer.x + this.scene.cameras.main.scrollX, this.scene.input.activePointer.y + this.scene.cameras.main.scrollY , speed);
 
     this.sprite.setDepth(5);
-    this.sprite.angle = this.pVelocity.angle() * 180/Math.PI + 90;
+    this.sprite.angle = this.pVelocity.angle() * 180/Math.PI;
     this.scene.events.on("update", this.update, this); //para que se ejecute el udate
   }
 

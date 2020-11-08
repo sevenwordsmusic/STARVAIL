@@ -9,18 +9,14 @@ export default class SceneExample extends Phaser.Scene {
   preload(){
 
     this.load.image('ebi', 'assets/Escena boton pausa.png'); //field
-
     this.load.image('btnPause', 'assets/BtnPauseGame.png'); //btn pause
-
-
     this.load.image('btnMuerte', 'assets/BtnPauseGame.png'); //btn pause
-
     this.load.image('btnScore', 'assets/BtnPauseGame.png'); //btn pause
 
 
     //Corners
-    this.load.image('corners', 'assets/Menu corners.png'); 
-    
+    this.load.image('corners', 'assets/Menu corners.png');
+
   }
 
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
@@ -42,7 +38,7 @@ export default class SceneExample extends Phaser.Scene {
     this.botonPause.on('pointerover', function(pointer){
       this.alpha=1;
     });
-    
+
     this.botonPause.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
@@ -74,7 +70,7 @@ export default class SceneExample extends Phaser.Scene {
       }
     }
 
-    
+
     if (this.ESC.isUp) {
       if (this.inPause){
       this.inPause = false;
@@ -87,7 +83,7 @@ export default class SceneExample extends Phaser.Scene {
     console.log("Juego pausado");
 
     this.botonPause.alpha=0.8;
-    
+
     this.scene.run("ScenePause");
     this.scene.bringToTop("ScenePause");
     this.scene.pause("SceneGameEbi");
@@ -95,19 +91,19 @@ export default class SceneExample extends Phaser.Scene {
 
   gameOver(){
     console.log("Juego terminado");
-    
+
     this.scene.start("SceneGameOver");
     this.scene.bringToTop("SceneGameOver");
     this.scene.stop("SceneGameEbi");
-    
+
   }
 
   gameScore(){
     console.log("Pantalla de puntuacion");
-    
+
     this.scene.start("SceneScore");
     this.scene.bringToTop("SceneScore");
     this.scene.stop("SceneGameEbi");
-    
+
   }
 }

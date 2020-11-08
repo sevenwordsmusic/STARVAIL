@@ -22,7 +22,7 @@ export default class BulletFast extends Projectile {
       this.prepareBullet(this.target.colSpecialObj.currentBodyIndex, x, y, this.scene.input.activePointer.x + this.scene.cameras.main.scrollX, this.scene.input.activePointer.y + this.scene.cameras.main.scrollY , speed);
 
     this.sprite.setDepth(5);
-    this.sprite.angle = this.pVelocity.angle() * 180/Math.PI + 90;
+    this.sprite.angle = this.pVelocity.angle() * 180/Math.PI;
     this.scene.events.on("update", this.update, this); //para que se ejecute el udate
   }
 

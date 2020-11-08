@@ -5,20 +5,6 @@ export default class SceneExample extends Phaser.Scene {
   }
 
 
-  //Se carga antes de ejecutar la escena. En este sitio se asignan las variables, se buscan los assets que se van a usar, se llama a los plugins, etc.
-  preload(){
-    //Options menu
-    this.load.image('OptionsScreenGame', 'assets/Options menu/OMScreen.png'); //field
-    this.load.image('btnExitOptionsGame', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
-    this.load.image('btnMinus', 'assets/Options menu/btnMinusOptionsMenu.png'); //btn minus
-    this.load.image('btnMusic', 'assets/Options menu/btnMusicOptionsMenu.png'); //btn music
-    this.load.image('btnPlus', 'assets/Options menu/btnPlusOptionsMenu.png'); //btn plus
-    this.load.image('btnSFX', 'assets/Options menu/btnSFXOptionsMenu.png'); //btn sfx
-    
-    //Corners
-    this.load.image('corners', 'assets/Menu corners.png'); 
-  }
-
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
 
@@ -38,7 +24,7 @@ export default class SceneExample extends Phaser.Scene {
 
     //Options field
     //var optionsScreen=this.add.image(0,0,'OptionsScreen').setOrigin(0,0).setScale(0.25);
-    
+
     //Boton exit
     this.btnExitOptionsGame = this.add.image(480,455,'btnExitOptionsGame').setScale(0.25).setAlpha(0.8);
 		this.btnExitOptionsGame.setInteractive({ useHandCursor: true  } )
@@ -174,7 +160,7 @@ export default class SceneExample extends Phaser.Scene {
       case -3:
         this.botonMusic.x = 300;
         break;
-      
+
       case -2:
         this.botonMusic.x = 360;
         break;
@@ -182,7 +168,7 @@ export default class SceneExample extends Phaser.Scene {
       case -1:
         this.botonMusic.x = 420;
         break;
-      
+
       case 0:
         this.botonMusic.x = 480;
         break;
@@ -190,7 +176,7 @@ export default class SceneExample extends Phaser.Scene {
       case 1:
         this.botonMusic.x = 540;
         break;
-      
+
       case 2:
         this.botonMusic.x = 600;
         break;
@@ -206,7 +192,7 @@ export default class SceneExample extends Phaser.Scene {
       case -3:
         this.botonSFX.x = 300;
         break;
-      
+
       case -2:
         this.botonSFX.x = 360;
         break;
@@ -214,7 +200,7 @@ export default class SceneExample extends Phaser.Scene {
       case -1:
         this.botonSFX.x = 420;
         break;
-      
+
       case 0:
         this.botonSFX.x = 480;
         break;
@@ -222,7 +208,7 @@ export default class SceneExample extends Phaser.Scene {
       case 1:
         this.botonSFX.x = 540;
         break;
-      
+
       case 2:
         this.botonSFX.x = 600;
         break;
@@ -231,7 +217,7 @@ export default class SceneExample extends Phaser.Scene {
         this.botonSFX.x = 660;
         break;
     }
-    
+
   }
 
   exitOptions(){
@@ -332,7 +318,7 @@ export default class SceneExample extends Phaser.Scene {
     this.sfx=true;
     console.log("SFX se desmutea");
     }
-    
+
     if(this.sfxVolume<3){
     this.sfxVolume++;
     console.log("+1 en SFX");

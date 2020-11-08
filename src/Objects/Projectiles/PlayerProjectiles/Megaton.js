@@ -7,7 +7,7 @@ export default class Megaton extends Projectile {
   constructor(scene, x, y, spr, dmg, area, knockback, extraEff, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
     //inicializacion
-    this.sprite = scene.matter.add.sprite(x,y,spr,0);
+    this.sprite = scene.matter.add.sprite(x,y,spr,4);
     this.sprite.parent = this;
     this.dmg = dmg;
     this.area = area;

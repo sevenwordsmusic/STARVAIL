@@ -4,19 +4,6 @@ export default class SceneExample extends Phaser.Scene {
     super("SceneGameOver");
   }
 
-
-  //Se carga antes de ejecutar la escena. En este sitio se asignan las variables, se buscan los assets que se van a usar, se llama a los plugins, etc.
-  preload(){
-    //Game over menu
-    this.load.image('GOScreen', 'assets/Game over menu/GOScreen.png'); //field
-    this.load.image('btnExitGameOver', 'assets/Game over menu/btnExitGameOver.png'); //btn exit
-    this.load.image('btnPlayAgainGameOver','assets/Game over menu/btnPlayAgainGameOver.png'); //btn play again
-
-    //Corners
-    this.load.image('corners', 'assets/Menu corners.png');
-    
-  }
-
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
 
@@ -28,7 +15,7 @@ export default class SceneExample extends Phaser.Scene {
 
     //Credits field
     var GOScreen=this.add.image(0,0,'GOScreen').setOrigin(0,0).setScale(0.25);
-    
+
     //Boton exit
     this.btnExitGameOver = this.add.image(746,459,'btnExitGameOver').setScale(0.25).setAlpha(0.8);
 		this.btnExitGameOver.setInteractive({ useHandCursor: true  } )
@@ -37,7 +24,7 @@ export default class SceneExample extends Phaser.Scene {
     this.btnExitGameOver.on('pointerover', function(pointer){
       this.alpha=1;
     });
-    
+
     this.btnExitGameOver.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
@@ -50,7 +37,7 @@ export default class SceneExample extends Phaser.Scene {
     this.btnPlayAgainGameOver.on('pointerover', function(pointer){
       this.alpha=1;
     });
-    
+
     this.btnPlayAgainGameOver.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
@@ -78,7 +65,7 @@ export default class SceneExample extends Phaser.Scene {
     this.btnPlayAgainGameOver.alpha=0.8;
 
     this.scene.stop('SceneGameOver');
-    
+
     /*
     this.scene.start('SceneGameEbi');
     this.scene.bringToTop("SceneGameEbi");
