@@ -43,6 +43,10 @@ import SceneLoading from "./Scenes/SceneLoading.js";
 import Audio from "./Audio.js";
 import Chatter from "./Chatter.js";
 import Tutorial from "./Scenes/Levels/Tutorial.js";
+import Level1 from "./Scenes/Levels/Level1.js";
+import Level2 from "./Scenes/Levels/Level1.js";
+import Level3 from "./Scenes/Levels/Level1.js";
+import LevelBoss from "./Scenes/Levels/LevelBoss.js";
 import SceneTest_1 from "./Scenes/SceneTest_1.js";
 import AnimatedTiles from "./Plugins/tileAnimator.js"
 
@@ -74,7 +78,7 @@ var config = {
     default: 'matter',
     matter: {
       gravity: { y: 0.98 },
-      debug: true
+      debug: false
     }
   },
   //escenas principales
@@ -96,6 +100,7 @@ var config = {
     SceneSplashScreen,
 
     Tutorial,
+    Level1,
     SceneTest_1
   ],
     plugins: {

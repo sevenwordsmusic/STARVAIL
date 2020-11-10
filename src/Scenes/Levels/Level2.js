@@ -122,7 +122,7 @@ export default class Level2 extends Phaser.Scene {
     console.log("a: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
 
     //Inicializacion y creacion de mapa de tiles.
-    this.map = this.make.tilemap({ key: "map0" });
+    this.map = this.make.tilemap({ key: "map2" });
     console.log("b: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund1", 32, 32, 0, 0);
     const tileset2 = this.map.addTilesetImage("front_layer", "tilesFront1", 32, 32, 0, 0);
@@ -161,6 +161,9 @@ export default class Level2 extends Phaser.Scene {
     //inicializamos el controlador de enemigos
     this.enemyController = new Blackboard(this);
 
+    //array de metas
+    this.goalArray = [];
+
     //se crean objetos esenciales de cada nivel como el player, los npcs, el boss....
     this.map.getObjectLayer("Special_Layer").objects.forEach(point => {
       if(point.name == "player"){
@@ -168,8 +171,7 @@ export default class Level2 extends Phaser.Scene {
         this.playerStartY = point.y;
       }
       else if(point.name == "goal"){
-        this.goalX = point.x;
-        this.goalY = point.y;
+        this.goalArray.push(new LevelEnd(this, point.x, point.y, 'star'));
       }
       else if(point.name == "boss"){
         new BossBefore(this, point.x, point.y);
@@ -369,7 +371,9 @@ export default class Level2 extends Phaser.Scene {
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
     //inicialización de meta
-    new LevelEnd(this, this.goalX, this.goalY, 'star', 'levelThird', Level3);
+    for(var i=0; i<this.goalArray.length; i++){
+      this.goalArray[i].initGoal( 'levelThird', Level3);
+    }
 
     this.input.setDefaultCursor('none');
 

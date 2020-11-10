@@ -466,10 +466,15 @@ export default class SceneLoading extends Phaser.Scene {
         frameRate: 8
     });
     //ENEMIGOS
-    //transicion a siguiente escena
+
+    //SI SE QUIEREN TESTEAR MENUS
     //this.scene.start("SceneSplashScreen");
-    //this.scene.start("tutorial");
-    this.scene.start("test1");
+
+    //SI SE QUIEREN TESTEAR NIVELES
+    this.scene.start("levelFirst1");
+
+    //SI SE QUIERE IR AL NIVEL DE PRUEBA
+    //this.scene.start("test1");
 
   }
 }
