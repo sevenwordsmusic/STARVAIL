@@ -10,7 +10,7 @@ export default class ZapperGround extends Enemy {
 
     //this.sprite.setBounce(1.01735).setFixedRotation().setFriction(0).setFrictionAir(0).setFrictionStatic(0);
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-    const body = Bodies.rectangle(0, 0, 30, 60);
+    const body = Bodies.rectangle(0, 0, 30, 40);
     /*this.sensors = {
       left: Bodies.rectangle(-25, 6, 10, 20, { isSensor: true }),
       right: Bodies.rectangle(25 , 6, 10, 20, { isSensor: true }),
@@ -21,7 +21,7 @@ export default class ZapperGround extends Enemy {
     });
 
     this.sprite.setExistingBody(compoundBody).setOrigin(0.52, 0.55).setPosition(x, y).setFixedRotation();*/
-    this.sprite.setExistingBody(body).setPosition(x, y).setFixedRotation();
+    this.sprite.setExistingBody(body).setPosition(x, y).setFixedRotation().setOrigin(0.5,0.75);
     this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
     this.sprite.body.collisionFilter.group = -1;
@@ -37,6 +37,7 @@ export default class ZapperGround extends Enemy {
     this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
     this.traveledDistance = 0;
     this.playerVector = new Phaser.Math.Vector2(0, 0);
+    this.targetDir = false;
     //No Tocar
 
     //Ajustar estas
@@ -62,6 +63,7 @@ export default class ZapperGround extends Enemy {
       context: this
     });*/
 
+
     //IA
     this.initializeAI(4);
     this.stateOnStart(0, function(){
@@ -80,6 +82,8 @@ export default class ZapperGround extends Enemy {
       if(this.sprite.body === undefined)return;
       this.sprite.body.friction = 0.1;
       this.sprite.setIgnoreGravity(false);
+      this.sprite.anims.setTimeScale(1);
+      this.sprite.anims.play('zapperGroundRun', true);
     });
     this.stateUpdate(1, function(time, delta){
       if(this.sprite.body === undefined)return;
@@ -90,10 +94,17 @@ export default class ZapperGround extends Enemy {
         this.traveledDistance = 0;
         this.patrolDir = -this.patrolDir;
       }
-
+      this.sprite.setFlipX(this.sprite.body.velocity.x<0);
     })
+    this.stateOnStart(2, function(){
+      if(this.sprite.body === undefined)return;
+      this.sprite.anims.setTimeScale(1.5);
+      this.sprite.anims.play('zapperGroundRun', true);
+    });
     this.stateUpdate(2, function(time, delta){
       if(this.sprite.body === undefined)return;
+      this.sprite.setFlipX(this.scene.game.player.sprite.x<this.sprite.x);
+
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
       this.playerVector.y = this.scene.game.player.sprite.y - this.sprite.y;
       this.distanceToCheck = Math.sqrt( Math.pow(this.playerVector.x ,2) +  Math.pow(this.playerVector.y ,2));
@@ -102,19 +113,22 @@ export default class ZapperGround extends Enemy {
           this.sprite.setVelocityX(this.detectSpeed * Math.sign(this.playerVector.x) * delta);
         //console.log("persuing");
       }else{
+        this.targetDir = this.scene.game.player.sprite.x<this.sprite.x;
+        this.sprite.setFlipX(this.targetDir);
         this.goTo(3)
       }
     })
     this.stateOnStart(3, function(){
       if(this.sprite.body === undefined)return;
-      //this.sprite.body.collisionFilter.group = -1;
-      this.sprite.anims.play('dummy', true)
+      this.sprite.setFlipX(this.targetDir);
+      this.sprite.anims.setTimeScale(1);
+      this.sprite.anims.play('zapperGroundAttack', true)
       this.sprite.once('animationcomplete', function(){
         this.goTo(2);
       },this);
       this.scene.time.addEvent({
-        delay: 500,
-        callback: () => (this.inflictDamagePlayerArea())
+        delay: 600,
+        callback: () => (this.inflictDamagePlayerArea(this.targetDir))
       },this);
     });
 
@@ -158,15 +172,22 @@ export default class ZapperGround extends Enemy {
      }
   }
 
-  inflictDamagePlayerArea(position){
+  inflictDamagePlayerArea(dir){
     if(this.sprite.body === undefined)return;
-    this.scene.graphics.clear();
-    this.scene.graphics.fillRect(this.sprite.x-50, this.sprite.y-50, 100, 100);
-    if(super.playerHit(this.sprite.x-50, this.sprite.y-50, this.sprite.x+50, this.sprite.y+50)){
-      //AUDIO
-          Audio.play3Dinstance(this,55);
-      //
-      this.scene.game.player.playerDamage(this.hitDamage, true);
+    if(dir){
+      if(super.playerHit(this.sprite.x - 75, this.sprite.y-25, this.sprite.x, this.sprite.y+10)){
+        //AUDIO
+            Audio.play3Dinstance(this,55);
+        //
+        this.scene.game.player.playerDamage(this.hitDamage, true);
+      }
+    }else{
+      if(super.playerHit(this.sprite.x, this.sprite.y-25, this.sprite.x + 75, this.sprite.y+10)){
+        //AUDIO
+            Audio.play3Dinstance(this,55);
+        //
+        this.scene.game.player.playerDamage(this.hitDamage, true);
+      }
     }
   }
 

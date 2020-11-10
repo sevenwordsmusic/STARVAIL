@@ -1,5 +1,5 @@
 
-export default class SceneExample extends Phaser.Scene {
+export default class SceneOptionsGame extends Phaser.Scene {
   constructor() {
     super("SceneOptionsGame");
   }

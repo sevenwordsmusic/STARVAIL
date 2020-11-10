@@ -166,7 +166,7 @@ export default class Audio extends Phaser.Scene {
                 volume: 0.0,
                 duration: this.barRateDiv[2],
             });
-        } 
+        }
     }
     static musicLayerEnemies(scene) {
         if (scene.game.player.getClosestEnemyDistance() > this.vanishingPoint) {
@@ -487,10 +487,14 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('zap', 'assets/audio/SFX/enemies/zap.ogg');
         this.load.audio('zapAir', 'assets/audio/SFX/enemies/zapAir.ogg');
         //MUSIC LOOPS
-        this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
+        /*this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
         this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
-        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg');
+        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg');*/
+        this.load.audio('musicLoop0000levitating', 'assets/audio/SFX/null.ogg');
+        this.load.audio('musicLoop0000moving', 'assets/audio/SFX/null.ogg');
+        this.load.audio('musicLoop0000flying', 'assets/audio/SFX/null.ogg');
+        this.load.audio('musicLoop0000chill', 'assets/audio/SFX/null.ogg');
     }
     create() {
         //INIT AUDIO

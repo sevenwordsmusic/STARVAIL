@@ -42,9 +42,8 @@ import Player from "./PlayerStuff/Player.js";
 import SceneLoading from "./Scenes/SceneLoading.js";
 import Audio from "./Audio.js";
 import Chatter from "./Chatter.js";
+import Tutorial from "./Scenes/Levels/Tutorial.js";
 import SceneTest_1 from "./Scenes/SceneTest_1.js";
-import SceneTest_2 from "./Scenes/SceneTest_2.js";
-import Joystick_test from "./Scenes/Joystick_test.js";
 import AnimatedTiles from "./Plugins/tileAnimator.js"
 
 import SceneMainMenu from "./Scenes/SceneMainMenu.js"
@@ -75,7 +74,7 @@ var config = {
     default: 'matter',
     matter: {
       gravity: { y: 0.98 },
-      debug: false
+      debug: true
     }
   },
   //escenas principales
@@ -96,6 +95,7 @@ var config = {
     SceneRanking,
     SceneSplashScreen,
 
+    Tutorial,
     SceneTest_1
   ],
     plugins: {

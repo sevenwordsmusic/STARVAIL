@@ -37,8 +37,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1038,
-                 "y":4326
+                 "x":1582,
+                 "y":4508
                 }, 
                 {
                  "height":0,
@@ -49,8 +49,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1174,
-                 "y":4220
+                 "x":1882,
+                 "y":4206
                 }, 
                 {
                  "height":0,
@@ -85,8 +85,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1690,
-                 "y":4494
+                 "x":1792,
+                 "y":4392
                 }, 
                 {
                  "height":0,
@@ -97,12 +97,24 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1904,
-                 "y":4540
+                 "x":1120,
+                 "y":4356
+                }, 
+                {
+                 "height":0,
+                 "id":89,
+                 "name":"sword",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1718,
+                 "y":4260
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -129,14 +141,14 @@
                         {
                          "name":"encounter",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":190.666666666667,
-                 "x":1010.33333333333,
-                 "y":4211.66666666667
+                 "x":2004.33333333333,
+                 "y":4329.66666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -224,7 +236,7 @@
          "y":0
         }],
  "nextlayerid":32,
- "nextobjectid":89,
+ "nextobjectid":90,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

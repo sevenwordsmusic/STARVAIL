@@ -11,7 +11,7 @@ export default class Mecha extends Enemy {
 
     //this.sprite.setBounce(1.01735).setFixedRotation().setFriction(0).setFrictionAir(0).setFrictionStatic(0);
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-    const body = Bodies.rectangle(0, 0, 70, 90, {chamfer: { radius: 8 } });
+    const body = Bodies.rectangle(0, 0, 45, 100, {chamfer: { radius: 10 } });
     /*this.sensors = {
       left: Bodies.rectangle(-25, 6, 10, 20, { isSensor: true }),
       right: Bodies.rectangle(25 , 6, 10, 20, { isSensor: true }),
@@ -28,7 +28,7 @@ export default class Mecha extends Enemy {
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
     this.sprite.body.collisionFilter.group = -1;
     this.sprite.body.restitution = 0.4;
-    this.sprite.setOrigin(0.5,0.6);
+    this.sprite.setOrigin(0.5,0.62);
 
     this.adjustedFriction = this.sprite.body.friction / this.scene.matter.world.getDelta();
 
@@ -52,7 +52,7 @@ export default class Mecha extends Enemy {
     this.detectSpeed = 1.5/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.retreatDistance = 300;                                            //distancia de la cual se pone a huir
     this.hitDamage = 10;                                                //daño al golpear
-    this.fireRate = 400;                                               //fire rate del droid
+    this.fireRate = 800;                                               //fire rate del droid
     this.energyDrop = 100;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
@@ -105,6 +105,15 @@ export default class Mecha extends Enemy {
       }
       this.gun.followPosition(this.sprite.x, this.sprite.y);
 
+      if(this.sprite.body.velocity.x >= 0.1){
+        this.sprite.setFlipX(false);
+        this.sprite.anims.play('mechaWalk', true);
+      }else if(this.sprite.body.velocity.x <= -0.1){
+        this.sprite.setFlipX(true);
+        this.sprite.anims.play('mechaWalk', true);
+      }else {
+        this.sprite.anims.play('mechaWalk', true);
+      }
     })
     this.stateOnStart(2, function(){
       this.fireTimer = this.scene.time.addEvent({
@@ -127,6 +136,28 @@ export default class Mecha extends Enemy {
 
       this.gun.followPosition(this.sprite.x, this.sprite.y);
       this.gun.aimGun(this.playerVector.angle());
+
+      if(Math.abs(this.sprite.body.velocity.x) < 0.5){
+        this.sprite.anims.play('mechaIdle', true);
+      }
+      if(Math.abs(this.distanceToCheck - this.retreatDistance) < 5){
+        this.sprite.setVelocityX(0);
+        this.sprite.anims.play('mechaIdle', true);
+      }else{
+        if(this.playerVector.x >= 0){
+          this.sprite.setFlipX(false);
+          if(this.sprite.body.velocity < 0)
+            this.sprite.anims.play('mechaWalk', true);
+          else
+            this.sprite.anims.playReverse('mechaWalk', true);
+        }else {
+          this.sprite.setFlipX(true);
+          if(this.sprite.body.velocity > 0)
+            this.sprite.anims.playReverse('mechaWalk', true);
+          else
+            this.sprite.anims.play('mechaWalk', true);
+        }
+      }
     })
     this.stateOnEnd(2, function(){
       this.fireTimer.remove();
@@ -157,6 +188,8 @@ export default class Mecha extends Enemy {
 
   onSensorCollide2({ bodyA, bodyB, pair }){
      if (bodyB.isSensor) return;
+     this.leftMultiply = 1;
+     this.rightMultiply = 1;
      if(this.scene.tileBodyMatrix[Math.floor(bodyB.position.x/32) - 2][Math.floor(bodyB.position.y/32)] === undefined){
        this.leftMultiply = 0;
      }else{

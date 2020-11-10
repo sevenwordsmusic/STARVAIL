@@ -58,7 +58,9 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función create, que crea los elementos del propio juego.
   create() {
     console.log(this);
-
+    this.playerStartX = 600;
+    this.playerStartY = 4500;
+    
     //INTERFAZ
 
     //Options field
@@ -122,7 +124,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     console.log("a: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
 
     //Inicializacion y creacion de mapa de tiles.
-    this.map = this.make.tilemap({ key: "map0" });
+    this.map = this.make.tilemap({ key: "mapTest" });
     console.log("b: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund1", 32, 32, 0, 0);
     const tileset2 = this.map.addTilesetImage("front_layer", "tilesFront1", 32, 32, 0, 0);
@@ -160,7 +162,7 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     //inicializamos el controlador de enemigos
     this.enemyController = new Blackboard(this);
-
+    /*
     //se crean objetos esenciales de cada nivel como el player, los npcs, el boss....
     this.map.getObjectLayer("Special_Layer").objects.forEach(point => {
       if(point.name == "player"){
@@ -218,7 +220,7 @@ export default class SceneTest_1 extends Phaser.Scene {
         }
         this.game.npcArray.splice(randNumber,1);
       }
-    });
+    });*/
 
     //Sistema dinámico de modificacion de collisiones
     var tileBodyMatrix = [];
@@ -330,8 +332,8 @@ export default class SceneTest_1 extends Phaser.Scene {
               enemiesToSpawn--;
               if(area.properties[2].value){
                 var enemyAux = spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
-                enemyAux.encounterNPC = this.encounterNPC;
-                this.encounterNPC.enemiesLeft++;
+                /*enemyAux.encounterNPC = this.encounterNPC;
+                this.encounterNPC.enemiesLeft++;*/
               }else {
                 spawnEnemy(enemiesToSpawnArray[currentEnemy].name, this, Phaser.Math.Between(area.x, area.x + area.width), Phaser.Math.Between(area.y, area.y + area.height));
               }
@@ -342,7 +344,10 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     if(this.map.getObjectLayer("Chest_Layer") != null)
       this.map.getObjectLayer("Chest_Layer").objects.forEach(point => {
-        new InteractableEnergyOnce(this, point.x, point.y);
+        if(point.name == "tutorialSpecial")
+          new InteractableEnergyOnce(this, point.x, point.y, 20000);
+        else
+          new InteractableEnergyOnce(this, point.x, point.y, 20);
       });
 
     if(this.map.getObjectLayer("Waypoint_Layer") != null)
@@ -360,13 +365,13 @@ export default class SceneTest_1 extends Phaser.Scene {
       });
 
     //jugador
-    new Player(this, this.playerStartX, this.playerStartY);
+    new Player(this, 600, 4500);
     //new Mentor(this, this.playerStartX + 400, this.playerStartY)
 
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
     //inicialización de meta
-    new LevelEnd(this, this.goalX, this.goalY, 'star', 'testsec', SceneTest_2);
+    //new LevelEnd(this, this.goalX, this.goalY, 'star', 'testsec', SceneTest_2);
 
     this.input.setDefaultCursor('none');
 

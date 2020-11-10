@@ -11,12 +11,12 @@ export default class EnergyBall extends Projectile {
     this.knockback = knockback;
 
     //inicializacion
-    this.sprite = scene.matter.add.sprite(x,y,'explodingBomb',0);
+    this.sprite = scene.matter.add.sprite(x,y,'bulletImpact5',0);
 
-    const body = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,6);
+    const body = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,9);
 
     this.sprite.setExistingBody(body).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
-    this.sprite.setDepth(5).setScale(0.5);
+    this.sprite.setDepth(5).setScale(0.75);
     this.sprite.setSensor(true).setIgnoreGravity(true);
     this.sprite.body.frictionAir = 0;
 
@@ -24,6 +24,7 @@ export default class EnergyBall extends Projectile {
     this.pVelocity = velDir;
     this.pVelocity = this.pVelocity.normalize();
     this.sprite.setVelocity(this.pVelocity.x * speed, this.pVelocity.y * speed);
+    this.sprite.setAngularVelocity(0.2 * ((this.pVelocity.x >= 0)?1:-1));
 
     this.projectileArmed = this.scene.matterCollision.addOnCollideStart({
       objectA: this.sprite.body,
@@ -53,15 +54,17 @@ export default class EnergyBall extends Projectile {
   itemExpire(proj){
     this.projectileArmed();
 
-    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
-    bombExplosion.setDepth(10).setScale(2)
+    const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "bulletImpact5");
+    bombExplosion.setDepth(10).setScale(1);
+    if(this.sprite != undefined)
+      bombExplosion.angle = this.sprite.angle;
 
     //al completar su animacion de explsion, dicha instancia se autodestruye
     bombExplosion.on('animationcomplete', function(){
       bombExplosion.destroy();
     });
     //animacion de explosion
-    bombExplosion.anims.play('explosion', true);
+    bombExplosion.anims.play('bulletImpact5', true);
     super.itemExpire(proj);
   }
   distanceToPlayer(){

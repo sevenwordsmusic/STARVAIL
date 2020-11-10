@@ -52,8 +52,8 @@ export default class Mentor extends FiniteStateMachine{
     this.reachedY = true;
 
     this.tutorialPositions = [];
-    this.tutorialPositions[0] = new Phaser.Math.Vector2(1128,2560);
-    this.tutorialPositions[1] = new Phaser.Math.Vector2(1628,2260);
+    /*this.tutorialPositions[0] = new Phaser.Math.Vector2(1128,2560);
+    this.tutorialPositions[1] = new Phaser.Math.Vector2(1628,2260);*/
 
     scene.matter.world.on("beforeupdate", this.resetTouching, this);
 

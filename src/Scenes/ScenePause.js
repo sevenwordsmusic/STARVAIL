@@ -3,7 +3,7 @@ import SceneTest_1 from "./SceneTest_1.js"
 /*import SceneTest_2 from "./SceneTest_2.js"
 import SceneTest_2 from "./SceneTest_2.js"*/
 
-export default class SceneExample extends Phaser.Scene {
+export default class ScenePause extends Phaser.Scene {
   constructor() {
     super("ScenePause");
   }

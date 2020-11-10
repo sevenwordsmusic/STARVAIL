@@ -4,11 +4,11 @@ import SuperiorQuery from "../SuperiorQuery.js"
 
 //Clase padre de todos los enemigos
 export default class Enemy extends FiniteStateMachine{
-  constructor(scene, x, y, sprtImg, hp){
+  constructor(scene, x, y, sprtImg, hp, optionalFrame = 0){
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.matter.add.sprite(x,y,sprtImg,0);
+    this.sprite = scene.matter.add.sprite(x,y,sprtImg,optionalFrame);
     this.sprite.parent = this;
     this.hp = hp;
     this.dead = false;

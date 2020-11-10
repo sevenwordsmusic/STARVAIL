@@ -9,7 +9,7 @@ export default class ZapperAir extends Enemy {
     this.sprite.setScale(2);
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-    const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 40, 40, {chamfer: { radius: 8 } });
+    const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 40, 45, {chamfer: { radius: 8 } });
     /*this.sensors = {
       left:   Bodies.rectangle(-28, 0, 10, 20, { isSensor: true }),
       right:  Bodies.rectangle(28, 0, 10, 20, { isSensor: true }),
@@ -21,7 +21,7 @@ export default class ZapperAir extends Enemy {
     });
 
     this.sprite.setExistingBody(compoundBody).setPosition(x, y).setFixedRotation();*/
-    this.sprite.setExistingBody(body).setPosition(x, y).setFixedRotation();
+    this.sprite.setExistingBody(body).setPosition(x, y).setFixedRotation().setOrigin(0.48,0.4);
     this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
     this.sprite.body.collisionFilter.group = -1;
@@ -40,6 +40,7 @@ export default class ZapperAir extends Enemy {
     this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
     this.stopper = false;
     this.playerVector = new Phaser.Math.Vector2(0, 0);
+    this.targetDir = false;
     //No Tocar
 
     //Ajustar estas
@@ -47,7 +48,7 @@ export default class ZapperAir extends Enemy {
     this.patrolSpeed = 3;                                             //velocidad al patrullar
     this.detectDistance = 250;                                        //distancia a la uqe detecta el jugador cuando esta patrullando
     this.detectSpeed = 2.5/this.scene.matter.world.getDelta();        //velocidad al detectarlo
-    this.hitDistance = 50;                                            //distancia de la cual se pone a golpear
+    this.hitDistance = 57;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 0.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
     this.hitDamage = 15;                                              //daño al golpear
     this.energyDrop = 50;                                             //drop de energia
@@ -83,6 +84,8 @@ export default class ZapperAir extends Enemy {
         this.patrolDir.x = Math.sign(this.initPos.x - this.sprite.x);
         this.patrolDir.y = Math.sign(this.initPos.y - this.sprite.y);
       }
+      this.sprite.anims.play('zapperAirMove',true)
+
       this.patrolTimer1 = this.scene.time.addEvent({
         delay: 3000,
         callback: () => (this.resetState())
@@ -98,15 +101,23 @@ export default class ZapperAir extends Enemy {
         this.sprite.setVelocityX(this.velX * this.patrolDir.x);
         this.sprite.setVelocityY(this.velY * this.patrolDir.y);
       }
+      this.sprite.setFlipX(this.sprite.body.velocity.x<0);
+      this.sprite.setOrigin(0.5 + ((this.sprite.body.velocity.x<0)?0.02:-0.02),0.4);
     })
     this.stateOnEnd(1, function(){
       if(this.sprite.body === undefined)return;
       this.patrolTimer1.remove();
       this.patrolTimer2.remove();
     });
-
+    this.stateOnStart(2, function(){
+      if(this.sprite.body === undefined)return;
+      this.sprite.anims.play('zapperAirMove',true)
+    })
     this.stateUpdate(2, function(time, delta){
       if(this.sprite.body === undefined)return;
+      this.sprite.setFlipX(this.scene.game.player.sprite.x<this.sprite.x);
+      this.sprite.setOrigin(0.5 + ((this.scene.game.player.sprite.x<this.sprite.x)?0.02:-0.02),0.4);
+
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
       this.playerVector.y = this.scene.game.player.sprite.y - this.sprite.y;
       this.distanceToCheck = Math.sqrt( Math.pow(this.playerVector.x ,2) +  Math.pow(this.playerVector.y,2));
@@ -115,19 +126,24 @@ export default class ZapperAir extends Enemy {
         this.sprite.setVelocityY((this.playerVector.y) *this.detectSpeed/this.distanceToCheck * delta);
         //console.log("persuing");
       }else{
+        this.targetDir = this.scene.game.player.sprite.x<this.sprite.x;
+        this.sprite.setFlipX(this.targetDir);
+        this.sprite.setOrigin(0.5 + ((this.targetDir<0)?0.02:-0.02),0.8);
         this.goTo(3);
       }
     })
     this.stateOnStart(3, function(){
       if(this.sprite.body === undefined)return;
       //this.sprite.body.collisionFilter.group = -1;
-      this.sprite.anims.play('dummy', true)
+      this.sprite.setFlipX(this.targetDir);
+      this.sprite.setOrigin(0.5 + ((this.targetDir<0)?0.02:-0.02),0.8);
+      this.sprite.anims.play('zapperAirAttack', true)
       this.sprite.once('animationcomplete', function(){
         this.goTo(2);
       },this);
       this.scene.time.addEvent({
-        delay: 500,
-        callback: () => (this.inflictDamagePlayerArea())
+        delay: 400,
+        callback: () => (this.inflictDamagePlayerArea(this.targetDir))
       },this);
     });
     this.stateOnEnd(3, function(){
@@ -156,11 +172,9 @@ export default class ZapperAir extends Enemy {
       this.patrolDir.y = -this.patrolDir.y;
   }
 
-  inflictDamagePlayerArea(position){
+  inflictDamagePlayerArea(dir){
     if(this.sprite.body === undefined)return;
-    this.scene.graphics.clear();
-    this.scene.graphics.fillRect(this.sprite.x-50, this.sprite.y-50, 100, 100);
-    if(super.playerHit(this.sprite.x-50, this.sprite.y-50, this.sprite.x+50, this.sprite.y+50)){
+    if(super.playerHit(this.sprite.x-80, this.sprite.y-15, this.sprite.x+80, this.sprite.y+25)){
       //AUDIO
           Audio.play3Dinstance(this,55);
           Audio.play3Dinstance(this,56);
@@ -207,7 +221,7 @@ export default class ZapperAir extends Enemy {
       //AUDIO
           Audio.play3DinstanceRnd(this, 52);
           this.sfx.stop();
-          this.sfxDetect.stop();  
+          this.sfxDetect.stop();
       //
       super.enemyDead();
       new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg), Math.sign(vYDmg),  this.energyDrop);

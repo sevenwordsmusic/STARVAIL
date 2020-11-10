@@ -90,15 +90,22 @@ export default class SceneLoading extends Phaser.Scene {
 
     this.load.spritesheet('dummy', 'assets/Sprites/Enemies/dummy.png', { frameWidth: 35, frameHeight: 44 });
 
-    this.load.spritesheet('zapperGround', 'assets/Sprites/Enemies/DroidZapper/run.png', { frameWidth: 58, frameHeight: 41 });
-    this.load.spritesheet('hero', 'assets/Sprites/Enemies/DroidHero/Blue Sword Run.png', { frameWidth: 93, frameHeight: 63 });
-    this.load.spritesheet('mecha', 'assets/Sprites/Enemies/DroidMecha/mechNoGun.png', { frameWidth: 42, frameHeight: 60 }); //la cosa se pone interesante!
+    //ENEMIGOS
+    //GROUND
+    this.load.spritesheet('zapperGround', 'assets/Sprites/Enemies/DroidZapper/DroidZapper.png', { frameWidth: 100, frameHeight: 45 });
+    this.load.spritesheet('hero', 'assets/Sprites/Enemies/DroidHero/DroidHero.png', { frameWidth: 96, frameHeight: 63 });
+    this.load.spritesheet('mecha', 'assets/Sprites/Enemies/DroidMecha/DroidMecha.png', { frameWidth: 144, frameHeight: 60 }); //la cosa se pone interesante!
     this.load.spritesheet('gun', 'assets/Sprites/Enemies/gun.png', { frameWidth: 37, frameHeight: 7 });
-    this.load.spritesheet('sith', 'assets/Sprites/Enemies/assassin/sithIdle.png', { frameWidth: 40, frameHeight: 30 });
+    this.load.spritesheet('sith', 'assets/Sprites/Enemies/assassin/assassin.png', { frameWidth: 144, frameHeight: 107 });
+    //GROUND
 
-    this.load.spritesheet('zapperAir', 'assets/Sprites/Enemies/DroidZapperAir/dronmove.png', { frameWidth: 91, frameHeight: 60 });
+    //AIR
+    this.load.spritesheet('zapperAir1', 'assets/Sprites/Enemies/DroidZapperAir/dronmove.png', { frameWidth: 91, frameHeight: 60 });
+    this.load.spritesheet('zapperAir2', 'assets/Sprites/Enemies/DroidZapperAir/attack.png', { frameWidth: 91, frameHeight: 60 });
     this.load.spritesheet('bomb', 'assets/Sprites/Enemies/DroidBomb/Homing.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('gunner', 'assets/Sprites/Enemies/DroidGunner/Gunner.png', { frameWidth: 60, frameHeight: 40 });
+    //AIR
+    //ENEMIGOS
 
     this.load.image('bg_e', 'assets/Backgrounds/Sky/SkyBG.png');
     this.load.image('bg1_e', 'assets/Backgrounds/Sky/CloudsFar.png');
@@ -131,6 +138,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.tilemapTiledJSON("map3", "assets/Mapas/Level3.json");
     this.load.tilemapTiledJSON("map4", "assets/Mapas/FinalLevel.json");
     this.load.tilemapTiledJSON("map0", "assets/Mapas/Tutorial.json");
+    this.load.tilemapTiledJSON("mapTest", "assets/Mapas/Level1Simple.json");
 
 
     this.load.image('bullet1', 'assets/Sprites/Bullet/bullet1.png');
@@ -144,6 +152,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('bulletImpact2', 'assets/Sprites/Impacts/big_directional_100x100px.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('bulletImpact3', 'assets/Sprites/Impacts/fast_100x100px.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('bulletImpact4', 'assets/Sprites/Impacts/full_100x100px.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('bulletImpact5', 'assets/Sprites/Impacts/clean4_100x100px.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
     this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
 
@@ -311,6 +320,12 @@ export default class SceneLoading extends Phaser.Scene {
             frameRate: 1000,
             repeat: 0
         });
+    this.anims.create({
+            key: 'bulletImpact5',
+            frames: this.anims.generateFrameNumbers('bulletImpact5', { start: 0, end: 29 }),
+            frameRate: 1000,
+            repeat: 0
+        });
 
     this.anims.create({
             key: 'dummy',
@@ -346,8 +361,77 @@ export default class SceneLoading extends Phaser.Scene {
         frameRate: 15,
         repeat: 1
     });
+
+    //ENEMIGOS
+    this.anims.create({
+        key: 'zapperGroundRun',
+        frames: this.anims.generateFrameNumbers('zapperGround', { start: 7, end: 12 }),
+        frameRate: 8,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'zapperGroundAttack',
+        frames: this.anims.generateFrameNumbers('zapperGround', { start: 12, end: 22 }),
+        frameRate: 8
+    });
+
+    this.anims.create({
+        key: 'heroRun',
+        frames: this.anims.generateFrameNumbers('hero', { start: 1, end: 6 }),
+        frameRate: 8,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'heroAttack',
+        frames: this.anims.generateFrameNumbers('hero', { start: 16, end: 36 }),
+        frameRate: 10
+    });
+
+    this.anims.create({
+        key: 'zapperAirMove',
+        frames: this.anims.generateFrameNumbers('zapperAir1', { start: 0, end: 4 }),
+        frameRate: 8,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'zapperAirAttack',
+        frames: this.anims.generateFrameNumbers('zapperAir2', { start: 6, end: 15 }),
+        frameRate: 8
+    });
+
+    this.anims.create({
+        key: 'mechaIdle',
+        frames: this.anims.generateFrameNumbers('mecha', { start: 0, end: 3 }),
+        frameRate: 2,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'mechaWalk',
+        frames: this.anims.generateFrameNumbers('mecha', { start: 4, end: 9 }),
+        frameRate: 6,
+        repeat: -1
+    });
+
+    this.anims.create({
+        key: 'sithRun',
+        frames: this.anims.generateFrameNumbers('sith', { start: 12, end: 15}),
+        frameRate: 7,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'sithAttack',
+        frames: this.anims.generateFrameNumbers('sith', { start: 17, end: 34 }),
+        frameRate: 8
+    });
+    this.anims.create({
+        key: 'sithTeleport',
+        frames: this.anims.generateFrameNumbers('sith', { start: 35, end: 43 }),
+        frameRate: 8
+    });
+    //ENEMIGOS
     //transicion a siguiente escena
     //this.scene.start("SceneSplashScreen");
+    //this.scene.start("tutorial");
     this.scene.start("test1");
 
   }
