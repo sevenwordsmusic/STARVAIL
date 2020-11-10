@@ -132,7 +132,7 @@ export default class SwordGround extends Enemy {
       },this);
       this.scene.time.addEvent({
         delay: 1000,
-        callback: () => (this.tryFlipX(this.scene.game.player.sprite.x<this.sprite.x))
+        callback: () => (this.tryFlipX())
       },this);
       this.scene.time.addEvent({
         delay: 1500,
@@ -158,9 +158,11 @@ export default class SwordGround extends Enemy {
       this.stateChanged=false;
     //
   }
-  tryFlipX(flip){
-    if(this.sprite != undefined)
-      this.sprite.setFlipX(flip);
+  tryFlipX(){
+    if(this.sprite != undefined){
+      this.targetDir =  this.scene.game.player.sprite.x<this.sprite.x;
+      this.tryFlipX(this.targetDir);
+    }
   }
 
   update(time, delta){

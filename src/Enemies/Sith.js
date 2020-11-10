@@ -120,7 +120,7 @@ export default class Sith extends Enemy {
       },this);
       this.scene.time.addEvent({
         delay: 1000,
-        callback: () => (this.targetDir =  this.scene.game.player.sprite.x<this.sprite.x ,this.tryFlipX(this.targetDir))
+        callback: () => (this.tryFlipX())
       },this);
       this.scene.time.addEvent({
         delay: 1500,
@@ -163,9 +163,11 @@ export default class Sith extends Enemy {
     //IA
   }
 
-  tryFlipX(flip){
-    if(this.sprite != undefined)
-      this.sprite.setFlipX(flip);
+  tryFlipX(){
+    if(this.sprite != undefined){
+      this.targetDir =  this.scene.game.player.sprite.x<this.sprite.x;
+      this.tryFlipX(this.targetDir);
+    }
   }
 
   update(time, delta){
