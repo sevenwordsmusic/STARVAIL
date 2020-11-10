@@ -57,7 +57,9 @@ export default class Player {
 
     //FUEGO DE VUELO
     this.flyFire = this.scene.add.sprite(x, y, 'fire_fly', 0);
+    this.flyFire.setScale(this.sprite.scale).setOrigin(0.5, 0.72);
     this.flyFire.setVisible(false);
+
     //FUEGO DE VUELO
 
     //código para boundry box de cuerpos de matter (no se toca)
@@ -234,6 +236,7 @@ export default class Player {
     if (bodyA === this.sensors.bottom) {
       this.isTouching.ground = true;
       if(this.activatedJet && this.cursors.down.isDown){
+          this.flyFire.setVisible(false);
           this.sprite.body.frictionAir = 0.01;
           //this.sprite.setVelocityY(this.scene.game.jetVelocity * this.scene.matter.world.getDelta());
           this.sprite.setIgnoreGravity(false);
@@ -370,10 +373,12 @@ export default class Player {
           this.movingArm.anims.play('arm_airUp', true);
           this.fireArm.adjustOffset(-5, -22);
 
-          this.flyFire.setVisible(true);
-          this.flyFire.anims.play('fire_moveup', true);
-
           this.sprite.once('animationcomplete', function(){
+            this.flyFire.x = this.sprite.x;
+            this.flyFire.y = this.sprite.y;
+            this.flyFire.setVisible(true);
+            this.flyFire.anims.play('fire_moveup', true);
+
             this.isTakingOf = false;
           },this);
           this.sprite.body.frictionAir = 0.06;
@@ -402,6 +407,8 @@ export default class Player {
         this.offJet();
         this.jetAumulator = 1;
       }
+      this.flyFire.x = this.sprite.x;
+      this.flyFire.y = this.sprite.y;
     }else{
       if(this.energy < this.scene.game.totalPlayerEnergy){
         if(this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate + 60)
@@ -430,33 +437,45 @@ export default class Player {
           this.sprite.anims.play('airDown', true);
           this.movingArm.anims.play('arm_airDown', true);
           this.fireArm.adjustOffset(-7, -19);
+          this.flyFire.anims.play('fire_movedown', true);
         }else if(this.cursors.right.isDown || this.cursors.left.isDown){
           this.sprite.anims.play('airMove', true);
           this.movingArm.anims.play('arm_airMove', true);
           this.fireArm.adjustOffset(1, -19);
+          this.flyFire.anims.play('fire_fly', true);
         }else if(this.cursors.up.isDown){
           this.sprite.anims.play('airUp', true);
           this.movingArm.anims.play('arm_airUp', true);
           this.fireArm.adjustOffset(-5, -25);
+          this.flyFire.anims.play('fire_moveup', true);
         }else{
           this.sprite.anims.play('airIdle', true);
           this.movingArm.anims.play('arm_airIdle', true);
           this.fireArm.adjustOffset(-5, -25);
+          this.flyFire.anims.play('fire_idle', true);
         }
       }
     }else{
-      if(this.cursors.right.isDown || this.cursors.left.isDown){
-        this.sprite.anims.setTimeScale(this.playerMoveForceX());            //hay que clampear
-        this.movingArm.anims.setTimeScale(this.playerMoveForceX());        //hay que clampear
-        this.sprite.anims.play('wRight', true);
-        this.movingArm.anims.play('arm_wRight', true);
-        this.fireArm.adjustOffset(3, -14);
+      if(this.sprite.body.velocity.y < 2){
+        if(this.cursors.right.isDown || this.cursors.left.isDown){
+          this.sprite.anims.setTimeScale(this.playerMoveForceX());            //hay que clampear
+          this.movingArm.anims.setTimeScale(this.playerMoveForceX());        //hay que clampear
+          this.sprite.anims.play('wRight', true);
+          this.movingArm.anims.play('arm_wRight', true);
+          this.fireArm.adjustOffset(3, -14);
+        }else{
+          this.sprite.anims.setTimeScale(1);
+          this.movingArm.anims.setTimeScale(1);
+          this.sprite.anims.play('idle', true);
+          this.movingArm.anims.play('arm_idle', true);
+          this.fireArm.adjustOffset(-4, -22);
+        }
       }else{
         this.sprite.anims.setTimeScale(1);
         this.movingArm.anims.setTimeScale(1);
-        this.sprite.anims.play('idle', true);
-        this.movingArm.anims.play('arm_idle', true);
-        this.fireArm.adjustOffset(-4, -22);
+        this.sprite.anims.play('airDown', true);
+        this.movingArm.anims.play('arm_airDown', true);
+        this.fireArm.adjustOffset(-7, -19);
       }
     }
 
@@ -464,15 +483,18 @@ export default class Player {
       this.scene.game.isFiring=true;
       this.sprite.setFlipX(this.fireArm.armDir.x < 0);
       this.movingArm.setFlipX(this.fireArm.armDir.x < 0);
+      this.flyFire.setFlipX(this.fireArm.armDir.x < 0);
       this.fireArm.flipOffset((this.fireArm.armDir.x < 0)?-1:1);
     }else{
         this.scene.game.isFiring=false;
       if(this.cursors.right.isDown){
         this.sprite.setFlipX(false);
         this.movingArm.setFlipX(false);
+        this.flyFire.setFlipX(false);
       }else if(this.cursors.left.isDown){
         this.sprite.setFlipX(true);
         this.movingArm.setFlipX(true);
+        this.flyFire.setFlipX(true);
       }
     }
   }
@@ -557,14 +579,14 @@ export default class Player {
   initializeWeaponsArray(){
     //creacion de armas con nombre, "rate" de ataque (cuanto más grande más lento), velocidad de proyectil, tiempo de vida de proyectil, coste de energia por disparo,
     //cuanta proporción de "recovery de energía" hay al disparar (por ej: si es 0.5 recuperamos la mitad de energía que de normal cada update), el sprite del proyectil, el frame del crosshair.png que se usa
-    this.weapons[0] = {name: "BulletNormal", damage: 6, spread: 0.05, fireRate: 6 * this.scene.matter.world.getDelta(), projectileSpeed: 30, expireTime: 800, energyCost: 0, energyRecoverProportion: 0, wSprite: "bullets", chFrame: 0};
-    this.weapons[1] = {name: "BulletSuperSonic", damage: 6, spread: 0.05, fireRate: 3 * this.scene.matter.world.getDelta(), projectileSpeed: 40, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullets", chFrame: 0};
-    this.weapons[2] = {name: "BulletExplosive", damage: 14, knockback: 2 / this.scene.matter.world.getDelta(),  spread: 0.1, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.25, energyRecoverProportion: 0, wSprite: "bullets", chFrame: 0};
-    this.weapons[3] = {name: "BulletBounce", damage: 10, bounce: 3, spread: 0.075, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: "bullets", chFrame: 0};
-    this.weapons[4] = {name: "BombNormal", damage: 40, area: 45, knockback:  2 / this.scene.matter.world.getDelta(), fireRate: 25 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "explodingBomb", chFrame: 1};
-    this.weapons[5] = {name: "BombMegaton", damage: 95, area: 68, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "bullets", chFrame: 1};
-    this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: "bullets", chFrame: 2};
-    this.weapons[7] = {name: "MissileMulti", damage: 10, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.6, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 3000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: "bullets", chFrame: 2};
+    this.weapons[0] = {name: "BulletNormal", damage: 6, spread: 0.05, fireRate: 6 * this.scene.matter.world.getDelta(), projectileSpeed: 30, expireTime: 800, energyCost: 0, energyRecoverProportion: 0, wSprite: 6, chFrame: 0};
+    this.weapons[1] = {name: "BulletSuperSonic", damage: 6, spread: 0.05, fireRate: 3 * this.scene.matter.world.getDelta(), projectileSpeed: 40, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: 0, chFrame: 0};
+    this.weapons[2] = {name: "BulletExplosive", damage: 14, knockback: 2 / this.scene.matter.world.getDelta(),  spread: 0.1, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.25, energyRecoverProportion: 0, wSprite: 3, chFrame: 0};
+    this.weapons[3] = {name: "BulletBounce", damage: 10, bounce: 3, spread: 0.075, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 0.1, energyRecoverProportion: 0, wSprite: 1, chFrame: 0};
+    this.weapons[4] = {name: "BombNormal", damage: 40, area: 45, knockback:  2 / this.scene.matter.world.getDelta(), fireRate: 25 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: 7, chFrame: 1};
+    this.weapons[5] = {name: "BombMegaton", damage: 95, area: 68, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 8, expireTime: 2000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: 4, chFrame: 1};
+    this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 3, energyRecoverProportion: 0.2, wSprite: 2, chFrame: 2};
+    this.weapons[7] = {name: "MissileMulti", damage: 10, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.9, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 12, expireTime: 4000, energyCost: 8, energyRecoverProportion: 0.2, wSprite: 5, chFrame: 2};
     this.weapons[8] = {name: "Lasser", damage: 0.82, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 0.004, energyRecoverProportion: 0, wSprite: "", chFrame: 3};
   }
 
@@ -676,7 +698,7 @@ export default class Player {
     this.buttons[aux].on('pointerdown', function () {
       this.setWeapon(id);
     }, this);
-    this.scene.add.image(this.buttons[aux].x, this.buttons[aux].y, this.weapons[id].wSprite,0).setScrollFactor(0).setDepth(101).setScale(2);
+    this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(2);
 
     this.nextButton++;
   }

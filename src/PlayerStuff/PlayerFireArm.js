@@ -19,7 +19,7 @@ export default class PlayerFireArm {
       this.sprite.setOrigin(0.05,0.5);
       this.sprite.setDepth(6);
 
-      this.sprite.setScale(1.2);
+      this.sprite.setScale(this.scene.game.player.sprite.scale);
 
       this.shoulderOffsetX = -4;
       this.shoulderOffsetY = -22;

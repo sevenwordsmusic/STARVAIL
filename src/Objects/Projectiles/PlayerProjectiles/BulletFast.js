@@ -8,7 +8,7 @@ export default class BulletFast extends Projectile {
   constructor(scene, x, y, spr, dmg, speed, velDirection, expTime, target, distanceToPlayer){
     super(scene, x, y,  expTime);
     //inicializacion
-    this.sprite = scene.add.sprite(x,y,spr,0);
+    this.sprite = scene.add.sprite(x,y,"bullets",spr);
     this.target = target;
     this.dmg = dmg;
 

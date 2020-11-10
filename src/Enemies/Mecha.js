@@ -76,6 +76,7 @@ export default class Mecha extends Enemy {
     this.initializeAI(3);
     this.stateOnStart(0, function(){
       if(this.sprite.body === undefined)return;
+      this.sprite.anims.stop();
       this.sprite.setIgnoreGravity(true);
       this.sprite.setVelocityX(0);
       this.sprite.setVelocityY(0);

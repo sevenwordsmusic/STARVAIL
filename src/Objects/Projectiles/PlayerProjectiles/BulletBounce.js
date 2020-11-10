@@ -8,7 +8,8 @@ export default class BulletBounce extends Projectile {
   constructor(scene, x, y, spr, dmg, bounce, speed, velDirection, expTime, target, distanceToPlayer){
     super(scene, x, y,  expTime);
     //inicializacion
-    this.sprite = scene.add.sprite(x,y,spr,1);
+    this.sprite = scene.add.sprite(x,y,"bullets",spr);
+    this.sprite.setScale(0.9,0.8);
     this.target = target;
 
     this.dmg = dmg;
@@ -72,7 +73,6 @@ export default class BulletBounce extends Projectile {
     bombExplosion.anims.play('bulletImpact', true);
     const xAux = this.sprite.x;
     const yAux = this.sprite.y;
-    const spriteTextureAux = this.sprite.texture;
     super.itemExpire();
 
 
@@ -93,9 +93,9 @@ export default class BulletBounce extends Projectile {
       var bulletCollision = SuperiorQuery.superiorRayCastBounce(xAux + directionVector.x * 48, yAux + directionVector.y * 48, directionVector, 14 ,this.scene.bulletInteracBodies);
       if(bulletCollision.collided){
         var bulletDistance = Math.sqrt(Math.pow(bulletCollision.colX - (xAux + directionVector.x * 14),2) + Math.pow(bulletCollision.colY - (yAux + directionVector.y * 14),2));
-        return new BulletBounce(this.scene, xAux + directionVector.x * 14, yAux + directionVector.y * 14, spriteTextureAux, this.dmg, this.bounce, this.speed, directionVector, Math.min(1000,(bulletDistance * this.scene.matter.world.getDelta())/this.speed), bulletCollision, bulletDistance);
+        return new BulletBounce(this.scene, xAux + directionVector.x * 14, yAux + directionVector.y * 14, 1, this.dmg, this.bounce, this.speed, directionVector, Math.min(1000,(bulletDistance * this.scene.matter.world.getDelta())/this.speed), bulletCollision, bulletDistance);
       }else{
-        return new BulletBounce(this.scene, xAux + directionVector.x * 14, yAux + directionVector.y * 14, spriteTextureAux, this.dmg, this.bounce, this.speed, directionVector, 1000, bulletCollision, -1);
+        return new BulletBounce(this.scene, xAux + directionVector.x * 14, yAux + directionVector.y * 14, 1, this.dmg, this.bounce, this.speed, directionVector, 1000, bulletCollision, -1);
       }
     }else{
       bombExplosion.angle = this.pVelocity.angle() * 180/Math.PI;

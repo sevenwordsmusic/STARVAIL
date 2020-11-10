@@ -9,7 +9,7 @@ export default class BombAir extends Enemy {
     this.sprite.setScale(1.65);
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-    const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 20, 20, {chamfer: { radius: 8 } });
+    const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 25, 25, {chamfer: { radius: 8 } });
     /*this.sensors = {
       left:   Bodies.rectangle(-28, 0, 10, 20, { isSensor: true }),
       right:  Bodies.rectangle(28, 0, 10, 20, { isSensor: true }),
@@ -64,6 +64,7 @@ export default class BombAir extends Enemy {
     this.initializeAI(4);
     this.stateOnStart(0, function(){
       if(this.sprite.body === undefined)return;
+      this.sprite.anims.stop();
       this.sprite.setVelocityX(0);
       this.sprite.setVelocityY(0);
       this.sprite.body.frictionAir = 10;
@@ -83,6 +84,9 @@ export default class BombAir extends Enemy {
         this.patrolDir.x = Math.sign(this.initPos.x - this.sprite.x);
         this.patrolDir.y = Math.sign(this.initPos.y - this.sprite.y);
       }
+
+      this.sprite.anims.stop();
+
       this.patrolTimer1 = this.scene.time.addEvent({
         delay: 3000,
         callback: () => (this.resetState())
@@ -98,6 +102,7 @@ export default class BombAir extends Enemy {
         this.sprite.setVelocityX(this.velX * this.patrolDir.x);
         this.sprite.setVelocityY(this.velY * this.patrolDir.y);
       }
+      this.sprite.setFlipX(this.sprite.body.velocity.x<0);
     })
     this.stateOnEnd(1, function(){
       if(this.sprite.body === undefined)return;
@@ -105,8 +110,13 @@ export default class BombAir extends Enemy {
       this.patrolTimer2.remove();
     });
 
+    this.stateOnStart(2, function(){
+      if(this.sprite.body === undefined)return;
+      this.sprite.anims.play('bombHoming', true);
+    });
     this.stateUpdate(2, function(time, delta){
       if(this.sprite.body === undefined)return;
+      this.sprite.setFlipX(this.scene.game.player.sprite.x<this.sprite.x);
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
       this.playerVector.y = this.scene.game.player.sprite.y - this.sprite.y;
       this.distanceToCheck = Math.sqrt( Math.pow(this.playerVector.x ,2) +  Math.pow(this.playerVector.y,2));
@@ -115,11 +125,14 @@ export default class BombAir extends Enemy {
         this.sprite.setVelocityY((this.playerVector.y) *this.detectSpeed/this.distanceToCheck * delta);
         //console.log("persuing");
       }else{
+        this.targetDir = this.scene.game.player.sprite.x<this.sprite.x;
+        this.sprite.setFlipX(this.targetDir);
         this.goTo(3);
       }
     })
     this.stateOnStart(3, function(){
       if(this.sprite.body === undefined)return;
+      this.sprite.setFlipX(this.targetDir);
       this.inflictDamagePlayerArea();
       this.enemyDead(0,0, false);
     });
@@ -191,7 +204,7 @@ export default class BombAir extends Enemy {
       //AUDIO
           Audio.play3DinstanceRnd(this, 52);
           this.sfx.stop();
-          this.sfxDetect.stop();  
+          this.sfxDetect.stop();
       //
       super.enemyDead();
       if(drop)

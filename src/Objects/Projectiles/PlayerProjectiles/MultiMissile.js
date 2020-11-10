@@ -8,7 +8,8 @@ export default class MultiMissile extends Projectile {
   constructor(scene, x, y, spr, dmg, area, knockback, offsprings, offspringScale, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
     //inicializacion
-    this.sprite = scene.matter.add.sprite(x,y,spr,5);
+    this.sprite = scene.matter.add.sprite(x,y,"bullets",spr);
+    this.sprite.setScale(2.2,1.4);
     this.sprite.parent = this;
     this.dmg = dmg;
     this.area = area;
@@ -21,8 +22,7 @@ export default class MultiMissile extends Projectile {
     this.sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,11);
     this.sensor.isSensor = true;
 
-    this.sprite.setExistingBody(this.sensor).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
-    this.sprite.setOrigin(0.5, 0.61).setDepth(5)
+    this.sprite.setExistingBody(this.sensor).setPosition(x, y).setDepth(5);/*.setFriction(0).setFrictionStatic(0)*/
     this.sprite.angle = velDir.angle() * 180/Math.PI;
     //this.sprite.setAngularVelocity(0.2 * dir);
     this.sprite.body.collisionFilter.group = -1;

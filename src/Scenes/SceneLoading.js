@@ -108,7 +108,7 @@ export default class SceneLoading extends Phaser.Scene {
     //AIR
     this.load.spritesheet('zapperAir1', 'assets/Sprites/Enemies/DroidZapperAir/dronmove.png', { frameWidth: 91, frameHeight: 60 });
     this.load.spritesheet('zapperAir2', 'assets/Sprites/Enemies/DroidZapperAir/attack.png', { frameWidth: 91, frameHeight: 60 });
-    this.load.spritesheet('bomb', 'assets/Sprites/Enemies/DroidBomb/Homing.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('bomb', 'assets/Sprites/Enemies/DroidBomb/Homing2.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('gunner', 'assets/Sprites/Enemies/DroidGunner/Gunner.png', { frameWidth: 60, frameHeight: 40 });
     //AIR
     //ENEMIGOS
@@ -276,25 +276,25 @@ export default class SceneLoading extends Phaser.Scene {
     this.anims.create({
         key: 'fire_idle',
         frames: this.anims.generateFrameNumbers('fire_idle', { start: 0, end: 2 }),
-        frameRate: 5,
+        frameRate: 3,
         repeat: -1
     });
     this.anims.create({
         key: 'fire_moveup',
         frames: this.anims.generateFrameNumbers('fire_moveup', { start: 0, end: 2 }),
-        frameRate: 5,
+        frameRate: 3,
         repeat: -1
     });
     this.anims.create({
         key: 'fire_movedown',
         frames: this.anims.generateFrameNumbers('fire_movedown', { start: 0, end: 2 }),
-        frameRate: 5,
+        frameRate: 3,
         repeat: -1
     });
     this.anims.create({
         key: 'fire_fly',
         frames: this.anims.generateFrameNumbers('fire_fly', { start: 0, end: 2 }),
-        frameRate: 5,
+        frameRate: 3,
         repeat: -1
     });
 
@@ -428,6 +428,12 @@ export default class SceneLoading extends Phaser.Scene {
         key: 'zapperAirAttack',
         frames: this.anims.generateFrameNumbers('zapperAir2', { start: 6, end: 15 }),
         frameRate: 8
+    });
+    this.anims.create({
+        key: 'bombHoming',
+        frames: this.anims.generateFrameNumbers('bomb', { start: 0, end: 1 }),
+        frameRate: 8,
+        repeat: -1
     });
 
     this.anims.create({

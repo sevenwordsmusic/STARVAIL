@@ -7,10 +7,10 @@ import Audio from "../Audio.js";
 export default class ZapperAir extends Enemy {
   constructor(scene, x, y){
     super(scene, x, y, 'gunner', 100);
-    this.sprite.setScale(1.25);
+    this.sprite.setScale(1.1);
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-    const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 40, 40, {chamfer: { radius: 8 } });
+    const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 40, 30, {chamfer: { radius: 8 } });
     /*this.sensors = {
       left:   Bodies.rectangle(-28, 0, 10, 20, { isSensor: true }),
       right:  Bodies.rectangle(28, 0, 10, 20, { isSensor: true }),
@@ -67,6 +67,7 @@ export default class ZapperAir extends Enemy {
     this.initializeAI(4);
     this.stateOnStart(0, function(){
       if(this.sprite.body === undefined)return;
+      this.sprite.anims.stop();
       this.sprite.setVelocityX(0);
       this.sprite.setVelocityY(0);
       this.sprite.body.frictionAir = 10;
@@ -100,6 +101,10 @@ export default class ZapperAir extends Enemy {
       if(!this.stopper){
         this.sprite.setVelocityX(this.velX * this.patrolDir.x);
         this.sprite.setVelocityY(this.velY * this.patrolDir.y);
+        var angle = Math.atan2(this.sprite.body.velocity.y, this.sprite.body.velocity.x);
+        if (angle < 0)
+            angle += 2 * Math.PI;
+        this.sprite.angle = angle * 180/Math.PI;
       }
     })
     this.stateOnEnd(1, function(){
@@ -108,6 +113,9 @@ export default class ZapperAir extends Enemy {
       this.patrolTimer2.remove();
     });
 
+    this.stateOnStart(2, function(){
+      if(this.sprite.body === undefined)return;
+    })
     this.stateUpdate(2, function(time, delta){
       if(this.sprite.body === undefined)return;
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
@@ -207,7 +215,7 @@ export default class ZapperAir extends Enemy {
       //AUDIO
           Audio.play3DinstanceRnd(this, 52);
           this.sfx.stop();
-          this.sfxDetect.stop();  
+          this.sfxDetect.stop();
       //
       super.enemyDead();
       if(drop)

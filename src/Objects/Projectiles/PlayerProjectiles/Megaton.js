@@ -7,14 +7,15 @@ export default class Megaton extends Projectile {
   constructor(scene, x, y, spr, dmg, area, knockback, extraEff, speed, velDir, dir, expTime){
     super(scene, x, y, expTime);
     //inicializacion
-    this.sprite = scene.matter.add.sprite(x,y,spr,4);
+    this.sprite = scene.matter.add.sprite(x,y,"bullets",spr);
+    this.sprite.setScale(1.15);
     this.sprite.parent = this;
     this.dmg = dmg;
     this.area = area;
     this.knockback = knockback;
     this.extraEff = extraEff;
 
-    this.mainBody = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,11);
+    this.mainBody = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 17, 8);
     this.sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,19);
     this.sensor.isSensor = true;
 
@@ -22,9 +23,8 @@ export default class Megaton extends Projectile {
       parts: [this.mainBody, this.sensor],
     });
     this.sprite.setExistingBody(compoundBody).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
-    this.sprite.setOrigin(0.5, 0.61).setDepth(5)
-    this.sprite.setFlipX(dir >= 0);
-    this.sprite.setAngularVelocity(0.2 * dir);
+    this.sprite.setDepth(5).setFlipX(dir >= 0);
+    this.sprite.setAngularVelocity(0.15 * dir);
       this.sprite.body.collisionFilter.group = 0;
     this.sprite.body.collisionFilter.category = 4;
 

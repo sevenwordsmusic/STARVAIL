@@ -8,7 +8,8 @@ export default class BulletExplosive extends Projectile {
   constructor(scene, x, y, spr, dmg, knockback, speed, velDirection, expTime, target, distanceToPlayer){
     super(scene, x, y,  expTime);
     //inicializacion
-    this.sprite = scene.add.sprite(x,y,spr,3);
+    this.sprite = scene.add.sprite(x,y,"bullets",spr);
+    this.sprite.setScale(0.85);
     this.target = target;
     this.dmg = dmg;
     this.knockback = knockback;

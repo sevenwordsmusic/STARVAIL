@@ -11,7 +11,8 @@ export default class Bomb extends Projectile {
     this.knockback = knockback;
 
     //inicializacion
-    this.sprite = scene.matter.add.sprite(x,y,'explodingBomb',0);
+    this.sprite = scene.matter.add.sprite(x,y,"bullets",spr);
+    this.sprite.setScale(1.5);
 
     this.mainBody = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,11);
     this.sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,19);
@@ -21,8 +22,7 @@ export default class Bomb extends Projectile {
       parts: [this.mainBody, this.sensor],
     });
     this.sprite.setExistingBody(compoundBody).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
-    this.sprite.setOrigin(0.5, 0.61).setDepth(5)
-    this.sprite.setFlipX(dir >= 0);
+    this.sprite.setDepth(5).setFlipX(dir >= 0);
     this.sprite.setAngularVelocity(0.2 * dir);
     this.sprite.body.collisionFilter.group = 0;
     this.sprite.body.collisionFilter.category = 4;
