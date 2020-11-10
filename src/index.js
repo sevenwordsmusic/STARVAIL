@@ -68,6 +68,9 @@ var config = {
   //Dimensiones de la ventana de juego (ancho y alto)
   width: 960,
   height: 540,
+  fps: {
+  target: 60,
+  },
   parent: 'phaserDOM',
   pixelArt: true,
   audio: {
