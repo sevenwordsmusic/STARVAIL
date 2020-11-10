@@ -64,7 +64,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('btnPause', 'assets/BtnPauseGame.png'); //btn pause
     //MENUS
 
-
+    //PLAYER
     this.load.image('square', 'assets/square.jpg');
     this.load.image('star', 'assets/star.png');
     this.load.spritesheet('crosshair', 'assets/HUD/crosshair.png', { frameWidth: 64, frameHeight: 64 });
@@ -84,11 +84,17 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('arm_playerAirMove', 'assets/Sprites/Player/player_movefly_onlygun.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('arm_playerAirDown', 'assets/Sprites/Player/player_movedown_onlygun.png', { frameWidth: 64, frameHeight: 64 });
 
+    this.load.spritesheet('fire_fly', 'assets/Sprites/Fire/fire_fly.png', { frameWidth: 64, frameHeight: 75 });
+    this.load.spritesheet('fire_idle', 'assets/Sprites/Fire/fire_idle.png', { frameWidth: 64, frameHeight: 75 });
+    this.load.spritesheet('fire_movedown', 'assets/Sprites/Fire/fire_movedown.png', { frameWidth: 64, frameHeight: 75 });
+    this.load.spritesheet('fire_moveup', 'assets/Sprites/Fire/fire_moveup.png', { frameWidth: 64, frameHeight: 75 });
+
     this.load.spritesheet('playerDeath', 'assets/Sprites/Player/player_death.png', { frameWidth: 64, frameHeight: 64 });
 
     this.load.image('playerFireArm', 'assets/Sprites/Player/player_FireArm.png', { frameWidth: 32, frameHeight: 64 });
+    //PLAYER
 
-    this.load.spritesheet('dummy', 'assets/Sprites/Enemies/dummy.png', { frameWidth: 35, frameHeight: 44 });
+    //this.load.spritesheet('dummy', 'assets/Sprites/Enemies/dummy.png', { frameWidth: 35, frameHeight: 44 });
 
     //ENEMIGOS
     //GROUND
@@ -265,6 +271,31 @@ export default class SceneLoading extends Phaser.Scene {
         frames: this.anims.generateFrameNumbers('arm_playerAirDown', { start: 0, end: 0 }),
         frameRate: 1,
         repeat: 0
+    });
+
+    this.anims.create({
+        key: 'fire_idle',
+        frames: this.anims.generateFrameNumbers('fire_idle', { start: 0, end: 2 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'fire_moveup',
+        frames: this.anims.generateFrameNumbers('fire_moveup', { start: 0, end: 2 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'fire_movedown',
+        frames: this.anims.generateFrameNumbers('fire_movedown', { start: 0, end: 2 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'fire_fly',
+        frames: this.anims.generateFrameNumbers('fire_fly', { start: 0, end: 2 }),
+        frameRate: 5,
+        repeat: -1
     });
 
     //MAS ANIMACIONES PERSONAJE

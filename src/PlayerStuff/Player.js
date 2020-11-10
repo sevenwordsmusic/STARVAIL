@@ -56,7 +56,8 @@ export default class Player {
     //BRAZO
 
     //FUEGO DE VUELO
-
+    this.flyFire = this.scene.add.sprite(x, y, 'fire_fly', 0);
+    this.flyFire.setVisible(false);
     //FUEGO DE VUELO
 
     //código para boundry box de cuerpos de matter (no se toca)
@@ -368,6 +369,10 @@ export default class Player {
           this.sprite.anims.play('propulsion', true);
           this.movingArm.anims.play('arm_airUp', true);
           this.fireArm.adjustOffset(-5, -22);
+
+          this.flyFire.setVisible(true);
+          this.flyFire.anims.play('fire_moveup', true);
+
           this.sprite.once('animationcomplete', function(){
             this.isTakingOf = false;
           },this);
