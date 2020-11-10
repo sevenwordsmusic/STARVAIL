@@ -301,9 +301,7 @@ export default class SceneTest_2 extends Phaser.Scene {
     /*var keyObj = this.input.keyboard.addKey('K');  // Get key object
     keyObj.on('down', function(event) { console.log("k presionada"); });*/
 
-  //AUDIO:
-   Audio.startAudioEngine(this);
-   this.maxMemory = 0;
+
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
