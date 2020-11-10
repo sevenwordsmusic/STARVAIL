@@ -11,34 +11,37 @@ export default class Audio extends Phaser.Scene {
     static propellerTween = false;
     static bpm = 104;
     static beat = 16;
-    static barRate = 60 * 1000 / (this.bpm * this.beat);
+    static barRate = 60 * 1000 / this.bpm * this.beat;
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64, this.barRate / 128];
-    static maxVolume = 0.7;
     static vanishingPoint = 1080;
     static halfDistance = this.vanishingPoint / 2;
     static volumeBGM = 1.0;
     static volumeSFX = 1.0;
     static load;
-    static barTimer;
-    static halfBarTimer;
     static walkCycleTimer;
     static maxSFXinstances = 28;
     static SFXinstance = 0;
     static stingerKilling = false;
 
+    //letsTalk calller:
     static chat(words, scene, character){
         if(character==0){
             Chatter.letsTalk(words, scene, 0, 0.7, 0.8);
         }else {
             Chatter.letsTalk(words, scene, 0, 0.3, 0.2);
         }
-
     }
-
+    //SFX instance creators:
     static createSFXinstance(name, num, load) {
         load.soundInstance[num] = [];
         for (var i = 0; i < Audio.maxSFXinstances; i++) {
             load.soundInstance[num][i] = load.sound.add(name);
+        }
+    }
+    static createSFXinstanceSub(name, num, sub, load) {
+        load.soundInstance[num][sub] = [];
+        for (var i = 0; i < Audio.maxSFXinstances; i++) {
+            load.soundInstance[num][sub][i] = load.sound.add(name);
         }
     }
     static createSFXloopInstance(name, num, load) {
@@ -50,46 +53,120 @@ export default class Audio extends Phaser.Scene {
             })
         }
     }
-    static createSFXinstanceSub(name, num, sub, load) {
-        load.soundInstance[num][sub] = [];
-        for (var i = 0; i < Audio.maxSFXinstances; i++) {
-            load.soundInstance[num][sub][i] = load.sound.add(name);
-        }
-    }
+    //MUSIC ENGINE starter:
     static startAudioEngine(scene) {
-        Audio.barTimer = scene.time.addEvent({
-            delay: Audio.barRate,
+        scene.time.addEvent({
+            delay: Audio.barRateDiv[0],
             callback: () => Audio.musicBar(scene),
             loop: true,
         });
-        Audio.halfBarTimer = scene.time.addEvent({
-            delay: Audio.barRateDiv[0],
+        scene.time.addEvent({
+            delay: Audio.barRateDiv[1],
             callback: () => Audio.musicHalfBar(scene),
             loop: true,
         });
-        console.log("AUDIO ENGINE STARTED.")
+        console.log("MUSIC ENGINE STARTED.")
     }
+    //EVERY BAR MUSIC UPDATES:
     static musicBar(scene) {
         this.counter++;
-        this.musicLayerShot(scene);
-        this.musicLayerKilling(scene);
-        this.musicLayerJet(scene);
         this.musicLayerHeight(scene);
-    }
-    static musicHalfBar(scene) {
-        this.musicLayerEnemies(scene);
         this.musicLayerMovement(scene);
+        //this.musicLayerEnemies(scene);
+    }
+    //EVERY HALF BAR MUSIC UPDATES:
+    static musicHalfBar(scene) {
+        this.musicLayerJet(scene);
         //this.musicLayerChill(scene);
     }
     static musicLayerHeight(scene) {
-        var volumeNormalized = this.volumeBGM - ((scene.game.player.earlyPos.y / 4800) * this.volumeBGM);
+        var volumeNormalized = this.volumeBGM - ((scene.game.player.earlyPos.y / 4096) * this.volumeBGM);
         if (volumeNormalized <= this.volumeBGM && volumeNormalized > 0.0) {
             scene.tweens.add({
-                targets: this.load.loopFliying,
+                targets: this.load.musicLoop0000levitating,
                 volume: volumeNormalized,
                 duration: this.barRateDiv[0],
             });
         }
+    }
+    static musicLayerMovement(scene) {
+        if (this.stingerMovement) {
+            this.stingerMovement = false;
+            scene.tweens.add({
+                targets: this.load.musicLoop0000moving,
+                volume: this.volumeBGM,
+                duration: this.barRateDiv[1],
+            });
+        } else {
+            scene.tweens.add({
+                targets: this.load.musicLoop0000moving,
+                volume: 0.0,
+                duration: this.barRateDiv[1],
+            });
+        }
+    }
+    static musicLayerJet(scene) {
+        if (this.stingerJet) {
+            this.stingerJet = false;
+            scene.tweens.add({
+                targets: this.load.musicLoop0000flying,
+                volume: this.volumeBGM,
+                duration: this.barRateDiv[2],
+            });
+        } else {
+            scene.tweens.add({
+                targets: this.load.musicLoop0000flying,
+                volume: 0.0,
+                duration: this.barRateDiv[2],
+            });
+        }
+    }
+    static musicLayerChill(scene) {
+        if (Audio.stingerChill && scene.game.player.inRoom()) {
+            Audio.stingerChill = false;
+            scene.tweens.add({
+                targets: this.load.musicLoop0000levitating,
+                volume: 0.0,
+                duration: this.barRateDiv[2],
+            });
+            scene.tweens.add({
+                targets: this.load.musicLoop0000moving,
+                volume: 0.0,
+                duration: this.barRateDiv[2],
+            });
+            scene.tweens.add({
+                targets: this.load.musicLoop0000flying,
+                volume: 0.0,
+                duration: this.barRateDiv[2],
+            });
+            scene.tweens.add({
+                targets: this.load.musicLoop0000chill,
+                volume: this.volumeBGM,
+                duration: this.barRateDiv[2],
+            });
+            console.log("IN CHILL")
+        } else if (!Audio.stingerChill && !scene.game.player.inRoom()) {
+            scene.tweens.add({
+                targets: this.load.musicLoop0000levitating,
+                volume: this.volumeBGM,
+                duration: this.barRateDiv[2],
+            });
+            scene.tweens.add({
+                targets: this.load.musicLoop0000moving,
+                volume: this.volumeBGM,
+                duration: this.barRateDiv[2],
+            });
+            scene.tweens.add({
+                targets: this.load.musicLoop0000flying,
+                volume: this.volumeBGM,
+                duration: this.barRateDiv[2],
+            });
+            scene.tweens.add({
+                targets: this.load.musicLoop0000chill,
+                volume: 0.0,
+                duration: this.barRateDiv[2],
+            });
+        } 
     }
     static musicLayerEnemies(scene) {
         if (scene.game.player.getClosestEnemyDistance() > this.vanishingPoint) {
@@ -110,160 +187,6 @@ export default class Audio extends Phaser.Scene {
             volume: this.volumeBGM * (distance / 1),
             duration: this.barRateDiv[2],
         });
-    }
-    static musicLayerKilling(scene) {
-        if (Audio.stingerKilling && scene.game.isFiring) {
-            Audio.stingerKilling = false;
-            scene.tweens.add({
-                targets: this.load.loopKilling,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-        } else if (!Audio.stingerKilling) {
-            scene.tweens.add({
-                targets: this.load.loopKilling,
-                volume: 0.0,
-                duration: this.barRateDiv[0],
-            });
-        }
-    }
-  /*
-    static musicLayerChill(scene) {
-        if (Audio.stingerChill && scene.game.inChill) {
-            Audio.stingerChill = false;
-            scene.tweens.add({
-                targets: this.load.loopBase,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopEnemies,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopKilling,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopFliying,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopLevitating,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopMovement,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopWeapon,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-
-            scene.tweens.add({
-                targets: this.load.loopChill,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-        } else if (!Audio.stingerChill) {
-            scene.tweens.add({
-                targets: this.load.loopChill,
-                volume: 0.0,
-                duration: this.barRateDiv[0],
-            });
-
-            scene.tweens.add({
-                targets: this.load.loopBase,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopEnemies,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopKilling,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopFliying,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopLevitating,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopMovement,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.loopWeapon,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-        }
-    }
-    */
-    static musicLayerShot(scene) {
-        if (this.stingerShot && scene.game.player.getClosestEnemyDistance() < this.halfDistance) {
-            this.stingerShot = false;
-                    scene.tweens.add({
-                        targets: this.load.loopWeapon,
-                        volume: this.volumeBGM,
-                        duration: this.barRateDiv[2],
-                    });
-        } else {
-                    scene.tweens.add({
-                        targets: this.load.loopWeapon,
-                        volume: 0.0,
-                        duration: this.barRateDiv[0],
-                    });
-        }
-    }
-    static musicLayerJet(scene) {
-        if (this.stingerJet) {
-            this.stingerJet = false;
-            scene.tweens.add({
-                targets: this.load.loopLevitating,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[0],
-            });
-        } else {
-            scene.tweens.add({
-                targets: this.load.loopLevitating,
-                volume: 0.0,
-                duration: this.barRateDiv[1],
-            });
-        }
-    }
-    static musicLayerMovement(scene) {
-        if (this.stingerMovement) {
-            this.stingerMovement = false;
-            scene.tweens.add({
-                targets: this.load.loopMovement,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[3],
-            });
-        } else {
-            scene.tweens.add({
-                targets: this.load.loopMovement,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-        }
     }
     static volume2D(length) {
         if (length > this.vanishingPoint) {
@@ -353,36 +276,15 @@ export default class Audio extends Phaser.Scene {
         }
         return instance;
     }
-    static lasserLoop(on){
-        if(on){
-            Audio.play2Dinstance(32);
-            this.load.lasserLoop.setDetune(-50 + (Math.random() * 100));
-            this.load.lasserLoop.play();
-            this.load.beamLoop.setDetune(-50 + (Math.random() * 100));
-            this.load.beamLoop.play();
-        }else{
-            Audio.play2Dinstance(33);
-            this.load.lasserLoop.stop();
-            this.load.beamLoop.stop();
-        }
-        return  this.load.beamLoop;
-    }
-    static lasserSufferingLoop(on){
-        if(on){
-            this.load.lasserSufferingLoop.play();
-        }else{
-            this.load.lasserSufferingLoop.stop();
-        }
-        return  this.load.lasserSufferingLoop;
-    }
+
     static audioUpdate(scene) {
         this.propellerFliying(scene);
         if (scene.game.isFiring && scene.game.player.energy == 0.0 && !scene.game.player.activatedJet) {
             Audio.play2DinstanceRate(10, 0.8 + scene.game.player.weaponCounter * 0.05);
-        }/*
-        if (scene.game.isChill && !this.stingerChill) {
+        }
+        if (scene.game.player.inRoom() && !this.stingerChill) {
             this.stingerChill = true;
-        }*/
+        }
         if (scene.game.isFiring && !this.stingerShot) {
             this.stingerShot = true;
         }
@@ -430,6 +332,28 @@ export default class Audio extends Phaser.Scene {
             this.earlyPos = Math.floor(scene.game.player.earlyPos.x);
             this.stingerMovement = true;
         }
+    }
+    static lasserLoop(on){
+        if(on){
+            Audio.play2Dinstance(32);
+            this.load.lasserLoop.setDetune(-50 + (Math.random() * 100));
+            this.load.lasserLoop.play();
+            this.load.beamLoop.setDetune(-50 + (Math.random() * 100));
+            this.load.beamLoop.play();
+        }else{
+            Audio.play2Dinstance(33);
+            this.load.lasserLoop.stop();
+            this.load.beamLoop.stop();
+        }
+        return  this.load.beamLoop;
+    }
+    static lasserSufferingLoop(on){
+        if(on){
+            this.load.lasserSufferingLoop.play();
+        }else{
+            this.load.lasserSufferingLoop.stop();
+        }
+        return  this.load.lasserSufferingLoop;
     }
     static propellerFliying(scene) {
         if (scene.game.player.activatedJet && !this.earlyPropeller) {
@@ -563,23 +487,10 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('zap', 'assets/audio/SFX/enemies/zap.ogg');
         this.load.audio('zapAir', 'assets/audio/SFX/enemies/zapAir.ogg');
         //MUSIC LOOPS
-        /*this.load.audio('loop0000base', 'assets/audio/BGM/loop0000base.mp3');
-        this.load.audio('loop0000enemies', 'assets/audio/BGM/loop0000enemies.mp3');
-        this.load.audio('loop0000killing', 'assets/audio/BGM/loop0000killing.mp3');
-        this.load.audio('loop0000flying', 'assets/audio/BGM/loop0000flying.mp3');
-        this.load.audio('loop0000levitating', 'assets/audio/BGM/loop0000levitating.mp3');
-        this.load.audio('loop0000moving', 'assets/audio/BGM/loop0000moving.mp3');
-        this.load.audio('loop0000weapon', 'assets/audio/BGM/loop0000weapon.mp3');
-        this.load.audio('loop0000chill', 'assets/audio/BGM/loop0000chill.ogg');*/
-
-        this.load.audio('loop0000base', 'assets/audio/SFX/walkLoop_00.ogg');
-        this.load.audio('loop0000enemies', 'assets/audio/SFX/walkLoop_00.ogg');
-        this.load.audio('loop0000killing', 'assets/audio/SFX/walkLoop_00.ogg');
-        this.load.audio('loop0000flying', 'assets/audio/SFX/walkLoop_00.ogg');
-        this.load.audio('loop0000levitating', 'assets/audio/SFX/walkLoop_00.ogg');
-        this.load.audio('loop0000moving', 'assets/audio/SFX/walkLoop_00.ogg');
-        this.load.audio('loop0000weapon', 'assets/audio/SFX/walkLoop_00.ogg');
-        this.load.audio('loop0000chill', 'assets/audio/SFX/walkLoop_00.ogg');
+        this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
+        this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
+        this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
+        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg');
     }
     create() {
         //INIT AUDIO
@@ -591,6 +502,7 @@ export default class Audio extends Phaser.Scene {
         this.stingerMovement = false;
         this.stingerSurface = false;
         this.stingerChill = false;
+        this.overallVolume = 0.0;
         this.clockWalk = new Date().getTime();
         //IMPACTS
         this.soundInstance[0] = [];
@@ -738,48 +650,28 @@ export default class Audio extends Phaser.Scene {
             loop: true
         })
         //MUSIC LOOPS
-        this.loopBase = this.sound.add('loop0000base', {
-            volume: this.volumeBGM,
-            loop: true
-        })
-        this.loopEnemies = this.sound.add('loop0000enemies', {
+        this.musicLoop0000levitating = this.sound.add('musicLoop0000levitating', {
             volume: 0.0,
             loop: true
         })
-        this.loopKilling = this.sound.add('loop0000killing', {
+        this.musicLoop0000moving = this.sound.add('musicLoop0000moving', {
             volume: 0.0,
             loop: true
         })
-        this.loopFliying = this.sound.add('loop0000flying', {
+        this.musicLoop0000flying = this.sound.add('musicLoop0000flying', {
             volume: 0.0,
             loop: true
         })
-        this.loopLevitating = this.sound.add('loop0000levitating', {
+        this.musicLoop0000chill = this.sound.add('musicLoop0000chill', {
             volume: 0.0,
             loop: true
         })
-        this.loopMovement = this.sound.add('loop0000moving', {
-            volume: 0.0,
-            loop: true
-        })
-        this.loopWeapon = this.sound.add('loop0000weapon', {
-            volume: 0.0,
-            loop: true
-        })
-        this.loopChill = this.sound.add('loop0000chill', {
-            volume: 0.0,
-            loop: true
-        })
-        this.ambientLoop.play();
         //INIT PLAY LEVEL0000
-        this.loopBase.play();
-        this.loopEnemies.play();
-        this.loopKilling.play();
-        this.loopFliying.play();
-        this.loopLevitating.play();
-        this.loopMovement.play();
-        this.loopWeapon.play();
-        this.loopChill.play();
+        this.ambientLoop.play();
+        this.musicLoop0000levitating.play();
+        this.musicLoop0000moving.play();
+        this.musicLoop0000flying.play();
+        this.musicLoop0000chill.play();
         //THE LOAD.
         Audio.load = this;
         console.log("AUDIO LOADED: everything went better than expected :D !!!");
