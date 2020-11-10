@@ -60,7 +60,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     console.log(this);
     this.playerStartX = 600;
     this.playerStartY = 4500;
-    
+
     //INTERFAZ
 
     //Options field
@@ -260,7 +260,7 @@ export default class SceneTest_1 extends Phaser.Scene {
         return target[Math.max(0, prop)];
       }
     });
-    this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
+    //this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
 
     //animacion de tiles de la capa de tiels animada
     this.animatedTiles.init(this.map);

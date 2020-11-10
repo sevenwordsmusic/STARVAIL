@@ -55,6 +55,10 @@ export default class Player {
     this.movingArm.setScale(this.sprite.scale);
     //BRAZO
 
+    //FUEGO DE VUELO
+
+    //FUEGO DE VUELO
+
     //código para boundry box de cuerpos de matter (no se toca)
     this.earlyPos = new Phaser.Math.Vector2(this.sprite.body.position.x, this.sprite.body.position.y);
     this.advance32X = 0;

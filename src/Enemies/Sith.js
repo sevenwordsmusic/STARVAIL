@@ -164,7 +164,7 @@ export default class Sith extends Enemy {
   }
 
   tryFlipX(){
-    if(this.sprite != undefined){
+    if(this.sprite != undefined && this.sprite.body != undefined){
       this.targetDir =  this.scene.game.player.sprite.x<this.sprite.x;
       this.tryFlipX(this.targetDir);
     }
@@ -177,8 +177,6 @@ export default class Sith extends Enemy {
   inflictDamagePlayerArea(dir){
     if(this.sprite.body === undefined)return;
     if(dir){
-      this.scene.graphics.clear();
-      this.scene.graphics.fillRect(this.sprite.x+10, this.sprite.y-50, -105, 90);
       if(super.playerHit(this.sprite.x-95, this.sprite.y-50, this.sprite.x+10, this.sprite.y+35)){
         //AUDIO
             //Audio.play3Dinstance(this,55);
@@ -186,8 +184,6 @@ export default class Sith extends Enemy {
         this.scene.game.player.playerDamage(this.hitDamage, true);
       }
     }else{
-      this.scene.graphics.clear();
-      this.scene.graphics.fillRect(this.sprite.x-10, this.sprite.y-50, 105, 90);
       if(super.playerHit(this.sprite.x-10, this.sprite.y-50, this.sprite.x + 95, this.sprite.y+35)){
         //AUDIO
             //Audio.play3Dinstance(this,55);
@@ -198,8 +194,6 @@ export default class Sith extends Enemy {
   }
   inflictDamagePlayerArea2(){
     if(this.sprite.body === undefined)return;
-    this.scene.graphics.clear();
-    this.scene.graphics.fillRect(this.sprite.x-55, this.sprite.y-65, 110, 110);
     if(super.playerHit(this.sprite.x-55, this.sprite.y-65, this.sprite.x+55, this.sprite.y+55))
       this.scene.game.player.playerDamage(this.teleportHitDamage, true);
   }

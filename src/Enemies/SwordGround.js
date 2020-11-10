@@ -159,7 +159,7 @@ export default class SwordGround extends Enemy {
     //
   }
   tryFlipX(){
-    if(this.sprite != undefined){
+    if(this.sprite != undefined && this.sprite.body != undefined){
       this.targetDir =  this.scene.game.player.sprite.x<this.sprite.x;
       this.tryFlipX(this.targetDir);
     }
