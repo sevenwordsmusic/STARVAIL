@@ -419,6 +419,8 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('impact_05', 'assets/audio/SFX/impact_05.ogg');
         this.load.audio('impact_06', 'assets/audio/SFX/impact_06.ogg');
         this.load.audio('impact_07', 'assets/audio/SFX/impact_07.ogg');
+        this.load.audio('ballBounce_00A', 'assets/audio/SFX/ballBounce_00A.ogg');
+        this.load.audio('ballBounce_00B', 'assets/audio/SFX/ballBounce_00B.ogg');
         //UI
         this.load.audio('null', 'assets/audio/SFX/null.ogg');
         this.load.audio('weaponChange_00', 'assets/audio/SFX/weaponChange_00.ogg');
@@ -427,9 +429,10 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('propellerStop_00', 'assets/audio/SFX/propellerStop_00.ogg');
         this.load.audio('wick_00', 'assets/audio/SFX/wick_00.ogg');
         this.load.audio('wick_01', 'assets/audio/SFX/wick_01.ogg');
+        this.load.audio('wick_02', 'assets/audio/SFX/wick_02.ogg');
+        this.load.audio('wick_03', 'assets/audio/SFX/wick_03.ogg');
         this.load.audio('trace_00', 'assets/audio/SFX/trace_00.ogg');
         this.load.audio('trace_01', 'assets/audio/SFX/trace_01.ogg');
-        this.load.audio('wick_02', 'assets/audio/SFX/wick_02.ogg');
         this.load.audio('lasserStart_00', 'assets/audio/SFX/lasserStart_00.ogg');
         this.load.audio('lasserStop_00', 'assets/audio/SFX/lasserStop_00.ogg');
         this.load.audio('walkStop_00', 'assets/audio/SFX/walkStop_00.ogg');
@@ -606,15 +609,15 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('impact_05', 5, this);
         Audio.createSFXinstance('impact_06', 6, this);
         Audio.createSFXinstance('impact_07', 7, this);
-        //UI_monoinstance
+        //
         Audio.createSFXinstance('weaponChange_00', 8, this);
         Audio.createSFXinstance('movingPart_00', 9, this);
         Audio.createSFXinstance('trigger_00', 10, this);
         Audio.createSFXinstance('propellerStop_00', 11, this);
-        //EXTRA A
+        //
         Audio.createSFXinstance('wick_00', 12, this);
         Audio.createSFXinstance('wick_01', 13, this);
-        //EXPLOSION
+        //
         this.soundInstance[14] = [];
         Audio.createSFXinstanceSub('explosion_00A', 14, 0, this);
         Audio.createSFXinstanceSub('explosion_00B', 14, 1, this);
@@ -636,7 +639,7 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('explosion_04B', 18, 1, this);
         Audio.createSFXinstanceSub('explosion_04C', 18, 2, this);
         Audio.createSFXinstance('explosion_05', 19, this);
-        //SHOTS
+        //
         Audio.createSFXinstance('shot_00', 20, this);
         Audio.createSFXinstance('shot_01', 21, this);
         Audio.createSFXinstance('shot_02', 22, this);
@@ -645,14 +648,14 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('shot_05', 25, this);
         Audio.createSFXinstance('shot_06', 26, this);
         Audio.createSFXinstance('shot_07', 27, this);
-        //EXTRA B
+        //
         Audio.createSFXinstance('walkStop_00', 28, this);
         Audio.createSFXinstance('trace_00', 29, this);
         Audio.createSFXinstance('trace_01', 30, this);
         Audio.createSFXinstance('wick_02', 31, this);
         Audio.createSFXinstance('lasserStart_00', 32, this);
         Audio.createSFXinstance('lasserStop_00', 33, this);
-        //ENEMIES
+        //
         Audio.createSFXloopInstance('droneLoop', 34, this);
         Audio.createSFXloopInstance('droneLoopDetect', 35, this);
         this.soundInstance[36] = [];
@@ -739,9 +742,10 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('explode_05B', 65, 1, this);
         Audio.createSFXinstanceSub('explode_05C', 65, 2, this);
         Audio.createSFXinstanceSub('explode_05C', 65, 3, this);
-
-
-
+        Audio.createSFXinstance('wick_03', 66, this);
+        this.soundInstance[67] = [];
+        Audio.createSFXinstanceSub('ballBounce_00A', 67, 0, this);
+        Audio.createSFXinstanceSub('ballBounce_00B', 67, 1, this);
 
 
         //UI LOOPS

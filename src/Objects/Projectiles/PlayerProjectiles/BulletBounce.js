@@ -28,6 +28,10 @@ export default class BulletBounce extends Projectile {
     this.sprite.setDepth(5);
     this.sprite.angle = this.pVelocity.angle() * 180/Math.PI ;
     this.scene.events.on("update", this.update, this); //para que se ejecute el udate
+
+    //AUDIO
+      this.sfx=Audio.play3Dinstance(this, 66);
+    //
   }
   //se para el update y si se trata de un enemigo, este recibe daño
   itemExpire(){
@@ -57,12 +61,15 @@ export default class BulletBounce extends Projectile {
       if(this.bounce>0){
         Audio.play3DinstanceRnd(this, 3);
         Audio.play3DinstanceRnd(this, 0);
+        Audio.play3DinstanceRnd(this, 67);
       }else if(this.bounce==0){
         Audio.play3DinstanceRnd(this, 1);
       }
       //
     }
-
+      //AUDIO
+        this.sfx.volume= 0.0;
+      //
 
     //al completar su animacion de explsion, dicha instancia se autodestruye
     bombExplosion.on('animationcomplete', function(){
@@ -108,6 +115,9 @@ export default class BulletBounce extends Projectile {
     if(this.sprite != undefined){
       this.sprite.x += (this.pVelocity.x * delta);
       this.sprite.y += (this.pVelocity.y * delta);
+      //AUDIO
+        this.sfx.volume=Audio.volume3D(this);
+      //
     }
   }
 
