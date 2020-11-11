@@ -78,9 +78,9 @@ export default class SceneMainMenu extends Phaser.Scene {
     console.log("Se ha pulsado start");
 
     this.botonStart.alpha=0.8;
-
-    this.scene.run("test1");
-    this.scene.bringToTop("test1");
+    //CAMBIAR 
+    this.scene.run("levelFirst1");
+    this.scene.bringToTop("levelFirst1");
     this.scene.remove("SceneMM");
   }
 

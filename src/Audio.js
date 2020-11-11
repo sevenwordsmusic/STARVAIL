@@ -23,12 +23,30 @@ export default class Audio extends Phaser.Scene {
     static SFXinstance = 0;
     static stingerKilling = false;
 
-    //letsTalk calller:
+    //letsTalk caller:
     static chat(words, scene, character){
-        if(character==0){
-            Chatter.letsTalk(words, scene, 0, 0.7, 0.8);
-        }else {
-            Chatter.letsTalk(words, scene, 0, 0.3, 0.2);
+        switch(character){
+          case 0:
+                Chatter.letsTalk(words, scene, 0, 0.7, 0.8);
+            break;
+          case 1:
+                Chatter.letsTalk(words, scene, 1, 0.3, 0.2);
+            break;
+          case 2:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 3:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 4:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 5:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 6:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
         }
     }
     //SFX instance creators:
@@ -486,6 +504,65 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('lasserSufferingLoop', 'assets/audio/SFX/enemies/lasserSufferingLoop.ogg');
         this.load.audio('zap', 'assets/audio/SFX/enemies/zap.ogg');
         this.load.audio('zapAir', 'assets/audio/SFX/enemies/zapAir.ogg');
+        this.load.audio('groundDeath_00A', 'assets/audio/SFX/enemies/groundDeath_00A.ogg');
+        this.load.audio('groundDeath_00B', 'assets/audio/SFX/enemies/groundDeath_00B.ogg');
+        this.load.audio('groundDeath_00C', 'assets/audio/SFX/enemies/groundDeath_00C.ogg');
+        this.load.audio('groundDeath_01A', 'assets/audio/SFX/enemies/groundDeath_01A.ogg');
+        this.load.audio('groundDeath_01B', 'assets/audio/SFX/enemies/groundDeath_01B.ogg');
+        this.load.audio('groundDeath_01C', 'assets/audio/SFX/enemies/groundDeath_01C.ogg');
+        this.load.audio('groundDeath_02A', 'assets/audio/SFX/enemies/groundDeath_02A.ogg');
+        this.load.audio('groundDeath_02B', 'assets/audio/SFX/enemies/groundDeath_02B.ogg');
+        this.load.audio('groundDeath_02C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_00A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_00B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_00C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_00C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_01A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_01B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_01C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_01C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_02A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_02B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_02C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_02C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_03A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_03B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_03C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_03C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_04A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_04B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_04C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_04C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_05A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_05B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_05C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_05C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+        this.load.audio('explode_00A', 'assets/audio/SFX/enemies/explode_00A.ogg');
+        this.load.audio('explode_00B', 'assets/audio/SFX/enemies/explode_00B.ogg');
+        this.load.audio('explode_00C', 'assets/audio/SFX/enemies/explode_00C.ogg');
+        this.load.audio('explode_00C', 'assets/audio/SFX/enemies/explode_00D.ogg');
+        this.load.audio('explode_01A', 'assets/audio/SFX/enemies/explode_01A.ogg');
+        this.load.audio('explode_01B', 'assets/audio/SFX/enemies/explode_01B.ogg');
+        this.load.audio('explode_01C', 'assets/audio/SFX/enemies/explode_01C.ogg');
+        this.load.audio('explode_01C', 'assets/audio/SFX/enemies/explode_01D.ogg');
+        this.load.audio('explode_02A', 'assets/audio/SFX/enemies/explode_02A.ogg');
+        this.load.audio('explode_02B', 'assets/audio/SFX/enemies/explode_02B.ogg');
+        this.load.audio('explode_02C', 'assets/audio/SFX/enemies/explode_02C.ogg');
+        this.load.audio('explode_02C', 'assets/audio/SFX/enemies/explode_02D.ogg');
+        this.load.audio('explode_03A', 'assets/audio/SFX/enemies/explode_03A.ogg');
+        this.load.audio('explode_03B', 'assets/audio/SFX/enemies/explode_03B.ogg');
+        this.load.audio('explode_03C', 'assets/audio/SFX/enemies/explode_03C.ogg');
+        this.load.audio('explode_03C', 'assets/audio/SFX/enemies/explode_03D.ogg');
+        this.load.audio('explode_04A', 'assets/audio/SFX/enemies/explode_04A.ogg');
+        this.load.audio('explode_04B', 'assets/audio/SFX/enemies/explode_04B.ogg');
+        this.load.audio('explode_04C', 'assets/audio/SFX/enemies/explode_04C.ogg');
+        this.load.audio('explode_04C', 'assets/audio/SFX/enemies/explode_04D.ogg');
+        this.load.audio('explode_05A', 'assets/audio/SFX/enemies/explode_05A.ogg');
+        this.load.audio('explode_05B', 'assets/audio/SFX/enemies/explode_05B.ogg');
+        this.load.audio('explode_05C', 'assets/audio/SFX/enemies/explode_05C.ogg');
+        this.load.audio('explode_05C', 'assets/audio/SFX/enemies/explode_05D.ogg');
+
+
         //MUSIC LOOPS
         /*this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
@@ -620,6 +697,53 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('null', 54, this);
         Audio.createSFXinstance('zap', 55, this);
         Audio.createSFXinstance('zapAir', 56, this);
+        this.soundInstance[57] = [];
+        Audio.createSFXinstanceSub('groundDeath_00A', 57, 0, this);
+        Audio.createSFXinstanceSub('groundDeath_00B', 57, 1, this);
+        Audio.createSFXinstanceSub('groundDeath_00C', 57, 2, this);
+        this.soundInstance[58] = [];
+        Audio.createSFXinstanceSub('groundDeath_01A', 58, 0, this);
+        Audio.createSFXinstanceSub('groundDeath_01B', 58, 1, this);
+        Audio.createSFXinstanceSub('groundDeath_01C', 58, 2, this);
+        this.soundInstance[59] = [];
+        Audio.createSFXinstanceSub('groundDeath_02A', 59, 0, this);
+        Audio.createSFXinstanceSub('groundDeath_02B', 59, 1, this);
+        Audio.createSFXinstanceSub('groundDeath_02C', 59, 2, this);
+        this.soundInstance[60] = [];
+        Audio.createSFXinstanceSub('explode_00A', 60, 0, this);
+        Audio.createSFXinstanceSub('explode_00B', 60, 1, this);
+        Audio.createSFXinstanceSub('explode_00C', 60, 2, this);
+        Audio.createSFXinstanceSub('explode_00C', 60, 3, this);
+        this.soundInstance[61] = [];
+        Audio.createSFXinstanceSub('explode_01A', 61, 0, this);
+        Audio.createSFXinstanceSub('explode_01B', 61, 1, this);
+        Audio.createSFXinstanceSub('explode_01C', 61, 2, this);
+        Audio.createSFXinstanceSub('explode_01C', 61, 3, this);
+        this.soundInstance[62] = [];
+        Audio.createSFXinstanceSub('explode_02A', 62, 0, this);
+        Audio.createSFXinstanceSub('explode_02B', 62, 1, this);
+        Audio.createSFXinstanceSub('explode_02C', 62, 2, this);
+        Audio.createSFXinstanceSub('explode_02C', 62, 3, this);
+        this.soundInstance[63] = [];
+        Audio.createSFXinstanceSub('explode_03A', 63, 0, this);
+        Audio.createSFXinstanceSub('explode_03B', 63, 1, this);
+        Audio.createSFXinstanceSub('explode_03C', 63, 2, this);
+        Audio.createSFXinstanceSub('explode_03C', 63, 3, this);
+        this.soundInstance[64] = [];
+        Audio.createSFXinstanceSub('explode_04A', 64, 0, this);
+        Audio.createSFXinstanceSub('explode_04B', 64, 1, this);
+        Audio.createSFXinstanceSub('explode_04C', 64, 2, this);
+        Audio.createSFXinstanceSub('explode_04C', 64, 3, this);
+        this.soundInstance[65] = [];
+        Audio.createSFXinstanceSub('explode_05A', 65, 0, this);
+        Audio.createSFXinstanceSub('explode_05B', 65, 1, this);
+        Audio.createSFXinstanceSub('explode_05C', 65, 2, this);
+        Audio.createSFXinstanceSub('explode_05C', 65, 3, this);
+
+
+
+
+
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
             volume: this.volumeSFX,

@@ -214,6 +214,7 @@ export default class ZapperAir extends Enemy {
     if(!this.dead){
       //AUDIO
           Audio.play3DinstanceRnd(this, 52);
+          Audio.play3DinstanceRnd(this, 63);
           this.sfx.stop();
           this.sfxDetect.stop();
       //

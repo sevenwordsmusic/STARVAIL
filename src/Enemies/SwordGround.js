@@ -242,6 +242,8 @@ export default class SwordGround extends Enemy {
     this.goTo(0);
     if(!this.dead){
       //AUDIO
+          Audio.play3DinstanceRnd(this, 58);
+          Audio.play3DinstanceRnd(this, 61);
           this.sfx.stop();
           this.sfxDetect.stop();
       //

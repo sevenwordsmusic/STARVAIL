@@ -471,10 +471,10 @@ export default class SceneLoading extends Phaser.Scene {
     //this.scene.start("SceneSplashScreen");
 
     //SI SE QUIEREN TESTEAR NIVELES
-    this.scene.start("levelFirst1");
+    //this.scene.start("levelFirst1");
 
     //SI SE QUIERE IR AL NIVEL DE PRUEBA
-    //this.scene.start("test1");
+    this.scene.start("test1");
 
   }
 }

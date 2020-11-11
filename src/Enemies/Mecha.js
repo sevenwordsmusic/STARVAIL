@@ -247,6 +247,8 @@ export default class Mecha extends Enemy {
     this.goTo(0);
     if(!this.dead){
       //AUDIO
+          Audio.play3DinstanceRnd(this, 59);
+          Audio.play3DinstanceRnd(this, 65);
           this.sfx.stop();
           this.sfxDetect.stop();
       //

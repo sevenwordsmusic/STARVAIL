@@ -226,6 +226,8 @@ export default class ZapperGround extends Enemy {
     this.goTo(0);
     if(!this.dead){
       //AUDIO
+          Audio.play3DinstanceRnd(this, 57);
+          Audio.play3DinstanceRnd(this, 60);
           this.sfx.stop();
           this.sfxDetect.stop();
       //

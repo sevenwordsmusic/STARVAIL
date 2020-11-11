@@ -300,7 +300,7 @@ export default class Level1 extends Phaser.Scene {
           return null;
       }
     }
-
+/*
     //inicialización de enemigos y cofres de capa de enemigos
     if(this.map.getObjectLayer("Enemy_Layer") != null)
       this.map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
@@ -342,7 +342,7 @@ export default class Level1 extends Phaser.Scene {
             }
           }
       });
-
+*/
     if(this.map.getObjectLayer("Chest_Layer") != null)
       this.map.getObjectLayer("Chest_Layer").objects.forEach(point => {
         if(point.name == "tutorialSpecial")

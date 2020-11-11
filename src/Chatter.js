@@ -12,7 +12,7 @@ export default class Chatter extends Phaser.Scene {
     static letsTalk(words, scene, genre, size, weight){
     	var chitchat=[];
     	Chatter.counter=0;
-    	for(var i=0; i<=words; i++){
+    	for(var i=0; i<words; i++){
     		chitchat[i]=scene.time.addEvent({
                 delay: Audio.barRateDiv[3]*i,
                 callback: () => {
@@ -29,12 +29,12 @@ export default class Chatter extends Phaser.Scene {
     static speakWord(genre, size, weight){
         var rnd=Math.floor(Math.random()*Chatter.male.length);
     	if(genre==0){
-            Chatter.male[rnd].setDetune(1200-(weight*2400));
             Chatter.male[rnd].setRate(1.5-size);
+            Chatter.male[rnd].setDetune(1200-(weight*2400));
 			Chatter.male[rnd].play();
     	}else{
-            Chatter.female[rnd].setDetune(1200-(weight*2400));
             Chatter.female[rnd].setRate(1.5-size);
+            Chatter.female[rnd].setDetune(1200-(weight*2400));
 			Chatter.female[rnd].play();
     	}
     	Chatter.counter++;
