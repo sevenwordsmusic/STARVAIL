@@ -31,26 +31,14 @@
                 {
                  "height":0,
                  "id":529,
-                 "name":"mecha",
+                 "name":"zapper2",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2003,
-                 "y":4389
-                }, 
-                {
-                 "height":0,
-                 "id":533,
-                 "name":"mecha",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1106,
-                 "y":4352
+                 "x":1375,
+                 "y":4335
                 }, 
                 {
                  "height":0,
@@ -61,8 +49,68 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1912,
+                 "x":1598,
+                 "y":4500
+                }, 
+                {
+                 "height":0,
+                 "id":535,
+                 "name":"zapper1",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1096,
+                 "y":4330
+                }, 
+                {
+                 "height":0,
+                 "id":536,
+                 "name":"bomb",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1542,
+                 "y":4236
+                }, 
+                {
+                 "height":0,
+                 "id":537,
+                 "name":"gunner",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2076,
+                 "y":4456
+                }, 
+                {
+                 "height":0,
+                 "id":538,
+                 "name":"sith",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1900,
                  "y":4490
+                }, 
+                {
+                 "height":0,
+                 "id":539,
+                 "name":"sword",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1108,
+                 "y":4502
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -161,7 +209,7 @@
          "y":0
         }],
  "nextlayerid":32,
- "nextobjectid":535,
+ "nextobjectid":540,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

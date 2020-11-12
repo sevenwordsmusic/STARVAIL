@@ -240,7 +240,7 @@ export default class SceneTest_1 extends Phaser.Scene {
         tileBody.original = undefined;
         tileBody.collisionFilter.category = 1;
         tileBody.collisionFilter.group = -4;
-        tileBody.gameObject.tile.setVisible(false);
+        //tileBody.gameObject.tile.setVisible(false);
         if (tileBody.position.x > this.playerStartX - 32*26 && tileBody.position.x < this.playerStartX + 32*26 && tileBody.position.y > this.playerStartY - 32*26 && tileBody.position.y < this.playerStartY + 32*26) {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
           tileBody.collisionFilter.mask = 1;
@@ -248,7 +248,7 @@ export default class SceneTest_1 extends Phaser.Scene {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, false);
           tileBody.collisionFilter.mask = 0;
           tileBody.isSleeping = true;
-          //tileBody.gameObject.tile.setVisible(false);
+          tileBody.gameObject.tile.setVisible(false);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
         }
         this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
@@ -372,7 +372,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     //new Mentor(this, this.playerStartX + 400, this.playerStartY)
 
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
-    cam.setZoom(0.5);
+    //cam.setZoom(0.5);
 
     //inicialización de meta
     //new LevelEnd(this, this.goalX, this.goalY, 'star', 'testsec', SceneTest_2);
