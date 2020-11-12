@@ -229,10 +229,10 @@ export default class ZapperGround extends Enemy {
   }
 
   enemyDead(vXDmg){
-    const xPos = this.sprite.x;
-    const yPos = this.sprite.y;
     this.goTo(0);
     if(!this.dead){
+      const xPos = this.sprite.x;
+      const yPos = this.sprite.y;
       //AUDIO
           Audio.play3DinstanceRnd(this, 57);
           Audio.play3DinstanceRnd(this, 60);

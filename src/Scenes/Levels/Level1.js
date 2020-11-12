@@ -40,12 +40,12 @@ import TileController from "../../TileController.js"
 
 //Clase Scene2, que extiende de Phaser.Scene.
 export default class Level1 extends Phaser.Scene {
-  static #count = 0;
+  static count = 0;
   static addNumber(){
-    Level1.#count = (Level1.getNumber() + 1)%5 ;
+    Level1.count = (Level1.getNumber() + 1)%5 ;
   }
   static getNumber(){
-    return Level1.#count;
+    return Level1.count;
   }
   constructor() {
     super('levelFirst' + (Level1.getNumber() + 1));
@@ -120,17 +120,14 @@ export default class Level1 extends Phaser.Scene {
       this.game.transitionToScene(this, 'Joystick', Joystick_test)
     },this);
 
-    console.log("a: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
 
     //Inicializacion y creacion de mapa de tiles.
     this.map = this.make.tilemap({ key: "map1" });
-    console.log("b: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund1", 32, 32, 1, 2);
     const tileset2 = this.map.addTilesetImage("front_layer", "tilesFront1", 32, 32, 1, 2);
     const tileset3 = this.map.addTilesetImage("main_layer", "tilesMain1", 32, 32, 1, 2);
     const tileset4 = this.map.addTilesetImage("second_layer", "tilesSecond1", 32, 32, 1, 2);
     const tileset5 = this.map.addTilesetImage("animated_layer", "animatedLayer1", 32, 32, 1, 2);
-    console.log("c: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
 
     //Capas de tiles.
     const mainlayer = this.map.createDynamicLayer("Main_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
@@ -146,9 +143,7 @@ export default class Level1 extends Phaser.Scene {
 
     //Colisiones de las capas.
     mainlayer.setCollisionByProperty({ Collides: true });
-    console.log("1: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     this.matter.world.convertTilemapLayer(mainlayer);
-    console.log("2: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
 
     lethallayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(lethallayer);
@@ -303,7 +298,7 @@ export default class Level1 extends Phaser.Scene {
           return null;
       }
     }
-/*
+
     //inicialización de enemigos y cofres de capa de enemigos
     if(this.map.getObjectLayer("Enemy_Layer") != null)
       this.map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
@@ -345,7 +340,7 @@ export default class Level1 extends Phaser.Scene {
             }
           }
       });
-*/
+
     if(this.map.getObjectLayer("Chest_Layer") != null)
       this.map.getObjectLayer("Chest_Layer").objects.forEach(point => {
         if(point.name == "tutorialSpecial")
@@ -431,8 +426,9 @@ export default class Level1 extends Phaser.Scene {
   pauseGame(){
     console.log("Juego pausado");
 
-    this.botonPause.alpha=0.8;
+    this.game.pauseInfo = 'levelFirst' + (Level1.getNumber());
 
+    this.botonPause.alpha=0.8;
     this.scene.run("ScenePause");
     this.scene.bringToTop("ScenePause");
     this.scene.pause('levelFirst' + (Level1.getNumber()));

@@ -8,9 +8,6 @@ export default class SceneLoading extends Phaser.Scene {
     //IMAGES, SPRITES, SPRITESHEETS
 
     //MENUS
-    //Splash menu
-    this.load.image('btnTitle', 'assets/lowResLogo.png');
-    this.load.image('corners', 'assets/Menu corners.png');
 
     //Score menu
     this.load.image('ScoreScreen', 'assets/Score screen menu/Botones Score.png'); //field
@@ -181,7 +178,6 @@ export default class SceneLoading extends Phaser.Scene {
   }
 
   create(){
-    console.log(this);
 
     //BG ANIMADO
     this.anims.create({
@@ -473,14 +469,10 @@ export default class SceneLoading extends Phaser.Scene {
     });
     //ENEMIGOS
 
-    //SI SE QUIEREN TESTEAR MENUS
-    //this.scene.start("SceneSplashScreen");
-
-    //SI SE QUIEREN TESTEAR NIVELES
-    this.scene.start("levelFirst1");
-
-    //SI SE QUIERE IR AL NIVEL DE PRUEBA
-    //this.scene.start("test1");
+    console.log("Done Loading Everything");
+    if(this.game.spashScreen != undefined)
+      this.game.spashScreen.finishedLoading();
+    this.scene.stop('SceneLoading');
 
   }
 }

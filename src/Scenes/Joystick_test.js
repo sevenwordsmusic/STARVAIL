@@ -1,12 +1,12 @@
 
 var cursorKeys
 export default class Joystick_test extends Phaser.Scene {
-  static #count = 0;
+  static count = 0;
   static addNumber(){
-    Joystick_test.#count = (Joystick_test.getNumber() + 1)%5 ;
+    Joystick_test.count = (Joystick_test.getNumber() + 1)%5 ;
   }
   static getNumber(){
-    return Joystick_test.#count;
+    return Joystick_test.count;
   }
   constructor() {
     super('Joystick' + (Joystick_test.getNumber() + 1));

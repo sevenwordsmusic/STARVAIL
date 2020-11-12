@@ -69,7 +69,7 @@ var config = {
   width: 960,
   height: 540,
   fps: {
-  target: 60,
+    target: 60,
   },
   parent: 'phaserDOM',
   pixelArt: true,
@@ -84,8 +84,19 @@ var config = {
       debug: false
     }
   },
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    parent: 'phaserDOM',
+    max: {
+        width: 960,
+        height: 540
+    }
+  },
   //escenas principales
   scene: [
+    SceneSplashScreen,
+
     Audio,
     Chatter,
     SceneLoading,
@@ -100,7 +111,6 @@ var config = {
     SceneCreditsScore,
     SceneGameOver,
     SceneRanking,
-    SceneSplashScreen,
 
     Tutorial,
     Level1,
@@ -254,5 +264,11 @@ function mobileTabletChek() {
 game.onPC = !mobileTabletChek();
 console.log("onPC:  " +game.onPC);
 
-
+game.prepareScreen = function(){
+  if(!game.onPC){
+    game.scale.lockOrientation('landscape');
+    game.scale.startFullscreen();
+  }
+}
+game.pauseInfo = '';
 window.gameDebug = game;

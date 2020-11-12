@@ -608,14 +608,14 @@ export default class Audio extends Phaser.Scene {
 
 
         //MUSIC LOOPS
-        /*this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
+        this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
         this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
-        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg');*/
-        this.load.audio('musicLoop0000levitating', 'assets/audio/SFX/null.ogg');
+        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg');
+        /*this.load.audio('musicLoop0000levitating', 'assets/audio/SFX/null.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/SFX/null.ogg');
         this.load.audio('musicLoop0000flying', 'assets/audio/SFX/null.ogg');
-        this.load.audio('musicLoop0000chill', 'assets/audio/SFX/null.ogg');
+        this.load.audio('musicLoop0000chill', 'assets/audio/SFX/null.ogg');*/
     }
     create() {
         //INIT AUDIO

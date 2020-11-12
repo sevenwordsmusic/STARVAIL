@@ -64,15 +64,15 @@ export default class SceneGameOver extends Phaser.Scene {
 
     this.btnPlayAgainGameOver.alpha=0.8;
 
+    this.game.prepareScreen();
+
     this.scene.stop('SceneGameOver');
+    this.scene.start('SceneMM');
+    this.scene.bringToTop("SceneMM");
 
     /*
     this.scene.start('SceneGameEbi');
     this.scene.bringToTop("SceneGameEbi");
     */
-
-   var SceneGameEbiR = this.scene.get('SceneGameEbi');
-
-   SceneGameEbiR.scene.restart();
   }
 }

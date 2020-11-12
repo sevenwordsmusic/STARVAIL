@@ -72,8 +72,8 @@ export default class ScenePause extends Phaser.Scene {
 
     this.scene.sendToBack('ScenePause');
 		this.scene.stop('ScenePause');
-    this.scene.resume('test' + (SceneTest_1.getNumber()));
-    this.scene.bringToTop('test' + (SceneTest_1.getNumber()));
+    this.scene.resume(this.game.pauseInfo);
+    this.scene.bringToTop(this.game.pauseInfo);
   }
 
   viewOptions(){
