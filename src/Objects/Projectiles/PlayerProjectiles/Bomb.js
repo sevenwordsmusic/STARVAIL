@@ -41,14 +41,21 @@ export default class Bomb extends Projectile {
     //AUDIO
     this.isMini=isMini;
     if(this.isMini){
-      this.sfx=Audio.play3Dinstance(this, 31);
+      this.sfx=Audio.play3DinstanceNoRate(this, 31);
     }else{
-      this.sfx=Audio.play3Dinstance(this, 12);
+      this.sfx=Audio.play3DinstanceNoRate(this, 12);
     }
-    this.touchDown=true;
-    this.touchDelay=0;
+    this.touchDelay=1.0;
     //
   }
+
+  //AUDIO
+  update(time, delta){
+    if(this.sprite!= undefined ){
+        this.sfx.volume=Audio.volume3D(this)
+    }
+  }
+  //
 
   armBomb(){
     this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
@@ -74,23 +81,26 @@ export default class Bomb extends Projectile {
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
+    //AUDIO
+        if(this.isMini){
+          Audio.play3DinstanceVolume(this, 6, this.touchDelay);
+        }else{
+          Audio.play3DinstanceVolume(this, 4, this.touchDelay);
+        }
+    //
     this.timer.remove();
     this.itemExpire();
   }
   onBodyCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
     //AUDIO
-      if(this.touchDown==true && this.touchDelay<3){
-        this.touchDelay++;
         if(this.isMini){
-          this.sfx.volume=Audio.play3Dinstance(this, 6).volume;
+          Audio.play3DinstanceVolume(this, 6, this.touchDelay);
         }else{
-          this.sfx.volume=Audio.play3Dinstance(this, 4).volume;
+          Audio.play3DinstanceVolume(this, 4, this.touchDelay);
         }
-      }else if(this.touchDown==true && this.touchDelay== 3){
-        this.touchDown=false;
-        this.touchDelay=0;
-      }
+        this.touchDelay=this.touchDelay*0.5;
+        this.sfx.volume=Audio.volume3D(this);
     //
   }
 

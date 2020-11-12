@@ -294,7 +294,46 @@ export default class Audio extends Phaser.Scene {
         }
         return instance;
     }
-
+    static play3DinstanceVolume(scene, type, volume) {
+        this.load.soundInstance[type][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
+        this.load.soundInstance[type][Audio.SFXinstance].setDetune(-100 + (Math.random() * 200));
+        this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volume3D(scene)*volume;
+        this.load.soundInstance[type][Audio.SFXinstance].play();
+        var instance = this.load.soundInstance[type][Audio.SFXinstance];
+        if (Audio.SFXinstance < Audio.maxSFXinstances - 1) {
+            Audio.SFXinstance++;
+        } else {
+            Audio.SFXinstance = 0;
+        }
+        return instance;
+    }
+    static play3DinstanceNoRate(scene, type) {
+        this.load.soundInstance[type][Audio.SFXinstance].setRate(1.0);
+        this.load.soundInstance[type][Audio.SFXinstance].setDetune(-25 + (Math.random() * 50));
+        this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volume3D(scene);
+        this.load.soundInstance[type][Audio.SFXinstance].play();
+        var instance = this.load.soundInstance[type][Audio.SFXinstance];
+        if (Audio.SFXinstance < Audio.maxSFXinstances - 1) {
+            Audio.SFXinstance++;
+        } else {
+            Audio.SFXinstance = 0;
+        }
+        return instance;
+    }
+    static play3DinstanceRndVolume(scene, type, volume) {
+        var rnd = [Math.floor(Math.random() * this.load.soundInstance[type].length)];
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].setDetune(-100 + (Math.random() * 200));
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].volume = Audio.volume3D(scene)*volume;
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].play();
+        var instance = this.load.soundInstance[type][rnd][Audio.SFXinstance];
+        if (Audio.SFXinstance < Audio.maxSFXinstances - 1) {
+            Audio.SFXinstance++;
+        } else {
+            Audio.SFXinstance = 0;
+        }
+        return instance;
+    }
     static audioUpdate(scene) {
         this.propellerFliying(scene);
         if (scene.game.isFiring && scene.game.player.energy == 0.0 && !scene.game.player.activatedJet) {
@@ -416,7 +455,9 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('impact_03D', 'assets/audio/SFX/impact_03D.ogg');
         this.load.audio('impact_03E', 'assets/audio/SFX/impact_03E.ogg');
         this.load.audio('impact_04', 'assets/audio/SFX/impact_04.ogg');
-        this.load.audio('impact_05', 'assets/audio/SFX/impact_05.ogg');
+        this.load.audio('impact_05A', 'assets/audio/SFX/impact_05A.ogg');
+        this.load.audio('impact_05B', 'assets/audio/SFX/impact_05B.ogg');
+        this.load.audio('impact_05C', 'assets/audio/SFX/impact_05C.ogg');
         this.load.audio('impact_06', 'assets/audio/SFX/impact_06.ogg');
         this.load.audio('impact_07', 'assets/audio/SFX/impact_07.ogg');
         this.load.audio('ballBounce_00A', 'assets/audio/SFX/ballBounce_00A.ogg');
@@ -604,9 +645,11 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('impact_03C', 3, 2, this);
         Audio.createSFXinstanceSub('impact_03D', 3, 3, this);
         Audio.createSFXinstanceSub('impact_03E', 3, 4, this);
-        //
         Audio.createSFXinstance('impact_04', 4, this);
-        Audio.createSFXinstance('impact_05', 5, this);
+        this.soundInstance[5] = [];
+        Audio.createSFXinstanceSub('impact_05A', 5, 0, this);
+        Audio.createSFXinstanceSub('impact_05B', 5, 1, this);
+        Audio.createSFXinstanceSub('impact_05C', 5, 2, this);
         Audio.createSFXinstance('impact_06', 6, this);
         Audio.createSFXinstance('impact_07', 7, this);
         //

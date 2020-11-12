@@ -40,11 +40,18 @@ export default class Megaton extends Projectile {
     this.bombArmed2;
 
     //AUDIO
-      this.sfx=Audio.play3Dinstance(this, 13);
-      this.touchDown=true;
-      this.touchDelay=0;
+      this.sfx=Audio.play3DinstanceNoRate(this, 13);
+      this.touchDelay=1.0;
     //
   }
+
+  //AUDIO
+  update(time, delta){
+    if(this.sprite!= undefined ){
+        this.sfx.volume=Audio.volume3D(this)
+    }
+  }
+  //
 
   armBomb(){
     this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
@@ -61,7 +68,10 @@ export default class Megaton extends Projectile {
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if(bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
-    if(bodyB.gameObject.parent != undefined){
+        if(bodyB.gameObject.parent != undefined){
+        //AUDIO
+            Audio.play3DinstanceRndVolume(this, 5, this.touchDelay);
+        //
       this.timer.remove();
       if(bodyB.gameObject.parent.constructor.name === "Megaton")
         this.itemExpire(true);
@@ -72,13 +82,9 @@ export default class Megaton extends Projectile {
   onBodyCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;
     //AUDIO
-      if(this.touchDown==true && this.touchDelay<3){
-        this.touchDelay++;
-        this.sfx.volume=Audio.play3Dinstance(this, 5).volume;
-      }else if(this.touchDown==true && this.touchDelay== 3){
-        this.touchDown=false;
-        this.touchDelay=0;
-      }
+        Audio.play3DinstanceRndVolume(this, 5, this.touchDelay);
+        this.touchDelay=this.touchDelay*0.5;
+        this.sfx.volume=Audio.volume3D(this);
     //
   }
 
