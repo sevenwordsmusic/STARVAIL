@@ -44,26 +44,48 @@ export default class Mentor extends FiniteStateMachine{
     });
 
     this.moveTimer = undefined;
-    this.speed = 0.3;
+    this.speed = 0.33;
     this.objectiveX = this.sprite.x;
     this.objectiveY = this.sprite.y;
     this.speedVector = new Phaser.Math.Vector2(0,0);
     this.reachedX = true;
     this.reachedY = true;
 
+    //Contiene Vector2
     this.tutorialPositions = [];
-    /*this.tutorialPositions[0] = new Phaser.Math.Vector2(1128,2560);
-    this.tutorialPositions[1] = new Phaser.Math.Vector2(1628,2260);*/
+    //this.tutorialPositions[0] = new Phaser.Math.Vector2(1128,2560);
+    //this.tutorialPositions[1] = new Phaser.Math.Vector2(1628,2260);
 
     scene.matter.world.on("beforeupdate", this.resetTouching, this);
 
     this.isFiring = false;
 
+
+    //DIALOGOS
     this.isTalking = false;
     this.dialogArray = [];
-    this.dialogArray[0] = `prueba1`;
-    this.dialogArray[1] = `prueba2`;
+    this.dialogArray[0] = `[b]D42K-H[/b]
+    Hola, parece que esto es un mensaje de prueba.
+    Nueva linea.
+    [b]D42K-H[/b]
+    Testeando testeando testeando testeando testeando.
+    ^Esta es la longitud de referencia para una linea.`;
+    
+    this.dialogArray[1] = `[b]D42K-H[/b]
+    Probando dialogo 2.
+
+    [b]D42K-H[/b]
+    No sé hulio, vamos a poner esto en movimiento.`;
+
     this.dialogArray[2] = `prueba3`;
+    this.dialogArray[3] = `prueba4`;
+    this.dialogArray[4] = `prueba5`;
+    this.dialogArray[5] = `prueba6`;
+    this.dialogArray[6] = `prueba7`;
+    this.dialogArray[7] = `prueba8`;
+    this.dialogArray[8] = `prueba9`;
+    this.dialogArray[9] = `prueba10`;
+    this.dialogArray[10] = `prueba11`;
     this.currentDialog = -1;
 
     //IA
@@ -82,11 +104,14 @@ export default class Mentor extends FiniteStateMachine{
       this.isTalking = true;
       this.scene.dialogManager.setCurrentSpeaker(this);
       this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
+      //this.scene.game.player.alive = false;
       this.scene.dialogManager.showDialogBox();
     })
     this.stateOnStart(2, function(){
-      if(this.currentDialog < this.tutorialPositions.length)
+      if(this.currentDialog < this.tutorialPositions.length) {
         this.moveTo(this.tutorialPositions[this.currentDialog]);
+        //this.scene.game.player.alive = true;
+      }
       else
         this.goTo(1);
     })

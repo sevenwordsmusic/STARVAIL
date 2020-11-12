@@ -70,14 +70,14 @@
                 {
                  "height":0,
                  "id":109,
-                 "name":"chest",
+                 "name":"tutorialSpecial",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":495,
-                 "y":1292
+                 "x":477,
+                 "y":1290
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -123,8 +123,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":446.666666666667,
-                 "y":2549.33333333333
+                 "x":446.667,
+                 "y":2549.33
                 }, 
                 {
                  "height":0,
@@ -135,8 +135,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2036.66666666667,
-                 "y":166
+                 "x":2041.33666666667,
+                 "y":244.666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -206,8 +206,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":576,
-                 "y":1120
+                 "x":596,
+                 "y":1084
                 }, 
                 {
                  "height":0,
@@ -242,8 +242,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1632,
-                 "y":448
+                 "x":1574.33333333333,
+                 "y":399.333333333333
                 }, 
                 {
                  "height":0,
@@ -254,8 +254,20 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2048,
-                 "y":544
+                 "x":2083,
+                 "y":557
+                }, 
+                {
+                 "height":0,
+                 "id":131,
+                 "name":"10",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1869.33333333333,
+                 "y":-876.666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -404,7 +416,7 @@
          "y":0
         }],
  "nextlayerid":54,
- "nextobjectid":131,
+ "nextobjectid":132,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.5",
@@ -413,7 +425,7 @@
         {
          "columns":56,
          "firstgid":1,
-         "image":"..\/Tiles\/Tileset unificado\/front_layer.png",
+         "image":"..\/..\/..\/..\/Tiles\/Tileset unificado\/front_layer.png",
          "imageheight":1728,
          "imagewidth":1792,
          "margin":0,
@@ -426,7 +438,7 @@
         {
          "columns":56,
          "firstgid":3025,
-         "image":"..\/Tiles\/Tileset unificado\/main_layer.png",
+         "image":"..\/..\/..\/..\/Tiles\/Tileset unificado\/main_layer.png",
          "imageheight":1728,
          "imagewidth":1792,
          "margin":0,
@@ -29837,7 +29849,7 @@
         {
          "columns":56,
          "firstgid":6049,
-         "image":"..\/Tiles\/Tileset unificado\/second_layer.png",
+         "image":"..\/..\/..\/..\/Tiles\/Tileset unificado\/second_layer.png",
          "imageheight":1728,
          "imagewidth":1792,
          "margin":0,
@@ -29850,7 +29862,7 @@
         {
          "columns":56,
          "firstgid":9073,
-         "image":"..\/Tiles\/Tileset unificado\/background_layer.png",
+         "image":"..\/..\/..\/..\/Tiles\/Tileset unificado\/background_layer.png",
          "imageheight":2048,
          "imagewidth":1792,
          "margin":0,
@@ -29863,7 +29875,7 @@
         {
          "columns":22,
          "firstgid":12657,
-         "image":"..\/Tiles\/Tileset unificado\/animated_layer.png",
+         "image":"..\/..\/..\/..\/Tiles\/Tileset unificado\/animated_layer.png",
          "imageheight":320,
          "imagewidth":704,
          "margin":0,

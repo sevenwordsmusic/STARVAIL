@@ -60,6 +60,17 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.playerStartX = 600;
     this.playerStartY = 4500;
 
+    function WordCount(str) { 
+      return str.split(" ").length;
+    }
+    
+    
+    console.log("PALABRAS: " + WordCount(`[b]D42K-H[/b] Finally... player, here we are!
+    Behold, here rises the Starvail Tower!
+    [b]D42K-H[/b]
+    This is the last bastion of our creators,
+    the place where life borns and dies...`));
+
     //INTERFAZ
 
     //Options field
@@ -353,7 +364,12 @@ export default class SceneTest_1 extends Phaser.Scene {
         new InteractableChest(this, point.x, point.y, 10 ,20);
       });
 
-    if(this.map.getObjectLayer("Waypoint_Layer") != null)
+
+
+
+    if(this.map.getObjectLayer("Waypoint_Layer") != null) {
+      var arrayPuntos = [8];
+      var counter = 0;
       this.map.getObjectLayer("Waypoint_Layer").objects.forEach(point => {
         if(point.name == "01")
           this.mentor = new Mentor(this, point.x, point.y);
@@ -363,10 +379,30 @@ export default class SceneTest_1 extends Phaser.Scene {
           ...
           ...
           this.mentor.tutorialPositions = arrayPuntos;
+
+          Una vez asignados los puntos en el tutorialPositions,
+          debes ir a Mentor.js a la linea 64 y rellenar los dialogos.
+
+          Para bloquear el movimiento del jugador, 
+          this.game.player.alive = false
+
+          Si estas en la clase del mentor,
+          this.scene.game.player.alive = false
+
           //por ultimo modifica el array de dialogos de Mentor.js
         */
+
+        arrayPuntos[counter] = new Phaser.Math.Vector2(point.x,point.y);
+        counter++;
+        console.log(point.name + "    " +  point.x + "    " + point.y);
       });
 
+      this.mentor.tutorialPositions = arrayPuntos;
+
+      
+    }
+
+    //console.log("tu array contiene " + arrayPuntos.lenght +  " puntos");
     //jugador
     new Player(this, 600, 4500);
     //new Mentor(this, this.playerStartX + 400, this.playerStartY)
@@ -382,7 +418,14 @@ export default class SceneTest_1 extends Phaser.Scene {
   //AUDIO:
    Audio.startAudioEngine(this);
    this.maxMemory = 0;
+
+
   }
+
+  
+
+
+
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
     //AUDIO:
@@ -408,7 +451,6 @@ export default class SceneTest_1 extends Phaser.Scene {
     /*console.log(Phaser.Physics.Matter.Matter.Composite.allBodies(this.matter.world.localWorld).length);
     console.log(this.matter.world.localWorld.bodies.length);
     console.log("   ");*/
-
     /*this.maxMemory = Math.max(this.maxMemory, Math.round((performance.memory.usedJSHeapSize/1024/1024)));
     console.log(this.maxMemory + "    " + Math.round((performance.memory.usedJSHeapSize/1024/1024)));*/
     /*const usedHeap = performance.memory.usedJSHeapSize/1024/1024;
@@ -443,17 +485,22 @@ export default class SceneTest_1 extends Phaser.Scene {
       this.events.on("update", this.printMemory, this);
   }
 
+
   stopDebugLoop(){
     this.events.off("update", this.printDelta);
     this.events.off("update", this.printMemory);
   }
 
+
+
   printDelta(time, delta){
-    console.log("Last Delta:  " + (Math.round(delta))+ " ms");
+    //console.log("Last Delta:  " + (Math.round(delta))+ " ms");
   }
   printMemory(time, delta){
-    console.log("Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
+    //console.log("Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
   }
+
+
 }
 
 class BodyWrapper {
