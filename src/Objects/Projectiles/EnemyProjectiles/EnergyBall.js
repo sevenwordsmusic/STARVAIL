@@ -16,7 +16,7 @@ export default class EnergyBall extends Projectile {
     const body = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,9);
 
     this.sprite.setExistingBody(body).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
-    this.sprite.setDepth(5).setScale(0.75);
+    this.sprite.setDepth(5).setScale(0.5);
     this.sprite.setSensor(true).setIgnoreGravity(true);
     this.sprite.body.frictionAir = 0;
     this.sprite.body.collisionFilter.group = -3;

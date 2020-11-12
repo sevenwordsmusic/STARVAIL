@@ -22,7 +22,7 @@ export default class NPC_Droid_1 extends FiniteStateMachine{
     3 - balas rebotantes
     4 - bombas normales
     5 - bombas megaton
-    6 - misiles 
+    6 - misiles
     7 - misiles que se separan en bombas
     8 - laser
     */
@@ -67,6 +67,7 @@ export default class NPC_Droid_1 extends FiniteStateMachine{
   finishedDialog(){
     this.isTalking = false;
     if(this.currentStateId()==1){
+      this.scene.game.obtainedWeapons.push(this.weaponToGive);
       this.scene.game.player.recieveWeapon(this.weaponToGive);
       console.log("arma conseguida");
       this.goTo(2);

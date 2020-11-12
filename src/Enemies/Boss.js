@@ -3,6 +3,7 @@ import DropableBossEnergy from "../Objects/Dropables/DropableBossEnergy.js"
 import BossGun from "./BossGun.js";
 import Audio from "../Audio.js";
 import BossAfter from "../NPCs/BossAfter.js"
+import TileController from "../TileController.js"
 
 //enemigo que hereda de Enemy
 export default class Boss extends Enemy {
@@ -27,6 +28,7 @@ export default class Boss extends Enemy {
     this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
     this.sprite.body.collisionFilter.group = -3;
+    this.sprite.body.collisionFilter.category = 4;
 
     this.sprite.body.frictionAir = 0.06;
     this.sprite.body.friction = 0;
@@ -74,7 +76,7 @@ export default class Boss extends Enemy {
 
     this.weaponSwitch = 2000;                                          //cada cuanto tiempo cambia de arm_airUp
     this.weaponSwitchRand = 500;                                       //varianza aleatoria del cambio de arma
-    this.laserFire = 4000;                                             //cada cuanto dispara lasser
+    this.laserFire = 100000;                                             //cada cuanto dispara lasser
     this.laserFireRand = 1000;                                         //varianza aleatoria de disparo de laser
     //Ajustar estas
     //Variables de IA
@@ -103,7 +105,7 @@ export default class Boss extends Enemy {
       this.velX = Phaser.Math.FloatBetween(this.patrolSpeed/2, this.patrolSpeed);
       this.velY = Phaser.Math.FloatBetween(this.patrolSpeed/2, this.patrolSpeed);
 
-      if(this.sprite.y < this.initPos.y - 300){
+      if(this.sprite.y < this.initPos.y - 220){
         this.patrolDir.y = 1;
       }
       else if(this.sprite.y < this.initPos.y){
@@ -112,10 +114,10 @@ export default class Boss extends Enemy {
         this.patrolDir.y = -1;
       }
 
-      if(this.sprite.x < this.initPos.x - 300){
+      if(this.sprite.x < this.initPos.x - 220){
         this.patrolDir.x = 1;
       }
-      else if(this.sprite.x > this.initPos.x + 300){
+      else if(this.sprite.x > this.initPos.x + 220){
         this.patrolDir.x = -1;
       }else{
         this.patrolDir.x = (Math.random()<0.5)?-1:1;
@@ -209,7 +211,7 @@ export default class Boss extends Enemy {
       this.gun.followPosition(this.sprite.x,this.sprite.y);
       this.gun.sprite.angle = -90;
       this.initDir.x = this.initPos.x - this.sprite.x;
-      this.initDir.y = this.initPos.y - this.sprite.y -300;
+      this.initDir.y = this.initPos.y - this.sprite.y -220;
       if(Math.abs(this.initDir.x) > 4 || Math.abs(this.initDir.y) > 4){
         this.initDir.normalize();
         this.sprite.setVelocityX(this.initDir.x * this.lastSpeed * delta);
@@ -223,7 +225,7 @@ export default class Boss extends Enemy {
     this.stateOnStart(4, function(){
       if(this.sprite.body === undefined)return;
       this.sprite.x = this.initPos.x;
-      this.sprite.y = this.initPos.y - 300;
+      this.sprite.y = this.initPos.y - 220;
       this.sprite.setVelocityX(0);
       this.sprite.setVelocityY(0);
       this.gun.fireMegaLaser()
@@ -239,7 +241,7 @@ export default class Boss extends Enemy {
       this.scene.bulletInteracBodies[this.currentBodyIndex] = undefined;
       this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = undefined;
       this.sprite.destroy();
-      new BossAfter(this.scene, this.initPos.x, this.initPos.y - 300);
+      new BossAfter(this.scene, this.initPos.x, this.initPos.y - 220);
       this.scene.time.addEvent({
         delay: 5000,
         callback: () => (console.log("irse a escena final"))
@@ -259,6 +261,11 @@ export default class Boss extends Enemy {
 
   update(time, delta){
       super.update(time, delta);
+  }
+
+  updateTouchBoundry(){
+    if(this.sprite != undefined)
+      TileController.playerTouchBoundry(this.scene, this.sprite);
   }
 
   playAnimation1(){
@@ -307,7 +314,7 @@ export default class Boss extends Enemy {
     }
     auxSfx.setDetune(auxSfx.detune+100);
 
-    if(this.sprite != undefined){
+    if(this.sprite != undefined && this.sprite.body != undefined){
       const hpDiff = this.hpBoundry - dmg;
       if(hpDiff <= 0){
         const energyDrops = Math.floor(Math.abs(hpDiff)/this.nextEnergy);
@@ -360,8 +367,8 @@ export default class Boss extends Enemy {
   }
 
   enemyDead(vXDmg, vYDmg, drop = true){
-    this.goTo(3);
     if(!this.dead){
+      this.goTo(3);
       //AUDIO
       Audio.play3DinstanceRnd(this, 52);
       this.sfx.stop();

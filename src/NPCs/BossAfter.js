@@ -10,10 +10,13 @@ export default class BossAfter extends FiniteStateMachine{
     //inicializacion
     this.scene = scene;
     this.sprite = scene.matter.add.sprite(x,y,'playerDeath',0).setScale(1.5);
-    this.sprite.body.collisionFilter.group = -1;
+    this.sprite.body.collisionFilter.group = -3;
+    this.sprite.body.collisionFilter.mask = 0;
     this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x).setFixedRotation();
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
+
+    this.initY = y;
 
     this.isTalking = false;
     this.dialogArray = [];
@@ -40,11 +43,22 @@ export default class BossAfter extends FiniteStateMachine{
       this.currentDialog = 0;
     });
     this.startAI();
+    this.scene.events.on("update", this.update, this);  //para que el update funcione
+  }
 
+  update(){
+    if(this.sprite != undefined && this.sprite.body != undefined){
+      if(this.sprite.y>this.initY+321){
+        this.sprite.setVelocityY(0);
+        this.sprite.y = this.initY+321;
+        this.sprite.setIgnoreGravity(true);
+      }
+    }
   }
 
   finishedDialog(){
     this.isTalking = false;
+    this.scene.events.off("update", this.update);
   }
 
 

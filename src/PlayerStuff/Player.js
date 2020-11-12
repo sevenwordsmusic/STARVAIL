@@ -79,7 +79,7 @@ export default class Player {
 
     //miniinvulnerabilidad al ser dañado
     this.invulTimer = this.scene.time.addEvent({
-      delay: 100
+      delay: 150
     });
 
     this.adjustedFriction = 1.2/this.scene.matter.world.getDelta();
@@ -218,12 +218,15 @@ export default class Player {
     this.tween = this.scene.tweens.add({
       targets: this.sprite,
       alpha: {from: 1, to: 0.2},
-      duration: 100,
+      duration: 150,
       repeat: 0,
       yoyo: true
     })
 
     this.recieveWeapon(0);
+    for(var i=0; i<this.scene.game.obtainedWeapons.length; i++){
+      this.recieveWeapon(this.scene.game.obtainedWeapons[i]);
+    }
 
     console.log(this);
   }
@@ -294,13 +297,13 @@ export default class Player {
 
     //this.updateBoundry();
     if(this.sprite.body.position.x - this.earlyPos.x > 0.005)
-      TileController.xFrontiers(this.scene, 1, 25, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32));
+      TileController.xFrontiers(this.scene, 1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32));
     else if(this.sprite.body.position.x - this.earlyPos.x < -0.005)
-      TileController.xFrontiers(this.scene, -1, 25, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
+      TileController.xFrontiers(this.scene, -1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
     if(this.sprite.body.position.y - this.earlyPos.y > 0.005)
-      TileController.yFrontiers(this.scene, 1, 25, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
+      TileController.yFrontiers(this.scene, 1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
     else if(this.sprite.body.position.y - this.earlyPos.y < -0.005)
-      TileController.yFrontiers(this.scene, -1, 25, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
+      TileController.yFrontiers(this.scene, -1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
 
     if(this.sprite.body.velocity.x > -0.01 && this.sprite.body.velocity.x < 0.01)
       this.sprite.body.velocity.x = 0;
@@ -501,7 +504,7 @@ export default class Player {
   }
 
   playerDamage(num, ignoreInvul = false) {
-    const delayT = 100;
+    const delayT = 150;
     if (this.invulTimer.elapsed == delayT || ignoreInvul) {
       //AUDIO
         Audio.play2DinstanceRnd(72);

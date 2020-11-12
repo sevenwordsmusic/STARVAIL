@@ -67,6 +67,7 @@ export default class NPC_Droid_2 extends FiniteStateMachine{
   finishedDialog(){
     this.isTalking = false;
     if(this.currentStateId()==1){
+      this.scene.game.obtainedWeapons.push(this.weaponToGive);
       this.scene.game.player.recieveWeapon(this.weaponToGive);
       console.log("arma conseguida");
       this.goTo(2);

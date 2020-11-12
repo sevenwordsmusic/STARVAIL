@@ -59,7 +59,7 @@ export default class SceneSplashScreen extends Phaser.Scene {
 
     this.scene.sendToBack('SceneSplashScreen');
 		this.scene.stop('SceneSplashScreen');
-    
+
 
     //SI SE QUIEREN TESTEAR MENUS
     this.scene.start('SceneMM');

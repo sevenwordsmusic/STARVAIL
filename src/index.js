@@ -114,6 +114,7 @@ var config = {
 
     Tutorial,
     Level1,
+    LevelBoss,
     SceneTest_1
   ],
     plugins: {
@@ -253,6 +254,8 @@ game.transferBody = function(bodies1, bodies2, body){
 }*/
 game.bulletInteracBodies = [];
 game.enemyBodies = [];
+
+game.obtainedWeapons = [];
 
 function mobileTabletChek() {
   let check = false;

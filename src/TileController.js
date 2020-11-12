@@ -72,6 +72,7 @@ export default class TileController {
        }
       }
     }
+    tileBody = undefined;
   }
 
   static enemyFullTouchBoundry(scene, sprite, sideNum, verNum){
@@ -85,6 +86,7 @@ export default class TileController {
        }
       }
     }
+    tileBody = undefined;
   }
 
   static playerTouchBoundry(scene, sprite){
@@ -98,7 +100,6 @@ export default class TileController {
        }
       }
     }
-
     tileBody = undefined;
   }
 

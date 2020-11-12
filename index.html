@@ -8,7 +8,7 @@
         margin: 0;
         background-color: black;
       }
-        #container:fullscreen {
+      #container:fullscreen {
       	background-color: black;
       }
       #container:-webkit-full-screen {
@@ -17,6 +17,14 @@
       @font-face {
       font-family: "LeahFat";
       src: url(./assets/ThaleahFat.ttf) format("truetype");
+      }
+      #playerName{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
       }
     </style>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.20.0/dist/phaser.js"></script>

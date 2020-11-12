@@ -163,8 +163,8 @@ export default class LevelBoss extends Phaser.Scene {
       else if(point.name == "goal"){
         //nada
       }
-      else if(point.name == "boss"){
-        new BossBefore(this, point.x, point.y);
+      else if(point.name == "BOSS"){
+        new BossBefore(this, point.x, point.y - 20);
       }
       else if(point.name == "NPC1"){
         new NPC_Droid_Default1(this, point.x, point.y);
@@ -231,7 +231,7 @@ export default class LevelBoss extends Phaser.Scene {
         tileBody.original = undefined;
         tileBody.collisionFilter.category = 1;
         tileBody.collisionFilter.group = -4;
-        if (tileBody.position.x > this.playerStartX - 32*26 && tileBody.position.x < this.playerStartX + 32*26 && tileBody.position.y > this.playerStartY - 32*26 && tileBody.position.y < this.playerStartY + 32*26) {
+        if (tileBody.position.x > this.playerStartX - 32*30 && tileBody.position.x < this.playerStartX + 32*30 && tileBody.position.y > this.playerStartY - 32*30 && tileBody.position.y < this.playerStartY + 32*30) {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
           tileBody.collisionFilter.mask = 1;
         } else {

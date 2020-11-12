@@ -40,8 +40,8 @@ export default class PlayerFireArmPC extends PlayerFireArm{
       this.crosshairSpr.setScale(this.chSize);
 
       this.armDir.normalize();
-      this.chLine.x1 = spX + this.armDir.x * 30;
-      this.chLine.y1 = spY + this.armDir.y * 30;
+      this.chLine.x1 = spX + this.armDir.x * (this.armExtnension-10);
+      this.chLine.y1 = spY + this.armDir.y * (this.armExtnension-10);
       this.chLine.x2 = this.crosshairSpr.x;
       this.chLine.y2 = this.crosshairSpr.y;
 

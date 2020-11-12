@@ -50,9 +50,12 @@ export default class BossBefore extends FiniteStateMachine{
     this.scene.events.off("update", this.update);
     this.isTalking = false;
     this.sprite.destroy();
+
+    this.scene.cameras.main.stopFollow();
+    this.scene.cameras.main.pan(this.initX, this.initY - 182, 2000, 'Linear', true);
+    this.scene.matter.world.setBounds(this.initX-500, this.initY-450, 1000, 1000);
     console.log("Boss Fight Started");
   }
-
 
 
 }

@@ -73,7 +73,6 @@ export default class Bomb extends Projectile {
   }
 
   delayArmBomb(delayTime){
-    this.sprite.body.collisionFilter.mask = 123;
     this.scene.time.addEvent({
       delay: delayTime,
       callback: () => (this.armBomb())

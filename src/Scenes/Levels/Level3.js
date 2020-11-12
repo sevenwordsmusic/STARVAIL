@@ -176,10 +176,6 @@ export default class Level3 extends Phaser.Scene {
       else if(point.name == "NPC2"){
         new NPC_Droid_Default2(this, point.x, point.y);
       }
-      else if(point.name == "goal"){
-        this.goalX = point.x;
-        this.goalY = point.y;
-      }
       else if(point.name == "NPC"){
         const randNumber = Math.floor(Math.random()*this.game.npcArray.length) + 1;
         const npcNumber = this.game.npcArray[randNumber];
@@ -235,7 +231,7 @@ export default class Level3 extends Phaser.Scene {
         tileBody.original = undefined;
         tileBody.collisionFilter.category = 1;
         tileBody.collisionFilter.group = -4;
-        if (tileBody.position.x > this.playerStartX - 32*26 && tileBody.position.x < this.playerStartX + 32*26 && tileBody.position.y > this.playerStartY - 32*26 && tileBody.position.y < this.playerStartY + 32*26) {
+        if (tileBody.position.x > this.playerStartX - 32*30 && tileBody.position.x < this.playerStartX + 32*30 && tileBody.position.y > this.playerStartY - 32*30 && tileBody.position.y < this.playerStartY + 32*30) {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
           tileBody.collisionFilter.mask = 1;
         } else {
