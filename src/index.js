@@ -72,7 +72,7 @@ var config = {
   target: 60,
   },
   parent: 'phaserDOM',
-  pixelArt: false,
+  pixelArt: true,
   audio: {
     disableWebAudio: false
   },
