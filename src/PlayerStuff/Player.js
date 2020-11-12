@@ -503,8 +503,9 @@ export default class Player {
   playerDamage(num, ignoreInvul = false) {
     const delayT = 100;
     if (this.invulTimer.elapsed == delayT || ignoreInvul) {
-      //var dieSound = this.scene.sound.add('die', {volume: this.scene.game.soundVolume});  SONIDO MUERTE
-      //dieSound.play();
+      //AUDIO
+        Audio.play2DinstanceRnd(72);
+      //
       this.invulTimer = this.scene.time.addEvent({
         delay: delayT
       });

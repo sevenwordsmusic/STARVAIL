@@ -18,10 +18,9 @@ export default class Audio extends Phaser.Scene {
     static volumeBGM = 1.0;
     static volumeSFX = 1.0;
     static load;
-    static walkCycleTimer;
     static maxSFXinstances = 28;
     static SFXinstance = 0;
-    static stingerKilling = false;
+
 
     //letsTalk caller:
     static chat(words, scene, character){
@@ -254,6 +253,20 @@ export default class Audio extends Phaser.Scene {
             Audio.SFXinstance = 0;
         }
     }
+    static play2DinstanceRnd(type) {
+        var rnd = [Math.floor(Math.random() * this.load.soundInstance[type].length)];
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].setDetune(-100 + (Math.random() * 200));
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].volume = Audio.volumeSFX;
+        this.load.soundInstance[type][rnd][Audio.SFXinstance].play();
+        var instance = this.load.soundInstance[type][rnd][Audio.SFXinstance];
+        if (Audio.SFXinstance < Audio.maxSFXinstances - 1) {
+            Audio.SFXinstance++;
+        } else {
+            Audio.SFXinstance = 0;
+        }
+        return instance;
+    }
     static play3Dinstance(scene, type) {
         this.load.soundInstance[type][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
         this.load.soundInstance[type][Audio.SFXinstance].setDetune(-100 + (Math.random() * 200));
@@ -348,37 +361,20 @@ export default class Audio extends Phaser.Scene {
         if (scene.game.player.activatedJet && !this.stingerJet) {
             this.stingerJet = true;
         }
-        if (Math.floor(scene.game.player.earlyPos.x) != this.earlyPos && !scene.game.player.activatedJet && !this.stingerWalk && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
-            this.stingerWalk = true;
-            this.load.walkLoop.volume = Audio.volumeSFX;
-            this.load.walkLoop.setDetune(-25 + (Math.random() * 50));
-            this.load.walkLoop.play();
-        }
-        if (this.stingerWalk && (scene.game.player.activatedJet || Math.floor(scene.game.player.earlyPos.x) == this.earlyPos)) {
-            this.stingerWalk = false;
-            this.load.walkLoop.stop();
-        } else if (this.stingerWalk && !scene.game.player.cursors.left.isDown && !scene.game.player.cursors.right.isDown) {
-            this.stingerWalk = false;
-            this.load.walkLoop.stop();
-        }
         if (!this.stingerSurface && Math.floor(scene.game.player.earlyPos.x) != this.earlyPos && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
             this.stingerSurface = true;
             this.load.surfaceLoop.volume = Audio.volumeSFX;
             this.load.surfaceLoop.setDetune(-25 + (Math.random() * 50));
             this.load.surfaceLoop.play();
-            this.clockWalk = new Date().getTime();
+            this.load.walkLoop.volume = Audio.volumeSFX;
+            this.load.walkLoop.setDetune(-25 + (Math.random() * 50));
+            this.load.walkLoop.play();
         }
         if (this.stingerSurface && (Math.floor(scene.game.player.earlyPos.x) == this.earlyPos || scene.game.player.activatedJet || !scene.game.player.isTouching.ground)) {
-            var stopCycleDelay = (new Date().getTime() - this.clockWalk) % 125;
             this.stingerSurface = false;
-            Audio.walkCycleTimer = scene.time.addEvent({
-                delay: stopCycleDelay,
-                callback: () => {
-                    this.load.surfaceLoop.stop();
-                    Audio.play2DinstanceRate(28, 1.0);
-                },
-                loop: false,
-            });
+            this.load.surfaceLoop.stop();
+            this.load.walkLoop.stop();
+            Audio.play2DinstanceRate(28, 1.0);
         }
         if (scene.game.player.weaponCounter != this.earlyWeapon) {
             this.earlyWeapon = scene.game.player.weaponCounter;
@@ -419,6 +415,7 @@ export default class Audio extends Phaser.Scene {
             this.load.engineLoop.play();
             this.load.propellerLoop.setDetune(-25 + (Math.random() * 50));
             this.load.propellerLoop.play();
+            Audio.play2Dinstance(71);
             Audio.play2DinstanceRate(9, 0.4);
         } else if (!scene.game.player.activatedJet && this.earlyPropeller) {
             this.earlyPropeller = false;
@@ -468,6 +465,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('movingPart_00', 'assets/audio/SFX/movingPart_00.ogg');
         this.load.audio('trigger_00', 'assets/audio/SFX/trigger_00.ogg');
         this.load.audio('propellerStop_00', 'assets/audio/SFX/propellerStop_00.ogg');
+        this.load.audio('propellerStart_00', 'assets/audio/SFX/propellerStart_00.ogg');
         this.load.audio('wick_00', 'assets/audio/SFX/wick_00.ogg');
         this.load.audio('wick_01', 'assets/audio/SFX/wick_01.ogg');
         this.load.audio('wick_02', 'assets/audio/SFX/wick_02.ogg');
@@ -477,6 +475,13 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('lasserStart_00', 'assets/audio/SFX/lasserStart_00.ogg');
         this.load.audio('lasserStop_00', 'assets/audio/SFX/lasserStop_00.ogg');
         this.load.audio('walkStop_00', 'assets/audio/SFX/walkStop_00.ogg');
+        this.load.audio('dropEnergy', 'assets/audio/SFX/dropEnergy.ogg');
+        this.load.audio('dropHealth', 'assets/audio/SFX/dropHealth.ogg');
+        this.load.audio('openChest', 'assets/audio/SFX/openChest.ogg');
+        this.load.audio('hurtZap_00A', 'assets/audio/SFX/hurtZap_00A.ogg');
+        this.load.audio('hurtZap_00B', 'assets/audio/SFX/hurtZap_00B.ogg');
+        this.load.audio('hurtZap_00C', 'assets/audio/SFX/hurtZap_00C.ogg');
+        this.load.audio('hurtZap_00D', 'assets/audio/SFX/hurtZap_00D.ogg');
         //EXPLOSION
         this.load.audio('explosion_00A', 'assets/audio/SFX/explosion_00A.ogg');
         this.load.audio('explosion_00B', 'assets/audio/SFX/explosion_00B.ogg');
@@ -623,12 +628,10 @@ export default class Audio extends Phaser.Scene {
         //STINGERS
         this.stingerShot = false;
         this.stingerJet = false;
-        this.stingerWalk = false;
         this.stingerMovement = false;
         this.stingerSurface = false;
         this.stingerChill = false;
         this.overallVolume = 0.0;
-        this.clockWalk = new Date().getTime();
         //IMPACTS
         this.soundInstance[0] = [];
         Audio.createSFXinstanceSub('impact_00A', 0, 0, this);
@@ -759,37 +762,45 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('explode_00A', 60, 0, this);
         Audio.createSFXinstanceSub('explode_00B', 60, 1, this);
         Audio.createSFXinstanceSub('explode_00C', 60, 2, this);
-        Audio.createSFXinstanceSub('explode_00C', 60, 3, this);
+        Audio.createSFXinstanceSub('explode_00D', 60, 3, this);
         this.soundInstance[61] = [];
         Audio.createSFXinstanceSub('explode_01A', 61, 0, this);
         Audio.createSFXinstanceSub('explode_01B', 61, 1, this);
         Audio.createSFXinstanceSub('explode_01C', 61, 2, this);
-        Audio.createSFXinstanceSub('explode_01C', 61, 3, this);
+        Audio.createSFXinstanceSub('explode_01D', 61, 3, this);
         this.soundInstance[62] = [];
         Audio.createSFXinstanceSub('explode_02A', 62, 0, this);
         Audio.createSFXinstanceSub('explode_02B', 62, 1, this);
         Audio.createSFXinstanceSub('explode_02C', 62, 2, this);
-        Audio.createSFXinstanceSub('explode_02C', 62, 3, this);
+        Audio.createSFXinstanceSub('explode_02D', 62, 3, this);
         this.soundInstance[63] = [];
         Audio.createSFXinstanceSub('explode_03A', 63, 0, this);
         Audio.createSFXinstanceSub('explode_03B', 63, 1, this);
         Audio.createSFXinstanceSub('explode_03C', 63, 2, this);
-        Audio.createSFXinstanceSub('explode_03C', 63, 3, this);
+        Audio.createSFXinstanceSub('explode_03D', 63, 3, this);
         this.soundInstance[64] = [];
         Audio.createSFXinstanceSub('explode_04A', 64, 0, this);
         Audio.createSFXinstanceSub('explode_04B', 64, 1, this);
         Audio.createSFXinstanceSub('explode_04C', 64, 2, this);
-        Audio.createSFXinstanceSub('explode_04C', 64, 3, this);
+        Audio.createSFXinstanceSub('explode_04D', 64, 3, this);
         this.soundInstance[65] = [];
         Audio.createSFXinstanceSub('explode_05A', 65, 0, this);
         Audio.createSFXinstanceSub('explode_05B', 65, 1, this);
         Audio.createSFXinstanceSub('explode_05C', 65, 2, this);
-        Audio.createSFXinstanceSub('explode_05C', 65, 3, this);
+        Audio.createSFXinstanceSub('explode_05D', 65, 3, this);
         Audio.createSFXinstance('wick_03', 66, this);
         this.soundInstance[67] = [];
         Audio.createSFXinstanceSub('ballBounce_00A', 67, 0, this);
         Audio.createSFXinstanceSub('ballBounce_00B', 67, 1, this);
-
+        Audio.createSFXinstance('dropEnergy', 68, this);
+        Audio.createSFXinstance('dropHealth', 69, this);
+        Audio.createSFXinstance('openChest', 70, this);
+        Audio.createSFXinstance('propellerStart_00', 71, this);
+        this.soundInstance[72] = [];
+        Audio.createSFXinstanceSub('hurtZap_00A', 72, 0, this);
+        Audio.createSFXinstanceSub('hurtZap_00B', 72, 1, this);
+        Audio.createSFXinstanceSub('hurtZap_00C', 72, 2, this);
+        Audio.createSFXinstanceSub('hurtZap_00D', 72, 3, this);
 
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {

@@ -1,6 +1,7 @@
 import Interactable from "./Interactable.js"
 import DropableGroundEnergy from "../Dropables/DropableGroundEnergy.js"
 import DropableGroundHealth from "../Dropables/DropableGroundHealth.js"
+import Audio from "../../Audio.js";
 
 export default class InteractableChest extends Interactable {
   constructor(scene, x, y, hp, energy){
@@ -11,11 +12,14 @@ export default class InteractableChest extends Interactable {
     this.spMaxSize = 1.5;
     this.spMinSize = 1.4;
 
-    this.energy = energy
-    this.hp = hp
+    this.energy = energy;
+    this.hp = hp;
   }
 
   onActivated(){
+    //AUDIO
+      Audio.play3Dinstance(this,70);
+    //
     super.onActivated();
     const dropAmount = 3;
     var maxHealthDrops = 2;
@@ -36,4 +40,12 @@ export default class InteractableChest extends Interactable {
     super.onPermaDeactivated();
     this.sprite.setFrame(1);
   }
+
+  distanceToPlayer(){
+    if(this.sprite != undefined)
+      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    else
+      return 1000;    //ARREGLAR ESTO
+  }
+
 }
