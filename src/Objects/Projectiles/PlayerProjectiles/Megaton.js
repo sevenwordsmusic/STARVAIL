@@ -68,7 +68,7 @@ export default class Megaton extends Projectile {
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if(bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
-        if(bodyB.gameObject.parent != undefined){
+      if(bodyB.gameObject.parent != undefined){
         //AUDIO
             Audio.play3DinstanceRndVolume(this, 5, this.touchDelay);
         //
@@ -83,7 +83,7 @@ export default class Megaton extends Projectile {
     if (bodyB.isSensor) return;
     //AUDIO
         Audio.play3DinstanceRndVolume(this, 5, this.touchDelay);
-        this.touchDelay=this.touchDelay*0.5;
+        this.touchDelay=this.touchDelay*0.6;
         this.sfx.volume=Audio.volume3D(this);
     //
   }

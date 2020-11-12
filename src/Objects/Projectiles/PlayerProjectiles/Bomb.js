@@ -99,7 +99,7 @@ export default class Bomb extends Projectile {
         }else{
           Audio.play3DinstanceVolume(this, 4, this.touchDelay);
         }
-        this.touchDelay=this.touchDelay*0.5;
+        this.touchDelay=this.touchDelay*0.6;
         this.sfx.volume=Audio.volume3D(this);
     //
   }
