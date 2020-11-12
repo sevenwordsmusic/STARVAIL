@@ -30,12 +30,11 @@ import NPC_Droid_8 from "../NPCs/NPC_Droid_8.js"
 import NPC_Droid_Default1 from "../NPCs/NPC_Droid_Default1.js"
 import NPC_Droid_Default2 from "../NPCs/NPC_Droid_Default2.js"
 import BossBefore from "../NPCs/BossBefore.js"
-import SceneTest_2 from "./SceneTest_2.js"
 import Joystick_test from "./Joystick_test.js"
 import LevelEnd from "../Objects/LevelEnd.js";
 import Audio from "../Audio.js";
-import InteractableEnergyOnce from "../Objects/Interactables/InteractableEnergyOnce.js"
-import InteractableEnergy from "../Objects/Interactables/InteractableEnergy.js"
+import InteractableChest from "../Objects/Interactables/InteractableChest.js"
+import TileController from "../TileController.js"
 
 //Clase Scene2, que extiende de Phaser.Scene.
 export default class SceneTest_1 extends Phaser.Scene {
@@ -236,19 +235,21 @@ export default class SceneTest_1 extends Phaser.Scene {
       //tile.setSize
       if (tile.physics.matterBody != undefined) {
         const tileBody = tile.physics.matterBody.body;
+        tileBody.ignoreGravity = true;
+        tileBody.ignorePointer = true;
+        tileBody.original = undefined;
+        tileBody.collisionFilter.category = 1;
+        tileBody.collisionFilter.group = -4;
+        tileBody.gameObject.tile.setVisible(false);
         if (tileBody.position.x > this.playerStartX - 32*26 && tileBody.position.x < this.playerStartX + 32*26 && tileBody.position.y > this.playerStartY - 32*26 && tileBody.position.y < this.playerStartY + 32*26) {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
-          //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
+          tileBody.collisionFilter.mask = 1;
         } else {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, false);
-          tileBody.collisionFilter.group = 0;
           tileBody.collisionFilter.mask = 0;
           tileBody.isSleeping = true;
-          tileBody.ignoreGravity = true;
-          tileBody.ignorePointer = true;
-          tileBody.original = undefined;
+          //tileBody.gameObject.tile.setVisible(false);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
-
         }
         this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
         counerAux++;
@@ -260,6 +261,8 @@ export default class SceneTest_1 extends Phaser.Scene {
         return target[Math.max(0, prop)];
       }
     });
+    this.touchedTiles = [];
+    this.matter.world.on("afterupdate", this.resetTiles, this);
     this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000}});    //QUITAR LUEGO !!
 
     //animacion de tiles de la capa de tiels animada
@@ -345,9 +348,9 @@ export default class SceneTest_1 extends Phaser.Scene {
     if(this.map.getObjectLayer("Chest_Layer") != null)
       this.map.getObjectLayer("Chest_Layer").objects.forEach(point => {
         if(point.name == "tutorialSpecial")
-          new InteractableEnergyOnce(this, point.x, point.y, 20000);
-        else
-          new InteractableEnergyOnce(this, point.x, point.y, 20);
+        new InteractableChest(this, point.x, point.y, 10 ,20000);
+      else
+        new InteractableChest(this, point.x, point.y, 10 ,20);
       });
 
     if(this.map.getObjectLayer("Waypoint_Layer") != null)
@@ -369,6 +372,7 @@ export default class SceneTest_1 extends Phaser.Scene {
     //new Mentor(this, this.playerStartX + 400, this.playerStartY)
 
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
+    cam.setZoom(0.5);
 
     //inicialización de meta
     //new LevelEnd(this, this.goalX, this.goalY, 'star', 'testsec', SceneTest_2);
@@ -412,6 +416,14 @@ export default class SceneTest_1 extends Phaser.Scene {
       console.log("USING TOO MUCH MEMORY:  " + usedHeap);
     }*/
   }
+  resetTiles(){
+    for(var i=0; i<this.touchedTiles.length; i++){
+      TileController.resetTileBody(this.touchedTiles[i]);
+      this.touchedTiles[i].touched = false;
+    }
+    this.touchedTiles.length = 0;
+    this.touchedTiles = [];
+  }
 
   pauseGame(){
     console.log("Juego pausado");
@@ -444,10 +456,10 @@ export default class SceneTest_1 extends Phaser.Scene {
   }
 }
 
-
 class BodyWrapper {
   constructor(body, active) {
     this.body = body;
     this.active = active;
+    this.touched = false;
   }
 }

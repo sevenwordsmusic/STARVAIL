@@ -9,6 +9,7 @@ export default class Bullet extends Projectile {
     super(scene, x, y,  expTime);
     //inicializacion
     this.sprite = scene.add.sprite(x,y,"bullets",spr);
+    this.sprite.setScale(0.8);
     this.target = target;
     this.dmg = dmg;
 

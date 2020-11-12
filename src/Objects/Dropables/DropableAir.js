@@ -3,7 +3,7 @@ export default class DropableAir extends Dropable{
   constructor(scene, x, y, spr, expTime){
     super(scene, x, y, spr, expTime);
 
-    const sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,35);
+    const sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,25);
     this.sprite.setExistingBody(sensor).setFixedRotation().setPosition(x, y);
     this.sprite.body.isSensor = true;
     this.sprite.setIgnoreGravity(true).setFixedRotation();
@@ -14,7 +14,7 @@ export default class DropableAir extends Dropable{
       callback:() => (this.dropablePicked(this)),
       context: this
     });
-    this.sprite.body.collisionFilter.group = -2;
+    this.sprite.body.collisionFilter.group = -3;
   }
 
   bounce(spreadVelX, dirX, spreadVelY, dirY){

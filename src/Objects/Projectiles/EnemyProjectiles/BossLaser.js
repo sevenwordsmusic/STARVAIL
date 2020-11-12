@@ -19,6 +19,7 @@ export default class BossLaser {
 
     this.sprite.setDepth(5).setScale(4,0.75);
     this.sprite.setSensor(true).setIgnoreGravity(true);
+    this.sprite.body.collisionFilter.group = -3;
     this.sprite.angle = dirVec.angle() * 180/Math.PI;
 
     this.sprite.anims.play('laserNonLethal', true);

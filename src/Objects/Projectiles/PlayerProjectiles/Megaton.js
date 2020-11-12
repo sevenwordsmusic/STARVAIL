@@ -25,8 +25,8 @@ export default class Megaton extends Projectile {
     this.sprite.setExistingBody(compoundBody).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
     this.sprite.setDepth(5).setFlipX(dir >= 0);
     this.sprite.setAngularVelocity(0.15 * dir);
-      this.sprite.body.collisionFilter.group = 0;
-    this.sprite.body.collisionFilter.category = 4;
+    this.sprite.body.collisionFilter.group = -2;
+    //this.sprite.body.collisionFilter.category = 4;
 
     //se calcula la direccion y magnitud del vector de velocidad
     this.pVelocity = velDir;
@@ -56,6 +56,7 @@ export default class Megaton extends Projectile {
   armBomb(){
     this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
       objectA: this.sensor,
+      objectB: this.scene.enemyController.enemyBodies.filter(body => body != undefined),
       callback: this.onSensorCollide,
       context: this
     });
@@ -68,6 +69,7 @@ export default class Megaton extends Projectile {
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if(bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
+    this.timer.remove();
       if(bodyB.gameObject.parent != undefined){
         //AUDIO
             Audio.play3DinstanceRndVolume(this, 5, this.touchDelay);

@@ -1,6 +1,7 @@
 import Enemy from "./Enemy.js";
 import DropableAirEnergy from "../Objects/Dropables/DropableAirEnergy.js"
 import Audio from "../Audio.js";
+import TileController from "../TileController.js"
 
 //enemigo que hereda de Enemy
 export default class BombAir extends Enemy {
@@ -24,7 +25,7 @@ export default class BombAir extends Enemy {
     this.sprite.setExistingBody(body).setPosition(x, y).setFixedRotation();
     this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
-    this.sprite.body.collisionFilter.group = -1;
+    this.sprite.body.collisionFilter.group = -3;
 
     this.sprite.setIgnoreGravity(true);
     this.sprite.body.frictionAir = 0.06;
@@ -68,6 +69,11 @@ export default class BombAir extends Enemy {
       this.sprite.setVelocityX(0);
       this.sprite.setVelocityY(0);
       this.sprite.body.frictionAir = 10;
+      TileController.disableEnemy(this.sprite);
+    })
+    this.stateOnEnd(0,function(){
+      if(this.sprite.body === undefined)return;
+      TileController.enableEnemy(this.sprite);
     })
     this.stateOnStart(1, function(){
       if(this.sprite.body === undefined)return;
@@ -148,6 +154,10 @@ export default class BombAir extends Enemy {
 
   update(time, delta){
       super.update(time, delta);
+  }
+  updateTouchBoundry(){
+    if(this.sprite != undefined)
+      TileController.enemyFullTouchBoundry(this.scene, this.sprite, 1, 1);
   }
 
   onSensorCollide({ bodyA, bodyB, pair }){

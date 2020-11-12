@@ -22,8 +22,8 @@ export default class Missile extends Projectile {
     this.sprite.setExistingBody(this.sensor).setPosition(x, y).setDepth(5);/*.setFriction(0).setFrictionStatic(0)*/
     this.sprite.angle = velDir.angle() * 180/Math.PI;
     //this.sprite.setAngularVelocity(0.2 * dir);
-    this.sprite.body.collisionFilter.group = -1;
-    this.sprite.body.collisionFilter.category = 4;
+    this.sprite.body.collisionFilter.group = -2;
+    //this.sprite.body.collisionFilter.category = 4;
 
     this.sprite.setIgnoreGravity(true);
 
@@ -92,7 +92,7 @@ export default class Missile extends Projectile {
   }
 
   armBomb(){
-    this.sprite.body.collisionFilter.group = 0;
+    //this.sprite.body.collisionFilter.group = 0;
     this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
       objectA: this.sensor,
       callback: this.onSensorCollide,

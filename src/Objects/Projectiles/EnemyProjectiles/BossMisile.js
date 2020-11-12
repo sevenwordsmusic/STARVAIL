@@ -19,6 +19,7 @@ export default class BossMisile extends Projectile {
     this.sprite.setDepth(5);
     this.sprite.setSensor(true).setIgnoreGravity(true);
     this.sprite.body.frictionAir = 0;
+    this.sprite.body.collisionFilter.group = -3;
 
     //se calcula la direccion y magnitud del vector de velocidad
     this.pVelocity = velDir;

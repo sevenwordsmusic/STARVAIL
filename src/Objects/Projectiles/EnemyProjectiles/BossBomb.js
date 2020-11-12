@@ -19,6 +19,7 @@ export default class BossBomb extends Projectile {
     this.sprite.setExistingBody(body).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
     this.sprite.setDepth(5).setScale(0.75);
     this.sprite.body.frictionAir = 0;
+    this.sprite.body.collisionFilter.group = -3;
 
     //se calcula la direccion y magnitud del vector de velocidad
     this.pVelocity = velDir;

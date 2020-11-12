@@ -43,6 +43,7 @@ export default class Blackboard{
 
     for(var i=0; i<this.enemyBodies.length; i++){
       if(this.enemyBodies[i] !== undefined){
+        this.enemyBodies[i].gameObject.parent.updateTouchBoundry();
         this.enemyBodies[i].gameObject.parent.update(time, delta);
         this.enemyBodies[i].gameObject.parent.updateAI(time, delta);
       }

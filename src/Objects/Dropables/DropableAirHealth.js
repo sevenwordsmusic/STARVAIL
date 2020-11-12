@@ -1,11 +1,10 @@
-import DropableGround from "./DropableGround.js";
-export default class DropableBossEnergy extends DropableGround{
-  constructor(scene, x, y, dir, energy){
+import DropableAir from "./DropableAir.js";
+export default class DropableAirHealth extends DropableAir{
+  constructor(scene, x, y, dirX, dirY, hp){
     super(scene, x, y, 'drop', 10000);
-    this.mass = 1;
-    this.energy = energy;
-    this.sprite.setFrame(1);
-    this.bounce(Phaser.Math.FloatBetween(3,5), dir, 2.5, 0.5);
+    this.hp = hp;
+    this.bounce(5.01, dirX, 5.01, dirY);
+    this.sprite.setFrame(0);
   }
 
   dropablePicked(drop){

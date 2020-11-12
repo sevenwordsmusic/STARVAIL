@@ -26,7 +26,7 @@ export default class Boss extends Enemy {
     this.sprite.setExistingBody(body).setPosition(x, y).setScale(1.5).setIgnoreGravity(true).setFixedRotation();
     this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
-    this.sprite.body.collisionFilter.group = -2;
+    this.sprite.body.collisionFilter.group = -3;
 
     this.sprite.body.frictionAir = 0.06;
     this.sprite.body.friction = 0;

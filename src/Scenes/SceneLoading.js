@@ -113,6 +113,11 @@ export default class SceneLoading extends Phaser.Scene {
     //AIR
     //ENEMIGOS
 
+    //INTERACTABLES
+    this.load.spritesheet('drop', 'assets/Sprites/Drops/Drops.png', { frameWidth: 20, frameHeight: 20 });
+    this.load.spritesheet('chest', 'assets/Sprites/Chest/Chest.png', { frameWidth: 64, frameHeight: 64 });
+    //INTERACTABLES
+
     this.load.image('bg_e', 'assets/Backgrounds/Sky/SkyBG.png');
     this.load.image('bg1_e', 'assets/Backgrounds/Sky/CloudsFar.png');
     this.load.image('bg2_e', 'assets/Backgrounds/Sky/CloudsMid.png');
@@ -160,7 +165,8 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('bulletImpact4', 'assets/Sprites/Impacts/full_100x100px.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('bulletImpact5', 'assets/Sprites/Impacts/clean4_100x100px.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
-    this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
+    //this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
+    this.load.spritesheet('smoke', 'assets/Sprites/Explosions/laser_smoke.png', { frameWidth: 100, frameHeight: 100 });
 
     this.load.spritesheet('laserNonLethal', 'assets/Sprites/Bullet/laser_nonletal.png', { frameWidth: 960, frameHeight: 32 }); //62
     this.load.spritesheet('laserLethal', 'assets/Sprites/Bullet/laser_letal.png', { frameWidth: 960, frameHeight: 32 }); //42*/
@@ -276,25 +282,25 @@ export default class SceneLoading extends Phaser.Scene {
     this.anims.create({
         key: 'fire_idle',
         frames: this.anims.generateFrameNumbers('fire_idle', { start: 0, end: 2 }),
-        frameRate: 3,
+        frameRate: 2,
         repeat: -1
     });
     this.anims.create({
         key: 'fire_moveup',
         frames: this.anims.generateFrameNumbers('fire_moveup', { start: 0, end: 2 }),
-        frameRate: 3,
+        frameRate: 2,
         repeat: -1
     });
     this.anims.create({
         key: 'fire_movedown',
         frames: this.anims.generateFrameNumbers('fire_movedown', { start: 0, end: 2 }),
-        frameRate: 3,
+        frameRate: 2,
         repeat: -1
     });
     this.anims.create({
         key: 'fire_fly',
         frames: this.anims.generateFrameNumbers('fire_fly', { start: 0, end: 2 }),
-        frameRate: 3,
+        frameRate: 2,
         repeat: -1
     });
 
@@ -375,8 +381,8 @@ export default class SceneLoading extends Phaser.Scene {
 
     this.anims.create({
             key: 'smoke',
-            frames: this.anims.generateFrameNumbers('smoke', { start: 0, end: 20 }),
-            frameRate: 12,
+            frames: this.anims.generateFrameNumbers('smoke', { start: 0, end: 69 }),
+            frameRate: 60,
             repeat: -1
         });
 

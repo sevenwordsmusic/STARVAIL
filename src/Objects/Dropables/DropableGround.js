@@ -4,7 +4,7 @@ export default class DropableGround extends Dropable{
     super(scene, x, y, spr, expTime);
 
     const mainBody = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, this.sprite.width, this.sprite.height);
-    const sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,35);
+    const sensor = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,25);
     sensor.isSensor = true;
     const compoundBody = Phaser.Physics.Matter.Matter.Body.create({
       parts: [mainBody, sensor],
@@ -19,7 +19,7 @@ export default class DropableGround extends Dropable{
       context: this
     });
 
-    this.sprite.body.collisionFilter.group = -2;
+    this.sprite.body.collisionFilter.group = -3;
   }
 
   bounce(spreadX, dir, speed, speedVar){

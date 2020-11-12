@@ -2,6 +2,7 @@ import Enemy from "./Enemy.js";
 import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
 import MechGun from "./MechGun.js";
 import Audio from "../Audio.js";
+import TileController from "../TileController.js"
 
 //enemigo que hereda de Enemy
 export default class Mecha extends Enemy {
@@ -26,7 +27,7 @@ export default class Mecha extends Enemy {
     this.sprite.setExistingBody(compoundBody).setPosition(x, y).setFixedRotation();
     this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
-    this.sprite.body.collisionFilter.group = -1;
+    this.sprite.body.collisionFilter.group = -3;
     this.sprite.body.restitution = 0.4;
     this.sprite.setOrigin(0.5,0.62);
 
@@ -82,9 +83,11 @@ export default class Mecha extends Enemy {
       this.sprite.setVelocityY(0);
       this.sprite.body.friction = 10;
       this.gun.followPosition(this.sprite.x, this.sprite.y);
+      TileController.disableEnemy(this.sprite);
     });
     this.stateOnEnd(0,function(){
       if(this.sprite.body === undefined)return;
+      TileController.enableEnemy(this.sprite);
       this.sprite.body.friction = 0.1;
       this.sprite.setIgnoreGravity(false);
       this.gun.followPosition(this.sprite.x, this.sprite.y);
@@ -176,6 +179,11 @@ export default class Mecha extends Enemy {
 
   update(time, delta){
     super.update(time, delta);
+  }
+
+  updateTouchBoundry(){
+    if(this.sprite != undefined)
+      TileController.enemyFullTouchBoundry(this.scene, this.sprite, 1, 2);
   }
 
   onSensorCollide({ bodyA, bodyB, pair }){

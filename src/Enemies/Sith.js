@@ -1,5 +1,6 @@
 import Enemy from "./Enemy.js";
 import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
+import TileController from "../TileController.js"
 
 //enemigo que hereda de Enemy
 export default class Sith extends Enemy {
@@ -23,7 +24,7 @@ export default class Sith extends Enemy {
     this.sprite.setExistingBody(body).setPosition(x, y).setFixedRotation().setOrigin(0.5,0.85);
     this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
-    this.sprite.body.collisionFilter.group = -1;
+    this.sprite.body.collisionFilter.group = -3;
     this.sprite.body.restitution = 0;
 
     this.adjustedFriction = this.sprite.body.friction / this.scene.matter.world.getDelta();
@@ -59,9 +60,11 @@ export default class Sith extends Enemy {
       this.sprite.setVelocityX(0);
       this.sprite.setVelocityY(0);
       this.sprite.body.friction = 10;
+      TileController.disableEnemy(this.sprite);
     });
     this.stateOnEnd(0,function(){
       if(this.sprite.body === undefined)return;
+      TileController.enableEnemy(this.sprite);
       this.sprite.body.friction = 0.1;
       this.sprite.setIgnoreGravity(false);
     })
@@ -173,6 +176,11 @@ export default class Sith extends Enemy {
 
   update(time, delta){
     super.update(time, delta);
+  }
+
+  updateTouchBoundry(){
+    if(this.sprite != undefined)
+      TileController.enemyHalfTouchBoundry(this.scene, this.sprite, 1, 2, 15);
   }
 
   inflictDamagePlayerArea(dir){
