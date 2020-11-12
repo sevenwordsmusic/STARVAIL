@@ -64,7 +64,7 @@ import SceneSplashScreen from "./Scenes/SceneSplashScreen.js"
 
 //Configuración de Phaser 3
 var config = {
-  type: Phaser.AUTO,
+  type: Phaser.WEBGL,
   //Dimensiones de la ventana de juego (ancho y alto)
   width: 960,
   height: 540,
@@ -72,7 +72,7 @@ var config = {
   target: 60,
   },
   parent: 'phaserDOM',
-  pixelArt: true,
+  pixelArt: false,
   audio: {
     disableWebAudio: false
   },
