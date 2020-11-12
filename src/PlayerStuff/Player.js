@@ -1,8 +1,8 @@
-
 import PlayerFireArmPC from "./PlayerFireArmPC.js";
 import PlayerFireArmMobile from "./PlayerFireArmMobile.js";
 import Bar from "./Bar.js";
 import TileController from "../TileController.js"
+import Audio from "../Audio.js";
 
 export default class Player {
   constructor(scene, x, y) {
@@ -516,6 +516,10 @@ export default class Player {
       if(this.hp <= 0){
         this.hp = 0;
         this.playerDeath();
+      }else{
+      //AUDIO
+        Audio.chat(1,this.scene,1);
+      //
       }
       this.hpBar.draw(this.hp);
     }
@@ -531,6 +535,9 @@ export default class Player {
 
   playerDeath(){
     if(this.alive){
+      //AUDIO
+        Audio.play2Dinstance(73);
+      //
       this.alive = false;
 
       if(this.scene.boss != undefined)

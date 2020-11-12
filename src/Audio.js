@@ -482,6 +482,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('hurtZap_00B', 'assets/audio/SFX/hurtZap_00B.ogg');
         this.load.audio('hurtZap_00C', 'assets/audio/SFX/hurtZap_00C.ogg');
         this.load.audio('hurtZap_00D', 'assets/audio/SFX/hurtZap_00D.ogg');
+        this.load.audio('dead', 'assets/audio/SFX/dead.ogg');
         //EXPLOSION
         this.load.audio('explosion_00A', 'assets/audio/SFX/explosion_00A.ogg');
         this.load.audio('explosion_00B', 'assets/audio/SFX/explosion_00B.ogg');
@@ -589,27 +590,27 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('explode_00A', 'assets/audio/SFX/enemies/explode_00A.ogg');
         this.load.audio('explode_00B', 'assets/audio/SFX/enemies/explode_00B.ogg');
         this.load.audio('explode_00C', 'assets/audio/SFX/enemies/explode_00C.ogg');
-        this.load.audio('explode_00C', 'assets/audio/SFX/enemies/explode_00D.ogg');
+        this.load.audio('explode_00D', 'assets/audio/SFX/enemies/explode_00D.ogg');
         this.load.audio('explode_01A', 'assets/audio/SFX/enemies/explode_01A.ogg');
         this.load.audio('explode_01B', 'assets/audio/SFX/enemies/explode_01B.ogg');
         this.load.audio('explode_01C', 'assets/audio/SFX/enemies/explode_01C.ogg');
-        this.load.audio('explode_01C', 'assets/audio/SFX/enemies/explode_01D.ogg');
+        this.load.audio('explode_01D', 'assets/audio/SFX/enemies/explode_01D.ogg');
         this.load.audio('explode_02A', 'assets/audio/SFX/enemies/explode_02A.ogg');
         this.load.audio('explode_02B', 'assets/audio/SFX/enemies/explode_02B.ogg');
         this.load.audio('explode_02C', 'assets/audio/SFX/enemies/explode_02C.ogg');
-        this.load.audio('explode_02C', 'assets/audio/SFX/enemies/explode_02D.ogg');
+        this.load.audio('explode_02D', 'assets/audio/SFX/enemies/explode_02D.ogg');
         this.load.audio('explode_03A', 'assets/audio/SFX/enemies/explode_03A.ogg');
         this.load.audio('explode_03B', 'assets/audio/SFX/enemies/explode_03B.ogg');
         this.load.audio('explode_03C', 'assets/audio/SFX/enemies/explode_03C.ogg');
-        this.load.audio('explode_03C', 'assets/audio/SFX/enemies/explode_03D.ogg');
+        this.load.audio('explode_03D', 'assets/audio/SFX/enemies/explode_03D.ogg');
         this.load.audio('explode_04A', 'assets/audio/SFX/enemies/explode_04A.ogg');
         this.load.audio('explode_04B', 'assets/audio/SFX/enemies/explode_04B.ogg');
         this.load.audio('explode_04C', 'assets/audio/SFX/enemies/explode_04C.ogg');
-        this.load.audio('explode_04C', 'assets/audio/SFX/enemies/explode_04D.ogg');
+        this.load.audio('explode_04D', 'assets/audio/SFX/enemies/explode_04D.ogg');
         this.load.audio('explode_05A', 'assets/audio/SFX/enemies/explode_05A.ogg');
         this.load.audio('explode_05B', 'assets/audio/SFX/enemies/explode_05B.ogg');
         this.load.audio('explode_05C', 'assets/audio/SFX/enemies/explode_05C.ogg');
-        this.load.audio('explode_05C', 'assets/audio/SFX/enemies/explode_05D.ogg');
+        this.load.audio('explode_05D', 'assets/audio/SFX/enemies/explode_05D.ogg');
 
 
         //MUSIC LOOPS
@@ -801,6 +802,7 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('hurtZap_00B', 72, 1, this);
         Audio.createSFXinstanceSub('hurtZap_00C', 72, 2, this);
         Audio.createSFXinstanceSub('hurtZap_00D', 72, 3, this);
+        Audio.createSFXinstance('dead', 73, this);
 
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
