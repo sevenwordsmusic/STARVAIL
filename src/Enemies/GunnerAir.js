@@ -181,6 +181,9 @@ export default class ZapperAir extends Enemy {
 
   shoot(){
     if(this.sprite.body === undefined)return;
+      //AUDIO
+        Audio.play3DinstanceRnd(this,76);
+      //
     new EnergyBall(this.scene, this.sprite.x, this.sprite.y, this.hitDamage, 0.1, 10, new Phaser.Math.Vector2(Math.cos(this.sprite.angle * Math.PI/180),Math.sin(this.sprite.angle * Math.PI/180)), 1000);
   }
 

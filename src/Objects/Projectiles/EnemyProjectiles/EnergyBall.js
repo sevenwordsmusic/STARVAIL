@@ -33,7 +33,9 @@ export default class EnergyBall extends Projectile {
       context: this
     });
     //AUDIO
-      //Audio.play3Dinstance(this,53);
+      if(expTime<1500){
+          this.shotByGunner=true;
+      }
     //
   }
 
@@ -44,16 +46,34 @@ export default class EnergyBall extends Projectile {
       this.timer.remove();
       this.scene.game.player.playerDamageKnockback(this.dmg, this.knockback, this.pVelocity);   //this.scene.game.player.playerDamage(this.dmg);
       this.itemExpire(this);
+      //AUDIO
+        if(this.shotByGunner){
+          Audio.play3DinstanceRnd(this, 36);
+        }else{
+          Audio.play3DinstanceRnd(this, 37);
+        }
+      //
     }
     else if(bodyB.gameObject.parent == undefined){
       this.projectileArmed();
       this.timer.remove();
       this.itemExpire(this);
+      //AUDIO
+        if(this.shotByGunner){
+          Audio.play3DinstanceRnd(this, 0);
+        }else{
+          Audio.play3DinstanceRnd(this, 1);
+        }
+      //
     }
   }
 
   itemExpire(proj){
     this.projectileArmed();
+
+    //AUDIO
+      Audio.play3Dinstance(this, 77);
+    //
 
     const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "bulletImpact5");
     bombExplosion.setDepth(10).setScale(1);
@@ -69,7 +89,7 @@ export default class EnergyBall extends Projectile {
     super.itemExpire(proj);
   }
   distanceToPlayer(){
-    if(this.sprite.body != undefined)
+    if(this.sprite != undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
     else
       return 1000;    //ARREGLAR ESTO

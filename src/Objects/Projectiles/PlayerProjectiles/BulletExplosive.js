@@ -35,9 +35,9 @@ export default class BulletExplosive extends Projectile {
   itemExpire(){
     this.scene.events.off("update", this.update, this);
 
-     //AUDIO_BALAEXPLOSIVA_Collision (aqui explotaria)
+    //AUDIO_BALAEXPLOSIVA
       Audio.play3Dinstance(this, 2);
-      //
+    //
 
     const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
     bombExplosion.setDepth(10) //42

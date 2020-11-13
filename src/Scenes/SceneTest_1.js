@@ -153,10 +153,11 @@ export default class SceneTest_1 extends Phaser.Scene {
 
     //capa letal pasa a ser un senosr
     lethallayer.forEachTile(function (tile) {
-      if(tile.physics.matterBody != undefined)
-        tile.physics.matterBody.body.isSensor = true;
-        tileBody.collisionFilter.category = 1;
-        tileBody.collisionFilter.group = -4;
+    if(tile.physics.matterBody != undefined){
+            tile.physics.matterBody.body.isSensor = true;
+            tile.physics.matterBody.body.collisionFilter.category = 1;
+            tile.physics.matterBody.body.collisionFilter.group = -4;
+          }
     }, this);
 
     //inicializamos el controlador de enemigos
