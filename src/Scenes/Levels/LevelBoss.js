@@ -110,12 +110,7 @@ export default class LevelBoss extends Phaser.Scene {
     //this.add.image(1200, 400, 'bg3_e').setScale(2).setScrollFactor(0.75).setDepth(-500);
 
     this.moon = this.add.sprite(this.game.moonPos.x, this.game.moonPos.y, 'star', 0).setScrollFactor(0).setDepth(-400);
-    this.timeBg = this.add.sprite(480, 100/*270*/, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
-    this.timeBg.once('animationcomplete', function(){
-      if(this.timeBg.anims.currentFrame != undefined)
-        this.game.currentBgAnimation = this.timeBg.anims.currentFrame.index-1;
-      this.game.transitionToScene(this, 'Joystick', Joystick_test)
-    },this);
+    this.timeBg = this.add.sprite(480, 270, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
 
 
     //Inicializacion y creacion de mapa de tiles.
@@ -374,7 +369,7 @@ export default class LevelBoss extends Phaser.Scene {
     //AUDIO:
     Audio.audioUpdate(this);
 
-    this.moon.x += (delta/50);
+    this.moon.x += (delta*this.game.moonVelocity);
     this.game.moonPos.x = this.moon.x;
 
 

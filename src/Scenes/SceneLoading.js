@@ -115,11 +115,11 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('chest', 'assets/Sprites/Chest/Chest.png', { frameWidth: 64, frameHeight: 64 });
     //INTERACTABLES
 
-    this.load.image('bg_e', 'assets/Backgrounds/Sky/SkyBG.png');
-    this.load.image('bg1_e', 'assets/Backgrounds/Sky/CloudsFar.png');
-    this.load.image('bg2_e', 'assets/Backgrounds/Sky/CloudsMid.png');
-    this.load.image('bg3_e', 'assets/Backgrounds/Sky/CloudsClose.png');
-    this.load.spritesheet('animatedBg', 'assets/animatedBgTest.png', { frameWidth: 631, frameHeight: 148 });
+    this.load.image('bg1', 'assets/Backgrounds/background0.png');
+    this.load.image('bg2', 'assets/Backgrounds/background1.png');
+    this.load.image('bg3', 'assets/Backgrounds/background2.png');
+    this.load.spritesheet('animatedBg', 'assets/Backgrounds/dirty_sky.png', { frameWidth: 960, frameHeight: 540 });
+    this.load.image('moon', 'assets/Backgrounds/moon.png');
 
     //Tilesets de niveles y mapas de niveles
     this.load.image("tilesBackgorund1", "assets/Tilesets/level1_tiles/background_layer.png");
@@ -182,9 +182,9 @@ export default class SceneLoading extends Phaser.Scene {
     //BG ANIMADO
     this.anims.create({
         key: 'bgAnimation',
-        frames: this.anims.generateFrameNumbers('animatedBg', { start: 0, end: 5 }),
-        frameRate: 0.001,
-        repeat: 0
+        frames: this.anims.generateFrameNumbers('animatedBg', { start: 0, end: 3 }),
+        frameRate: 2,
+        repeat: -1
     });
 
     //ANIMS

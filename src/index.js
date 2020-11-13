@@ -169,7 +169,8 @@ for(var i=0; i<8; i++){
   game.npcArray[i] = i;
 }
 
-game.moonPos = new Phaser.Math.Vector2(480, 100);
+game.moonPos = new Phaser.Math.Vector2(130, 130);
+game.moonVelocity = 1/200;      //si = 1 -> avanza 50 unidades en un segundo
 game.currentBgAnimation = 0;
 game.transitionToScene = function(scene, keyNext, sceneNext){
   var SceneCurrentClass = eval(scene.constructor.name);
