@@ -620,7 +620,10 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('explode_05C', 'assets/audio/SFX/enemies/explode_05C.ogg');
         this.load.audio('explode_05D', 'assets/audio/SFX/enemies/explode_05D.ogg');
         this.load.audio('sword', 'assets/audio/SFX/enemies/sword.ogg');
-
+        this.load.audio('mechGun_00A', 'assets/audio/SFX/enemies/mechGun_00A.ogg');
+        this.load.audio('mechGun_00B', 'assets/audio/SFX/enemies/mechGun_00B.ogg');
+        this.load.audio('mechGun_00C', 'assets/audio/SFX/enemies/mechGun_00C.ogg');
+        this.load.audio('mechGun_00D', 'assets/audio/SFX/enemies/mechGun_00D.ogg');       
         //MUSIC LOOPS
         /*this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
@@ -812,6 +815,13 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('hurtZap_00D', 72, 3, this);
         Audio.createSFXinstance('dead', 73, this);
         Audio.createSFXinstance('sword', 74, this);
+        this.soundInstance[75] = [];
+        Audio.createSFXinstanceSub('mechGun_00A', 75, 0, this);
+        Audio.createSFXinstanceSub('mechGun_00B', 75, 1, this);
+        Audio.createSFXinstanceSub('mechGun_00C', 75, 2, this);
+        Audio.createSFXinstanceSub('mechGun_00D', 75, 3, this);
+
+
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
             volume: this.volumeSFX,
