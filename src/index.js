@@ -51,6 +51,7 @@ import SceneTest_1 from "./Scenes/SceneTest_1.js";
 import AnimatedTiles from "./Plugins/tileAnimator.js"
 
 import SceneMainMenu from "./Scenes/SceneMainMenu.js"
+import ScenePlayerName from "./Scenes/ScenePlayerName.js"
 import SceneCredits from "./Scenes/SceneCredits.js"
 import SceneOptions from "./Scenes/SceneOptionsMM.js"
 import SceneGameEbi from "./Scenes/SceneGameEbi.js"
@@ -102,6 +103,7 @@ var config = {
     SceneLoading,
 
     SceneMainMenu,
+    ScenePlayerName,
     SceneCredits,
     SceneOptions,
     SceneGameEbi,
@@ -138,6 +140,8 @@ var config = {
 //Declaramos nuestro juego
 var game = new Phaser.Game(config);
 console.log(game);                      //el bug de exces memory podría deberse a que el explorador recuerda los recursos cargados en el cache del juego
+
+game.playerName = "Player";
 
 //Declaramos variables globales del juego.
 game.moveVelocity = 0.22;            //velocidad horizontal en el suelo

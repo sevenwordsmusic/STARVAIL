@@ -66,8 +66,8 @@ export default class Level1 extends Phaser.Scene {
     //var ebi=this.add.image(0,0,'ebi').setOrigin(0,0).setScale(0.25);
 
     //Boton pause
-    this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0).setDepth(5000);
-		this.botonPause.setInteractive({ useHandCursor: true  } )
+    this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0).setDepth(100);
+		this.botonPause.setInteractive()
     .on('pointerdown', () => this.pauseGame());
 
     this.botonPause.on('pointerover', function(pointer){
@@ -142,8 +142,11 @@ export default class Level1 extends Phaser.Scene {
 
     //capa letal pasa a ser un senosr
     lethallayer.forEachTile(function (tile) {
-      if(tile.physics.matterBody != undefined)
+      if(tile.physics.matterBody != undefined){
         tile.physics.matterBody.body.isSensor = true;
+        tile.physics.matterBody.body.collisionFilter.category = 1;
+        tile.physics.matterBody.body.collisionFilter.group = -4;
+      }
     }, this);
 
     //inicializamos el controlador de enemigos

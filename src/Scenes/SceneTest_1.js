@@ -77,8 +77,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     //var ebi=this.add.image(0,0,'ebi').setOrigin(0,0).setScale(0.25);
 
     //Boton pause
-    this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0);
-		this.botonPause.setInteractive({ useHandCursor: true  } )
+    this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0).setDepth(100);
+		this.botonPause.setInteractive()
     .on('pointerdown', () => this.pauseGame());
 
     this.botonPause.on('pointerover', function(pointer){
@@ -155,6 +155,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     lethallayer.forEachTile(function (tile) {
       if(tile.physics.matterBody != undefined)
         tile.physics.matterBody.body.isSensor = true;
+        tileBody.collisionFilter.category = 1;
+        tileBody.collisionFilter.group = -4;
     }, this);
 
     //inicializamos el controlador de enemigos
