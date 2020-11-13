@@ -370,7 +370,7 @@ export default class Level1 extends Phaser.Scene {
 
   //AUDIO:
    Audio.startMusicEngineLevelOne(this);
-   Audio.levelOneInit(this);
+   //Audio.levelOneInit(this);
   //
    this.maxMemory = 0;
   }

@@ -67,6 +67,16 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('crosshair', 'assets/HUD/crosshair.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('weaponsHUD', 'assets/HUD/weaponsHUD.png', { frameWidth: 268, frameHeight: 252 });
 
+    //HUD
+    this.load.image('hpBarHUD', 'assets/HUD/hpBar.png');
+    this.load.image('energyBarHUD', 'assets/HUD/energyBar.png');
+    this.load.image('weaponHUD0', 'assets/HUD/weaponselect_current.png');
+    this.load.image('weaponHUD1', 'assets/HUD/weaponselect_left1.png');
+    this.load.image('weaponHUD2', 'assets/HUD/weaponselect_up1.png');
+    this.load.image('weaponHUD3', 'assets/HUD/weaponselect_left2.png');
+    this.load.image('weaponHUD4', 'assets/HUD/weaponselect_up2.png');
+    //HUD
+
     this.load.spritesheet('playerRun', 'assets/Sprites/Player/player_run_nogun.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('playerIdle', 'assets/Sprites/Player/player_idle_nogun.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('playerAirUp', 'assets/Sprites/Player/player_moveup_nogun.png', { frameWidth: 64, frameHeight: 64 });

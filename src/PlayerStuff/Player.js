@@ -100,11 +100,21 @@ export default class Player {
     this.weaponCounter = 0;
 
     this.buttons = [5];
-    for(var i=0; i<5;i++){
-      this.buttons[i] = this.scene.add.sprite(700 + i*50, 450, 'square',0).setScale(0.75).setInteractive();
-      this.buttons[i].setScrollFactor(0).setDepth(100);
-      this.buttons[i].playerInteractable = true;
-    }
+    this.buttons[0] = this.scene.add.sprite(800, 450, ('weaponHUD0'),0).setInteractive();
+    this.buttons[0].setScrollFactor(0).setDepth(100);
+    this.buttons[0].playerInteractable = true;
+    this.buttons[1] = this.scene.add.sprite(696, 450, ('weaponHUD1'),0).setInteractive();
+    this.buttons[1].setScrollFactor(0).setDepth(100);
+    this.buttons[1].playerInteractable = true;
+    this.buttons[2] = this.scene.add.sprite(800, 342, ('weaponHUD2'),0).setInteractive();
+    this.buttons[2].setScrollFactor(0).setDepth(100);
+    this.buttons[2].playerInteractable = true;
+    this.buttons[3] = this.scene.add.sprite(641, 450, ('weaponHUD3'),0).setInteractive();
+    this.buttons[3].setScrollFactor(0).setDepth(100);
+    this.buttons[3].playerInteractable = true;
+    this.buttons[4] = this.scene.add.sprite(800, 286, ('weaponHUD4'),0).setInteractive();
+    this.buttons[4].setScrollFactor(0).setDepth(100);
+    this.buttons[4].playerInteractable = true;
     this.nextButton = 0;
 
     if(this.scene.game.onPC){
@@ -224,6 +234,10 @@ export default class Player {
     })
 
     this.recieveWeapon(0);
+    this.recieveWeapon(1);
+    this.recieveWeapon(3);
+    this.recieveWeapon(5);
+    this.recieveWeapon(7);
     for(var i=0; i<this.scene.game.obtainedWeapons.length; i++){
       this.recieveWeapon(this.scene.game.obtainedWeapons[i]);
     }
@@ -705,7 +719,7 @@ export default class Player {
     this.buttons[aux].on('pointerdown', function () {
       this.setWeapon(id);
     }, this);
-    this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(2);
+    this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(4);
 
     this.nextButton++;
   }
