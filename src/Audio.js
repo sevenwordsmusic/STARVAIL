@@ -435,11 +435,11 @@ export default class Audio extends Phaser.Scene {
     }
 
     static levelOneInit(scene){
-        this.ambientLoop.play();
-        this.musicLoop0000levitating.play();
-        this.musicLoop0000moving.play();
-        this.musicLoop0000flying.play();
-        this.musicLoop0000chill.play();
+        this.load.ambientLoop.play();
+        this.load.musicLoop0000levitating.play();
+        this.load.musicLoop0000moving.play();
+        this.load.musicLoop0000flying.play();
+        this.load.musicLoop0000chill.play();
     }
 
     preload() {
