@@ -79,7 +79,7 @@ export default class NPC_Droid_3 extends FiniteStateMachine{
     
     
     [b]L41N[/b]
-    This bullets can bounce. Fire them, and soon
+    These bullets can bounce. Fire them, and soon
     they will be everywhere... like me! Hehehe.
     [b]L41N[/b]
     Now, let's see... I'm here, but I'm still there?

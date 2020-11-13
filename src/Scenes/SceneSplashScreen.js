@@ -17,7 +17,7 @@ export default class SceneSplashScreen extends Phaser.Scene {
     this.scene.run("Audio");
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x091191);
+    this.cameras.main.setBackgroundColor(0x697ca1);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
@@ -60,7 +60,7 @@ export default class SceneSplashScreen extends Phaser.Scene {
     //this.scene.start('SceneMM');
 
     //SI SE QUIEREN TESTEAR NIVELES
-    //this.scene.start("tutorial1");
+    this.scene.start("tutorial1");
     //this.scene.start("levelFirst1");
     //this.scene.start("levelSecond1");
     //this.scene.start("levelThird1");

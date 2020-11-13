@@ -67,7 +67,7 @@ export default class Tutorial extends Phaser.Scene {
     //var ebi=this.add.image(0,0,'ebi').setOrigin(0,0).setScale(0.25);
 
     //Boton pause
-    this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0);
+    this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0).setDepth(5000);
 		this.botonPause.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.pauseGame());
 
@@ -113,7 +113,7 @@ export default class Tutorial extends Phaser.Scene {
     //this.add.image(1100, 320, 'bg2_e').setScale(2).setScrollFactor(0.5).setDepth(-501);
     //this.add.image(1200, 400, 'bg3_e').setScale(2).setScrollFactor(0.75).setDepth(-500);
 
-    this.moon = this.add.sprite(this.game.moonPos.x, this.game.moonPos.y, 'star', 0).setScrollFactor(0).setDepth(-400);
+    this.moon = this.add.sprite(this.game.moonPos.x, this.game.moonPos.y, 'moon', 0).setScrollFactor(0).setDepth(-400);
     this.timeBg = this.add.sprite(480, 270, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
 
 
@@ -339,20 +339,40 @@ export default class Tutorial extends Phaser.Scene {
           new InteractableChest(this, point.x, point.y, 10 ,20);
       });
 
-    if(this.map.getObjectLayer("Waypoint_Layer") != null)
-      this.map.getObjectLayer("Waypoint_Layer").objects.forEach(point => {
-        if(point.name == "01")
-          this.mentor = new Mentor(this, point.x, point.y);
-
-        /*array de posiciones aqui
-          var arrayPuntos = []
-          ...
-          ...
-          this.mentor.tutorialPositions = arrayPuntos;
-          //por ultimo modifica el array de dialogos de Mentor.js
-        */
-      });
-
+      if(this.map.getObjectLayer("Waypoint_Layer") != null) {
+        var arrayPuntos = [8];
+        var counter = 0;
+        this.map.getObjectLayer("Waypoint_Layer").objects.forEach(point => {
+          if(point.name == "01")
+            this.mentor = new Mentor(this, point.x, point.y);
+  
+          /*array de posiciones aqui
+            var arrayPuntos = []
+            ...
+            ...
+            this.mentor.tutorialPositions = arrayPuntos;
+  
+            Una vez asignados los puntos en el tutorialPositions,
+            debes ir a Mentor.js a la linea 64 y rellenar los dialogos.
+  
+            Para bloquear el movimiento del jugador,
+            this.game.player.alive = false
+  
+            Si estas en la clase del mentor,
+            this.scene.game.player.alive = false
+  
+            //por ultimo modifica el array de dialogos de Mentor.js
+          */
+  
+          arrayPuntos[counter] = new Phaser.Math.Vector2(point.x,point.y);
+          counter++;
+          console.log(point.name + "    " +  point.x + "    " + point.y);
+        });
+  
+        this.mentor.tutorialPositions = arrayPuntos;
+  
+  
+      }
     //jugador
     new Player(this, this.playerStartX, this.playerStartY);
     //new Mentor(this, this.playerStartX + 400, this.playerStartY)

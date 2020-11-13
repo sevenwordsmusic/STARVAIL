@@ -65,7 +65,7 @@ export default class Level2 extends Phaser.Scene {
     //var ebi=this.add.image(0,0,'ebi').setOrigin(0,0).setScale(0.25);
 
     //Boton pause
-    this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0);
+    this.botonPause = this.add.image(880,78,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0).setDepth(5000);
 		this.botonPause.setInteractive({ useHandCursor: true  } )
     .on('pointerdown', () => this.pauseGame());
 
