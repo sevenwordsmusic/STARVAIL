@@ -491,6 +491,11 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('hurtZap_00C', 'assets/audio/SFX/hurtZap_00C.ogg');
         this.load.audio('hurtZap_00D', 'assets/audio/SFX/hurtZap_00D.ogg');
         this.load.audio('dead', 'assets/audio/SFX/dead.ogg');
+        this.load.audio('beep', 'assets/audio/SFX/beep.ogg');
+        this.load.audio('hover', 'assets/audio/SFX/menu/hover.ogg');
+        this.load.audio('back', 'assets/audio/SFX/menu/back.ogg');
+        this.load.audio('forth', 'assets/audio/SFX/menu/forth.ogg');
+
         //EXPLOSION
         this.load.audio('explosion_00A', 'assets/audio/SFX/explosion_00A.ogg');
         this.load.audio('explosion_00B', 'assets/audio/SFX/explosion_00B.ogg');
@@ -831,7 +836,10 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('gunGun_00C', 76, 2, this);
         Audio.createSFXinstanceSub('gunGun_00D', 76, 3, this);
         Audio.createSFXinstance('energyImpact', 77, this);
-
+        Audio.createSFXinstance('beep', 78, this);
+        Audio.createSFXinstance('hover', 79, this);
+        Audio.createSFXinstance('back', 80, this);
+        Audio.createSFXinstance('forth', 81, this);
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
             volume: this.volumeSFX,

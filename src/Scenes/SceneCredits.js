@@ -1,3 +1,4 @@
+import Audio from "../Audio.js";
 
 export default class SceneCredits extends Phaser.Scene {
   constructor() {
@@ -23,6 +24,9 @@ export default class SceneCredits extends Phaser.Scene {
 
     this.btnExitCredits.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.2);
+      //
     });
 
     this.btnExitCredits.on('pointerout', function(pointer){
@@ -102,7 +106,9 @@ export default class SceneCredits extends Phaser.Scene {
 
   exitCredits(){
     console.log("Se ha pulsado exit");
-
+      //AUDIO
+        Audio.play2DinstanceRate(80, 1.2);
+      //
     this.btnExitCredits.alpha=0.8;
 
     this.scene.sendToBack('SceneCredits');

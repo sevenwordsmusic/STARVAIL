@@ -19,6 +19,7 @@ export default class InteractableChest extends Interactable {
   onActivated(){
     //AUDIO
       Audio.play3Dinstance(this,70);
+      Audio.play3Dinstance(this,78);
     //
     super.onActivated();
     const dropAmount = 3;

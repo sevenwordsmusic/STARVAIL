@@ -1,5 +1,5 @@
 import SceneTest_1 from "./SceneTest_1.js";
-
+import Audio from "../Audio.js";
 
 export default class SceneMainMenu extends Phaser.Scene {
   constructor() {
@@ -26,6 +26,9 @@ export default class SceneMainMenu extends Phaser.Scene {
 
     this.botonCredits.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.0);
+      //
     });
 
     this.botonCredits.on('pointerout', function(pointer){
@@ -39,6 +42,9 @@ export default class SceneMainMenu extends Phaser.Scene {
 
     this.botonStart.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.0);
+      //
     });
 
     this.botonStart.on('pointerout', function(pointer){
@@ -52,6 +58,9 @@ export default class SceneMainMenu extends Phaser.Scene {
 
     this.botonOptions.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.0);
+      //
     });
 
     this.botonOptions.on('pointerout', function(pointer){
@@ -66,7 +75,9 @@ export default class SceneMainMenu extends Phaser.Scene {
 
   viewCredits(){
     console.log("Se ha pulsado credits");
-
+      //AUDIO
+        Audio.play2DinstanceRate(81, 1.0);
+      //
     this.botonCredits.alpha=0.8;
 
     this.scene.run("SceneCredits");
@@ -76,7 +87,9 @@ export default class SceneMainMenu extends Phaser.Scene {
 
   startGame(){
     console.log("Se ha pulsado start");
-
+      //AUDIO
+        Audio.play2DinstanceRate(81, 1.0);
+      //
     this.game.prepareScreen();
 
     this.botonStart.alpha=0.8;
@@ -89,7 +102,9 @@ export default class SceneMainMenu extends Phaser.Scene {
 
   viewOptions(){
     console.log("Se ha pulsado options");
-
+      //AUDIO
+        Audio.play2DinstanceRate(81, 1.0);
+      //
     this.botonOptions.alpha=0.8;
 
     this.scene.run("SceneOptionsMM");

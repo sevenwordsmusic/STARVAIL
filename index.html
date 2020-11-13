@@ -27,6 +27,57 @@
         text-align: center;
         display: none;
       }
+      #soundSliders{
+        font-family: "LeahFat";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-size: 350%;
+        color: #E96B00;
+        text-shadow:
+         -2px -2px 0 #000,  
+          2px -2px 0 #000,
+          -2px 2px 0 #000,
+           2px 2px 0 #000;
+        display: none;
+      }
+       #soundSliders input{
+        position: relative;
+        width: 500%;
+        height: 200%;
+        left: -205%;
+        background-color: #74524b;
+      }     
+      .slider {
+        -webkit-appearance: none;
+        width: 52px;
+        height: 52px;
+        margin-bottom: 25%;
+        outline: none;
+        opacity: 0.8;
+        border: 2px solid #000000;
+      }
+
+      .slider:hover {
+        opacity: 1.0;
+      }
+      .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 52px;
+        height: 52px;
+        background: #0000FF;
+        cursor: pointer;
+      }
+      .slider::-moz-range-thumb {
+        width: 52px;
+        height: 52px;
+        background: #0000FF;
+        cursor: pointer;
+      }
     </style>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.20.0/dist/phaser.js"></script>
     <script src="src/phaser-matter-collision-plugin.min.js"></script>
@@ -35,6 +86,15 @@
 </head>
 <bodY>
   <input type="text" id="playerName" placeholder="Player" autocomplete="off"><br><br>
+
+  <div>
+    <div id="soundSliders">
+      BGM<br>
+      <input type="range" min="0" max="10" value="5" class="slider" id="bgmSlider"><br>
+      SFX<br>
+      <input type="range" min="0" max="10" value="5" class="slider" id="sfxSlider">
+    </div>
+  </div>
   <div id= 'phaserDOM'></div>
 </body>
 </html>

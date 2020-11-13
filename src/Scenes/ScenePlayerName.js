@@ -1,3 +1,4 @@
+import Audio from "../Audio.js";
 import SceneTest_1 from "./SceneTest_1.js";
 
 
@@ -27,6 +28,9 @@ export default class ScenePlayerName extends Phaser.Scene {
 
     this.btnExitOptionsMM.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.2);
+      //
     });
 
     this.btnExitOptionsMM.on('pointerout', function(pointer){
@@ -40,6 +44,9 @@ export default class ScenePlayerName extends Phaser.Scene {
 
     this.botonStart.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.2);
+      //
     });
 
     this.botonStart.on('pointerout', function(pointer){
@@ -54,7 +61,9 @@ export default class ScenePlayerName extends Phaser.Scene {
 
   exitOptions(){
     console.log("Se ha pulsado exit");
-
+      //AUDIO
+        Audio.play2DinstanceRate(80, 1.2);
+      //
     this.hideInput();
 
     this.btnExitOptionsMM.alpha=0.8;
@@ -67,7 +76,9 @@ export default class ScenePlayerName extends Phaser.Scene {
 
   startGame(){
     console.log("Se ha pulsado start");
-
+      //AUDIO
+        Audio.play2DinstanceRate(81, 1.2);
+      //
     this.game.playerName = document.getElementById("playerName").value;
     this.hideInput();
 
