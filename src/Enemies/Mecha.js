@@ -76,7 +76,7 @@ export default class Mecha extends Enemy {
     //this.initializeAI(4);
     this.initializeAI(3);
     this.stateOnStart(0, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.stop();
       this.sprite.setIgnoreGravity(true);
       this.sprite.setVelocityX(0);
@@ -86,20 +86,20 @@ export default class Mecha extends Enemy {
       TileController.disableEnemy(this.sprite);
     });
     this.stateOnEnd(0,function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       TileController.enableEnemy(this.sprite);
       this.sprite.body.friction = 0.1;
       this.sprite.setIgnoreGravity(false);
       this.gun.followPosition(this.sprite.x, this.sprite.y);
     })
     this.stateOnStart(1, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.body.friction = 0.1;
       this.sprite.setIgnoreGravity(false);
       this.gun.followPosition(this.sprite.x, this.sprite.y);
     });
     this.stateUpdate(1, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
 
       this.sprite.setVelocityX(this.patrolSpeed * this.patrolDir * ((this.patrolDir>=0)?this.rightMultiply:this.leftMultiply) * delta);
       this.traveledDistance += delta;
@@ -127,7 +127,7 @@ export default class Mecha extends Enemy {
       },this);
     })
     this.stateUpdate(2, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
       this.playerVector.y = this.scene.game.player.sprite.y - this.sprite.y;
       this.distanceToCheck = Math.sqrt( Math.pow(this.playerVector.x ,2) +  Math.pow(this.playerVector.y ,2));
@@ -212,7 +212,7 @@ export default class Mecha extends Enemy {
   }
 
   inflictDamagePlayerArea(position){
-    if(this.sprite.body === undefined)return;
+    if(this.sprite == undefined || this.sprite.body == undefined)return;
     this.scene.graphics.clear();
     this.scene.graphics.fillRect(this.sprite.x-50, this.sprite.y-50, 100, 100);
     if(super.playerHit(this.sprite.x-50, this.sprite.y-50, this.sprite.x+50, this.sprite.y+50))

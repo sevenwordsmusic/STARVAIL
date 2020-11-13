@@ -54,7 +54,7 @@ export default class Sith extends Enemy {
     //IA
     this.initializeAI(5);
     this.stateOnStart(0, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.stop();
       this.sprite.setIgnoreGravity(true);
       this.sprite.setVelocityX(0);
@@ -63,13 +63,13 @@ export default class Sith extends Enemy {
       TileController.disableEnemy(this.sprite);
     });
     this.stateOnEnd(0,function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       TileController.enableEnemy(this.sprite);
       this.sprite.body.friction = 0.1;
       this.sprite.setIgnoreGravity(false);
     })
     this.stateOnStart(1, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.body.friction = 0.1;
       this.sprite.setIgnoreGravity(false);
 
@@ -83,7 +83,7 @@ export default class Sith extends Enemy {
     });
 
     this.stateOnStart(2, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.attackTimer = this.scene.time.addEvent({
         delay: Phaser.Math.Between(this.teleportWaitTimerMin, this.teleportWaitTimerMax),
         callback: () => (this.goTo(4))
@@ -91,7 +91,7 @@ export default class Sith extends Enemy {
       this.sprite.anims.play('sithRun', true);
     });
     this.stateUpdate(2, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.setFlipX(this.scene.game.player.sprite.x<this.sprite.x);
 
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
@@ -111,7 +111,7 @@ export default class Sith extends Enemy {
       this.attackTimer.remove();
     });
     this.stateOnStart(3, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       //this.sprite.body.collisionFilter.group = -1;
       this.sprite.setFlipX(this.targetDir);
       this.sprite.anims.play('sithAttack', true)
@@ -133,18 +133,18 @@ export default class Sith extends Enemy {
     });
 
     this.stateUpdate(3, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.setVelocityX(this.hitSpeed * Math.sign(this.scene.game.player.sprite.x - this.sprite.x) * delta);
     });
 
     this.stateOnEnd(3, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       //this.sprite.body.collisionFilter.group = 0;
     });
 
 
     this.stateOnStart(4, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       //this.sprite.body.collisionFilter.group = -1;
       this.scene.time.addEvent({
         delay: 200,
@@ -184,7 +184,7 @@ export default class Sith extends Enemy {
   }
 
   inflictDamagePlayerArea(dir){
-    if(this.sprite.body === undefined)return;
+    if(this.sprite == undefined || this.sprite.body == undefined)return;
     if(dir){
       if(super.playerHit(this.sprite.x-95, this.sprite.y-50, this.sprite.x+10, this.sprite.y+35)){
         //AUDIO
@@ -202,7 +202,7 @@ export default class Sith extends Enemy {
     }
   }
   inflictDamagePlayerArea2(){
-    if(this.sprite.body === undefined)return;
+    if(this.sprite == undefined || this.sprite.body == undefined)return;
     if(super.playerHit(this.sprite.x-55, this.sprite.y-65, this.sprite.x+55, this.sprite.y+55))
       this.scene.game.player.playerDamage(this.teleportHitDamage, true);
   }

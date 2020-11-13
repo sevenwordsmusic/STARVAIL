@@ -70,12 +70,9 @@ export default class Player {
     this.updateBoundryCounterX = 0;
     this.updateBoundryCounterY = 0;
 
-    //vida, energía y sus barras correspondientes
+    //vida, energía
     this.alive = true;
     this.hp = this.scene.game.totalPlayerHp;
-    this.energy = this.scene.game.totalPlayerEnergy;
-    this.hpBar = new Bar(this.scene, 50,450, 250, 25, 0x00ff00, 0x999999, 0x000000, this.hp);
-    this.energyBar = new Bar(this.scene, 50,485, 250, 25, 0x0000ff, 0x999999, 0x000000, this.energy);
 
     //miniinvulnerabilidad al ser dañado
     this.invulTimer = this.scene.time.addEvent({
@@ -100,19 +97,19 @@ export default class Player {
     this.weaponCounter = 0;
 
     this.buttons = [5];
-    this.buttons[0] = this.scene.add.sprite(800, 450, ('weaponHUD0'),0).setInteractive();
+    this.buttons[0] = this.scene.add.sprite(885, 465, ('weaponHUD0'),0).setInteractive();
     this.buttons[0].setScrollFactor(0).setDepth(100);
     this.buttons[0].playerInteractable = true;
-    this.buttons[1] = this.scene.add.sprite(696, 450, ('weaponHUD1'),0).setInteractive();
+    this.buttons[1] = this.scene.add.sprite(781, 465, ('weaponHUD1'),0).setInteractive();
     this.buttons[1].setScrollFactor(0).setDepth(100);
     this.buttons[1].playerInteractable = true;
-    this.buttons[2] = this.scene.add.sprite(800, 342, ('weaponHUD2'),0).setInteractive();
+    this.buttons[2] = this.scene.add.sprite(885, 357, ('weaponHUD2'),0).setInteractive();
     this.buttons[2].setScrollFactor(0).setDepth(100);
     this.buttons[2].playerInteractable = true;
-    this.buttons[3] = this.scene.add.sprite(641, 450, ('weaponHUD3'),0).setInteractive();
+    this.buttons[3] = this.scene.add.sprite(726, 465, ('weaponHUD3'),0).setInteractive();
     this.buttons[3].setScrollFactor(0).setDepth(100);
     this.buttons[3].playerInteractable = true;
-    this.buttons[4] = this.scene.add.sprite(800, 286, ('weaponHUD4'),0).setInteractive();
+    this.buttons[4] = this.scene.add.sprite(885, 301, ('weaponHUD4'),0).setInteractive();
     this.buttons[4].setScrollFactor(0).setDepth(100);
     this.buttons[4].playerInteractable = true;
     this.nextButton = 0;
@@ -152,6 +149,15 @@ export default class Player {
       }, this);
       //DISPARO
       //EVENTOS
+
+      //barras vida, energía
+      this.energy = this.scene.game.totalPlayerEnergy;
+      this.hpBar = new Bar(this.scene, 23,454, 312, 12, 0x00ff00, this.hp);
+      const hpBarHUD = this.scene.add.image(180, 458, 'hpBarHUD').setScrollFactor(0).setDepth(100);
+      const hpBarFillHUD = this.scene.add.image(180, 458, 'hpBarFillHUD').setScrollFactor(0).setDepth(90);//12 312
+      this.energyBar = new Bar(this.scene, 23, 496, 312, 12, 0x0000ff, this.energy);
+      const energyBarHUD = this.scene.add.image(180, 507, 'energyBarHUD').setScrollFactor(0).setDepth(100);
+      const energyBarFillHUD = this.scene.add.image(180, 507, 'energyBarFillHUD').setScrollFactor(0).setDepth(90);
     }
     else {
       this.scene.input.addPointer(1);
@@ -195,6 +201,15 @@ export default class Player {
       }, this);
       //DISPARO
       //EVENTOS
+
+      //barras vida, energía
+      this.energy = this.scene.game.totalPlayerEnergy;
+      this.hpBar = new Bar(this.scene, 23, 34, 312, 12, 0x00ff00, this.hp);
+      const hpBarHUD = this.scene.add.image(180, 38, 'hpBarHUD').setScrollFactor(0).setDepth(100);
+      const hpBarFillHUD = this.scene.add.image(180, 38, 'hpBarFillHUD').setScrollFactor(0).setDepth(90);//12 312
+      this.energyBar = new Bar(this.scene, 23, 76, 312, 12, 0x0000ff, this.energy);
+      const energyBarHUD = this.scene.add.image(180, 87, 'energyBarHUD').setScrollFactor(0).setDepth(100);
+      const energyBarFillHUD = this.scene.add.image(180, 87, 'energyBarFillHUD').setScrollFactor(0).setDepth(90);
     }
 
     scene.matterCollision.addOnCollideStart({
@@ -719,8 +734,23 @@ export default class Player {
     this.buttons[aux].on('pointerdown', function () {
       this.setWeapon(id);
     }, this);
-    this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(4);
-
+    if(this.nextButton == 0){
+      this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(4);
+    }
+    else if(this.nextButton == 1){
+      this.scene.add.sprite(this.buttons[aux].x + 10, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
+    }
+    else if(this.nextButton == 2){
+      this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y + 10, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
+    }
+    else if(this.nextButton == 3){
+      this.scene.add.sprite(this.buttons[aux].x - 10, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
+      this.scene.add.image(this.buttons[aux].x + 10, this.buttons[aux].y + 61, "decoHUD1" ).setScrollFactor(0).setDepth(101);
+    }
+    else if(this.nextButton == 4){
+      this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y - 5, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
+      this.scene.add.image(this.buttons[aux].x-116, this.buttons[aux].y+50, "decoHUD2" ).setScrollFactor(0).setDepth(101);
+    }
     this.nextButton++;
   }
 

@@ -97,11 +97,9 @@ export default class Tutorial extends Phaser.Scene {
 
     //Camara.
     cam = this.cameras.main;
-    cam.setBackgroundColor('#dddddd');
-    this.matter.world.setBounds(0, -500, 4000, 6000);
-    cam.setBounds(0, -500, 4000, 6000);/*
-    this.matter.world.setBounds(0, -500, 2900, 2800);
-    cam.setBounds(0, -500, 2880, 2784);*/
+    cam.setBackgroundColor('#262626');
+    this.matter.world.setBounds(0, 0, 3776, 4800);
+    cam.setBounds(0, 0, 3776, 4800);
 
     cam.fadeIn(Audio.barRateDiv[2]);  //Constante de Audio para sincronía
     //fadeOut = false;
@@ -146,10 +144,11 @@ export default class Tutorial extends Phaser.Scene {
 
     //capa letal pasa a ser un senosr
     lethallayer.forEachTile(function (tile) {
-      if(tile.physics.matterBody != undefined)
+      if(tile.physics.matterBody != undefined){
         tile.physics.matterBody.body.isSensor = true;
-        tileBody.collisionFilter.category = 1;
-        tileBody.collisionFilter.group = -4;
+        tile.physics.matterBody.body.collisionFilter.category = 1;
+        tile.physics.matterBody.body.collisionFilter.group = -4;
+      }
     }, this);
 
     //inicializamos el controlador de enemigos
@@ -212,7 +211,7 @@ export default class Tutorial extends Phaser.Scene {
 
     //Sistema dinámico de modificacion de collisiones
     var tileBodyMatrix = [];
-    for (var i = 0; i < 145; i++) {
+    for (var i = 0; i < 155; i++) {
       tileBodyMatrix[i] = [];
       for (var j = 0; j < 155; j++) {
         tileBodyMatrix[i][j] = undefined;
@@ -347,33 +346,33 @@ export default class Tutorial extends Phaser.Scene {
         this.map.getObjectLayer("Waypoint_Layer").objects.forEach(point => {
           if(point.name == "01")
             this.mentor = new Mentor(this, point.x, point.y);
-  
+
           /*array de posiciones aqui
             var arrayPuntos = []
             ...
             ...
             this.mentor.tutorialPositions = arrayPuntos;
-  
+
             Una vez asignados los puntos en el tutorialPositions,
             debes ir a Mentor.js a la linea 64 y rellenar los dialogos.
-  
+
             Para bloquear el movimiento del jugador,
             this.game.player.alive = false
-  
+
             Si estas en la clase del mentor,
             this.scene.game.player.alive = false
-  
+
             //por ultimo modifica el array de dialogos de Mentor.js
           */
-  
+
           arrayPuntos[counter] = new Phaser.Math.Vector2(point.x,point.y);
           counter++;
           console.log(point.name + "    " +  point.x + "    " + point.y);
         });
-  
+
         this.mentor.tutorialPositions = arrayPuntos;
-  
-  
+
+
       }
     //jugador
     new Player(this, this.playerStartX, this.playerStartY);

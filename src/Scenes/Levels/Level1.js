@@ -96,11 +96,9 @@ export default class Level1 extends Phaser.Scene {
 
     //Camara.
     cam = this.cameras.main;
-    cam.setBackgroundColor('#dddddd');
-    this.matter.world.setBounds(0, -500, 4000, 6000);
-    cam.setBounds(0, -500, 4000, 6000);/*
-    this.matter.world.setBounds(0, -500, 2900, 2800);
-    cam.setBounds(0, -500, 2880, 2784);*/
+    cam.setBackgroundColor('#262626');
+    this.matter.world.setBounds(0, 0, 3776, 4800);
+    cam.setBounds(0, 0, 3776, 4800);
 
     cam.fadeIn(Audio.barRateDiv[2]);  //Constante de Audio para sincronía
     //fadeOut = false;
@@ -211,7 +209,7 @@ export default class Level1 extends Phaser.Scene {
 
     //Sistema dinámico de modificacion de collisiones
     var tileBodyMatrix = [];
-    for (var i = 0; i < 145; i++) {
+    for (var i = 0; i < 155; i++) {
       tileBodyMatrix[i] = [];
       for (var j = 0; j < 155; j++) {
         tileBodyMatrix[i][j] = undefined;

@@ -65,16 +65,19 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('square', 'assets/square.jpg');
     this.load.image('star', 'assets/star.png');
     this.load.spritesheet('crosshair', 'assets/HUD/crosshair.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('weaponsHUD', 'assets/HUD/weaponsHUD.png', { frameWidth: 268, frameHeight: 252 });
 
     //HUD
     this.load.image('hpBarHUD', 'assets/HUD/hpBar.png');
     this.load.image('energyBarHUD', 'assets/HUD/energyBar.png');
+    this.load.image('hpBarFillHUD', 'assets/HUD/hpBarFill.png');
+    this.load.image('energyBarFillHUD', 'assets/HUD/energyBarFill.png');
     this.load.image('weaponHUD0', 'assets/HUD/weaponselect_current.png');
     this.load.image('weaponHUD1', 'assets/HUD/weaponselect_left1.png');
     this.load.image('weaponHUD2', 'assets/HUD/weaponselect_up1.png');
     this.load.image('weaponHUD3', 'assets/HUD/weaponselect_left2.png');
     this.load.image('weaponHUD4', 'assets/HUD/weaponselect_up2.png');
+    this.load.image('decoHUD1', 'assets/HUD/deco1.png');
+    this.load.image('decoHUD2', 'assets/HUD/deco2.png');
     //HUD
 
     this.load.spritesheet('playerRun', 'assets/Sprites/Player/player_run_nogun.png', { frameWidth: 64, frameHeight: 64 });
@@ -103,6 +106,17 @@ export default class SceneLoading extends Phaser.Scene {
 
     //this.load.spritesheet('dummy', 'assets/Sprites/Enemies/dummy.png', { frameWidth: 35, frameHeight: 44 });
 
+    //BOSS
+    this.load.spritesheet('bossRun', 'assets/Sprites/Boss/boss_run.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bossIdle', 'assets/Sprites/Boss/boss_idle.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bossAirUp', 'assets/Sprites/Boss/boss_moveup.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bossAirIdle', 'assets/Sprites/Boss/boss_flyidle.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bossAirMove', 'assets/Sprites/Boss/boss_movefly.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bossAirDown', 'assets/Sprites/Boss/boss_movedown.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bossDeath', 'assets/Sprites/Boss/boss_death.png', { frameWidth: 64, frameHeight: 64 });
+    //this.load.image('bossFireArm', 'assets/Sprites/Boss/boss_FireArm.png', { frameWidth: 32, frameHeight: 64 });
+    //BOSS
+
     //ENEMIGOS
     //GROUND
     this.load.spritesheet('zapperGround', 'assets/Sprites/Enemies/DroidZapper/DroidZapper.png', { frameWidth: 100, frameHeight: 45 });
@@ -116,7 +130,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('zapperAir1', 'assets/Sprites/Enemies/DroidZapperAir/dronmove.png', { frameWidth: 91, frameHeight: 60 });
     this.load.spritesheet('zapperAir2', 'assets/Sprites/Enemies/DroidZapperAir/attack.png', { frameWidth: 91, frameHeight: 60 });
     this.load.spritesheet('bomb', 'assets/Sprites/Enemies/DroidBomb/Homing2.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('gunner', 'assets/Sprites/Enemies/DroidGunner/Gunner.png', { frameWidth: 60, frameHeight: 40 });
+    this.load.spritesheet('gunner', 'assets/Sprites/Enemies/DroidGunner/Droid_gunner.png', { frameWidth: 60, frameHeight: 40 });
     //AIR
     //ENEMIGOS
 
@@ -288,25 +302,25 @@ export default class SceneLoading extends Phaser.Scene {
     this.anims.create({
         key: 'fire_idle',
         frames: this.anims.generateFrameNumbers('fire_idle', { start: 0, end: 2 }),
-        frameRate: 2,
+        frameRate: 12,
         repeat: -1
     });
     this.anims.create({
         key: 'fire_moveup',
         frames: this.anims.generateFrameNumbers('fire_moveup', { start: 0, end: 2 }),
-        frameRate: 2,
+        frameRate: 12,
         repeat: -1
     });
     this.anims.create({
         key: 'fire_movedown',
         frames: this.anims.generateFrameNumbers('fire_movedown', { start: 0, end: 2 }),
-        frameRate: 2,
+        frameRate: 12,
         repeat: -1
     });
     this.anims.create({
         key: 'fire_fly',
         frames: this.anims.generateFrameNumbers('fire_fly', { start: 0, end: 2 }),
-        frameRate: 2,
+        frameRate: 12,
         repeat: -1
     });
 
@@ -405,6 +419,51 @@ export default class SceneLoading extends Phaser.Scene {
         repeat: 1
     });
 
+    //BOSS
+    this.anims.create({
+        key: 'wRightBoss',
+        frames: this.anims.generateFrameNumbers('bossRun', { start: 0, end: 7 }),
+        frameRate: 14,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'idleBoss',
+        frames: this.anims.generateFrameNumbers('bossIdle', { start: 0, end: 6 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'propulsionBoss',
+        frames: this.anims.generateFrameNumbers('bossAirUp', { start: 0, end: 1 }),
+        frameRate: 20,
+        repeat: 0
+    });
+    this.anims.create({
+        key: 'airIdleBoss',
+        frames: this.anims.generateFrameNumbers('bossAirIdle', { start: 0, end: 6 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'airUpBoss',
+        frames: this.anims.generateFrameNumbers('bossAirUp', { start: 1, end: 1 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'airMoveBoss',
+        frames: this.anims.generateFrameNumbers('bossAirMove', { start: 0, end: 0 }),
+        frameRate: 1,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'airDownBoss',
+        frames: this.anims.generateFrameNumbers('bossAirDown', { start: 0, end: 0 }),
+        frameRate: 1,
+        repeat: -1
+    });
+    //BOSS
+
     //ENEMIGOS
     this.anims.create({
         key: 'zapperGroundRun',
@@ -441,6 +500,15 @@ export default class SceneLoading extends Phaser.Scene {
         frames: this.anims.generateFrameNumbers('zapperAir2', { start: 6, end: 15 }),
         frameRate: 8
     });
+
+    this.anims.create({
+        key: 'gunnerFire',
+        frames: this.anims.generateFrameNumbers('gunner', { start: 0, end: 2 }),
+        frameRate: 8,
+        repeat: 1,
+        yoyo: true
+    });
+
     this.anims.create({
         key: 'bombHoming',
         frames: this.anims.generateFrameNumbers('bomb', { start: 0, end: 1 }),

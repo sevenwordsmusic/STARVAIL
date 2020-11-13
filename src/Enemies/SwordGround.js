@@ -67,7 +67,7 @@ export default class SwordGround extends Enemy {
     //IA
     this.initializeAI(4);
     this.stateOnStart(0, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.stop();
       this.sprite.setIgnoreGravity(true);
       this.sprite.setVelocityX(0);
@@ -76,20 +76,20 @@ export default class SwordGround extends Enemy {
       TileController.disableEnemy(this.sprite);
     });
     this.stateOnEnd(0,function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       TileController.enableEnemy(this.sprite);
       this.sprite.body.friction = 0.1;
       this.sprite.setIgnoreGravity(false);
     })
     this.stateOnStart(1, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.body.friction = 0.1;
       this.sprite.setIgnoreGravity(false);
       this.sprite.anims.setTimeScale(1);
       this.sprite.anims.play('heroRun', true);
     });
     this.stateUpdate(1, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
 
       this.sprite.setVelocityX(this.patrolSpeed * this.patrolDir * delta);
       this.traveledDistance += delta;
@@ -100,12 +100,12 @@ export default class SwordGround extends Enemy {
       this.sprite.setFlipX(this.sprite.body.velocity.x<0);
     })
     this.stateOnStart(2, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.setTimeScale(1.5);
       this.sprite.anims.play('heroRun', true);
     });
     this.stateUpdate(2, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.setFlipX(this.scene.game.player.sprite.x<this.sprite.x);
 
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
@@ -122,7 +122,7 @@ export default class SwordGround extends Enemy {
       }
     })
     this.stateOnStart(3, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       //this.sprite.body.collisionFilter.group = -1;
       this.sprite.setFlipX(this.targetDir);
       this.sprite.anims.setTimeScale(1);
@@ -145,12 +145,12 @@ export default class SwordGround extends Enemy {
     });
 
     this.stateUpdate(3, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.setVelocityX(this.hitSpeed * Math.sign(this.scene.game.player.sprite.x - this.sprite.x) * delta);
     });
 
     this.stateOnEnd(3, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       //this.sprite.body.collisionFilter.group = 0;
     });
     this.startAI();
@@ -196,7 +196,7 @@ export default class SwordGround extends Enemy {
   }
 
   inflictDamagePlayerArea(dir){
-    if(this.sprite.body === undefined)return;
+    if(this.sprite == undefined || this.sprite.body == undefined)return;
         //AUDIO
             Audio.play3Dinstance(this,74);
         //

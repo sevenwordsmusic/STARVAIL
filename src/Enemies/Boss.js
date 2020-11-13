@@ -8,7 +8,7 @@ import TileController from "../TileController.js"
 //enemigo que hereda de Enemy
 export default class Boss extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'playerIdle', 20);
+    super(scene, x, y, 'bossIdle', 20);
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this.sprite
@@ -76,7 +76,7 @@ export default class Boss extends Enemy {
 
     this.weaponSwitch = 2000;                                          //cada cuanto tiempo cambia de arm_airUp
     this.weaponSwitchRand = 500;                                       //varianza aleatoria del cambio de arma
-    this.laserFire = 100000;                                             //cada cuanto dispara lasser
+    this.laserFire = 10000;                                             //cada cuanto dispara lasser
     this.laserFireRand = 1000;                                         //varianza aleatoria de disparo de laser
     //Ajustar estas
     //Variables de IA
@@ -98,7 +98,7 @@ export default class Boss extends Enemy {
     //IA
     this.initializeAI(6);
     this.stateOnStart(0, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
 
       this.sprite.body.frictionAir = 0.06;
       this.stopper = false;
@@ -142,7 +142,7 @@ export default class Boss extends Enemy {
     })
 
     this.stateUpdate(0, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       if(!this.stopper){
         if(this.patrolDir.y <= 0 || this.sprite.y < this.initPos.y){
           this.sprite.setVelocityX(this.velX * this.patrolDir.x);
@@ -156,14 +156,14 @@ export default class Boss extends Enemy {
       this.gun.aimGun(this.playerVector.angle());
     })
     this.stateOnEnd(0, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.patrolTimer1.remove();
       this.patrolTimer2.remove();
       this.fireTimer.remove();
     });
 
     this.stateUpdate(1, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.playAnimation1();
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
       this.playerVector.y = this.scene.game.player.sprite.y - this.sprite.y;
@@ -182,7 +182,7 @@ export default class Boss extends Enemy {
     })
 
     this.stateOnStart(2, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.playAnimation2();
       this.sprite.x = this.initPos.x;
       this.sprite.y = this.initPos.y + 100;
@@ -195,7 +195,7 @@ export default class Boss extends Enemy {
     })
 
     this.stateUpdate(2, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.gun.followPosition(this.sprite.x,this.sprite.y);
       this.gun.followLaser();
       if(!this.lethalLaser){
@@ -206,7 +206,7 @@ export default class Boss extends Enemy {
     })
 
     this.stateUpdate(3, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.playAnimation1();
       this.gun.followPosition(this.sprite.x,this.sprite.y);
       this.gun.sprite.angle = -90;
@@ -223,7 +223,7 @@ export default class Boss extends Enemy {
     })
 
     this.stateOnStart(4, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.x = this.initPos.x;
       this.sprite.y = this.initPos.y - 220;
       this.sprite.setVelocityX(0);
@@ -272,13 +272,13 @@ export default class Boss extends Enemy {
     const dir = this.scene.game.player.sprite.x < this.sprite.x;
     if(!this.stopper){
       if(this.sprite.body.velocity.y > 0.1){
-        this.sprite.anims.play('airDown', true);
+        this.sprite.anims.play('airDownBoss', true);
         this.gun.adjustOffset(5 * ((dir)?1:-1), 4);
       }else if(Math.abs(this.sprite.body.velocity.x) > 0.1){
-        this.sprite.anims.play('airMove', true);
+        this.sprite.anims.play('airMoveBoss', true);
         this.gun.adjustOffset(-2 * ((dir)?1:-1), 4);
       }else if(this.sprite.body.velocity.y < -0.1){
-        this.sprite.anims.play('airUp', true);
+        this.sprite.anims.play('airUpBoss', true);
         this.gun.adjustOffset(3 * ((dir)?1:-1), -1);
       }
     }
@@ -293,7 +293,7 @@ export default class Boss extends Enemy {
 
   playAnimation2(){
     const dir = this.scene.game.player.sprite.x < this.sprite.x;
-    this.sprite.anims.play('idle', true);
+    this.sprite.anims.play('idleBoss', true);
     this.gun.adjustOffset(5 * ((dir)?1:-1), 0);
     this.sprite.setFlipX(dir);
   }

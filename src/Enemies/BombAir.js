@@ -64,7 +64,7 @@ export default class BombAir extends Enemy {
     //IA
     this.initializeAI(4);
     this.stateOnStart(0, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.stop();
       this.sprite.setVelocityX(0);
       this.sprite.setVelocityY(0);
@@ -72,11 +72,11 @@ export default class BombAir extends Enemy {
       TileController.disableEnemy(this.sprite);
     })
     this.stateOnEnd(0,function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       TileController.enableEnemy(this.sprite);
     })
     this.stateOnStart(1, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.body.frictionAir = 0.06;
       this.stopper = false;
       this.distanceToCheck= Math.sqrt( Math.pow(this.initPos.x - this.sprite.x,2) +  Math.pow(this.initPos.y - this.sprite.y,2));
@@ -103,7 +103,7 @@ export default class BombAir extends Enemy {
       },this);
     });
     this.stateUpdate(1, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       if(!this.stopper){
         this.sprite.setVelocityX(this.velX * this.patrolDir.x);
         this.sprite.setVelocityY(this.velY * this.patrolDir.y);
@@ -111,17 +111,17 @@ export default class BombAir extends Enemy {
       this.sprite.setFlipX(this.sprite.body.velocity.x<0);
     })
     this.stateOnEnd(1, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.patrolTimer1.remove();
       this.patrolTimer2.remove();
     });
 
     this.stateOnStart(2, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.play('bombHoming', true);
     });
     this.stateUpdate(2, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.setFlipX(this.scene.game.player.sprite.x<this.sprite.x);
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
       this.playerVector.y = this.scene.game.player.sprite.y - this.sprite.y;
@@ -137,7 +137,7 @@ export default class BombAir extends Enemy {
       }
     })
     this.stateOnStart(3, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.setFlipX(this.targetDir);
       this.inflictDamagePlayerArea();
       this.enemyDead(0,0, false);
@@ -169,7 +169,7 @@ export default class BombAir extends Enemy {
   }
 
   inflictDamagePlayerArea(position){
-    if(this.sprite.body === undefined)return;
+    if(this.sprite == undefined || this.sprite.body == undefined)return;
     this.scene.graphics.clear();
     this.scene.graphics.fillRect(this.sprite.x-100, this.sprite.y-100, 200, 200);
     if(super.playerHit(this.sprite.x-100, this.sprite.y-100, this.sprite.x+100, this.sprite.y+100))

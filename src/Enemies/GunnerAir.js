@@ -67,7 +67,7 @@ export default class ZapperAir extends Enemy {
     //IA
     this.initializeAI(4);
     this.stateOnStart(0, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.stop();
       this.sprite.setVelocityX(0);
       this.sprite.setVelocityY(0);
@@ -75,11 +75,11 @@ export default class ZapperAir extends Enemy {
       TileController.disableEnemy(this.sprite);
     })
     this.stateOnEnd(0,function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       TileController.enableEnemy(this.sprite);
     })
     this.stateOnStart(1, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.body.frictionAir = 0.06;
       this.stopper = false;
       this.distanceToCheck= Math.sqrt( Math.pow(this.initPos.x - this.sprite.x,2) +  Math.pow(this.initPos.y - this.sprite.y,2));
@@ -103,7 +103,7 @@ export default class ZapperAir extends Enemy {
       },this);
     });
     this.stateUpdate(1, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       if(!this.stopper){
         this.sprite.setVelocityX(this.velX * this.patrolDir.x);
         this.sprite.setVelocityY(this.velY * this.patrolDir.y);
@@ -114,13 +114,13 @@ export default class ZapperAir extends Enemy {
       }
     })
     this.stateOnEnd(1, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.patrolTimer1.remove();
       this.patrolTimer2.remove();
     });
 
     this.stateUpdate(2, function(time, delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
       this.playerVector.y = this.scene.game.player.sprite.y - this.sprite.y;
       this.sprite.angle = this.playerVector.angle() * 180/Math.PI;
@@ -134,7 +134,8 @@ export default class ZapperAir extends Enemy {
       }
     })
     this.stateOnStart(3, function(){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
+      this.sprite.anims.play("gunnerFire",true);
       this.shoot();
       this.scene.time.addEvent({
         delay: this.fireRate,
@@ -142,7 +143,7 @@ export default class ZapperAir extends Enemy {
       },this);
     });
     this.stateUpdate(3, function(time ,delta){
-      if(this.sprite.body === undefined)return;
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
       this.playerVector.y = this.scene.game.player.sprite.y - this.sprite.y;
       this.sprite.angle = this.playerVector.angle() * 180/Math.PI;
@@ -180,10 +181,7 @@ export default class ZapperAir extends Enemy {
   }
 
   shoot(){
-    if(this.sprite.body === undefined)return;
-      //AUDIO
-        Audio.play3DinstanceRnd(this,76);
-      //
+    if(this.sprite == undefined || this.sprite.body == undefined)return;
     new EnergyBall(this.scene, this.sprite.x, this.sprite.y, this.hitDamage, 0.1, 10, new Phaser.Math.Vector2(Math.cos(this.sprite.angle * Math.PI/180),Math.sin(this.sprite.angle * Math.PI/180)), 1000);
   }
 

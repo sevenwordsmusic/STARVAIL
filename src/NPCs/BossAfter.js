@@ -9,7 +9,7 @@ export default class BossAfter extends FiniteStateMachine{
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.matter.add.sprite(x,y,'playerDeath',0).setScale(1.5);
+    this.sprite = scene.matter.add.sprite(x,y,'bossDeath',0).setScale(1.5);
     this.sprite.body.collisionFilter.group = -3;
     this.sprite.body.collisionFilter.mask = 0;
     this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x).setFixedRotation();
@@ -21,7 +21,7 @@ export default class BossAfter extends FiniteStateMachine{
     this.isTalking = false;
     this.dialogArray = [];
     //DIALOGO DE FINAL BUENO (Ha ayudado a 2 o mas droides)
-    this.dialogArray[0] = 
+    this.dialogArray[0] =
     `[b]D42K-H[/b]
     I've been defeated... you have learned a lot
     on your way here, player.
@@ -29,7 +29,7 @@ export default class BossAfter extends FiniteStateMachine{
     I intended to save you the pain of 'suicide',
     but it seems I wasn't strong enough.
     [b]D42K-H[/b]
-    Now, go ahead and end my life, player. This 
+    Now, go ahead and end my life, player. This
     will finally put an end to my existential dread.
     -FLASHAZO-
     [b]player[/b]
@@ -69,7 +69,7 @@ export default class BossAfter extends FiniteStateMachine{
     You can stay and help me, if you want.
     Or you can end your meaningless life yourself.
     [b]D42K-H[/b]
-    Impressive... Maybe this tower really holds 
+    Impressive... Maybe this tower really holds
     the meaning of life, after all.
     [b]D42K-H[/b]
     Please, let me stay by your side, player.
@@ -79,7 +79,7 @@ export default class BossAfter extends FiniteStateMachine{
     die a meaningless death.`;
 
     //DIALOGO DE FINAL MALO (Ha ayudado a menos de 2 droides)
-    this.dialogArray[1] = 
+    this.dialogArray[1] =
     `[b]D42K-H[/b]
     I've been defeated... you have learned a lot
     on your way here, player.
@@ -87,7 +87,7 @@ export default class BossAfter extends FiniteStateMachine{
     I intented to save you the pain of 'suicide',
     but it seems I wasn't strong enough.
     [b]D42K-H[/b]
-    Now, go ahead and end my life, player. This 
+    Now, go ahead and end my life, player. This
     will finally put an end to my existential dread.
     -FLASHAZO Y MUERTE DE D42K-
     [b]player[/b]

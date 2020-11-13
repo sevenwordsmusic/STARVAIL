@@ -94,11 +94,9 @@ export default class Level3 extends Phaser.Scene {
 
     //Camara.
     cam = this.cameras.main;
-    cam.setBackgroundColor('#dddddd');
-    this.matter.world.setBounds(0, -500, 4000, 6000);
-    cam.setBounds(0, -500, 4000, 6000);/*
-    this.matter.world.setBounds(0, -500, 2900, 2800);
-    cam.setBounds(0, -500, 2880, 2784);*/
+    cam.setBackgroundColor('#262626');
+    this.matter.world.setBounds(0, 0, 3776, 4800);
+    cam.setBounds(0, 0, 3776, 4800);
 
     cam.fadeIn(Audio.barRateDiv[2]);  //Constante de Audio para sincronía
     //fadeOut = false;
@@ -107,7 +105,7 @@ export default class Level3 extends Phaser.Scene {
     //Backgrounds.
     this.add.image(-2000, 500, 'bg3').setScale(2).setScrollFactor(0.5,0.1).setDepth(-300);
 
-    this.moon = this.add.sprite(this.game.moonPos.x, this.game.moonPos.y, 'star', 0).setScrollFactor(0).setDepth(-400);
+    this.moon = this.add.sprite(this.game.moonPos.x, this.game.moonPos.y, 'moon', 0).setScrollFactor(0).setDepth(-400);
     this.timeBg = this.add.sprite(480, 270, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
 
 
@@ -140,10 +138,11 @@ export default class Level3 extends Phaser.Scene {
 
     //capa letal pasa a ser un senosr
     lethallayer.forEachTile(function (tile) {
-      if(tile.physics.matterBody != undefined)
+      if(tile.physics.matterBody != undefined){
         tile.physics.matterBody.body.isSensor = true;
-        tileBody.collisionFilter.category = 1;
-        tileBody.collisionFilter.group = -4;
+        tile.physics.matterBody.body.collisionFilter.category = 1;
+        tile.physics.matterBody.body.collisionFilter.group = -4;
+      }
     }, this);
 
     //inicializamos el controlador de enemigos
@@ -208,7 +207,7 @@ export default class Level3 extends Phaser.Scene {
 
     //Sistema dinámico de modificacion de collisiones
     var tileBodyMatrix = [];
-    for (var i = 0; i < 145; i++) {
+    for (var i = 0; i < 155; i++) {
       tileBodyMatrix[i] = [];
       for (var j = 0; j < 155; j++) {
         tileBodyMatrix[i][j] = undefined;

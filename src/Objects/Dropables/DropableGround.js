@@ -8,7 +8,9 @@ export default class DropableGround extends Dropable{
     sensor.isSensor = true;
     const compoundBody = Phaser.Physics.Matter.Matter.Body.create({
       parts: [mainBody, sensor],
-      frictionAir: 0.02
+      frictionAir: 0.02,
+      friction: 0,
+      frictionStatic: 0
     });
     this.sprite.setExistingBody(compoundBody).setFixedRotation().setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
     this.sprite.body.restitution = 0.5;

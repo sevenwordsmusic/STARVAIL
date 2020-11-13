@@ -38,7 +38,7 @@ export default class Enemy extends FiniteStateMachine{
   }
 
   update(time, delta){
-    if(this.sprite.body !== undefined){
+    if(this.sprite != undefined && this.sprite.body !== undefined){
       if(this.knockVector.length() > this.adjustedFriction){
         this.knockVector.x -= this.knockVecNomralized.x * this.adjustedFriction;
         this.knockVector.y -= this.knockVecNomralized.y * this.adjustedFriction;
