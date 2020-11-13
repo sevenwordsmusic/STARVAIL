@@ -409,8 +409,9 @@ export default class LevelBoss extends Phaser.Scene {
   pauseGame(){
     console.log("Juego pausado");
 
-    this.botonPause.alpha=0.8;
+    this.game.pauseInfo = 'levelBoss' + (LevelBoss.getNumber());
 
+    this.botonPause.alpha=0.8;
     this.scene.run("ScenePause");
     this.scene.bringToTop("ScenePause");
     this.scene.pause('levelBoss' + (LevelBoss.getNumber()));

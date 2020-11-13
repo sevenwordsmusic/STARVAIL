@@ -457,8 +457,9 @@ export default class SceneTest_1 extends Phaser.Scene {
   pauseGame(){
     console.log("Juego pausado");
 
-    this.botonPause.alpha=0.8;
+    this.game.pauseInfo = 'test' + (Level1.getNumber());
 
+    this.botonPause.alpha=0.8;
     this.scene.run("ScenePause");
     this.scene.bringToTop("ScenePause");
     this.scene.pause('test' + (SceneTest_1.getNumber()));
