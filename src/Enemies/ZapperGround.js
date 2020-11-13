@@ -282,7 +282,7 @@ export default class ZapperGround extends Enemy {
     //
   }
   distanceToPlayer(){
-    if(this.sprite != undefined)
+    if(this.sprite.body != undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
     else
       return 1000;    //ARREGLAR ESTO
