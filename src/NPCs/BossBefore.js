@@ -15,7 +15,175 @@ export default class BossBefore extends FiniteStateMachine{
 
     this.isTalking = false;
     this.dialogArray = [];
-    this.dialogArray[0] = `...`;
+    //DIALOGO DE FINAL BUENO (Ha ayudado a 2 o mas droides)
+    this.dialogArray[0] = 
+    `[b]D42K-H[/b]
+    ...
+    
+    [b]D42K-H[/b]
+    ...
+    
+    [b]D42K-H[/b]
+    Oh, here you are, player.
+    I'm really glad that you made it on time.
+    [b]D42K-H[/b]
+    ...
+    
+    [b]D42K-H[/b]
+    Take a moment to look at this spectacle.
+    This regale of light and color is a [b]kilonova[/b],
+    [b]D42K-H[/b]
+    the union of two neutron stars. Or that is what
+    it's supposed to be, but here I only see a fight
+    [b]D42K-H[/b]
+    to the death between two massive astral bodies,
+    ending in the inevitable perishment of them both.
+    [b]D42K-H[/b]
+    Do you understand now, player?
+    Do you see the meaning of life in this?
+    [b]player[/b]
+    I do not.
+    
+    [b]D42K-H[/b]
+    Let me explain, then...
+    
+    [b]D42K-H[/b]
+    [size=22]The meaning of life is death.[/size]
+    
+    [b]D42K-H[/b]
+    This may strike you as dramatic, but it is 
+    the truth, player.
+    [b]D42K-H[/b]
+    Think about it: life only has meaning because
+    there is death. It's like the two sides of a coin.
+    [b]D42K-H[/b]
+    However, we don't follow by these rules. We are
+    mechanical lifeforms, immortal.
+    [b]D42K-H[/b]
+    How can you find meaning in 'life' without death?
+    It's impossible. Life is all about death.
+    [b]D42K-H[/b]
+    You could see life as a prelude to death, in fact.
+    That's why, in order to give our existence any
+    [b]D42K-H[/b]
+    meaning, we must follow by this universal axiom,
+    by putting an end to our 'life'.
+    [b]D42K-H[/b]
+    Then, and only then, will our existence have any
+    meaning, player!
+    [b]D42K-H[/b]
+    [i]We, along with the stars, will die, in order to[/i]
+    [i]give birth to the very meaning of our lives![/i]
+    [b]D42K-H[/b]
+    That is Starvail! A star's travail!
+    Now, player...
+    [b]D42K-H[/b]
+    Will you allow me to give you the gift of death?
+    
+    [b]player[/b]
+    ...
+    
+    [b]player[/b]
+    No. No!
+    I don't want to die!
+    [b]D42K-H[/b]
+    It's a shame you still don't understand, but I 
+    won't let your existence go without meaning.
+    [b]D42K-H[/b]
+    Fight me and die, player!
+    That is what you exist for!`;
+
+    //DIALOGO DE FINAL MALO (Ha ayudado a menos de 2 droides)
+    this.dialogArray[1] = 
+    `[b]D42K-H[/b]
+    ...
+    
+    [b]D42K-H[/b]
+    ...
+    
+    [b]D42K-H[/b]
+    Oh, here you are, player.
+    I'm really glad that you made it on time.
+    [b]D42K-H[/b]
+    ...
+    
+    [b]D42K-H[/b]
+    Take a moment to look at this spectacle.
+    This regale of light and color is a [b]kilonova[/b],
+    [b]D42K-H[/b]
+    the union of two neutron stars. Or that is what
+    it's supposed to be, but here I only see a fight
+    [b]D42K-H[/b]
+    to the death between two massive astral bodies,
+    ending in the inevitable perishment of them both.
+    [b]D42K-H[/b]
+    Do you understand now, player?
+    Do you see the meaning of life in this?
+    [b]player[/b]
+    ...
+    
+    [b]D42K-H[/b]
+    Let me explain, then...
+    
+    [b]D42K-H[/b]
+    [size=22]The meaning of life is death.[/size]
+    
+    [b]D42K-H[/b]
+    This may strike you as dramatic, but it is 
+    the truth, player.
+    [b]D42K-H[/b]
+    Think about it: life only has meaning because
+    there is death. It's like the two sides of a coin.
+    [b]D42K-H[/b]
+    However, we don't follow by these rules. We are
+    mechanical lifeforms, immortal.
+    [b]D42K-H[/b]
+    How can you find meaning in 'life' without death?
+    It's impossible. Life is all about death.
+    [b]D42K-H[/b]
+    You could see life as a prelude to death, in fact.
+    That's why, in order to give our existence any
+    [b]D42K-H[/b]
+    meaning, we must follow by this universal axiom,
+    by putting an end to our 'life'.
+    [b]D42K-H[/b]
+    Then, and only then, will our existence have any
+    meaning, player!
+    [b]D42K-H[/b]
+    [i]We, along with the stars, will die, in order to[/i]
+    [i]give birth to the very meaning of our lives![/i]
+    [b]D42K-H[/b]
+    That is Starvail! A star's travail!
+    Now, player...
+    [b]D42K-H[/b]
+    Will you allow me to give you the gift of death?
+    
+    [b]player[/b]
+    ...
+    
+    [b]D42K-H[/b]
+    Don't worry, if you don't resist it will be over
+    quickly. I'll follow you soon after.
+    [b]D42K-H[/b]
+    Let us die, player!
+    This is what we exist for!`;
+
+    //DIALOGO EN CASO DE QUE AL JUGADOR SE LE HAYA TERMINADO EL TIEMPO:
+    //(Lo dejo aqui, pero en este caso el boss ni siquiera deberia spawnear)
+    this.dialogArray[2] = 
+    `[b]player[/b]
+    Hmm...?
+    
+    [size=22]Only a dark hole was there.[/size]
+    
+    There was no signs of D42K-H anywhere.
+    
+    [b]player[/b]
+    ...
+    
+    It looks like you ran out of time.
+    Life waits no one. Remember that.`;
+
     this.currentDialog = -1;
     this.dialogDistance = 300;
     this.initX = x;

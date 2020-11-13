@@ -14,7 +14,7 @@ export default class NPC_Droid_5 extends FiniteStateMachine{
     this.isTalking = false;
     this.enemiesLeft = 0;
 
-    this.weaponToGive = 5;
+    this.weaponToGive = 6;
     /*
     0 - balas normales
     1 - balas rapidas
@@ -28,11 +28,87 @@ export default class NPC_Droid_5 extends FiniteStateMachine{
     */
 
     this.dialogArray = [];
-    this.dialogArray[0] = `Ayuda, Ayuda!!!`;
+    this.dialogArray[0] = 
+    `[b]Vagrant Droid[/b]
+    Please, come save me!
+    I need your help!`;
 
-    this.dialogArray[1] = `Gracias por ayudarme, toma arma`;
+    this.dialogArray[1] = 
+    `[b]Vagrant Droid[/b]
+    Thank you very much for your help!
+    You saved me! I must befriend you!
+    [b]Vagrant Droid[/b]
+    Oh, sorry, I didn't mean I must, I mean, I
+    want to know you! What's your name?
+    [b]player[/b]
+    My name is player.
+    
+    [b]FR3UD[/b]
+    A pleasure to meet you, player
+    My name is FR3UD. I hope you like it.
+    [b]FR3UD[/b]
+    Why should you like my name? Well, I think
+    it is a good name, but maybe I only think so
+    [b]FR3UD[/b]
+    because that's the way others tend to see it. I'm
+    not sure if I like myself... my self-concept
+    [b]FR3UD[/b]
+    is always based on the concept others have of me.
+    Do you think that's weird? Maybe I do too, then.
+    [b]FR3UD[/b]
+    Anyways, now that you saved me, I guess we can be
+    friends! Would you like to be my friend?
+    [b]FR3UD[/b]
+    I think that's why I came here, to this tower;
+    because I felt lonely... didn't you too?
+    [b]FR3UD[/b]
+    But now that I think of it... maybe accompanying you
+    isn't a good idea. I don't want to get hurt...
+    [b]FR3UD[/b]
+    Maybe I'm afraid to love after all. Even if I'm
+    lonely, [i]we are never so defenceless against[/i]
+    [b]FR3UD[/b]
+    [i]suffering as when we love others.[/i]
+    But thanks to you, I know myself better than before,
+    [b]FR3UD[/b]
+    and I think that's all I searched for in this tower.
+    Now, I must reward you both for saving my life and
+    [b]FR3UD[/b]
+    for helping me conciliate with my ego.
+    Take this, player:
+    OBTAINED PLUGIN WEAPON: [B]GUIDED MISSILES[/b]
+    
+    
+    [b]FR3UD[/b]
+    Unlike us, these missiles will follow their target
+    until they join together in an... explosive way.
+    [b]FR3UD[/b]
+    They're very powerful, but keep in mind, they
+    also require energy!
+    [b]FR3UD[/b]
+    Thank you, again. At first, I only wanted you to
+    save me because I needed it, and I only talked to
+    [b]FR3UD[/b]
+    you because I felt like I should, but after all
+    I was wrong, and I really wanted to meet you.
+    [b]FR3UD[/b]
+    Maybe I'm not strong enough to accompany you,
+    and I hate being so weak, but from error to
+    [b]FR3UD[/b]
+    error, one discovers the entire truth. Don't
+    surrender in discovering your own self.
+    [b]FR3UD[/b]
+    Remember: [i]One day, in retrospect, the years of[/i]
+    [i]struggle will strike you as the most beautiful.[/i]
+    [b]FR3UD[/b]
+    Farewell!`;
 
-    this.dialogArray[2] = `...`;
+    this.dialogArray[2] = 
+    `[b]FR3UD[/b]
+    Remember: [i]One day, in retrospect, the years of[/i]
+    [i]struggle will strike you as the most beautiful.[/i]
+    [b]FR3UD[/b]
+    Farewell!`;
 
     this.currentDialog = -1;
 

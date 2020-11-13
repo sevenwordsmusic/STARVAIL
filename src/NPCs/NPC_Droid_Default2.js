@@ -14,7 +14,16 @@ export default class NPC_Droid_Default2 extends FiniteStateMachine{
     this.isTalking = false;
 
     this.dialogArray = [];
-    this.dialogArray[0] = `Dialogo defecto`;
+    this.dialogArray[0] = 
+    `[b]Vagrant Droid[/b]
+    Hello, stranger droid. Are you here to scale
+    the tower as well?
+    [b]Vagrant Droid[/b]
+    If that's the case, please help other androids
+    like me... not everyones is as capable for combat
+    [b]Vagrant Droid[/b]
+    as you are, so many like me may need your help.
+    Thanks for stopping by to talk to me! Good luck!`;
 
     this.currentDialog = -1;
 
