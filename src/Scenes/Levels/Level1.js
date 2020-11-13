@@ -366,14 +366,16 @@ export default class Level1 extends Phaser.Scene {
     this.input.setDefaultCursor('none');
 
   //AUDIO:
-   Audio.startAudioEngine(this);
+   Audio.startMusicEngineLevelOne(this);
+   Audio.levelOneInit(this);
+  //
    this.maxMemory = 0;
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
     //AUDIO:
     Audio.audioUpdate(this);
-
+    //
     this.moon.x += (delta*this.game.moonVelocity);
     this.game.moonPos.x = this.moon.x;
 

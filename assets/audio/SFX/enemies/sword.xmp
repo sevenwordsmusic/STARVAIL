@@ -26,24 +26,24 @@
                </rdf:li>
             </rdf:Bag>
          </xmpDM:Tracks>
-         <xmp:MetadataDate>2020-11-12T23:34:07+01:00</xmp:MetadataDate>
-         <xmp:ModifyDate>2020-11-12T23:34:07+01:00</xmp:ModifyDate>
-         <xmpMM:InstanceID>xmp.iid:0b7caada-b0f2-fd46-906f-36c9ca561ea4</xmpMM:InstanceID>
-         <xmpMM:DocumentID>xmp.did:96af952a-99bf-2f48-9c84-d2f74da17862</xmpMM:DocumentID>
-         <xmpMM:OriginalDocumentID>xmp.did:96af952a-99bf-2f48-9c84-d2f74da17862</xmpMM:OriginalDocumentID>
+         <xmp:MetadataDate>2020-11-13T05:10:35+01:00</xmp:MetadataDate>
+         <xmp:ModifyDate>2020-11-13T05:10:35+01:00</xmp:ModifyDate>
+         <xmpMM:InstanceID>xmp.iid:e71b213c-dd33-1c4b-9542-60250b789bb3</xmpMM:InstanceID>
+         <xmpMM:DocumentID>xmp.did:4697d3a1-5169-dd43-bcc0-b8269a5b44e8</xmpMM:DocumentID>
+         <xmpMM:OriginalDocumentID>xmp.did:4697d3a1-5169-dd43-bcc0-b8269a5b44e8</xmpMM:OriginalDocumentID>
          <xmpMM:History>
             <rdf:Seq>
                <rdf:li rdf:parseType="Resource">
                   <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:96af952a-99bf-2f48-9c84-d2f74da17862</stEvt:instanceID>
-                  <stEvt:when>2020-11-12T23:34:07+01:00</stEvt:when>
+                  <stEvt:instanceID>xmp.iid:4697d3a1-5169-dd43-bcc0-b8269a5b44e8</stEvt:instanceID>
+                  <stEvt:when>2020-11-13T05:10:35+01:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition 13.0 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/metadata</stEvt:changed>
                </rdf:li>
                <rdf:li rdf:parseType="Resource">
                   <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:0b7caada-b0f2-fd46-906f-36c9ca561ea4</stEvt:instanceID>
-                  <stEvt:when>2020-11-12T23:34:07+01:00</stEvt:when>
+                  <stEvt:instanceID>xmp.iid:e71b213c-dd33-1c4b-9542-60250b789bb3</stEvt:instanceID>
+                  <stEvt:when>2020-11-13T05:10:35+01:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition 13.0 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/</stEvt:changed>
                </rdf:li>

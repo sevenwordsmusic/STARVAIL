@@ -70,8 +70,8 @@ export default class Audio extends Phaser.Scene {
             })
         }
     }
-    //MUSIC ENGINE starter:
-    static startAudioEngine(scene) {
+    //MUSIC ENGINE level #1 starter:
+    static startMusicEngineLevelOne(scene) {
         scene.time.addEvent({
             delay: Audio.barRateDiv[0],
             callback: () => Audio.musicBar(scene),
@@ -82,7 +82,6 @@ export default class Audio extends Phaser.Scene {
             callback: () => Audio.musicHalfBar(scene),
             loop: true,
         });
-        console.log("MUSIC ENGINE STARTED.")
     }
     //EVERY BAR MUSIC UPDATES:
     static musicBar(scene) {
@@ -434,6 +433,15 @@ export default class Audio extends Phaser.Scene {
             });
         }
     }
+
+    static levelOneInit(scene){
+        this.ambientLoop.play();
+        this.musicLoop0000levitating.play();
+        this.musicLoop0000moving.play();
+        this.musicLoop0000flying.play();
+        this.musicLoop0000chill.play();
+    }
+
     preload() {
         //LOAD AUDIO
         //AMBIENT
@@ -611,17 +619,17 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('explode_05B', 'assets/audio/SFX/enemies/explode_05B.ogg');
         this.load.audio('explode_05C', 'assets/audio/SFX/enemies/explode_05C.ogg');
         this.load.audio('explode_05D', 'assets/audio/SFX/enemies/explode_05D.ogg');
-
+        this.load.audio('sword', 'assets/audio/SFX/enemies/sword.ogg');
 
         //MUSIC LOOPS
-        this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
+        /*this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
         this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
-        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg');
-        /*this.load.audio('musicLoop0000levitating', 'assets/audio/SFX/null.ogg');
+        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg');*/
+        this.load.audio('musicLoop0000levitating', 'assets/audio/SFX/null.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/SFX/null.ogg');
         this.load.audio('musicLoop0000flying', 'assets/audio/SFX/null.ogg');
-        this.load.audio('musicLoop0000chill', 'assets/audio/SFX/null.ogg');*/
+        this.load.audio('musicLoop0000chill', 'assets/audio/SFX/null.ogg');
     }
     create() {
         //INIT AUDIO
@@ -803,7 +811,7 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('hurtZap_00C', 72, 2, this);
         Audio.createSFXinstanceSub('hurtZap_00D', 72, 3, this);
         Audio.createSFXinstance('dead', 73, this);
-
+        Audio.createSFXinstance('sword', 74, this);
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
             volume: this.volumeSFX,
@@ -854,12 +862,7 @@ export default class Audio extends Phaser.Scene {
             volume: 0.0,
             loop: true
         })
-        //INIT PLAY LEVEL0000
-        this.ambientLoop.play();
-        this.musicLoop0000levitating.play();
-        this.musicLoop0000moving.play();
-        this.musicLoop0000flying.play();
-        this.musicLoop0000chill.play();
+
         //THE LOAD.
         Audio.load = this;
         console.log("AUDIO LOADED: everything went better than expected :D !!!");

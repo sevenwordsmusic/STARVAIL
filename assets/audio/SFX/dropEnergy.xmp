@@ -26,26 +26,27 @@
                </rdf:li>
             </rdf:Bag>
          </xmpDM:Tracks>
-         <xmp:MetadataDate>2020-11-12T22:46:53+01:00</xmp:MetadataDate>
-         <xmp:ModifyDate>2020-11-12T22:46:53+01:00</xmp:ModifyDate>
-         <xmpMM:InstanceID>xmp.iid:c38a49b3-fea2-0d4e-b6a1-9a7a415e169d</xmpMM:InstanceID>
-         <xmpMM:DocumentID>xmp.did:0fa5e998-b931-7742-b771-c75bb5d64512</xmpMM:DocumentID>
-         <xmpMM:OriginalDocumentID>xmp.did:0fa5e998-b931-7742-b771-c75bb5d64512</xmpMM:OriginalDocumentID>
+         <xmp:MetadataDate>2020-11-13T05:18:40+01:00</xmp:MetadataDate>
+         <xmp:CreatorTool>Adobe Audition 13.0 (Windows)</xmp:CreatorTool>
+         <xmp:CreateDate>2020-11-13T05:18:40+01:00</xmp:CreateDate>
+         <xmp:ModifyDate>2020-11-13T05:18:40+01:00</xmp:ModifyDate>
+         <xmpMM:InstanceID>xmp.iid:355eb803-dc05-0441-985d-e0cf3e3eb418</xmpMM:InstanceID>
+         <xmpMM:DocumentID>xmp.did:7515278b-fa6b-2c4a-a64e-33d3d4126e77</xmpMM:DocumentID>
+         <xmpMM:OriginalDocumentID>xmp.did:7515278b-fa6b-2c4a-a64e-33d3d4126e77</xmpMM:OriginalDocumentID>
          <xmpMM:History>
             <rdf:Seq>
                <rdf:li rdf:parseType="Resource">
                   <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:0fa5e998-b931-7742-b771-c75bb5d64512</stEvt:instanceID>
-                  <stEvt:when>2020-11-12T22:46:53+01:00</stEvt:when>
+                  <stEvt:instanceID>xmp.iid:7515278b-fa6b-2c4a-a64e-33d3d4126e77</stEvt:instanceID>
+                  <stEvt:when>2020-11-13T05:18:40+01:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition 13.0 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/metadata</stEvt:changed>
                </rdf:li>
                <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:c38a49b3-fea2-0d4e-b6a1-9a7a415e169d</stEvt:instanceID>
-                  <stEvt:when>2020-11-12T22:46:53+01:00</stEvt:when>
+                  <stEvt:action>created</stEvt:action>
+                  <stEvt:instanceID>xmp.iid:355eb803-dc05-0441-985d-e0cf3e3eb418</stEvt:instanceID>
+                  <stEvt:when>2020-11-13T05:18:40+01:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition 13.0 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
                </rdf:li>
             </rdf:Seq>
          </xmpMM:History>

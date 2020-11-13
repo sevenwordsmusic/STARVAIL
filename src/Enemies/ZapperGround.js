@@ -183,18 +183,15 @@ export default class ZapperGround extends Enemy {
 
   inflictDamagePlayerArea(dir){
     if(this.sprite.body === undefined)return;
-    if(dir){
-      if(super.playerHit(this.sprite.x - 75, this.sprite.y-25, this.sprite.x, this.sprite.y+10)){
         //AUDIO
             Audio.play3Dinstance(this,55);
         //
+    if(dir){
+      if(super.playerHit(this.sprite.x - 75, this.sprite.y-25, this.sprite.x, this.sprite.y+10)){
         this.scene.game.player.playerDamage(this.hitDamage, true);
       }
     }else{
       if(super.playerHit(this.sprite.x, this.sprite.y-25, this.sprite.x + 75, this.sprite.y+10)){
-        //AUDIO
-            Audio.play3Dinstance(this,55);
-        //
         this.scene.game.player.playerDamage(this.hitDamage, true);
       }
     }

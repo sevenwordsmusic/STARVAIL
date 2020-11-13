@@ -186,10 +186,12 @@ export default class ZapperAir extends Enemy {
 
   inflictDamagePlayerArea(dir){
     if(this.sprite.body === undefined)return;
+      //AUDIO
+          Audio.play3Dinstance(this,56);
+      //
     if(super.playerHit(this.sprite.x-80, this.sprite.y-15, this.sprite.x+80, this.sprite.y+25)){
       //AUDIO
           Audio.play3Dinstance(this,55);
-          Audio.play3Dinstance(this,56);
       //
       this.scene.game.player.playerDamage(this.hitDamage, true);
     }

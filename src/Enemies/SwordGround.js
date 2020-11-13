@@ -197,19 +197,22 @@ export default class SwordGround extends Enemy {
 
   inflictDamagePlayerArea(dir){
     if(this.sprite.body === undefined)return;
+        //AUDIO
+            Audio.play3Dinstance(this,74);
+        //
     if(dir){
       if(super.playerHit(this.sprite.x-95, this.sprite.y-35, this.sprite.x+10, this.sprite.y+35)){
-        //AUDIO
-            //Audio.play3Dinstance(this,55);
-        //
         this.scene.game.player.playerDamage(this.hitDamage, true);
+      //AUDIO
+          Audio.play3Dinstance(this,55);
+      //
       }
     }else{
       if(super.playerHit(this.sprite.x-10, this.sprite.y-35, this.sprite.x + 95, this.sprite.y+35)){
-        //AUDIO
-            //Audio.play3Dinstance(this,55);
-        //
         this.scene.game.player.playerDamage(this.hitDamage, true);
+      //AUDIO
+          Audio.play3Dinstance(this,55);
+      //
       }
     }
   }

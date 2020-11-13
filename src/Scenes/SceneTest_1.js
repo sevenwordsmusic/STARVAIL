@@ -403,7 +403,8 @@ export default class SceneTest_1 extends Phaser.Scene {
     this.input.setDefaultCursor('none');
 
   //AUDIO:
-   Audio.startAudioEngine(this);
+   Audio.startMusicEngineLevelOne(this);
+  //
    this.maxMemory = 0;
 
 
@@ -416,8 +417,8 @@ export default class SceneTest_1 extends Phaser.Scene {
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
     //AUDIO:
-    Audio.audioUpdate(this);
-
+      Audio.audioUpdate(this);
+    //
     this.moon.x += (delta/50);
     this.game.moonPos.x = this.moon.x;
 
