@@ -88,7 +88,11 @@ export default class SceneScore extends Phaser.Scene {
     //this.add.bitmapText(480,270,'font','0',100);
 
     //No se porque no sale la fuente bien
-    this.add.text(10, 10, finalScore, {fontFamily: 'LeahFat', fontSize: '10em'});
+    this.add.text(140, 36,totalTime, {font: "30px 'LeahFat'",color: "#000000"});
+    this.add.text(160, 107,totalKills, {font: "30px 'LeahFat'",color: "#000000"});
+    this.add.text(530, 181,specialEvents, {font: "30px 'LeahFat'",color: "#000000"});
+    this.add.text(340, 251,tipoFinal, {font: "30px 'LeahFat'",color: "#000000"});
+    this.add.text(360, 330,finalScore, {font: "45px 'LeahFat'",color: "#000000"});
 
   }
 
