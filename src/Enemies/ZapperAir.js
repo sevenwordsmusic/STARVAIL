@@ -6,7 +6,7 @@ import TileController from "../TileController.js"
 //enemigo que hereda de Enemy
 export default class ZapperAir extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'zapperAirMove', 100);
+    super(scene, x, y, 'zapperAirMove', 50);
     this.sprite.setScale(2);
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
@@ -51,8 +51,8 @@ export default class ZapperAir extends Enemy {
     this.detectSpeed = 2.5/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.hitDistance = 57;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 0.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
-    this.hitDamage = 15;                                              //daño al golpear
-    this.energyDrop = 50;                                             //drop de energia
+    this.hitDamage = 50;                                              //daño al golpear
+    this.energyDrop = 125;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
     /*

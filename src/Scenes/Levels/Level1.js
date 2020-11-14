@@ -333,9 +333,9 @@ export default class Level1 extends Phaser.Scene {
     if(this.map.getObjectLayer("Chest_Layer") != null)
       this.map.getObjectLayer("Chest_Layer").objects.forEach(point => {
         if(point.name == "tutorialSpecial")
-          new InteractableChest(this, point.x, point.y, 10 ,20000);
+          new InteractableChest(this, point.x, point.y, 100 ,20000);
         else
-          new InteractableChest(this, point.x, point.y, 10 ,20);
+          new InteractableChest(this, point.x, point.y, 100 , 200);
       });
 
     if(this.map.getObjectLayer("Waypoint_Layer") != null)

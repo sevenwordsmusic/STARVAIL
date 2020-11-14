@@ -43,9 +43,9 @@ export default class Sith extends Enemy {
     this.detectSpeed = 4/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.hitDistance = 80;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 1.2/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
-    this.hitDamage = 25;                                              //daño al golpear
-    this.teleportHitDamage = 30;                                       //daño al golpear
-    this.energyDrop = 150;                                             //drop de energia
+    this.hitDamage = 100;                                              //daño al golpear
+    this.teleportHitDamage = 50;                                       //daño al golpear
+    this.energyDrop = 500;                                             //drop de energia
     this.initialWaitTimer = 5000;                                       //tiempo de espera al descubrir enemigo antes de que te ataque
     this.teleportWaitTimerMin = 5000;                                      //tiempo minimo que espera si no alcanza al jugador antes de teleportarse
     this.teleportWaitTimerMax = 8000;                                      //tiempo maximo que espera si no alcanza al jugador antes de teleportarse

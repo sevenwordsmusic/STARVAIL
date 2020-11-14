@@ -7,7 +7,7 @@ import TileController from "../TileController.js"
 //enemigo que hereda de Enemy
 export default class Mecha extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'mecha', 500);
+    super(scene, x, y, 'mecha', 400);
     this.sprite.setScale(2.5);
 
     //this.sprite.setBounce(1.01735).setFixedRotation().setFriction(0).setFrictionAir(0).setFrictionStatic(0);
@@ -52,9 +52,9 @@ export default class Mecha extends Enemy {
     this.detectDistance = 500;                                        //distancia a la uqe detecta el jugador cuando esta patrullando
     this.detectSpeed = 1.5/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.retreatDistance = 300;                                            //distancia de la cual se pone a huir
-    this.hitDamage = 10;                                                //daño al golpear
+    this.hitDamage = 150;                                                //daño al golpear
     this.fireRate = 800;                                               //fire rate del droid
-    this.energyDrop = 100;                                             //drop de energia
+    this.energyDrop = 333;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
 

@@ -53,6 +53,7 @@ export default class Mentor extends FiniteStateMachine {
 
     //Contiene Vector2
     this.tutorialPositions = [];
+    this.scene.dialogManager.setSpeakerVoice(1);
     //this.tutorialPositions[0] = new Phaser.Math.Vector2(1128,2560);
     //this.tutorialPositions[1] = new Phaser.Math.Vector2(1628,2260);
 
@@ -355,7 +356,10 @@ export default class Mentor extends FiniteStateMachine {
     this.stateOnEnd(0, function () {
       this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x);
       this.isTalking = true;
+              //AUDIO (número de palabras, escena, personaje);
+              //Audio.chat(20, scene, 1);
       this.scene.dialogManager.setCurrentSpeaker(this);
+      this.scene.dialogManager.setSpeakerVoice(1);
       this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog], 10);
       //this.scene.game.player.alive = false;
       this.scene.dialogManager.showDialogBox();

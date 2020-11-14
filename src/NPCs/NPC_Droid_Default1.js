@@ -21,7 +21,6 @@ export default class NPC_Droid_Default1 extends FiniteStateMachine{
     `[b]Vagrant Droid[/b]
     Hello, stranger droid. Are you here to go
     up the tower as well?
-    If that's the case, please help other androids
     [b]Vagrant Droid[/b]
     If that's the case, please help other androids
     like me... not everyones is as capable for combat

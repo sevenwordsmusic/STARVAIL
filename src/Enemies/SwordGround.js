@@ -48,8 +48,8 @@ export default class SwordGround extends Enemy {
     this.detectSpeed = 3.5/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.hitDistance = 70;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 1/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
-    this.hitDamage = 15;                                              //daño al golpear
-    this.energyDrop = 50;                                             //drop de energia
+    this.hitDamage = 75;                                              //daño al golpear
+    this.energyDrop = 150;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
 

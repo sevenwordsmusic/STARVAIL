@@ -1,3 +1,5 @@
+import Audio from "../Audio.js";
+
 export default class Dialog {
     static preloadToScene(scene){
       scene.load.scenePlugin({
@@ -17,6 +19,8 @@ export default class Dialog {
         const COLOR_LIGHT = 0xFFFFFF;
         const COLOR_DARK = 0x00000;
 
+        this.speakerVoice = 1;
+
         const GetValue = Phaser.Utils.Objects.GetValue;
 
         var wrapWidth = GetValue(config, 'wrapWidth', 0);
@@ -29,7 +33,7 @@ export default class Dialog {
             background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY)
                 .setStrokeStyle(2, COLOR_LIGHT),
 
-            icon: scene.rexUI.add.roundRectangle(100, 50, 2, 2, 30, COLOR_DARK),
+            icon: scene.rexUI.add.roundRectangle(0, 0, 2, 10, 30, COLOR_DARK),
 
             // text: this.getBuiltInText(wrapWidth, fixedWidth, fixedHeight),
             text: this.getBBcodeText(wrapWidth, fixedWidth, fixedHeight),
@@ -38,9 +42,9 @@ export default class Dialog {
 
             space: {
                 left: 20,
-                right: 20,
-                top: 20,
-                bottom: 20,
+                right: 10,
+                top: 10,
+                bottom: 10,
                 icon: 10,
                 text: 10,
             },
@@ -101,8 +105,11 @@ export default class Dialog {
 
 
 
-        //.on('type', function () {
-        //})
+        .on('type', function () {
+          if(this.speakerVoice != -1) 
+          Audio.chat(1, scene, this.speakerVoice);
+          console.log(this.page.text);
+        })
 
 
         this.textBox.setScrollFactor(0).setDepth(105);
@@ -112,7 +119,7 @@ export default class Dialog {
 
      getBuiltInText (wrapWidth, fixedWidth, fixedHeight) {
         return this.scene.add.text(0, 0, '', {
-          fontSize: '20px',
+          fontSize: '22px',
           wordWrap: {
             width: wrapWidth
           },
@@ -126,7 +133,7 @@ export default class Dialog {
           fixedWidth: fixedWidth,
           fixedHeight: fixedHeight,
 
-          fontSize: '20px',
+          fontSize: '22px',
           wrap: {
             mode: 'word',
             width: wrapWidth
@@ -151,6 +158,10 @@ export default class Dialog {
         if(this.textBox.currentSpeaker !== undefined)
           this.textBox.currentSpeaker.isTalking = false;
         this.textBox.currentSpeaker = speaker;
+      }
+
+      setSpeakerVoice(voiceNumber){
+        this.speakerVoice = voiceNumber;
       }
 
 
