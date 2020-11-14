@@ -111,10 +111,10 @@ export default class Level3 extends Phaser.Scene {
 
     //Inicializacion y creacion de mapa de tiles.
     this.map = this.make.tilemap({ key: "map3" });
-    const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund1", 32, 32, 1, 2);
-    const tileset2 = this.map.addTilesetImage("front_layer", "tilesFront1", 32, 32, 1, 2);
-    const tileset3 = this.map.addTilesetImage("main_layer", "tilesMain1", 32, 32, 1, 2);
-    const tileset4 = this.map.addTilesetImage("second_layer", "tilesSecond1", 32, 32, 1, 2);
+    const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund3", 32, 32, 1, 2);
+    const tileset2 = this.map.addTilesetImage("front_layer", "tilesFront3", 32, 32, 1, 2);
+    const tileset3 = this.map.addTilesetImage("main_layer", "tilesMain3", 32, 32, 1, 2);
+    const tileset4 = this.map.addTilesetImage("second_layer", "tilesSecond3", 32, 32, 1, 2);
     const tileset5 = this.map.addTilesetImage("animated_layer", "animatedLayer1", 32, 32, 1, 2);
 
     //Capas de tiles.
