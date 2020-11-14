@@ -72,4 +72,10 @@ export default class SceneOptionsGame extends Phaser.Scene {
     this.scene.bringToTop("ScenePause");
   }
 
+  update(time, delta){
+    //AUDIO
+      Audio.updateVolumes(this.scene);
+    //
+  }
+
 }

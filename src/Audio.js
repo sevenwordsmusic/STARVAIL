@@ -15,12 +15,27 @@ export default class Audio extends Phaser.Scene {
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64, this.barRate / 128];
     static vanishingPoint = 1280;
     static halfDistance = this.vanishingPoint / 2;
-    static volumeBGM = 1.0;
-    static volumeSFX = 1.0;
+    static volumeBGM = 0.5;
+    static volumeSFX = 0.5;
     static load;
     static maxSFXinstances = 16;
     static SFXinstance = 0;
 
+    static updateVolumes(){
+        if(document.getElementById("bgmSlider").value/10!=Audio.volumeBGM){
+            Audio.volumeBGM=document.getElementById("bgmSlider").value/10;
+        }
+        if(document.getElementById("sfxSlider").value/10!=Audio.volumeSFX){
+            Audio.volumeSFX=document.getElementById("sfxSlider").value/10;
+            this.load.walkLoop.volume=Audio.volumeSFX;
+            this.load.surfaceLoop.volume=Audio.volumeSFX;
+            this.load.propellerLoop.volume=Audio.volumeSFX;
+            this.load.engineLoop.volume=Audio.volumeSFX;
+            this.load.ambientLoop.volume=Audio.volumeSFX;
+            this.load.lasserLoop.volume=Audio.volumeSFX;
+            this.load.beamLoop.volume=Audio.volumeSFX;
+        }
+      }
 
     //letsTalk caller:
     static chat(words, scene, character){
@@ -113,9 +128,9 @@ export default class Audio extends Phaser.Scene {
     //EVERY BAR MUSIC UPDATES:
     static musicBar(scene) {
         this.counter++;
-        this.musicLayerHeight(scene);
-        this.musicLayerMovement(scene);
-        //this.musicLayerEnemies(scene);
+        //this.musicLayerHeight(scene);
+        //this.musicLayerMovement(scene);
+        this.musicLayerEnemies(scene);
     }
     //EVERY HALF BAR MUSIC UPDATES:
     static musicHalfBar(scene) {
@@ -438,8 +453,10 @@ export default class Audio extends Phaser.Scene {
         if (scene.game.player.activatedJet && !this.earlyPropeller) {
             this.earlyPropeller = true;
             this.load.engineLoop.setDetune(-25 + (Math.random() * 50));
+            this.load.engineLoop.volume= Audio.volumeSFX;
             this.load.engineLoop.play();
             this.load.propellerLoop.setDetune(-25 + (Math.random() * 50));
+            this.load.propellerLoop.volume= Audio.volumeSFX;
             this.load.propellerLoop.play();
             Audio.play2Dinstance(71);
             Audio.play2DinstanceRate(9, 0.4);
@@ -929,15 +946,15 @@ export default class Audio extends Phaser.Scene {
         })
         //MUSIC LOOPS
         this.musicLoop0000levitating = this.sound.add('musicLoop0000levitating', {
-            volume: 0.0,
+            volume: 0.5,
             loop: true
         })
         this.musicLoop0000moving = this.sound.add('musicLoop0000moving', {
-            volume: 0.0,
+            volume: 0.5,
             loop: true
         })
         this.musicLoop0000flying = this.sound.add('musicLoop0000flying', {
-            volume: 0.0,
+            volume: 0.5,
             loop: true
         })
         this.musicLoop0000chill = this.sound.add('musicLoop0000chill', {
@@ -951,4 +968,5 @@ export default class Audio extends Phaser.Scene {
         //Let's go motherfuckers~
         this.scene.start("Chatter");
     }
+
 }

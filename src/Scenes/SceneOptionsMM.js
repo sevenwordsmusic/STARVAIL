@@ -63,4 +63,10 @@ export default class SceneOptionsMM extends Phaser.Scene {
     this.scene.bringToTop("SceneMM");
   }
 
+  update(time, delta){
+    //AUDIO
+      Audio.updateVolumes(this.scene);
+    //
+  }
+
 }

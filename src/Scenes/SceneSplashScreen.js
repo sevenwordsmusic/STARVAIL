@@ -1,4 +1,4 @@
-
+import Audio from "../Audio.js";
 export default class SceneSplashScreen extends Phaser.Scene {
   constructor() {
     super("SceneSplashScreen");
@@ -51,13 +51,12 @@ export default class SceneSplashScreen extends Phaser.Scene {
 
   startTheGame(){
     console.log("Empezamos el juego");
-
     this.scene.sendToBack('SceneSplashScreen');
 		this.scene.stop('SceneSplashScreen');
 
 
     //SI SE QUIEREN TESTEAR MENUS
-    //this.scene.start('SceneMM');
+    this.scene.start('SceneMM');
 
     //SI SE QUIEREN TESTEAR NIVELES
     //this.scene.start("tutorial1");
@@ -67,7 +66,10 @@ export default class SceneSplashScreen extends Phaser.Scene {
     //this.scene.start("levelBoss1");
 
     //SI SE QUIERE IR AL NIVEL DE PRUEBA
-    this.scene.start("SceneScore");
+    //this.scene.start("test1");
+
+    //PUNTUACIONES
+    //this.scene.start("SceneScore");
   }
 
 }

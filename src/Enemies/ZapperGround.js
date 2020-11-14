@@ -271,7 +271,7 @@ export default class ZapperGround extends Enemy {
       break;
       case 2:
         //AUDIO
-        this.sfxDetect.setRate((Audio.volume2D(dist)*2)+0.75);
+        this.sfxDetect.setRate(Audio.volume2D(dist)+0.75);
 
         //
         if(dist > this.standByReDistance){
