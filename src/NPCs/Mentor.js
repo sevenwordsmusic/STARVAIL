@@ -80,266 +80,266 @@ follow me, I'll tell you what I know.
 [b]TIP[/b]
 Use the A and D keys to run.`;
 
-    this.dialogArray[2] = 
-    `[b]D42K-H[/b]
-    Hmm... this place reeks of bad oil,
-    it's more worn out than I expected...
-    [b]D42K-H[/b]
-    player, looks like we'll have to make
-    our way flying to the top of the tower.
-    [b]D42K-H[/b]
-    Let's look up there, follow me.
-    You remember how to fly, right?
-    [b]TIP[/b]
-    You can fly using your jet boots.
-    To activate them, press the W key.
-    [b]TIP[/b]
-    But, beware, for this consumes energy,
-    represented as the blue bar on your screen.
-    [b]TIP[/b]
-    If your energy runs out, your boots will
-    deactivate and you'll fall.
-    [b]TIP[/b]
-    You should never let this happen.`;
+this.dialogArray[2] = 
+`[b]D42K-H[/b]
+Hmm... this place reeks of bad oil,
+it's more worn out than I expected...
+[b]D42K-H[/b]
+player, looks like we'll have to make
+our way flying to the top of the tower.
+[b]D42K-H[/b]
+Let's look up there, follow me.
+You remember how to fly, right?
+[b]TIP[/b]
+You can fly using your jet boots.
+To activate them, press the W key.
+[b]TIP[/b]
+But, beware, for this consumes energy,
+represented as the blue bar on your screen.
+[b]TIP[/b]
+If your energy runs out, your boots will
+deactivate and you'll fall.
+[b]TIP[/b]
+You should never let this happen.`;
 
-    this.dialogArray[3] = 
-    `[b]D42K-H[/b]
-    Good job, player. I hope your air
-    navigation systems are up to date,
-    [b]D42K-H[/b]
-    because you'll surely need them here.
-    Now, you should check the integrity of
-    [b]D42K-H[/b]
-    your weapon systems. You know, vagrants
-    like us are treated as infected units here,
-    [b]D42K-H[/b]
-    so you'll probably need to engage in combat
-    with the automatons;
-    [b]D42K-H[/b]
-    try shooting the deactivated droid here.
-    I'll wait you up there.
-    [b]TIP[/b]
-    To fire your weapon, aim with the mouse. To
-    shoot, click the left mouse button.
-    [b]TIP[/b]
-    Defeated enemies drop energy cells, which
-    you can use to keep ascending through the tower.`;
+this.dialogArray[3] = 
+`[b]D42K-H[/b]
+Good job, player. I hope your air
+navigation systems are up to date,
+[b]D42K-H[/b]
+because you'll surely need them here.
+Now, you should check the integrity of
+[b]D42K-H[/b]
+your weapon systems. You know, vagrants
+like us are treated as infected units here,
+[b]D42K-H[/b]
+so you'll probably need to engage in combat
+with the automatons;
+[b]D42K-H[/b]
+try shooting the deactivated droid here.
+I'll wait you up there.
+[b]TIP[/b]
+To fire your weapon, aim with the mouse. To
+shoot, click the left mouse button.
+[b]TIP[/b]
+Defeated enemies drop energy cells, which
+you can use to keep ascending through the tower.`;
 
-    this.dialogArray[4] = 
-    `[b]D42K-H[/b]
-    Careful, player! Looks like the defence
-    systems of Starvail include laser barriers.
-    [b]D42K-H[/b]
-    Do you think the human gods keep those active?
-    Why would they impede us ascending the tower?
-    [b]D42K-H[/b]
-    ...
-    
-    [b]D42K-H[/b]
-    It's not like we can ask them, anyway. All
-    that is left in the physichal world is us, androids.
-    [b]D42K-H[/b]
-    Let's keep going, player.
-    Watch out for the lasers, fly over them.
-    [b]TIP[/b]
-    Lasers are harmful elements that will repel
-    and damage you on contact.
-    [b]TIP[/b]
-    Sometimes they will block your way, in which
-    case you'll have to find another route.
-    [b]TIP[/b]
-    In any case, you must keep away from them.`;
-    
-    this.dialogArray[5] = 
-    `[b]D42K-H[/b]
-    Hmm... look at what we've got here, it's a
-    support storage unit!
-    [b]D42K-H[/b]
-    These units will surely contain energy and
-    repairment supplies. Anytime you find one,
-    [b]D42K-H[/b]
-    you should scavenge them. Take the energy
-    supplies, we're moving up!
-    [b]TIP[/b]
-    You may find supply chests scattered among
-    Starvail. They contain both energy and
-    [b]TIP[/b]
-    health units that will help you keep going,
-    so you should always open them.
-    [b]TIP[/b]
-    To open a chest or interact with any item,
-    you, click on said item.`;
+this.dialogArray[4] = 
+`[b]D42K-H[/b]
+Careful, player! Looks like the defence
+systems of Starvail include laser barriers.
+[b]D42K-H[/b]
+Do you think the human gods keep those active?
+Why would they impede us ascending the tower?
+[b]D42K-H[/b]
+...
 
-    this.dialogArray[6] = 
-    `[b]D42K-H[/b]
-    Keep an eye on the lasers!`;
-    
-    this.dialogArray[7] = 
-    `[b]D42K-H[/b]
-    Hmm, what is this? An orange laser barrier?
-    From the data I can analyze, looks like
-    [b]D42K-H[/b]
-    these barriers can be managed by external
-    handlers. Try activating this button, player.
-    [b]TIP[/b]
-    Orange laser barriers, unlike red laser
-    barriers, can always be deactivated using their
-    [b]TIP[/b]
-    corresponding switch. If you stumble upon
-    a orange laser barrier that impedes your
-    [b]TIP[/b]
-    progress, you must search for its switch
-    in your surroundings.
-    [b]TIP[/b]
-    Barriers, both red and orange, may appear
-    randomly, so keep an eye for them!`;
-    
-    this.dialogArray[8] = 
-    `[b]D42K-H[/b]
-    Good job, player!
-    ...!
-    [b]D42K-H[/b]
-    Watch out, there's an automaton here!
-    Time to put your systems to test.
-    [b]D42K-H[/b]
-    Fight without fear, for these droids just
-    see us vagrants as disposable 'bugs'.
-    [b]TIP[/b]
-    You'll encounter a wide amount of enemies
-    in your ascension thorough Starvail.
-    [b]TIP[/b]
-    You can fight or run, but keep in
-    mind they can provide you with the energy
-    [b]TIP[/b]
-    you need if you choose to defeat them.
-    And remember, if your health bar empties...
-    [b]TIP[/b]
-    [b]your journey will come to an abrupt end[/b]`;
+[b]D42K-H[/b]
+It's not like we can ask them, anyway. All
+that is left in the physichal world is us, androids.
+[b]D42K-H[/b]
+Let's keep going, player.
+Watch out for the lasers, fly over them.
+[b]TIP[/b]
+Lasers are harmful elements that will repel
+and damage you on contact.
+[b]TIP[/b]
+Sometimes they will block your way, in which
+case you'll have to find another route.
+[b]TIP[/b]
+In any case, you must keep away from them.`;
 
-    this.dialogArray[9] = 
-    `[b]D42K-H[/b]
-    Good battle performance, player!
-    Looks like this is the end of this block.
-    [b]D42K-H[/b]
-    From this point up, the paths begin to
-    diverge. In order to reach the top, [b]you[/b]
-    [b]D42K-H[/b]
-    [b]must overcome three blocks similar to this
-    one.[/b] I won't accompany you, though, as
-    [b]D42K-H[/b]
-    this is a trial that we must face alone in
-    order to attain enlightenment.
-    [b]player[/b]
-    ...
-    
-    [b]D42K-H[/b]
-    Do you think we'll find the meaning of our
-    existence here, player?
-    [b]D42K-H[/b]
-    We came here to witness the 'birth of a
-    new star'. We must reach the top of this
-    [b]D42K-H[/b]
-    tower before the nigth ends in order to
-    be able to see it happen. If our logical
-    [b]D42K-H[/b]
-    processing units are right, this will provide
-    us with a 'reason to live'. I don't know
-    [b]D42K-H[/b]
-    when this technical requirement came to be,
-    but we cannot ignore it, right?
-    [b]D42K-H[/b]
-    We will fulfill this task tonight, I hope.
-    If you want to know how much time you have
-    [b]D42K-H[/b]
-    left until sunrise, you only have to look at
-    the moon; the contamination makes it harder
-    [b]D42K-H[/b]
-    to see, but if you look carefully you'll see
-    it. The moon rises from the west and hides to the east
-    [b]D42K-H[/b]
-    near dawn. If that happens, you'll have missed
-    the opportunity, player. Keep an eye on it.
-    [b]player[/b]
-    ...
-    Okay.
-    [b]D42K-H[/b]
-    Before we go, I will give you some advice,
-    and a parting gift:
-    [b]D42K-H[/b]
-    You may find other vagrants, like us,
-    trying to make their way to the top of
-    [b]D42K-H[/b]
-    the tower. They won't try to harm you, and
-    may even call you for help, as they may
-    [b]D42K-H[/b]
-    be defenceless against the automatons of
-    this tower. Wether to help them or not
-    [b]D42K-H[/b]
-    is your [b]choice[/b]. They may even
-    reward you for your help, but I won't
-    [b]D42K-H[/b]
-    assist any of them, as I have limited
-    time to fulfill my primordial task:
-    [b]D42K-H[/b]
-    reaching the top of this tower before
-    sunrise. I advice you to do
-    [b]D42K-H[/b]
-    the same, player.The only thing 
-    that matters is reaching the top of Starvail Tower.
-    [b]D42K-H[/b]
-    Don't let that data be ignored.
-    
-    [b]player[/b]
-    ...
-    
-    [b]D42K-H[/b]
-    Now, for my parting gift, I will give
-    you a [b]plug-in weapon[/b].
-    [b]D42K-H[/b]
-    This upgrade will allow your cannon
-    to shoot a new type of ammo: bombs.
-    [b]D42K-H[/b]
-    I hope this helps you in your way up,
-    player.
-    [b]D42K-H[/b]
-    Now, it's time to part ways. I will meet
-    you at the top of the tower, to witness
-    [b]D42K-H[/b]
-    the birth of a new star. I hope you
-    make it in time...
-    [b]D42K-H[/b]
-    for this night we will overcome the
-    malware known as 'existential dread'.
-    [b]TIP[/b]
-    To change the type of ammo of your weapon,
-    click on the icon of the ammo you want to use
-    [b]TIP[/b]
-    in the panel on the bottom right. Keep
-    in mind, [b]some ammos requiere energy to [/b]
-    [b]TIP[/b]
-    [b]be used.[/b] The more energy they require,
-    the more powerful they are.
-    [b]TIP[/b]
-    In order to obtain more weapon upgrades,
-    help the vagrant droids you'll find along
-    [b]TIP[/b]
-    the way. But keep in mind, your main
-    objective is [b] to make it to the top of[/b]
-    [b]TIP[/b]
-    [b]the tower in time[/b]. In order to
-    do this, [b]you must conquer three levels [/b]
-    [b]TIP[/b]
-    [b]similar to this one[/b].
-    
-    [b]TIP[/b]
-    This concludes your introduction to the world
-    of Starvail. 
-    [b]TIP[/b]
-    Now, go forth and discover the true meaning 
-    of life, player!`;
-    this.dialogArray[10] = 
-    `[b]D42K-H[/b]
-    I don't think you should be seeing this.`;
+this.dialogArray[5] = 
+`[b]D42K-H[/b]
+Hmm... look at what we've got here, it's a
+support storage unit!
+[b]D42K-H[/b]
+These units will surely contain energy and
+repairment supplies. Anytime you find one,
+[b]D42K-H[/b]
+you should scavenge them. Take the energy
+supplies, we're moving up!
+[b]TIP[/b]
+You may find supply chests scattered among
+Starvail. They contain both energy and
+[b]TIP[/b]
+health units that will help you keep going,
+so you should always open them.
+[b]TIP[/b]
+To open a chest or interact with any item,
+you, click on said item.`;
+
+this.dialogArray[6] = 
+`[b]D42K-H[/b]
+Keep an eye on the lasers!`;
+
+this.dialogArray[7] = 
+`[b]D42K-H[/b]
+Hmm, what is this? An orange laser barrier?
+From the data I can analyze, looks like
+[b]D42K-H[/b]
+these barriers can be managed by external
+handlers. Try activating this button, player.
+[b]TIP[/b]
+Orange laser barriers, unlike red laser
+barriers, can always be deactivated using their
+[b]TIP[/b]
+corresponding switch. If you stumble upon
+a orange laser barrier that impedes your
+[b]TIP[/b]
+progress, you must search for its switch
+in your surroundings.
+[b]TIP[/b]
+Barriers, both red and orange, may appear
+randomly, so keep an eye for them!`;
+
+this.dialogArray[8] = 
+`[b]D42K-H[/b]
+Good job, player!
+...!
+[b]D42K-H[/b]
+Watch out, there's an automaton here!
+Time to put your systems to test.
+[b]D42K-H[/b]
+Fight without fear, for these droids just
+see us vagrants as disposable 'bugs'.
+[b]TIP[/b]
+You'll encounter a wide amount of enemies
+in your ascension thorough Starvail.
+[b]TIP[/b]
+You can fight or run, but keep in
+mind they can provide you with the energy
+[b]TIP[/b]
+you need if you choose to defeat them.
+And remember, if your health bar empties...
+[b]TIP[/b]
+[b]your journey will come to an abrupt end[/b]`;
+
+this.dialogArray[9] = 
+`[b]D42K-H[/b]
+Good battle performance, player!
+Looks like this is the end of this block.
+[b]D42K-H[/b]
+From this point up, the paths begin to
+diverge. In order to reach the top, [b]you[/b]
+[b]D42K-H[/b]
+[b]must overcome three blocks similar to this
+one.[/b] I won't accompany you, though, as
+[b]D42K-H[/b]
+this is a trial that we must face alone in
+order to attain enlightenment.
+[b]player[/b]
+...
+
+[b]D42K-H[/b]
+Do you think we'll find the meaning of our
+existence here, player?
+[b]D42K-H[/b]
+We came here to witness the 'birth of a
+new star'. We must reach the top of this
+[b]D42K-H[/b]
+tower before the nigth ends in order to
+be able to see it happen. If our logical
+[b]D42K-H[/b]
+processing units are right, this will provide
+us with a 'reason to live'. I don't know
+[b]D42K-H[/b]
+when this technical requirement came to be,
+but we cannot ignore it, right?
+[b]D42K-H[/b]
+We will fulfill this task tonight, I hope.
+If you want to know how much time you have
+[b]D42K-H[/b]
+left until sunrise, you only have to look at
+the moon; the contamination makes it harder
+[b]D42K-H[/b]
+to see, but if you look carefully you'll see
+it. The moon rises from the west and hides to the east
+[b]D42K-H[/b]
+near dawn. If that happens, you'll have missed
+the opportunity, player. Keep an eye on it.
+[b]player[/b]
+...
+Okay.
+[b]D42K-H[/b]
+Before we go, I will give you some advice,
+and a parting gift:
+[b]D42K-H[/b]
+You may find other vagrants, like us,
+trying to make their way to the top of
+[b]D42K-H[/b]
+the tower. They won't try to harm you, and
+may even call you for help, as they may
+[b]D42K-H[/b]
+be defenceless against the automatons of
+this tower. Wether to help them or not
+[b]D42K-H[/b]
+is your [b]choice[/b]. They may even
+reward you for your help, but I won't
+[b]D42K-H[/b]
+assist any of them, as I have limited
+time to fulfill my primordial task:
+[b]D42K-H[/b]
+reaching the top of this tower before
+sunrise. I advice you to do
+[b]D42K-H[/b]
+the same, player.The only thing 
+that matters is reaching the top of Starvail Tower.
+[b]D42K-H[/b]
+Don't let that data be ignored.
+
+[b]player[/b]
+...
+
+[b]D42K-H[/b]
+Now, for my parting gift, I will give
+you a [b]plug-in weapon[/b].
+[b]D42K-H[/b]
+This upgrade will allow your cannon
+to shoot a new type of ammo: bombs.
+[b]D42K-H[/b]
+I hope this helps you in your way up,
+player.
+[b]D42K-H[/b]
+Now, it's time to part ways. I will meet
+you at the top of the tower, to witness
+[b]D42K-H[/b]
+the birth of a new star. I hope you
+make it in time...
+[b]D42K-H[/b]
+for this night we will overcome the
+malware known as 'existential dread'.
+[b]TIP[/b]
+To change the type of ammo of your weapon,
+click on the icon of the ammo you want to use
+[b]TIP[/b]
+in the panel on the bottom right. Keep
+in mind, [b]some ammos requiere energy to [/b]
+[b]TIP[/b]
+[b]be used.[/b] The more energy they require,
+the more powerful they are.
+[b]TIP[/b]
+In order to obtain more weapon upgrades,
+help the vagrant droids you'll find along
+[b]TIP[/b]
+the way. But keep in mind, your main
+objective is [b] to make it to the top of[/b]
+[b]TIP[/b]
+[b]the tower in time[/b]. In order to
+do this, [b]you must conquer three levels [/b]
+[b]TIP[/b]
+[b]similar to this one[/b].
+
+[b]TIP[/b]
+This concludes your introduction to the world
+of Starvail. 
+[b]TIP[/b]
+Now, go forth and discover the true meaning 
+of life, player!`;
+this.dialogArray[10] = 
+`[b]D42K-H[/b]
+I don't think you should be seeing this.`;
     this.currentDialog = -1;
 
     //IA
