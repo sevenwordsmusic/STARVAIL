@@ -40,7 +40,7 @@ export default class Audio extends Phaser.Scene {
     //letsTalk caller:
     static chat(words, scene, character){
         switch(character){
-          case 0:
+          case "D42K-H":
                 Chatter.letsTalk(words, scene, 0, 0.5, 0.6);
             break;
           case 1:
@@ -87,6 +87,8 @@ export default class Audio extends Phaser.Scene {
             break;
           case 15:
                 Chatter.letsTalk(words, scene, 0, 0.4, 0.8);
+            break;
+          default:
             break;
         }
     }

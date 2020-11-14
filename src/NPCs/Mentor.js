@@ -66,19 +66,19 @@ export default class Mentor extends FiniteStateMachine {
     this.isTalking = false;
     this.dialogArray = [];
     this.dialogArray[0] = 
-    `[b]D42K-H[/b]
-    Finally... player, here we are!
-    Behold, here rises the Starvail Tower!
-    [b]D42K-H[/b]
-    This is the last bastion of our creators,
-    the place where life is born and dies...`;
+`[b]D42K-H[/b]
+Finally... player, here we are!
+Behold, here rises the Starvail Tower!
+[b]D42K-H[/b]
+This is the last bastion of our creators,
+the place where life is born and dies...`;
 
     this.dialogArray[1] = 
-    `[b]D42K-H[/b]
-    I can't wait to ascend! player,
-    follow me, I'll tell you what I know.
-    [b]TIP[/b]
-    Use the A and D keys to run.`;
+`[b]D42K-H[/b]
+I can't wait to ascend! player,
+follow me, I'll tell you what I know.
+[b]TIP[/b]
+Use the A and D keys to run.`;
 
     this.dialogArray[2] = 
     `[b]D42K-H[/b]

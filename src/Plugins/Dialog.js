@@ -8,12 +8,16 @@ export default class Dialog {
           sceneKey: 'rexUI'
       });
     }
+    static charCount=0;
+    static gettingName=false;
+    static actualSpeaker="";
+    static wordCount=0;
     //Parametros: escena, posicion x, posicion y, booleano que determina si se destruirá el dialogo cuando acaba,
     //tiempo que pasará en milisegundos desde que acaba el dialogo hasta que se destruye si lo anterior es cierto, y configuración
     constructor(scene, x, y, destroyonEnd,timeToDestroy, config) {
         this.scene = scene;
+        this.slicer=[];
         scene.dialogManager = this;
-
         //Colores para el dialogo
         const COLOR_PRIMARY = 0x181818;
         const COLOR_LIGHT = 0xFFFFFF;
@@ -79,7 +83,7 @@ export default class Dialog {
             }, this.textBox)
             .on('pageend', function () {
                 if (this.isLastPage) {
-
+                    Dialog.charCount=0;
                     if(destroyonEnd) {
                         var timer = scene.time.addEvent({
                             delay: timeToDestroy,                // ms
@@ -106,15 +110,41 @@ export default class Dialog {
 
 
         .on('type', function () {
-          if(this.speakerVoice != -1) 
-          Audio.chat(1, scene, this.speakerVoice);
-          console.log(this.page.text);
+            Dialog.vocoder(this.page.text,this.scene);
         })
 
 
         this.textBox.setScrollFactor(0).setDepth(105);
         this.textBox.playerInteractable = true;
         this.hideDialogBox();
+    }
+
+    static vocoder(textToSlice,scene){
+      var auxChar=textToSlice.charAt(Dialog.charCount);
+      Dialog.charCount++;
+      if(auxChar== "["){
+        Dialog.actualSpeaker="";
+        Dialog.gettingName=true;
+        Dialog.charCount+=2;
+      }else if(Dialog.gettingName){
+        if(textToSlice.charAt(Dialog.charCount)!="["){
+          Dialog.actualSpeaker=Dialog.actualSpeaker + auxChar;
+        }else if(textToSlice.charAt(Dialog.charCount)=="["){
+          Dialog.actualSpeaker=Dialog.actualSpeaker + auxChar;
+          Dialog.charCount+=4;
+          for(var i=Dialog.charCount; textToSlice.charAt(i)!= "[" && i< textToSlice.length; i++){
+            if(textToSlice.charAt(i)== " " || textToSlice.charAt(i)== "\n"){
+              Dialog.wordCount++;
+            }
+          }
+          Dialog.wordCount--;
+          Audio.chat(Dialog.wordCount,scene,Dialog.actualSpeaker);
+          Dialog.actualSpeaker="";
+          Dialog.gettingName=false;
+          Dialog.wordCount=0;
+        }
+      }
+
     }
 
      getBuiltInText (wrapWidth, fixedWidth, fixedHeight) {
