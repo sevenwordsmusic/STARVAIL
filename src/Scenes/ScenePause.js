@@ -1,4 +1,4 @@
-
+import Audio from "../Audio.js";
 import SceneTest_1 from "./SceneTest_1.js"
 /*import SceneTest_2 from "./SceneTest_2.js"
 import SceneTest_2 from "./SceneTest_2.js"*/
@@ -27,6 +27,9 @@ export default class ScenePause extends Phaser.Scene {
 
     this.btnResumeGamePause.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.0);
+      //
     });
 
     this.btnResumeGamePause.on('pointerout', function(pointer){
@@ -40,6 +43,9 @@ export default class ScenePause extends Phaser.Scene {
 
     this.btnOptionsGame.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.0);
+      //
     });
 
     this.btnOptionsGame.on('pointerout', function(pointer){
@@ -53,6 +59,9 @@ export default class ScenePause extends Phaser.Scene {
 
     this.btnExitPause.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.0);
+      //
     });
 
     this.btnExitPause.on('pointerout', function(pointer){
@@ -67,7 +76,9 @@ export default class ScenePause extends Phaser.Scene {
 
   resumeGamePause(){
     console.log("Volviendo al juego desde el menu de pausa");
-
+      //AUDIO
+        Audio.play2DinstanceRate(81, 1.0);
+      //
     this.btnResumeGamePause.alpha=0.8;
 
     this.scene.sendToBack('ScenePause');
@@ -78,7 +89,9 @@ export default class ScenePause extends Phaser.Scene {
 
   viewOptions(){
     console.log("Entrando a options");
-
+      //AUDIO
+        Audio.play2DinstanceRate(81, 1.0);
+      //
     this.btnOptionsGame.alpha=0.8;
 
     this.scene.run("SceneOptionsGame");
@@ -87,7 +100,9 @@ export default class ScenePause extends Phaser.Scene {
   }
 
   exitGame(){
-
+      //AUDIO
+        Audio.play2DinstanceRate(81, 1.0);
+      //
     this.btnExitPause.alpha=0.8;
 
     this.scene.start("SceneMM");

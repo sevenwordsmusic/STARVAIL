@@ -1,6 +1,7 @@
 import Enemy from "./Enemy.js";
 import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
 import TileController from "../TileController.js"
+import Audio from "../Audio.js";
 
 //enemigo que hereda de Enemy
 export default class Sith extends Enemy {
@@ -115,6 +116,7 @@ export default class Sith extends Enemy {
       //this.sprite.body.collisionFilter.group = -1;
       this.sprite.setFlipX(this.targetDir);
       this.sprite.anims.play('sithAttack', true)
+
       this.sprite.once('animationcomplete', function(){
         this.goTo(2);
       },this);
@@ -145,6 +147,12 @@ export default class Sith extends Enemy {
 
     this.stateOnStart(4, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
+      //AUDIO
+        Audio.play3Dinstance(this, 84);
+      //
+
+
+
       //this.sprite.body.collisionFilter.group = -1;
       this.scene.time.addEvent({
         delay: 200,
@@ -165,6 +173,13 @@ export default class Sith extends Enemy {
     });
     this.startAI();
     //IA
+
+
+    //AUDIO
+      this.sfx=Audio.play3DenemyInstance(this, 86);
+      this.sfxDetect=Audio.play2Dinstance(54);
+      //this.stateChanged=false;
+    //
   }
 
   tryFlipX(){
@@ -176,6 +191,10 @@ export default class Sith extends Enemy {
 
   update(time, delta){
     super.update(time, delta);
+      //AUDIO
+        this.sfx.volume=Audio.volume3D(this);
+        this.sfxDetect.volume=Audio.volume3D(this);
+      //
   }
 
   updateTouchBoundry(){
@@ -185,6 +204,9 @@ export default class Sith extends Enemy {
 
   inflictDamagePlayerArea(dir){
     if(this.sprite == undefined || this.sprite.body == undefined)return;
+      //AUDIO
+        Audio.play3DinstanceRnd(this, 85);
+      //
     if(dir){
       if(super.playerHit(this.sprite.x-95, this.sprite.y-50, this.sprite.x+10, this.sprite.y+35)){
         //AUDIO
@@ -224,6 +246,12 @@ export default class Sith extends Enemy {
   enemyDead(vXDmg){
     this.goTo(0);
     if(!this.dead){
+      //AUDIO
+          Audio.play3DinstanceRnd(this, 58);
+          Audio.play3DinstanceRnd(this, 61);
+          this.sfx.stop();
+          this.sfxDetect.stop();
+      //
       let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "enemyExplosion");
       explosion.setDepth(10).setScale(2.5);
       //al completar su animacion de explsion, dicha instancia se autodestruye
@@ -249,4 +277,12 @@ export default class Sith extends Enemy {
       break;
     }
   }
+
+  distanceToPlayer(){
+    if(this.sprite.body != undefined)
+      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    else
+      return 512;    //ARREGLAR ESTO
+  }
+
 }

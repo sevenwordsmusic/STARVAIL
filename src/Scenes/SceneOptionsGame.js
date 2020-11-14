@@ -34,6 +34,9 @@ export default class SceneOptionsGame extends Phaser.Scene {
 
     this.btnExitOptionsGame.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.0);
+      //
     });
 
     this.btnExitOptionsGame.on('pointerout', function(pointer){

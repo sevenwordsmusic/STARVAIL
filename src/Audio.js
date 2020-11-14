@@ -13,7 +13,7 @@ export default class Audio extends Phaser.Scene {
     static beat = 16;
     static barRate = 60 * 1000 / this.bpm * this.beat;
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64, this.barRate / 128];
-    static vanishingPoint = 1080;
+    static vanishingPoint = 1280;
     static halfDistance = this.vanishingPoint / 2;
     static volumeBGM = 1.0;
     static volumeSFX = 1.0;
@@ -420,6 +420,7 @@ export default class Audio extends Phaser.Scene {
             this.earlyPropeller = false;
             this.propellerTween = false;
             Audio.play2Dinstance(11);
+            Audio.play2Dinstance(82);
             Audio.load.propellerLoop.stop();
             Audio.load.propellerLoop.setRate(1.0);
             Audio.load.engineLoop.stop();
@@ -495,7 +496,8 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('hover', 'assets/audio/SFX/menu/hover.ogg');
         this.load.audio('back', 'assets/audio/SFX/menu/back.ogg');
         this.load.audio('forth', 'assets/audio/SFX/menu/forth.ogg');
-
+        this.load.audio('jetStop', 'assets/audio/SFX/jetStop.ogg');
+        this.load.audio('theStart', 'assets/audio/SFX/theStart.ogg');
         //EXPLOSION
         this.load.audio('explosion_00A', 'assets/audio/SFX/explosion_00A.ogg');
         this.load.audio('explosion_00B', 'assets/audio/SFX/explosion_00B.ogg');
@@ -634,6 +636,17 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('gunGun_00C', 'assets/audio/SFX/enemies/gunGun_00C.ogg');
         this.load.audio('gunGun_00D', 'assets/audio/SFX/enemies/gunGun_00D.ogg');
         this.load.audio('energyImpact', 'assets/audio/SFX/enemies/energyImpact.ogg');
+        this.load.audio('sithVanish', 'assets/audio/SFX/enemies/sithVanish.ogg');
+        this.load.audio('sithSwing_00', 'assets/audio/SFX/enemies/sithSwing_00.ogg');
+        this.load.audio('sithSwing_01', 'assets/audio/SFX/enemies/sithSwing_01.ogg');
+        this.load.audio('sithSwing_02', 'assets/audio/SFX/enemies/sithSwing_02.ogg');
+        this.load.audio('sithSwing_03', 'assets/audio/SFX/enemies/sithSwing_03.ogg');
+        this.load.audio('sithSwing_04', 'assets/audio/SFX/enemies/sithSwing_04.ogg');
+        this.load.audio('sithSwing_05', 'assets/audio/SFX/enemies/sithSwing_05.ogg');
+        this.load.audio('sithSwing_06', 'assets/audio/SFX/enemies/sithSwing_06.ogg');
+        this.load.audio('sithSwing_07', 'assets/audio/SFX/enemies/sithSwing_07.ogg');
+        this.load.audio('sithHumLoop', 'assets/audio/SFX/enemies/sithHumLoop.ogg');
+
         //MUSIC LOOPS
         this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
@@ -840,6 +853,19 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('hover', 79, this);
         Audio.createSFXinstance('back', 80, this);
         Audio.createSFXinstance('forth', 81, this);
+        Audio.createSFXinstance('jetStop', 82, this);
+        Audio.createSFXinstance('theStart', 83, this);
+        Audio.createSFXinstance('sithVanish', 84, this);
+        this.soundInstance[85] = [];
+        Audio.createSFXinstanceSub('sithSwing_00', 85, 0, this);
+        Audio.createSFXinstanceSub('sithSwing_01', 85, 1, this);
+        Audio.createSFXinstanceSub('sithSwing_02', 85, 2, this);
+        Audio.createSFXinstanceSub('sithSwing_03', 85, 3, this);
+        Audio.createSFXinstanceSub('sithSwing_04', 85, 4, this);
+        Audio.createSFXinstanceSub('sithSwing_05', 85, 5, this);
+        Audio.createSFXinstanceSub('sithSwing_06', 85, 6, this);
+        Audio.createSFXinstanceSub('sithSwing_07', 85, 7, this);
+        Audio.createSFXloopInstance('sithHumLoop', 86, this);
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
             volume: this.volumeSFX,

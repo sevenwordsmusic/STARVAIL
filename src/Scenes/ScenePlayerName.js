@@ -29,7 +29,7 @@ export default class ScenePlayerName extends Phaser.Scene {
     this.btnExitOptionsMM.on('pointerover', function(pointer){
       this.alpha=1;
       //AUDIO
-        Audio.play2DinstanceRate(79, 1.2);
+        Audio.play2DinstanceRate(79, 1.0);
       //
     });
 
@@ -45,7 +45,7 @@ export default class ScenePlayerName extends Phaser.Scene {
     this.botonStart.on('pointerover', function(pointer){
       this.alpha=1;
       //AUDIO
-        Audio.play2DinstanceRate(79, 1.2);
+        Audio.play2DinstanceRate(79, 1.0);
       //
     });
 
@@ -62,7 +62,7 @@ export default class ScenePlayerName extends Phaser.Scene {
   exitOptions(){
     console.log("Se ha pulsado exit");
       //AUDIO
-        Audio.play2DinstanceRate(80, 1.2);
+        Audio.play2DinstanceRate(80, 1.0);
       //
     this.hideInput();
 
@@ -77,7 +77,8 @@ export default class ScenePlayerName extends Phaser.Scene {
   startGame(){
     console.log("Se ha pulsado start");
       //AUDIO
-        Audio.play2DinstanceRate(81, 1.2);
+        Audio.play2DinstanceRate(81, 1.0);
+      Audio.play2DinstanceRate(83, 1.0);
       //
     this.game.playerName = document.getElementById("playerName").value;
     this.hideInput();

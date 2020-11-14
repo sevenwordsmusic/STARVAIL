@@ -154,6 +154,10 @@ export default class BombAir extends Enemy {
 
   update(time, delta){
       super.update(time, delta);
+      //AUDIO
+        this.sfx.volume=Audio.volume3D(this);
+        this.sfxDetect.volume=Audio.volume3D(this);
+      //
   }
   updateTouchBoundry(){
     if(this.sprite != undefined)
@@ -248,8 +252,8 @@ export default class BombAir extends Enemy {
       break;
       case 2:
         //AUDIO
-        this.sfx.rate=((Audio.volume2D(dist)*2)+0.75);
-        this.sfxDetect.volume=Audio.volume2D(dist);
+        this.sfxDetect.setRate((Audio.volume2D(dist)*2)+0.75);
+
         //
         if(dist > this.standByReDistance){
           //AUDIO
@@ -269,10 +273,10 @@ export default class BombAir extends Enemy {
     //
   }
   distanceToPlayer(){
-    if(this.sprite.sprite != undefined)
+    if(this.sprite.body != undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
     else
-      return 1000;    //ARREGLAR ESTO
+      return 512;    //ARREGLAR ESTO
   }
 
   //AUDIO

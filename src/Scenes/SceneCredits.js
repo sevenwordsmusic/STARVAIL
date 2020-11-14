@@ -25,7 +25,7 @@ export default class SceneCredits extends Phaser.Scene {
     this.btnExitCredits.on('pointerover', function(pointer){
       this.alpha=1;
       //AUDIO
-        Audio.play2DinstanceRate(79, 1.2);
+        Audio.play2DinstanceRate(79, 1.0);
       //
     });
 
@@ -107,7 +107,7 @@ export default class SceneCredits extends Phaser.Scene {
   exitCredits(){
     console.log("Se ha pulsado exit");
       //AUDIO
-        Audio.play2DinstanceRate(80, 1.2);
+        Audio.play2DinstanceRate(80, 1.0);
       //
     this.btnExitCredits.alpha=0.8;
 
