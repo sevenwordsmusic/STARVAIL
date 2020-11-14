@@ -212,20 +212,18 @@ export default class ZapperGround extends Enemy {
         this.soundChangeState();
       //
       this.goTo( 2);
-    }
-    if(this.currentStateId() != 0)
+    }else if(this.currentStateId() != 0)
       super.damage(dmg, v);
   }
   damageLaser(dmg, v){
     //AUDIO
       Audio.load.lasserSufferingLoop.setDetune(50);
     //
-    if(this.currentStateId() == 1)
-      //AUDIO
+    if(this.currentStateId() == 1){
         this.soundChangeState();
       //
       this.goTo(2);
-    if(this.currentStateId() != 0)
+    }else if(this.currentStateId() != 0)
       super.damageLaser(dmg, v);
   }
 
@@ -289,9 +287,6 @@ export default class ZapperGround extends Enemy {
           this.goTo(0);
       break;
     }
-    //AUDIO
-      this.sfx.volume=Audio.volume2D(dist);
-    //
   }
   distanceToPlayer(){
     if(this.sprite.body != undefined)

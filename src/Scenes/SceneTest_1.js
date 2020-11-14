@@ -282,17 +282,17 @@ export default class SceneTest_1 extends Phaser.Scene {
     //funcion crear enemigo
     function spawnEnemy(enemyName, scene, xPos, yPos){
       switch(enemyName){
-        case "zapper1":
+        case "zapper1X":
           return new ZapperGround(scene, xPos, yPos);
-        case "zapper2":
+        case "zapper2X":
           return new ZapperAir(scene, xPos, yPos);
-        case "sword":
+        case "swordX":
           return new SwordGround(scene, xPos, yPos);
-        case "gunner":
+        case "gunnerX":
           return new GunnerAir(scene, xPos, yPos);
-        case "bomb":
+        case "bombX":
           return new BombAir(scene, xPos, yPos);
-        case "mecha":
+        case "mechaX":
           return new Mecha(scene, xPos, yPos);
         case "sith":
           return new Sith(scene, xPos, yPos);

@@ -260,8 +260,7 @@ export default class Player {
   }
   soundFall(bodyB){
     /*if (bodyB.isSensor) return;
-    var landSound = this.scene.sound.add('land', {volume: this.scene.game.soundVolume});
-    landSound.play();*/
+*/
   }
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor) return;

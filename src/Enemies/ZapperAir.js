@@ -216,20 +216,19 @@ export default class ZapperAir extends Enemy {
         this.soundChangeState();
       //
       this.goTo( 2);
-    }
-    if(this.currentStateId() != 0)
+    }else if(this.currentStateId() != 0)
       super.damage(dmg, v);
   }
   damageLaser(dmg, v){
     //AUDIO
       Audio.load.lasserSufferingLoop.setDetune(-50);
     //
-    if(this.currentStateId() == 1)
+    if(this.currentStateId() == 1){
       //AUDIO
         this.soundChangeState();
       //
       this.goTo(2);
-    if(this.currentStateId() != 0)
+    }else if(this.currentStateId() != 0)
       super.damageLaser(dmg, v);
   }
 
@@ -275,7 +274,7 @@ export default class ZapperAir extends Enemy {
       break;
       case 2:
         //AUDIO
-        this.sfxDetect.setRate((Audio.volume2D(dist)/2)+0.75);
+        this.sfxDetect.setRate((Audio.volume2D(dist)*2)+0.75);
 
         //
         if(dist > this.standByReDistance){
@@ -291,9 +290,6 @@ export default class ZapperAir extends Enemy {
           this.goTo(0);
       break;
     }
-    //AUDIO
-      this.sfx.volume=Audio.volume2D(dist);
-    //
   }
   distanceToPlayer(){
     if(this.sprite.body != undefined)

@@ -238,20 +238,19 @@ export default class Mecha extends Enemy {
         this.soundChangeState();
       //
       this.goTo( 2);
-    }
-    if(this.currentStateId() != 0)
+    }else if(this.currentStateId() != 0)
       super.damage(dmg, v);
   }
   damageLaser(dmg, v){
     //AUDIO
       Audio.load.lasserSufferingLoop.setDetune(-200);
     //
-    if(this.currentStateId() == 1)
+    if(this.currentStateId() == 1){
       //AUDIO
         this.soundChangeState();
       //
       this.goTo(2);
-    if(this.currentStateId() != 0)
+    }else if(this.currentStateId() != 0)
       super.damageLaser(dmg, v);
   }
 
@@ -314,9 +313,6 @@ export default class Mecha extends Enemy {
           this.goTo(0);
       break;
     }
-    //AUDIO
-      this.sfx.volume=Audio.volume2D(dist);
-    //
   }
   distanceToPlayer(){
     if(this.sprite.body != undefined)

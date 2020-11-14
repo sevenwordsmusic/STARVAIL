@@ -26,10 +26,10 @@ export default class Audio extends Phaser.Scene {
     static chat(words, scene, character){
         switch(character){
           case 0:
-                Chatter.letsTalk(words, scene, 0, 0.7, 0.8);
+                Chatter.letsTalk(words, scene, 0, 0.5, 0.6);
             break;
           case 1:
-                Chatter.letsTalk(words, scene, 1, 0.3, 0.2);
+                Chatter.letsTalk(words, scene, 1, 0.3, 0.4);
             break;
           case 2:
                 Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
@@ -45,6 +45,33 @@ export default class Audio extends Phaser.Scene {
             break;
           case 6:
                 Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 7:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 8:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 9:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 10:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 11:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 12:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 13:
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+            break;
+          case 14:
+                Chatter.letsTalk(words, scene, 0, 0.7, 0.7);
+            break;
+          case 15:
+                Chatter.letsTalk(words, scene, 0, 0.4, 0.8);
             break;
         }
     }
@@ -646,7 +673,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('sithSwing_06', 'assets/audio/SFX/enemies/sithSwing_06.ogg');
         this.load.audio('sithSwing_07', 'assets/audio/SFX/enemies/sithSwing_07.ogg');
         this.load.audio('sithHumLoop', 'assets/audio/SFX/enemies/sithHumLoop.ogg');
-
+        this.load.audio('sithPursue', 'assets/audio/SFX/enemies/sithPursue.ogg');
         //MUSIC LOOPS
         this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
@@ -866,6 +893,7 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('sithSwing_06', 85, 6, this);
         Audio.createSFXinstanceSub('sithSwing_07', 85, 7, this);
         Audio.createSFXloopInstance('sithHumLoop', 86, this);
+        Audio.createSFXloopInstance('sithPursue', 87, this);
         //UI LOOPS
         this.walkLoop = this.sound.add('walkLoop_00', {
             volume: this.volumeSFX,

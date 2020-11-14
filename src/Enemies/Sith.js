@@ -178,7 +178,7 @@ export default class Sith extends Enemy {
     //AUDIO
       this.sfx=Audio.play3DenemyInstance(this, 86);
       this.sfxDetect=Audio.play2Dinstance(54);
-      //this.stateChanged=false;
+      this.stateChanged=false;
     //
   }
 
@@ -210,14 +210,14 @@ export default class Sith extends Enemy {
     if(dir){
       if(super.playerHit(this.sprite.x-95, this.sprite.y-50, this.sprite.x+10, this.sprite.y+35)){
         //AUDIO
-            //Audio.play3Dinstance(this,55);
+            Audio.play3Dinstance(this,55);
         //
         this.scene.game.player.playerDamage(this.hitDamage, true);
       }
     }else{
       if(super.playerHit(this.sprite.x-10, this.sprite.y-50, this.sprite.x + 95, this.sprite.y+35)){
         //AUDIO
-            //Audio.play3Dinstance(this,55);
+            Audio.play3Dinstance(this,55);
         //
         this.scene.game.player.playerDamage(this.hitDamage, true);
       }
@@ -227,19 +227,43 @@ export default class Sith extends Enemy {
     if(this.sprite == undefined || this.sprite.body == undefined)return;
     if(super.playerHit(this.sprite.x-55, this.sprite.y-65, this.sprite.x+55, this.sprite.y+55))
       this.scene.game.player.playerDamage(this.teleportHitDamage, true);
+    //Nota para Seven con carinyo de Seven.
   }
 
 
   damage(dmg, v){
-    if(this.currentStateId() == 1)
+      //AUDIO
+        if(Math.random()>0.85){
+          Audio.chat(1,this.scene,15);
+        }
+        if(Math.random()>0.75){
+          var auxSfx=Audio.play3DinstanceRnd(this,45);
+        }else{
+           var auxSfx=Audio.play3DinstanceRnd(this,44);
+        }
+          auxSfx.setDetune(auxSfx.detune+150);
+      //
+    if(this.currentStateId() == 1){
+      //AUDIO
+        this.soundChangeState();
+      //
       this.goTo(4);
-    else if(this.currentStateId() != 0)
+    }else if(this.currentStateId() != 0)
       super.damage(dmg, v);
   }
   damageLaser(dmg, v){
-    if(this.currentStateId() == 1)
+      //AUDIO
+        Audio.load.lasserSufferingLoop.setDetune(-50);
+        if(Math.random()>0.9875){
+          Audio.chat(1,this.scene,15);
+        }
+      //
+    if(this.currentStateId() == 1){
+      //AUDIO
+        this.soundChangeState();
+      //
       this.goTo(4);
-    else if(this.currentStateId() != 0)
+    }else if(this.currentStateId() != 0)
       super.damageLaser(dmg, v);
   }
 
@@ -248,7 +272,7 @@ export default class Sith extends Enemy {
     if(!this.dead){
       //AUDIO
           Audio.play3DinstanceRnd(this, 58);
-          Audio.play3DinstanceRnd(this, 61);
+          Audio.play3DinstanceRnd(this, 64);
           this.sfx.stop();
           this.sfxDetect.stop();
       //
@@ -268,12 +292,21 @@ export default class Sith extends Enemy {
   updatePlayerPosition(dist){
     switch (this.currentStateId()) {
       case 0:
-        if(dist <= this.standByDistance && !this.dead)
+        if(dist <= this.standByDistance && !this.dead){
+          //AUDIO
+            this.soundChangeState();
+          //
           this.goTo(1);
+        }
       break;
       case 2:
-        if(dist > this.standByReDistance)
+        //AUDIO
+        this.sfxDetect.setDetune(Audio.volume2D(dist)*1200);
+
+        //
+        if(dist > this.standByReDistance){
           this.goTo(4);
+        }
       break;
     }
   }
@@ -284,5 +317,12 @@ export default class Sith extends Enemy {
     else
       return 512;    //ARREGLAR ESTO
   }
-
+  //AUDIO
+  soundChangeState(){
+    if(!this.stateChanged){
+      this.sfxDetect=Audio.play3Dinstance(this, 87);
+      this.stateChanged=true;
+    }
+  }
+  //
 }
