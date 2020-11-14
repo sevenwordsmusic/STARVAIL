@@ -224,6 +224,14 @@ export default class Sith extends Enemy {
   enemyDead(vXDmg){
     this.goTo(0);
     if(!this.dead){
+      let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "enemyExplosion");
+      explosion.setDepth(10).setScale(2.5);
+      //al completar su animacion de explsion, dicha instancia se autodestruye
+      explosion.on('animationcomplete', function(){
+        explosion.destroy();
+      });
+      //animacion de explosion
+      explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
       new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
     }

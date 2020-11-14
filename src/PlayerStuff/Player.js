@@ -251,8 +251,7 @@ export default class Player {
     this.recieveWeapon(0);
     this.recieveWeapon(1);
     this.recieveWeapon(3);
-    this.recieveWeapon(5);
-    this.recieveWeapon(7);
+    this.recieveWeapon(8);
     for(var i=0; i<this.scene.game.obtainedWeapons.length; i++){
       this.recieveWeapon(this.scene.game.obtainedWeapons[i]);
     }

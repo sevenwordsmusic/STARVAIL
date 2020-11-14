@@ -8,13 +8,16 @@ export default class NPC_Droid_Default1 extends FiniteStateMachine{
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.add.sprite(x,y,'dummy',0).setScale(2);
+    this.sprite = scene.add.sprite(x,y,'npc4',0).setScale(2);
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
     this.isTalking = false;
 
+    this.sprite.setOrigin(0.5,0.75);
+    this.sprite.anims.play('npc4',true);
+
     this.dialogArray = [];
-    this.dialogArray[0] = 
+    this.dialogArray[0] =
     `[b]Vagrant Droid[/b]
     Hello, stranger droid. Are you here to go
     up the tower as well?
@@ -34,6 +37,7 @@ export default class NPC_Droid_Default1 extends FiniteStateMachine{
             Audio.chat(5, scene, 0);
          //
         this.isTalking = true;
+        this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x)
         this.scene.dialogManager.setCurrentSpeaker(this);
         this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
         this.scene.dialogManager.showDialogBox();

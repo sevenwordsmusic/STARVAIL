@@ -8,11 +8,14 @@ export default class NPC_Droid_6 extends FiniteStateMachine{
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.add.sprite(x,y,'dummy',0).setScale(2);
+    this.sprite = scene.add.sprite(x,y,'npc1',0).setScale(1.5);
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
     this.isTalking = false;
     this.enemiesLeft = 0;
+
+    this.sprite.setOrigin(0.5,0.75);
+    this.sprite.anims.play('npc1',true);
 
     this.weaponToGive = 7;
     /*
@@ -28,11 +31,11 @@ export default class NPC_Droid_6 extends FiniteStateMachine{
     */
 
     this.dialogArray = [];
-    this.dialogArray[0] = 
+    this.dialogArray[0] =
     `[b]Vagrant Droid[/b]
     Help! I need help!`;
 
-    this.dialogArray[1] = 
+    this.dialogArray[1] =
     `[b]Vagrant Droid[/b]
     Thanks, vagrant droid!
     You really saved me there.
@@ -47,7 +50,7 @@ export default class NPC_Droid_6 extends FiniteStateMachine{
     What is the name of my savior?
     [b]player[/b]
     My name is player.
-    
+
     [b]JUN6[/b]
     It's a pleasure, player
     I'm known as JUN6.
@@ -61,7 +64,7 @@ export default class NPC_Droid_6 extends FiniteStateMachine{
     But in reality, to do so, I must face my [i]shadows,[/i]
     I must accept them as a part of me, in order
     [b]JUN6[/b]
-    to be true and to be able to change. This 
+    to be true and to be able to change. This
     near death-experience helped me realize that.
     [b]JUN6[/b]
     Do you know why us vagrants are scared of death?
@@ -85,8 +88,8 @@ export default class NPC_Droid_6 extends FiniteStateMachine{
     In return, I want you to evolve as well.
     Please, accept this gift:
     OBTAINED PLUGIN WEAPON: [B]CLUSTER MISSILES[/b]
-    
-    
+
+
     [b]JUN6[/b]
     These missiles will release small bombs on
     detonation, causing massive, multiple damage!
@@ -109,7 +112,7 @@ export default class NPC_Droid_6 extends FiniteStateMachine{
     [i]if there is any reaction, both are transformed.[/i]
     Thank you again, and farewell, player!`;
 
-    this.dialogArray[2] = 
+    this.dialogArray[2] =
     `[b]JUN6[/b]
     After all, [i]the meeting of two personalities is[/i]
     [i]like the contact of two chemical substances;[/i]
@@ -125,6 +128,7 @@ export default class NPC_Droid_6 extends FiniteStateMachine{
             Audio.chat(5, scene, 0);
          //
         this.isTalking = true;
+        this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x)
         this.scene.dialogManager.setCurrentSpeaker(this);
         this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
         this.scene.dialogManager.showDialogBox();
@@ -155,11 +159,14 @@ export default class NPC_Droid_6 extends FiniteStateMachine{
       console.log("arma conseguida");
       this.goTo(2);
     }
+    else if(this.currentStateId() == 0 && this.enemiesLeft<=0){
+      this.goTo(1);
+    }
   }
 
   enemyKilled(){
     this.enemiesLeft --;
-    if(this.enemiesLeft<=0)
+    if(this.enemiesLeft<=0 && !this.isTalking)
       this.goTo(1);
   }
 }

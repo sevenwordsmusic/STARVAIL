@@ -74,11 +74,7 @@ export default class Megaton extends Projectile {
         //AUDIO
             Audio.play3DinstanceRndVolume(this, 5, this.touchDelay);
         //
-      this.timer.remove();
-      if(bodyB.gameObject.parent.constructor.name === "Megaton")
-        this.itemExpire(true);
-      else
-        this.itemExpire(false);
+      this.itemExpire();
     }
   }
   onBodyCollide({ bodyA, bodyB, pair }) {
@@ -90,7 +86,7 @@ export default class Megaton extends Projectile {
     //
   }
 
-  itemExpire(big = false){
+  itemExpire(){
     this.bombArmed1();
     this.bombArmed2();
     //AUDIO
@@ -98,23 +94,17 @@ export default class Megaton extends Projectile {
       Audio.play3DinstanceRnd(this,18);
       this.sfx.stop();
     //
-    var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
-    if(!big){
-      bombExplosion.setDepth(10).setScale(this.area/15) //42
-      this.damageEnemiesArea();
-      this.scene.cameras.main.shake(300, 0.01);
-    }else{
-      bombExplosion.setDepth(10).setScale(this.area/15*this.extraEff) //42
-      this.damageEnemiesArea2();
-      this.scene.cameras.main.shake(350*this.extraEff, 0.015*this.extraEff);
-    }
+    var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "megatonExplosion");
+    bombExplosion.setDepth(10).setScale(3) //42
+    this.damageEnemiesArea();
+    this.scene.cameras.main.shake(300, 0.01);
 
     //al completar su animacion de explsion, dicha instancia se autodestruye
     bombExplosion.on('animationcomplete', function(){
       bombExplosion.destroy();
     });
     //animacion de explosion
-    bombExplosion.anims.play('explosion', true);
+    bombExplosion.anims.play('megatonExplosion', true);
 
     this.mainBody = undefined;
     this.sensor = undefined;
@@ -135,15 +125,15 @@ export default class Megaton extends Projectile {
         damagedEnemies[i].gameObject.parent.damageAndKnock(this.dmg, this.knockback, new Phaser.Math.Vector2(damagedEnemies[i].gameObject.x - this.sprite.x, damagedEnemies[i].gameObject.y - this.sprite.y));
     }
   }
-  damageEnemiesArea2(){
+  /*damageEnemiesArea2(){
     console.log("Big Explosion");
     var damagedEnemies = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area*this.extraEff, this.scene.enemyController.enemyBodies);
-    if(damagedEnemies.length > 0){/*AUDIO ENEMIGO DAÑADO*/}
+    if(damagedEnemies.length > 0){AUDIO ENEMIGO DAÑADO}
     for(var i in damagedEnemies){
       if(damagedEnemies[i] != undefined && damagedEnemies[i].gameObject != null)
         damagedEnemies[i].gameObject.parent.damageAndKnock(this.dmg*this.extraEff, this.knockback*this.extraEff, new Phaser.Math.Vector2(damagedEnemies[i].gameObject.x - this.sprite.x, damagedEnemies[i].gameObject.y - this.sprite.y));
     }
-  }
+  }*/
 
   distanceToPlayer(){
     if(this.sprite.body != undefined)

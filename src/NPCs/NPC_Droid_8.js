@@ -8,18 +8,21 @@ export default class NPC_Droid_8 extends FiniteStateMachine{
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.add.sprite(x,y,'dummy',0).setScale(2);
+    this.sprite = scene.add.sprite(x,y,'npc3',0).setScale(1.5);
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
     this.isTalking = false;
     this.enemiesLeft = 0;
+
+    this.sprite.setOrigin(0.5,0.75);
+    this.sprite.anims.play('npc3',true);
 
     this.weaponToGive = 8;
     /*
     0 - balas normales
     1 - balas rapidas
     2 - balas explosivas
-    3 - balas rebotantes
+    3 - balas rebotantesw
     4 - bombas normales
     5 - bombas megaton
     6 - misiles
@@ -28,9 +31,9 @@ export default class NPC_Droid_8 extends FiniteStateMachine{
     */
 
     this.dialogArray = [];
-    this.dialogArray[0] = `Ayuda, Ayuda!!!`;
+    this.dialogArray[0] = `Help, Help!!!`;
 
-    this.dialogArray[1] = `Gracias por ayudarme, toma arma`;
+    this.dialogArray[1] = `Thank you for helping me, have this amazing weapon!`;
 
     this.dialogArray[2] = `...`;
 
@@ -42,6 +45,7 @@ export default class NPC_Droid_8 extends FiniteStateMachine{
             Audio.chat(5, scene, 0);
          //
         this.isTalking = true;
+        this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x)
         this.scene.dialogManager.setCurrentSpeaker(this);
         this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
         this.scene.dialogManager.showDialogBox();
@@ -72,11 +76,14 @@ export default class NPC_Droid_8 extends FiniteStateMachine{
       console.log("arma conseguida");
       this.goTo(2);
     }
+    else if(this.currentStateId() == 0 && this.enemiesLeft<=0){
+      this.goTo(1);
+    }
   }
 
   enemyKilled(){
     this.enemiesLeft --;
-    if(this.enemiesLeft<=0)
+    if(this.enemiesLeft<=0 && !this.isTalking)
       this.goTo(1);
   }
 }

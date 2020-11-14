@@ -8,11 +8,14 @@ export default class NPC_Droid_2 extends FiniteStateMachine{
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.add.sprite(x,y,'dummy',0).setScale(2);
+    this.sprite = scene.add.sprite(x,y,'npc2',0).setScale(1.5);
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
     this.isTalking = false;
     this.enemiesLeft = 0;
+
+    this.sprite.setOrigin(0.5,0.75);
+    this.sprite.anims.play('npc2',true);
 
     this.weaponToGive = 2;
     /*
@@ -28,11 +31,11 @@ export default class NPC_Droid_2 extends FiniteStateMachine{
     */
 
     this.dialogArray = [];
-    this.dialogArray[0] = 
+    this.dialogArray[0] =
     `[b]Vagrant Droid[/b]
     Hey, care lending me a hand!?`;
 
-    this.dialogArray[1] = 
+    this.dialogArray[1] =
     `[b]Vagrant Droid[/b]
     Thank you, friendly android!
     I take you are a vagrant too, right?
@@ -41,12 +44,12 @@ export default class NPC_Droid_2 extends FiniteStateMachine{
     must thank you for that. What's your name?
     [b]player[/b]
     My name is player.
-    
+
     [b]Y04K3[/b]
     A pleasure to meet you, player
     My name is Y04K3
     [b]Y04K3[/b]
-    I'm a vagrant droid, just as you, searching 
+    I'm a vagrant droid, just as you, searching
     for the truth in this desolated tower...
     [b]Y04K3[/b]
     I can't believe how fogged the hive mind of
@@ -72,13 +75,13 @@ export default class NPC_Droid_2 extends FiniteStateMachine{
     Now, before you part, please let me give you
     something to help you on your journey:
     OBTAINED PLUGIN WEAPON: [B]EXPLOSIVE BULLETS[/b]
-    
-    
+
+
     [b]Y04K3[/b]
     This explosive ammo will do more damage than
     your normal ammo, causing damage in area as well!
     [b]Y04K3[/b]
-    Now nothing will stay in your way to find 
+    Now nothing will stay in your way to find
     your own truth, player!
     [b]Y04K3[/b]
     In my case, I don't think I need to see the birth
@@ -90,7 +93,7 @@ export default class NPC_Droid_2 extends FiniteStateMachine{
     May you find your own truth, player.
     Farewell!`;
 
-    this.dialogArray[2] = 
+    this.dialogArray[2] =
     `[b]Y04K3[/b]
     May you find your own truth, player.
     Never lie to yourself, face the truth!
@@ -105,6 +108,7 @@ export default class NPC_Droid_2 extends FiniteStateMachine{
             Audio.chat(5, scene, 0);
          //
         this.isTalking = true;
+        this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x)
         this.scene.dialogManager.setCurrentSpeaker(this);
         this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
         this.scene.dialogManager.showDialogBox();
@@ -135,11 +139,14 @@ export default class NPC_Droid_2 extends FiniteStateMachine{
       console.log("arma conseguida");
       this.goTo(2);
     }
+    else if(this.currentStateId() == 0 && this.enemiesLeft<=0){
+      this.goTo(1);
+    }
   }
 
   enemyKilled(){
     this.enemiesLeft --;
-    if(this.enemiesLeft<=0)
+    if(this.enemiesLeft<=0 && !this.isTalking)
       this.goTo(1);
   }
 }

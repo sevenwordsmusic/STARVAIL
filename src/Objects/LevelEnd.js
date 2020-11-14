@@ -3,9 +3,10 @@ export default class LevelEnd {
   constructor(scene, x, y, spr){
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.matter.add.sprite(x,y,spr,0).setScale(3);
+    this.sprite = scene.matter.add.sprite(x,y,spr,0).setScale(20, 3);
     this.sprite.body.isSensor = true;
     this.sprite.body.isStatic = true;
+    this.sprite.setVisible(false);
   }
 
   initGoal(keyNext, sceneNext){

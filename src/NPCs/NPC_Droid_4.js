@@ -8,11 +8,14 @@ export default class NPC_Droid_4 extends FiniteStateMachine{
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.add.sprite(x,y,'dummy',0).setScale(2);
+    this.sprite = scene.add.sprite(x,y,'npc4',0).setScale(1.5);
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
     this.isTalking = false;
     this.enemiesLeft = 0;
+
+    this.sprite.setOrigin(0.5,0.75);
+    this.sprite.anims.play('npc4',true);
 
     this.weaponToGive = 5;
     /*
@@ -28,11 +31,11 @@ export default class NPC_Droid_4 extends FiniteStateMachine{
     */
 
     this.dialogArray = [];
-    this.dialogArray[0] = 
+    this.dialogArray[0] =
     `[b]Vagrant Droid[/b]
     Hey, care helping me with this?`;
 
-    this.dialogArray[1] = 
+    this.dialogArray[1] =
     `[b]Vagrant Droid[/b]
     Thank you. I can't do much on this side,
     after all. What does it matter, anyway?
@@ -41,10 +44,10 @@ export default class NPC_Droid_4 extends FiniteStateMachine{
     You are one of those vagrants, right?
     [b]Vagrant Droid[/b]
     What is your name?
-    
+
     [b]player[/b]
     My name is player.
-    
+
     [b]N14L[/b]
     Hey, player.
     My name is N14L. Maybe you already knew that.
@@ -77,15 +80,15 @@ export default class NPC_Droid_4 extends FiniteStateMachine{
     you, nothing more. But I can give you something
     [b]N14L[/b]
     to help you find what you are looking for:
-    
+
     OBTAINED PLUGIN WEAPON: [B]MEGATON BOMB[/b]
-    
-    
+
+
     [b]N14L[/b]
     Those are very powerful bombs. Humans tended to
     think these would end humanity, in fact. Hehehe
     [b]N14L[/b]
-    You must use them with care, though. They 
+    You must use them with care, though. They
     consume a lot of energy!
     [b]N14L[/b]
     Now, I think this me will vanish onto the Wired
@@ -103,7 +106,7 @@ export default class NPC_Droid_4 extends FiniteStateMachine{
     Don't do anything stupid, though, I'll know.
     Bye!`;
 
-    this.dialogArray[2] = 
+    this.dialogArray[2] =
     `[b]N14L[/b]
     If you meet another me, that thinks it's the
     real me, maybe you can understand.
@@ -119,6 +122,7 @@ export default class NPC_Droid_4 extends FiniteStateMachine{
             Audio.chat(5, scene, 0);
          //
         this.isTalking = true;
+        this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x)
         this.scene.dialogManager.setCurrentSpeaker(this);
         this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
         this.scene.dialogManager.showDialogBox();
@@ -149,11 +153,14 @@ export default class NPC_Droid_4 extends FiniteStateMachine{
       console.log("arma conseguida");
       this.goTo(2);
     }
+    else if(this.currentStateId() == 0 && this.enemiesLeft<=0){
+      this.goTo(1);
+    }
   }
 
   enemyKilled(){
     this.enemiesLeft --;
-    if(this.enemiesLeft<=0)
+    if(this.enemiesLeft<=0 && !this.isTalking)
       this.goTo(1);
   }
 }

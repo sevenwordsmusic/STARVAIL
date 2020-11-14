@@ -8,13 +8,16 @@ export default class NPC_Droid_7 extends FiniteStateMachine{
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.add.sprite(x,y,'dummy',0).setScale(2);
+    this.sprite = scene.add.sprite(x,y,'npc2',0).setScale(1.5);
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
     this.isTalking = false;
     this.enemiesLeft = 0;
 
-    this.weaponToGive = 7;
+    this.sprite.setOrigin(0.5,0.75);
+    this.sprite.anims.play('npc2',true);
+
+    this.weaponToGive = 8;
     /*
     0 - balas normales
     1 - balas rapidas
@@ -28,11 +31,11 @@ export default class NPC_Droid_7 extends FiniteStateMachine{
     */
 
     this.dialogArray = [];
-    this.dialogArray[0] = 
+    this.dialogArray[0] =
     `[b]Vagrant Droid[/b]
     Hey, you! Please, I need your help!`;
 
-    this.dialogArray[1] = 
+    this.dialogArray[1] =
     `[b]Vagrant Droid[/b]
     Thank you, stranger friend!
     You saved my life!
@@ -47,7 +50,7 @@ export default class NPC_Droid_7 extends FiniteStateMachine{
     In any case, please tell me your name.
     [b]player[/b]
     My name is player.
-    
+
     [b]K4N7[/b]
     I'm pleasured to meet you, player
     My name is K4N7. I'm a vagrant, like you!
@@ -56,7 +59,7 @@ export default class NPC_Droid_7 extends FiniteStateMachine{
     you to save me; if you were like the others here,
     [b]K4N7[/b]
     I would have been destroyed for sure. That makes me
-    wonder, though, why would you save me? Why do you 
+    wonder, though, why would you save me? Why do you
     [b]K4N7[/b]
     act the way you do? You may say you're an altruist
     for helping others in need, but you still had a
@@ -85,8 +88,8 @@ export default class NPC_Droid_7 extends FiniteStateMachine{
     Please, allow me to gift you this plugin weapon,
     for I must reward this meeting with you:
     OBTAINED PLUGIN WEAPON: [B]LASER CANNON[/b]
-    
-    
+
+
     [b]K4N7[/b]
     This plugin will allow you to fire a powerful
     laser that will melt away your enemies!
@@ -105,7 +108,7 @@ export default class NPC_Droid_7 extends FiniteStateMachine{
     [b]K4N7[/b]
     here. Good luck in your journey, take care!`;
 
-    this.dialogArray[2] = 
+    this.dialogArray[2] =
     `[b]K4N7[/b]
     Never be afraid of the shadows of this world,
     player. For you have the enlightenement of
@@ -123,6 +126,7 @@ export default class NPC_Droid_7 extends FiniteStateMachine{
             Audio.chat(5, scene, 0);
          //
         this.isTalking = true;
+        this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x)
         this.scene.dialogManager.setCurrentSpeaker(this);
         this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
         this.scene.dialogManager.showDialogBox();
@@ -153,11 +157,14 @@ export default class NPC_Droid_7 extends FiniteStateMachine{
       console.log("arma conseguida");
       this.goTo(2);
     }
+    else if(this.currentStateId() == 0 && this.enemiesLeft<=0){
+      this.goTo(1);
+    }
   }
 
   enemyKilled(){
     this.enemiesLeft --;
-    if(this.enemiesLeft<=0)
+    if(this.enemiesLeft<=0 && !this.isTalking)
       this.goTo(1);
   }
 }

@@ -195,9 +195,9 @@ export default class Level2 extends Phaser.Scene {
           case 7:
             this.encounterNPC =new NPC_Droid_7(this, point.x, point.y);
           break;
-          case 8:
+          /*case 8:
             this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
-          break;
+          break;*/
           default:
             this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
           break

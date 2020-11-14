@@ -156,7 +156,7 @@ export default class Level1 extends Phaser.Scene {
     //se crean objetos esenciales de cada nivel como el player, los npcs, el boss....
     this.map.getObjectLayer("Special_Layer").objects.forEach(point => {
       if(point.name == "player"){
-        this.playerStartX = point.x;
+        this.playerStartX = point.x;  //{x: 3235.226602791005, y: 2247.1999811774253}
         this.playerStartY = point.y;
       }
       else if(point.name == "goal"){
@@ -196,9 +196,9 @@ export default class Level1 extends Phaser.Scene {
           case 7:
             this.encounterNPC =new NPC_Droid_7(this, point.x, point.y);
           break;
-          case 8:
+          /*case 8:
             this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
-          break;
+          break;*/
           default:
             this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
           break
@@ -356,7 +356,7 @@ export default class Level1 extends Phaser.Scene {
     new Player(this, this.playerStartX, this.playerStartY);
 
     //new Mentor(this, this.playerStartX + 400, this.playerStartY)
-
+    //cam.setZoom(0.5);
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 
     //inicialización de meta

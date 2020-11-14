@@ -33,8 +33,8 @@ export default class ZapperGround extends Enemy {
     //Variables de IA
     //No Tocar
     this.patrolDir = (Math.round(Math.random()) == 1)?1:-1;
-    this.standByReDistance = 700;
-    this.patrolDistance = 650;
+    this.standByReDistance = 950;
+    this.patrolDistance = 900;
     this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
     this.traveledDistance = 0;
     this.playerVector = new Phaser.Math.Vector2(0, 0);
@@ -236,6 +236,14 @@ export default class ZapperGround extends Enemy {
           this.sfx.stop();
           this.sfxDetect.stop();
       //
+      let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "enemyExplosion");
+      explosion.setDepth(10).setScale(2);
+      //al completar su animacion de explsion, dicha instancia se autodestruye
+      explosion.on('animationcomplete', function(){
+        explosion.destroy();
+      });
+      //animacion de explosion
+      explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
       new DropableGroundEnergy(this.scene, xPos, yPos, Math.sign(vXDmg),  this.energyDrop);
     }

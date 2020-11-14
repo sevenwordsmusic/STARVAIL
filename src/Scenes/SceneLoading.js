@@ -132,7 +132,17 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('bomb', 'assets/Sprites/Enemies/DroidBomb/Homing2.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('gunner', 'assets/Sprites/Enemies/DroidGunner/Droid_gunner.png', { frameWidth: 60, frameHeight: 40 });
     //AIR
+
+    this.load.spritesheet('enemyExplosion', 'assets/Sprites/VFX/enemy_death_80x80_74.png', { frameWidth: 80, frameHeight: 80 });
     //ENEMIGOS
+
+    //NPC
+    this.load.spritesheet('npc1', 'assets/Sprites/NPC/npc1_idle.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('npc2', 'assets/Sprites/NPC/npc2_idle.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('npc3', 'assets/Sprites/NPC/npc3_idle.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('npc4', 'assets/Sprites/NPC/npc4_idle.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('npc5', 'assets/Sprites/NPC/npc5_idle.png', { frameWidth: 64, frameHeight: 64 });
+    //NPC
 
     //INTERACTABLES
     this.load.spritesheet('drop', 'assets/Sprites/Drops/Drops.png', { frameWidth: 20, frameHeight: 20 });
@@ -186,6 +196,9 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('bulletImpact4', 'assets/Sprites/Impacts/full_100x100px.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('bulletImpact5', 'assets/Sprites/Impacts/clean4_100x100px.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
+    //this.load.spritesheet('bombExplosion', 'assets/Sprites/VFX/bomb_explosion_80x80_77.png', { frameWidth: 80, frameHeight: 80 });
+    this.load.spritesheet('megatonExplosion', 'assets/Sprites/VFX/megaton_explosion_100x100_51.png', { frameWidth: 100, frameHeight: 100 });
+    //this.load.spritesheet('missileExplosion', 'assets/Sprites/VFX/missil_explosion_100x100_75.png', { frameWidth: 100, frameHeight: 100 });
     //this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
     this.load.spritesheet('smoke', 'assets/Sprites/Explosions/laser_smoke.png', { frameWidth: 100, frameHeight: 100 });
 
@@ -333,6 +346,13 @@ export default class SceneLoading extends Phaser.Scene {
     });
 
     this.anims.create({
+            key: 'enemyExplosion',
+            frames: this.anims.generateFrameNumbers('enemyExplosion', { start: 0, end: 73 }),
+            frameRate: 35,
+            repeat: 0
+        });
+
+    this.anims.create({
             key: 'eBomb',
             frames: this.anims.generateFrameNumbers('explodingBomb', { start: 0, end: 13 }),
             frameRate: 7,
@@ -352,6 +372,27 @@ export default class SceneLoading extends Phaser.Scene {
             frameRate: 10,
             repeat: 0
         });
+
+    /*this.anims.create({
+            key: 'bombExplosion',
+            frames: this.anims.generateFrameNumbers('bombExplosion', { start: 0, end: 76 }),
+            frameRate: 1000,
+            repeat: 0
+        });*/
+
+    this.anims.create({
+            key: 'megatonExplosion',
+            frames: this.anims.generateFrameNumbers('megatonExplosion', { start: 0, end: 50 }),
+            frameRate: 35,
+            repeat: 0
+        });
+
+    /*this.anims.create({
+            key: 'missileExplosion',
+            frames: this.anims.generateFrameNumbers('missileExplosion', { start: 0, end: 74 }),
+            frameRate: 35,
+            repeat: 0
+        });*/
 
     this.anims.create({
             key: 'bulletImpact',
@@ -546,6 +587,39 @@ export default class SceneLoading extends Phaser.Scene {
         frameRate: 8
     });
     //ENEMIGOS
+
+    //NPC
+    this.anims.create({
+        key: 'npc1',
+        frames: this.anims.generateFrameNumbers('npc1', { start: 0, end: 5 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'npc2',
+        frames: this.anims.generateFrameNumbers('npc2', { start: 0, end: 5 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'npc3',
+        frames: this.anims.generateFrameNumbers('npc3', { start: 0, end: 5 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'npc4',
+        frames: this.anims.generateFrameNumbers('npc4', { start: 0, end: 5 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'npc5',
+        frames: this.anims.generateFrameNumbers('npc5', { start: 0, end: 5 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    //NPC
 
     console.log("Done Loading Everything");
     if(this.game.spashScreen != undefined)

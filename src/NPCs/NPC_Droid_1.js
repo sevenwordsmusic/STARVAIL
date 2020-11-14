@@ -8,11 +8,14 @@ export default class NPC_Droid_1 extends FiniteStateMachine{
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.add.sprite(x,y,'dummy',0).setScale(2);
+    this.sprite = scene.add.sprite(x,y,'npc1',0).setScale(1.5);
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
     this.isTalking = false;
     this.enemiesLeft = 0;
+
+    this.sprite.setOrigin(0.5,0.75);
+    this.sprite.anims.play('npc1',true);
 
     this.weaponToGive = 1;
     /*
@@ -28,11 +31,11 @@ export default class NPC_Droid_1 extends FiniteStateMachine{
     */
 
     this.dialogArray = [];
-    this.dialogArray[0] = 
+    this.dialogArray[0] =
     `[b]Vagrant Droid[/b]
     Please, help me get rid of these bullies!`;
 
-    this.dialogArray[1] = 
+    this.dialogArray[1] =
     `[b]Vagrant Droid[/b]
     Wow, thank you, stranger fellow android!
     I don't fear death, but as weird as it sounds,
@@ -41,7 +44,7 @@ export default class NPC_Droid_1 extends FiniteStateMachine{
     What is your name, if I can know?
     [b]player[/b]
     My name is player.
-    
+
     [b]B0RG35[/b]
     Nice to meet you, player!
     My name is B0RG35.
@@ -73,8 +76,8 @@ export default class NPC_Droid_1 extends FiniteStateMachine{
     to the top of this tower, but you may be. Take
     this plugin weapon, player.
     OBTAINED PLUGIN WEAPON: [B]SONIC BULLETS [/b]
-    
-    
+
+
     [b]B0RG35[/b]
     These bullets are the fastest you can find!
     They also do more damage, they're a 'blast'.
@@ -91,7 +94,7 @@ export default class NPC_Droid_1 extends FiniteStateMachine{
     can bear the pain of immortality, that is.
     Farewell!`;
 
-    this.dialogArray[2] = 
+    this.dialogArray[2] =
     `[b]B0RG35[/b]
     May you have a fulfilling existence, if you
     can bear the pain of immortality, that is.
@@ -106,6 +109,7 @@ export default class NPC_Droid_1 extends FiniteStateMachine{
             Audio.chat(5, scene, 0);
          //
         this.isTalking = true;
+        this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x)
         this.scene.dialogManager.setCurrentSpeaker(this);
         this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
         this.scene.dialogManager.showDialogBox();
@@ -136,11 +140,14 @@ export default class NPC_Droid_1 extends FiniteStateMachine{
       console.log("arma conseguida");
       this.goTo(2);
     }
+    else if(this.currentStateId() == 0 && this.enemiesLeft<=0){
+      this.goTo(1);
+    }
   }
 
   enemyKilled(){
     this.enemiesLeft --;
-    if(this.enemiesLeft<=0)
+    if(this.enemiesLeft<=0 && !this.isTalking)
       this.goTo(1);
   }
 }

@@ -44,8 +44,8 @@ import Audio from "./Audio.js";
 import Chatter from "./Chatter.js";
 import Tutorial from "./Scenes/Levels/Tutorial.js";
 import Level1 from "./Scenes/Levels/Level1.js";
-import Level2 from "./Scenes/Levels/Level1.js";
-import Level3 from "./Scenes/Levels/Level1.js";
+import Level2 from "./Scenes/Levels/Level2.js";
+import Level3 from "./Scenes/Levels/Level3.js";
 import LevelBoss from "./Scenes/Levels/LevelBoss.js";
 import SceneTest_1 from "./Scenes/SceneTest_1.js";
 import AnimatedTiles from "./Plugins/tileAnimator.js"
@@ -116,6 +116,8 @@ var config = {
 
     Tutorial,
     Level1,
+    Level2,
+    Level3,
     LevelBoss,
     SceneTest_1
   ],
@@ -168,8 +170,8 @@ for(var i=0; i<game.levelVariants.length; i++){
   game.chosenLevels[i] = Math.random()*game.levelVariants[i] + 1;
 }
 
-game.npcArray = [8];
-for(var i=0; i<8; i++){
+game.npcArray = [7];
+for(var i=0; i<7; i++){
   game.npcArray[i] = i;
 }
 

@@ -8,11 +8,14 @@ export default class NPC_Droid_3 extends FiniteStateMachine{
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.add.sprite(x,y,'dummy',0).setScale(2);
+    this.sprite = scene.add.sprite(x,y,'npc3',0).setScale(1.5);
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
     this.isTalking = false;
     this.enemiesLeft = 0;
+
+    this.sprite.setOrigin(0.5,0.75);
+    this.sprite.anims.play('npc3',true);
 
     this.weaponToGive = 3;
     /*
@@ -28,11 +31,11 @@ export default class NPC_Droid_3 extends FiniteStateMachine{
     */
 
     this.dialogArray = [];
-    this.dialogArray[0] = 
+    this.dialogArray[0] =
     `[b]Vagrant Droid[/b]
     Help me, please! I need your help!`;
 
-    this.dialogArray[1] = 
+    this.dialogArray[1] =
     `[b]Vagrant Droid[/b]
     Thank you!
     You must have been sent by God!
@@ -44,7 +47,7 @@ export default class NPC_Droid_3 extends FiniteStateMachine{
     Hey, what is your name?
     [b]player[/b]
     My name is player.
-    
+
     [b]L41N[/b]
     A pleasure to meet you, player
     My name is L41N. Do you remember me?
@@ -76,8 +79,8 @@ export default class NPC_Droid_3 extends FiniteStateMachine{
     Please, let me give you something in return!
     It's easy to find these things in the other side.
     OBTAINED PLUGIN WEAPON: [B]BOUNCING BULLETS[/b]
-    
-    
+
+
     [b]L41N[/b]
     These bullets can bounce. Fire them, and soon
     they will be everywhere... like me! Hehehe.
@@ -97,7 +100,7 @@ export default class NPC_Droid_3 extends FiniteStateMachine{
     In any case, thank you, player!
     I'm glad that I met you!`;
 
-    this.dialogArray[2] = 
+    this.dialogArray[2] =
     `[b]L41N[/b]
     Ok... let's see, maybe I'm confused again.
     Am I here, or am I there? Can people exist
@@ -113,6 +116,7 @@ export default class NPC_Droid_3 extends FiniteStateMachine{
             Audio.chat(5, scene, 0);
          //
         this.isTalking = true;
+        this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x)
         this.scene.dialogManager.setCurrentSpeaker(this);
         this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
         this.scene.dialogManager.showDialogBox();
@@ -143,11 +147,14 @@ export default class NPC_Droid_3 extends FiniteStateMachine{
       console.log("arma conseguida");
       this.goTo(2);
     }
+    else if(this.currentStateId() == 0 && this.enemiesLeft<=0){
+      this.goTo(1);
+    }
   }
 
   enemyKilled(){
     this.enemiesLeft --;
-    if(this.enemiesLeft<=0)
+    if(this.enemiesLeft<=0 && !this.isTalking)
       this.goTo(1);
   }
 }

@@ -37,8 +37,8 @@ export default class ZapperAir extends Enemy {
     //Variables de IA
     //No Tocar
     this.patrolDir = new Phaser.Math.Vector2(0,0);
-    this.standByReDistance = 700;
-    this.patrolDistance = 650;
+    this.standByReDistance = 950;
+    this.patrolDistance = 900;
     this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
     this.stopper = false;
     this.playerVector = new Phaser.Math.Vector2(0, 0);
@@ -226,6 +226,14 @@ export default class ZapperAir extends Enemy {
           this.sfx.stop();
           this.sfxDetect.stop();
       //
+      let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "enemyExplosion");
+      explosion.setDepth(10).setScale(2.25);
+      //al completar su animacion de explsion, dicha instancia se autodestruye
+      explosion.on('animationcomplete', function(){
+        explosion.destroy();
+      });
+      //animacion de explosion
+      explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
       if(drop)
         new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg), Math.sign(vYDmg),  this.energyDrop);
