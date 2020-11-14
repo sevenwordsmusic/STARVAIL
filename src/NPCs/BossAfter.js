@@ -31,7 +31,6 @@ export default class BossAfter extends FiniteStateMachine{
     [b]D42K-H[/b]
     Now, go ahead and end my life, player. This
     will finally put an end to my existential dread.
-    -FLASHAZO-
     [b]player[/b]
     I won't end your life, D42K-H.
     That won't give you any meaning.
@@ -89,7 +88,6 @@ export default class BossAfter extends FiniteStateMachine{
     [b]D42K-H[/b]
     Now, go ahead and end my life, player. This
     will finally put an end to my existential dread.
-    -FLASHAZO Y MUERTE DE D42K-
     [b]player[/b]
     I hope that gave your life meaning, D42K-H.
     ...
