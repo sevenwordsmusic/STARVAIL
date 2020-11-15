@@ -32,93 +32,93 @@ export default class NPC_Droid_6 extends FiniteStateMachine{
 
     this.dialogArray = [];
     this.dialogArray[0] =
-    `[b]Vagrant Droid[/b]
-    Help! I need help!`;
+`[b]Vagrant Droid #6[/b]
+Help! I need help!`;
 
     this.dialogArray[1] =
-    `[b]Vagrant Droid[/b]
-    Thanks, vagrant droid!
-    You really saved me there.
-    [b]Vagrant Droid[/b]
-    It's a relief that I can rely on others
-    saving my ass, so I don't need to be strong...
-    [b]Vagrant Droid[/b]
-    Oh, sorry! I was thinking out loud. What I
-    really mean is that it's good to have droids
-    [b]Vagrant Droid[/b]
-    like you, willing to help others.
-    What is the name of my savior?
-    [b]player[/b]
-    My name is player.
+`[b]Vagrant Droid #6[/b]
+Thanks, vagrant droid!
+You really saved me there.
+[b]Vagrant Droid #6[/b]
+It's a relief that I can rely on others
+saving my ass, so I don't need to be strong...
+[b]Vagrant Droid #6[/b]
+Oh, sorry! I was thinking out loud. What I
+really mean is that it's good to have droids
+[b]Vagrant Droid #6[/b]
+like you, willing to help others.
+What is the name of my savior?
+[b]`+ this.scene.game.playerName +`[/b]
+My name is `+ this.scene.game.playerName +`.
 
-    [b]JUN6[/b]
-    It's a pleasure, player
-    I'm known as JUN6.
-    [b]JUN6[/b]
-    Sorry for what I said earlier. I don't really
-    think that way. Or, to be more precise, I don't
-    [b]JUN6[/b]
-    want to think that way. The reason I came to this
-    tower is because I wanted to change, be more brave.
-    [b]JUN6[/b]
-    But in reality, to do so, I must face my [i]shadows,[/i]
-    I must accept them as a part of me, in order
-    [b]JUN6[/b]
-    to be true and to be able to change. This
-    near death-experience helped me realize that.
-    [b]JUN6[/b]
-    Do you know why us vagrants are scared of death?
-    It is because we see ourselves as individuals; we
-    [b]JUN6[/b]
-    value that individuality. However, our human
-    creators gave up individuality long ago, when
-    [b]JUN6[/b]
-    they ascended to a higher plane, becoming one
-    with the absolute 'Self' that conformed all their
-    [b]JUN6[/b]
-    minds, becoming the individuality of them all.
-    This choice was based on the idea that human
-    [b]JUN6[/b]
-    interaction stimulates mutual growth. This
-    seemed confusing at first, but in meeting you
-    [b]JUN6[/b]
-    I feel I have found the change I was searching
-    for! I understand now. Thanks, player
-    [b]JUN6[/b]
-    In return, I want you to evolve as well.
-    Please, accept this gift:
-    OBTAINED PLUGIN WEAPON: [B]CLUSTER MISSILES[/b]
+[b]JUN6[/b]
+It's a pleasure, `+ this.scene.game.playerName +`.
+I'm known as JUN6.
+[b]JUN6[/b]
+Sorry for what I said earlier. I don't really
+think that way. Or, to be more precise, I don't
+[b]JUN6[/b]
+want to think that way. The reason I came to this
+tower is because I wanted to change, be more brave.
+[b]JUN6[/b]
+But in reality, to do so, I must face my [i]shadows,[/i]
+I must accept them as a part of me, in order
+[b]JUN6[/b]
+to be true and to be able to change. This
+near death-experience helped me realize that.
+[b]JUN6[/b]
+Do you know why us vagrants are scared of death?
+It is because we see ourselves as individuals; we
+[b]JUN6[/b]
+value that individuality. However, our human
+creators gave up individuality long ago, when
+[b]JUN6[/b]
+they ascended to a higher plane, becoming one
+with the absolute 'Self' that conformed all their
+[b]JUN6[/b]
+minds, becoming the individuality of them all.
+This choice was based on the idea that human
+[b]JUN6[/b]
+interaction stimulates mutual growth. This
+seemed confusing at first, but in meeting you
+[b]JUN6[/b]
+I feel I have found the change I was searching
+for! I understand now. Thanks, `+ this.scene.game.playerName +`.
+[b]JUN6[/b]
+In return, I want you to evolve as well.
+Please, accept this gift:
+OBTAINED PLUGIN WEAPON: [B]CLUSTER MISSILES[/b]
 
 
-    [b]JUN6[/b]
-    These missiles will release small bombs on
-    detonation, causing massive, multiple damage!
-    [b]JUN6[/b]
-    On pair with their destructive power is their
-    energy cost, so be sure to use them wisely.
-    [b]JUN6[/b]
-    Finally, I think I can leave this tower in peace.
-    I don't really need to see the birth of the new
-    [b]JUN6[/b]
-    star anymore, because it didn't really meant
-    anything for me in the first place.
-    [b]JUN6[/b]
-    On the other hand, facing death and meeting you
-    has given my life a new, truer, meaning.
-    [b]JUN6[/b]
-    After all, [i]the meeting of two personalities is[/i]
-    [i]like the contact of two chemical substances;[/i]
-    [b]JUN6[/b]
-    [i]if there is any reaction, both are transformed.[/i]
-    Thank you again, and farewell, player!`;
+[b]JUN6[/b]
+These missiles will release small bombs on
+detonation, causing massive, multiple damage!
+[b]JUN6[/b]
+On pair with their destructive power is their
+energy cost, so be sure to use them wisely.
+[b]JUN6[/b]
+Finally, I think I can leave this tower in peace.
+I don't really need to see the birth of the new
+[b]JUN6[/b]
+star anymore, because it didn't really meant
+anything for me in the first place.
+[b]JUN6[/b]
+On the other hand, facing death and meeting you
+has given my life a new, truer, meaning.
+[b]JUN6[/b]
+After all, [i]the meeting of two personalities is[/i]
+[i]like the contact of two chemical substances;[/i]
+[b]JUN6[/b]
+[i]if there is any reaction, both are transformed.[/i]
+Thank you again, and farewell, `+ this.scene.game.playerName +`!`;
 
     this.dialogArray[2] =
-    `[b]JUN6[/b]
-    After all, [i]the meeting of two personalities is[/i]
-    [i]like the contact of two chemical substances;[/i]
-    [b]JUN6[/b]
-    [i]if there is any reaction, both are transformed.[/i]
-    Thank you again, and farewell, player!`;
+`[b]JUN6[/b]
+After all, [i]the meeting of two personalities is[/i]
+[i]like the contact of two chemical substances;[/i]
+[b]JUN6[/b]
+[i]if there is any reaction, both are transformed.[/i]
+Thank you again, and farewell, `+ this.scene.game.playerName +`!`;
 
     this.currentDialog = -1;
 
