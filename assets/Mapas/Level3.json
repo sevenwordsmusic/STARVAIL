@@ -1960,6 +1960,77 @@
         }, 
         {
          "draworder":"topdown",
+         "id":12,
+         "name":"Sound_Layer",
+         "objects":[
+                {
+                 "height":0,
+                 "id":199,
+                 "name":"laser",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1255.75,
+                 "y":4175.75
+                }, 
+                {
+                 "height":0,
+                 "id":200,
+                 "name":"laser",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1434.25,
+                 "y":4176.5
+                }, 
+                {
+                 "height":0,
+                 "id":201,
+                 "name":"laser",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3109.66666666667,
+                 "y":4304
+                }, 
+                {
+                 "height":0,
+                 "id":202,
+                 "name":"laser",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2516,
+                 "y":1170
+                }, 
+                {
+                 "height":0,
+                 "id":203,
+                 "name":"laser",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1571.33333333333,
+                 "y":1169.33333333333
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":9,
          "name":"Enemy_Layer",
          "objects":[
@@ -2813,8 +2884,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":12,
- "nextobjectid":199,
+ "nextlayerid":13,
+ "nextobjectid":204,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.5",

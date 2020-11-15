@@ -1,5 +1,6 @@
 import Enemy from "./Enemy.js";
 import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
+import DropableGroundHealth from "../Objects/Dropables/DropableGroundHealth.js"
 import MechGun from "./MechGun.js";
 import Audio from "../Audio.js";
 import TileController from "../TileController.js"
@@ -52,9 +53,10 @@ export default class Mecha extends Enemy {
     this.detectDistance = 500;                                        //distancia a la uqe detecta el jugador cuando esta patrullando
     this.detectSpeed = 1.5/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.retreatDistance = 300;                                            //distancia de la cual se pone a huir
-    this.hitDamage = 150;                                                //daño al golpear
-    this.fireRate = 800;                                               //fire rate del droid
-    this.energyDrop = 333;                                             //drop de energia
+    this.hitDamage = 100;                                                //daño al golpear
+    this.fireRate = 1000;
+    this.healthDrop = 200;                                               //fire rate del droid
+    this.energyDrop = 500;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
 
@@ -272,7 +274,11 @@ export default class Mecha extends Enemy {
       //animacion de explosion
       explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
-      new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
+      if(Math.random() < 0.7){
+        new DropableGroundHealth(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.healthDrop);
+        }
+        new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
+      
       this.gun.destroy();
     }
   }

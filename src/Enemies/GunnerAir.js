@@ -1,5 +1,6 @@
 import Enemy from "./Enemy.js";
-import DropableAirEnergy from "../Objects/Dropables/DropableAirEnergy.js"
+import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
+import DropableGroundHealth from "../Objects/Dropables/DropableGroundHealth.js"
 import EnergyBall from "../Objects/Projectiles/EnemyProjectiles/EnergyBall.js"
 import Audio from "../Audio.js";
 import TileController from "../TileController.js"
@@ -7,7 +8,7 @@ import TileController from "../TileController.js"
 //enemigo que hereda de Enemy
 export default class ZapperAir extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'gunner', 100);
+    super(scene, x, y, 'gunner', 160);
     this.sprite.setScale(1.1);
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
@@ -53,8 +54,9 @@ export default class ZapperAir extends Enemy {
     this.stopAndHitDistance = 250;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 1.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
     this.hitDamage = 75;                                              //daño al golpear
-    this.fireRate = 800;                                              //fire rate del droid
-    this.energyDrop = 200;                                             //drop de energia
+    this.fireRate = 800; 
+    this.healthDrop = 100;                                             //fire rate del droid
+    this.energyDrop = 250;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
     /*
@@ -239,7 +241,10 @@ export default class ZapperAir extends Enemy {
       explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
       if(drop)
-        new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg), Math.sign(vYDmg),  this.energyDrop);
+      if(Math.random() < 0.5){
+        new DropableGroundHealth(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.healthDrop);
+        }
+        new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
     }
   }
   updatePlayerPosition(dist){

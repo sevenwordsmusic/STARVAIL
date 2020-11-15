@@ -198,7 +198,7 @@ export default class Level3 extends Phaser.Scene {
             this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
           break;*/
           default:
-            this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
+            this.encounterNPC =new NPC_Droid_3(this, point.x, point.y);
           break
         }
         this.game.npcArray.splice(randNumber,1);
@@ -253,15 +253,15 @@ export default class Level3 extends Phaser.Scene {
 
     //arrays de enemigos de tierra/aire disponibles
     this.availableEnemiesGround = [];
-    this.availableEnemiesGround[0] = {name: "zapper1", probability: 1};
-    /*this.availableEnemiesGround[1] = {name: "sword", probability: 1};
-    this.availableEnemiesGround[2] = {name: "mecha", probability: 1};
-    this.availableEnemiesGround[3] = {name: "sith", probability: 1};*/
+    //this.availableEnemiesGround[0] = {name: "zapper1", probability: 0};
+    this.availableEnemiesGround[0] = {name: "sword", probability: 0.66};
+    this.availableEnemiesGround[1] = {name: "mecha", probability: 0.2};
+    this.availableEnemiesGround[2] = {name: "sith", probability: 0.2};
 
     this.availableEnemiesAir = [];
-    this.availableEnemiesAir[0] = {name: "zapper2", probability: 0.75};
-    /*this.availableEnemiesAir[1] = {name: "gunner", probability: 1};
-    this.availableEnemiesAir[2] = {name: "bomb", probability: 1};*/
+    //this.availableEnemiesAir[0] = {name: "zapper2", probability: 0};
+    this.availableEnemiesAir[0] = {name: "gunner", probability: 0.4};
+    this.availableEnemiesAir[1] = {name: "bomb", probability: 0.75};
 
     //funcion crear enemigo
     function spawnEnemy(enemyName, scene, xPos, yPos){
@@ -333,7 +333,7 @@ export default class Level3 extends Phaser.Scene {
         if(point.name == "tutorialSpecial")
           new InteractableChest(this, point.x, point.y, 10 ,20000);
         else
-          new InteractableChest(this, point.x, point.y, 10 ,20);
+          new InteractableChest(this, point.x, point.y, 100 ,200);
       });
 
     if(this.map.getObjectLayer("Waypoint_Layer") != null)
@@ -358,7 +358,7 @@ export default class Level3 extends Phaser.Scene {
 
     //inicialización de meta
     for(var i=0; i<this.goalArray.length; i++){
-      this.goalArray[i].initGoal( 'levelBoss', LevelBoss);
+      this.goalArray[i].initGoal('levelBoss', LevelBoss);
     }
 
     this.input.setDefaultCursor('none');

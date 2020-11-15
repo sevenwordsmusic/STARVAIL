@@ -48,7 +48,7 @@ export default class ZapperGround extends Enemy {
     this.detectSpeed = 2.5/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.hitDistance = 50;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 0.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
-    this.hitDamage = 50;                                              //daño al golpear
+    this.hitDamage = 70;                                              //daño al golpear
     this.energyDrop = 100;                                             //drop de energia
     //Ajustar estas
     //Variables de IA

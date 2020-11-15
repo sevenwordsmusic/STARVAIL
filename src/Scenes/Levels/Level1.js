@@ -200,7 +200,7 @@ export default class Level1 extends Phaser.Scene {
             this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
           break;*/
           default:
-            this.encounterNPC =new NPC_Droid_8(this, point.x, point.y);
+            this.encounterNPC =new NPC_Droid_1(this, point.x, point.y);
           break
         }
         this.game.npcArray.splice(randNumber,1);
@@ -256,14 +256,14 @@ export default class Level1 extends Phaser.Scene {
     //arrays de enemigos de tierra/aire disponibles
     this.availableEnemiesGround = [];
     this.availableEnemiesGround[0] = {name: "zapper1", probability: 1};
-    /*this.availableEnemiesGround[1] = {name: "sword", probability: 1};
-    this.availableEnemiesGround[2] = {name: "mecha", probability: 1};
-    this.availableEnemiesGround[3] = {name: "sith", probability: 1};*/
+    //this.availableEnemiesGround[1] = {name: "sword", probability: 0};
+    //this.availableEnemiesGround[2] = {name: "mecha", probability: 0};
+    //this.availableEnemiesGround[3] = {name: "sith", probability: 0};
 
     this.availableEnemiesAir = [];
-    this.availableEnemiesAir[0] = {name: "zapper2", probability: 0.75};
-    /*this.availableEnemiesAir[1] = {name: "gunner", probability: 1};
-    this.availableEnemiesAir[2] = {name: "bomb", probability: 1};*/
+    this.availableEnemiesAir[0] = {name: "zapper2", probability: 1};
+    //this.availableEnemiesAir[1] = {name: "gunner", probability: 0};
+    //this.availableEnemiesAir[2] = {name: "bomb", probability: 0};
 
     //funcion crear enemigo
     function spawnEnemy(enemyName, scene, xPos, yPos){

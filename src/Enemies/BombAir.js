@@ -6,7 +6,7 @@ import TileController from "../TileController.js"
 //enemigo que hereda de Enemy
 export default class BombAir extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'bomb', 50);
+    super(scene, x, y, 'bomb', 80);
     this.sprite.setScale(1.65);
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
@@ -50,7 +50,7 @@ export default class BombAir extends Enemy {
     this.detectSpeed = 4/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.hitDistance = 50;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 0.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
-    this.hitDamage = 50;                                              //daño al golpear
+    this.hitDamage = 150;                                              //daño al golpear
     this.energyDrop = 50;                                             //drop de energia
     //Ajustar estas
     //Variables de IA

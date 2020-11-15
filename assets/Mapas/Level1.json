@@ -149,8 +149,8 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":838.667,
-                 "x":1002.3,
+                 "width":571.667,
+                 "x":1269.3,
                  "y":4209.27
                 }, 
                 {
@@ -338,8 +338,8 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":204,
-                 "x":1618.18,
+                 "width":110.666666666667,
+                 "x":1653.51333333333,
                  "y":3569.09
                 }, 
                 {
@@ -782,6 +782,18 @@
                  "width":0,
                  "x":1576,
                  "y":736
+                }, 
+                {
+                 "height":0,
+                 "id":315,
+                 "name":"sword",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2202,
+                 "y":765
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2090,7 +2102,7 @@
          "y":0
         }],
  "nextlayerid":43,
- "nextobjectid":315,
+ "nextobjectid":316,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.5",

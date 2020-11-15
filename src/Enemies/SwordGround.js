@@ -6,7 +6,7 @@ import TileController from "../TileController.js"
 //enemigo que hereda de Enemy
 export default class SwordGround extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'hero', 100);
+    super(scene, x, y, 'hero', 120);
     this.sprite.setScale(2);
 
     //this.sprite.setBounce(1.01735).setFixedRotation().setFriction(0).setFrictionAir(0).setFrictionStatic(0);
@@ -48,7 +48,7 @@ export default class SwordGround extends Enemy {
     this.detectSpeed = 3.5/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.hitDistance = 70;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 1/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
-    this.hitDamage = 75;                                              //daño al golpear
+    this.hitDamage = 80;                                              //daño al golpear
     this.energyDrop = 150;                                             //drop de energia
     //Ajustar estas
     //Variables de IA

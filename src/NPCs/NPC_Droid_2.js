@@ -71,6 +71,7 @@ Be sure to find your true self, `+ this.scene.game.playerName +`.
 As for me, I think I feel truer than ever, now
 [b]Y04K3[/b]
 that I got to meet you! Thank you, really.
+
 [b]Y04K3[/b]
 Now, before you part, please let me give you
 something to help you on your journey:

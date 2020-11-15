@@ -1,12 +1,13 @@
 import Enemy from "./Enemy.js";
 import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
+import DropableGroundHealth from "../Objects/Dropables/DropableGroundHealth.js"
 import TileController from "../TileController.js"
 import Audio from "../Audio.js";
 
 //enemigo que hereda de Enemy
 export default class Sith extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'sith', 200, 43);
+    super(scene, x, y, 'sith', 250, 43);
     this.sprite.setScale(2);
 
     //this.sprite.setBounce(1.01735).setFixedRotation().setFriction(0).setFrictionAir(0).setFrictionStatic(0);
@@ -42,9 +43,10 @@ export default class Sith extends Enemy {
     //Ajustar estas
     this.detectSpeed = 4/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.hitDistance = 80;                                            //distancia de la cual se pone a golpear
-    this.hitSpeed = 1.2/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
-    this.hitDamage = 100;                                              //daño al golpear
-    this.teleportHitDamage = 50;                                       //daño al golpear
+    this.hitSpeed = 1.4/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
+    this.hitDamage = 200;                                              //daño al golpear
+    this.teleportHitDamage = 100;                                       //daño al golpear
+    this.healthDrop = 250;
     this.energyDrop = 500;                                             //drop de energia
     this.initialWaitTimer = 5000;                                       //tiempo de espera al descubrir enemigo antes de que te ataque
     this.teleportWaitTimerMin = 5000;                                      //tiempo minimo que espera si no alcanza al jugador antes de teleportarse
@@ -285,7 +287,10 @@ export default class Sith extends Enemy {
       //animacion de explosion
       explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
-      new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
+      if(Math.random() < 0.85){
+        new DropableGroundHealth(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.healthDrop);
+        }
+        new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);;
     }
   }
 
