@@ -74,16 +74,14 @@ Finally... `+ this.scene.game.playerName +`, here we are!
 Behold, here rises the Starvail Tower!
 [b]D42K-H[/b]
 This is the last bastion of our creators,
-the place where life is born and dies...`;
-
-    this.dialogArray[1] =
-`[b]D42K-H[/b]
+the place where life is born and dies...
+[b]D42K-H[/b]
 I can't wait to ascend! `+ this.scene.game.playerName +`,
 follow me, I'll tell you what I know.
 [b]TIP[/b]
 Use the A and D keys to run.`;
 
-    this.dialogArray[2] =
+    this.dialogArray[1] =
 `[b]D42K-H[/b]
 Hmm... this place reeks of bad oil,
 it's more worn out than I expected...
@@ -105,7 +103,7 @@ deactivate and you'll fall.
 [b]TIP[/b]
 You should never let this happen.`;
 
-    this.dialogArray[3] =
+    this.dialogArray[2] =
 `[b]D42K-H[/b]
 Good job, `+ this.scene.game.playerName +`. I hope your air
 navigation systems are up to date,
@@ -128,7 +126,7 @@ shoot, click the left mouse button.
 Defeated enemies drop energy cells, which
 you can use to keep ascending through the tower.`;
 
-    this.dialogArray[4] =
+    this.dialogArray[3] =
 `[b]D42K-H[/b]
 Careful, `+ this.scene.game.playerName +`! Looks like the defence
 systems of Starvail include laser barriers.
@@ -153,7 +151,7 @@ case you'll have to find another route.
 [b]TIP[/b]
 In any case, you must keep away from them.`;
 
-    this.dialogArray[5] =
+    this.dialogArray[4] =
 `[b]D42K-H[/b]
 Hmm... look at what we've got here, it's a
 support storage unit!
@@ -173,11 +171,11 @@ so you should always open them.
 To open a chest or interact with any item,
 you, click on said item.`;
 
-    this.dialogArray[6] =
+    this.dialogArray[5] =
 `[b]D42K-H[/b]
 Keep an eye on the lasers!`;
 
-    this.dialogArray[7] =
+    this.dialogArray[6] =
 `[b]D42K-H[/b]
 Hmm, what is this? An orange laser barrier?
 From the data I can analyze, looks like
@@ -197,7 +195,7 @@ in your surroundings.
 Barriers, both red and orange, may appear
 randomly, so keep an eye for them!`;
 
-    this.dialogArray[8] =
+    this.dialogArray[7] =
 `[b]D42K-H[/b]
 Good job, `+ this.scene.game.playerName +`!
 ...!
@@ -219,7 +217,7 @@ And remember, if your health bar empties...
 [b]TIP[/b]
 [b]your journey will come to an abrupt end[/b]`;
 
-    this.dialogArray[9] =
+    this.dialogArray[8] =
 `[b]D42K-H[/b]
 Good battle performance, `+ this.scene.game.playerName +`!
 Looks like this is the end of this block.
@@ -341,7 +339,7 @@ of Starvail.
 Now, go forth and discover the true meaning
 of life, `+ this.scene.game.playerName +`!`;
 
-    this.dialogArray[10] =
+    this.dialogArray[9] =
 `[b]D42K-H[/b]
 I don't think you should be seeing this.`;
     this.currentDialog = -1;
@@ -404,7 +402,7 @@ I don't think you should be seeing this.`;
       if (!this.reachedY)
         this.sprite.setVelocityY(this.speedVector.y * delta);
 
-      if (this.reachedX && this.reachedY){
+      if (this.reachedX){
         this.goTo(0);
       }
     })

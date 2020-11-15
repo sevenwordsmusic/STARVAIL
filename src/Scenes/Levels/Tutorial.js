@@ -348,30 +348,12 @@ export default class Tutorial extends Phaser.Scene {
         var arrayPuntos = [8];
         var counter = 0;
         this.map.getObjectLayer("Waypoint_Layer").objects.forEach(point => {
-          if(point.name == "01")
+          if(point.name == "01"){
             this.mentor = new Mentor(this, point.x, point.y);
-
-          /*array de posiciones aqui
-            var arrayPuntos = []
-            ...
-            ...
-            this.mentor.tutorialPositions = arrayPuntos;
-
-            Una vez asignados los puntos en el tutorialPositions,
-            debes ir a Mentor.js a la linea 64 y rellenar los dialogos.
-
-            Para bloquear el movimiento del jugador,
-            this.game.player.alive = false
-
-            Si estas en la clase del mentor,
-            this.scene.game.player.alive = false
-
-            //por ultimo modifica el array de dialogos de Mentor.js
-          */
-
-          arrayPuntos[counter] = new Phaser.Math.Vector2(point.x,point.y);
-          counter++;
-          console.log(point.name + "    " +  point.x + "    " + point.y);
+          }else{
+            arrayPuntos[counter] = new Phaser.Math.Vector2(point.x,point.y);
+            counter++;
+          }
         });
 
         this.mentor.tutorialPositions = arrayPuntos;

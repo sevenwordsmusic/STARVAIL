@@ -117,12 +117,12 @@ export default class SceneLoading extends Phaser.Scene {
 
     this.load.image('bossFireArm', 'assets/Sprites/Boss/boss_FireArm.png', { frameWidth: 32, frameHeight: 64 });
 
-    this.load.spritesheet('mentorRun', 'assets/Sprites/Boss/boss_run_withgun.png', { frameWidth: 64, frameHeight: 75 });
-    this.load.spritesheet('mentorIdle', 'assets/Sprites/Boss/boss_idle_withgun.png', { frameWidth: 64, frameHeight: 75 });
-    this.load.spritesheet('mentorAirUp', 'assets/Sprites/Boss/boss_moveup_withgun.png', { frameWidth: 64, frameHeight: 75 });
-    this.load.spritesheet('mentorAirIdle', 'assets/Sprites/Boss/boss_flyidle_withgun.png', { frameWidth: 64, frameHeight: 75 });
-    this.load.spritesheet('mentorAirMove', 'assets/Sprites/Boss/boss_movefly_withgun.png', { frameWidth: 64, frameHeight: 75 });
-    this.load.spritesheet('mentorAirDown', 'assets/Sprites/Boss/boss_movedown_withgun.png', { frameWidth: 64, frameHeight: 75 });
+    this.load.spritesheet('mentorRun', 'assets/Sprites/Boss/boss_run_withgun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('mentorIdle', 'assets/Sprites/Boss/boss_idle_withgun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('mentorAirUp', 'assets/Sprites/Boss/boss_moveup_withgun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('mentorAirIdle', 'assets/Sprites/Boss/boss_flyidle_withgun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('mentorAirMove', 'assets/Sprites/Boss/boss_movefly_withgun.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('mentorAirDown', 'assets/Sprites/Boss/boss_movedown_withgun.png', { frameWidth: 64, frameHeight: 64 });
     //BOSS
 
     //EFCTOS FIN JUEGO
