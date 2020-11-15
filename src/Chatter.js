@@ -29,6 +29,7 @@ export default class Chatter extends Phaser.Scene {
         switch(genre){
           case 0:
                 Chatter.male[rnd].volume=Audio.volumeSFX;
+                Chatter.male[rnd].setRate(1.5-size);
                 Chatter.male[rnd].setDetune(1200-(weight*2400));
                 Chatter.male[rnd].play();
             break;

@@ -17,6 +17,7 @@ export default class Audio extends Phaser.Scene {
     static maxVolume = 1.0;
     static volumeBGM = 0.5;
     static volumeSFX = 0.5;
+    static maxBGMvolumeByEnemies = this.volumeBGM;
     static load;
     static maxSFXinstances = 16;
     static SFXinstance = 0;
@@ -50,6 +51,18 @@ export default class Audio extends Phaser.Scene {
             this.load.beamLoop.volume = Audio.volumeSFX;
         }
     }
+
+    static maxBGMvolume(scene) {
+        if (scene.game.player.getClosestEnemyDistance() > Audio.inRangeDistance) {
+            var distance = 0.0;
+        } else if (scene.game.player.getClosestEnemyDistance() < 0.0) {
+            var distance = Audio.maxVolume;
+        } else {
+            var distance = (Audio.inRangeDistance - scene.game.player.getClosestEnemyDistance()) / Audio.inRangeDistance;
+        }
+        Audio.maxBGMvolumeByEnemies= distance * Audio.volumeBGM;
+    }
+
     static volume2D(length) {
         if (length > this.vanishingPoint) {
             var distance = 0.0;
@@ -76,50 +89,45 @@ export default class Audio extends Phaser.Scene {
             case "D42K-H":
                 Chatter.letsTalk(words, scene, 0, 0.5, 0.6);
                 break;
-            case 1:
+            case "D42K_H":
+                Chatter.letsTalk(words, scene, 0, 0.7, 0.8);
+                break;
+            case scene.game.playerName:
                 Chatter.letsTalk(words, scene, 1, 0.3, 0.4);
                 break;
-            case 2:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 3:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 4:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 5:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 6:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 7:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 8:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 9:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 10:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 11:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 12:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 13:
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
-                break;
-            case 14:
-                Chatter.letsTalk(words, scene, 0, 0.7, 0.7);
-                break;
-            case 15:
+            case "sithDroid":
                 Chatter.letsTalk(words, scene, 0, 0.4, 0.8);
+                break;
+            case "Vagrant Droid #0":
+                Chatter.letsTalk(words, scene, 1, 0.2, 0.2);
+                break;
+            case "B0RG35":
+            case "Vagrant Droid #1":
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                break;
+            case "Y04K3":
+            case "Vagrant Droid #2":
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                break;
+            case "L41N":
+            case "Vagrant Droid #3":
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                break;
+            case "N14L":
+            case "Vagrant Droid #4":
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                break;
+            case "FR3UD":
+            case "Vagrant Droid #5":
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                break;
+            case "JUN6":
+            case "Vagrant Droid #6":
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                break;
+            case "K4N7":
+            case "Vagrant Droid #7":
+                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
                 break;
             default:
                 break;
@@ -128,9 +136,6 @@ export default class Audio extends Phaser.Scene {
     //MUSIC ENGINE level #1 starter:
     static startMusicEngine(scene) {
         this.load.ambientLoop.play();
-        this.load.musicLoop0000levitating.play();
-        this.load.musicLoop0000moving.play();
-        this.load.musicLoop0000flying.play();
         this.load.musicLoop0000chill.play();
         scene.tweens.add({
             targets: this.load.ambientLoop,
@@ -146,6 +151,16 @@ export default class Audio extends Phaser.Scene {
     }
     static levelZero(scene) {
         this.load.musicLoop0000chill.volume = 0;
+        console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #0.", Audio.ctf, "");
+    }
+    static levelOne(scene) {
+        this.load.musicLoop0000chill.stop();
+        this.load.musicLoop0000chill.play();
+        this.load.musicLoop0000chill.volume = 0;
+        this.load.musicLoop0000levitating.play();
+        this.load.musicLoop0000moving.play();
+        this.load.musicLoop0000flying.play();
+        this.load.musicLoop0000chill.play();
         scene.time.addEvent({
             delay: Audio.barRateDiv[0],
             callback: () => Audio.musicBar(scene),
@@ -156,16 +171,19 @@ export default class Audio extends Phaser.Scene {
             callback: () => Audio.musicHalfBar(scene),
             loop: true,
         });
+        console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #1.", Audio.ctf, "");
     }
+
     //EVERY BAR MUSIC UPDATES:
     static musicBar(scene) {
         this.counter++;
+        console.log("BAR " + this.counter);
         //this.musicLayerHeight(scene);
         //this.musicLayerMovement(scene);
     }
     //EVERY HALF BAR MUSIC UPDATES:
     static musicHalfBar(scene) {
-        this.musicLayerJet(scene);
+        //this.musicLayerJet(scene);
         //this.musicLayerChill(scene);
     }
     static musicLayerHeight(scene) {
@@ -256,16 +274,6 @@ export default class Audio extends Phaser.Scene {
                 duration: this.barRateDiv[2],
             });
         }
-    }
-    static musicLayerEnemies(scene) {
-        if (scene.game.player.getClosestEnemyDistance() > Audio.inRangeDistance) {
-            var distance = 0.0;
-        } else if (scene.game.player.getClosestEnemyDistance() < 0.0) {
-            var distance = Audio.maxVolume;
-        } else {
-            var distance = (Audio.inRangeDistance - scene.game.player.getClosestEnemyDistance()) / Audio.inRangeDistance;
-        }
-        console.log(distance * Audio.volumeBGM);
     }
     //INSTANCE PLAYERS:
     //Default 2D:
@@ -396,8 +404,8 @@ export default class Audio extends Phaser.Scene {
     //GENERAL METHODS:
     //Frame update:
     static update(scene) {
-        this.musicLayerEnemies(scene);
-        this.propellerFliying(scene);
+        Audio.maxBGMvolume(scene);
+        Audio.propellerFliying(scene);
         if (scene.game.isFiring && scene.game.player.energy == 0.0 && !scene.game.player.activatedJet) {
             Audio.play2DinstanceRate(10, 0.8 + scene.game.player.weaponCounter * 0.05);
         }
@@ -410,7 +418,7 @@ export default class Audio extends Phaser.Scene {
         if (scene.game.player.activatedJet && !this.stingerJet) {
             this.stingerJet = true;
         }
-        if (!this.stingerSurface && Math.floor(scene.game.player.earlyPos.x) != this.earlyPos && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
+        if (!this.stingerSurface && Math.floor(scene.game.player.earlyPos.x) != Audio.earlyPos && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
             this.stingerSurface = true;
             this.load.surfaceLoop.volume = Audio.volumeSFX;
             this.load.surfaceLoop.setDetune(-25 + (Math.random() * 50));
@@ -419,49 +427,49 @@ export default class Audio extends Phaser.Scene {
             this.load.walkLoop.setDetune(-25 + (Math.random() * 50));
             this.load.walkLoop.play();
         }
-        if (this.stingerSurface && (Math.floor(scene.game.player.earlyPos.x) == this.earlyPos || scene.game.player.activatedJet || !scene.game.player.isTouching.ground)) {
+        if (this.stingerSurface && (Math.floor(scene.game.player.earlyPos.x) == Audio.earlyPos || scene.game.player.activatedJet || !scene.game.player.isTouching.ground)) {
             this.stingerSurface = false;
             this.load.surfaceLoop.stop();
             this.load.walkLoop.stop();
             Audio.play2DinstanceRate(28, 1.0);
         }
-        if (scene.game.player.weaponCounter != this.earlyWeapon) {
-            this.earlyWeapon = scene.game.player.weaponCounter;
+        if (scene.game.player.weaponCounter != Audio.earlyWeapon) {
+            Audio.earlyWeapon = scene.game.player.weaponCounter;
             Audio.play2DinstanceRate(8, 0.8 + scene.game.player.weaponCounter * 0.05);
             Audio.play2DinstanceRate(9, 0.8 + scene.game.player.weaponCounter * 0.05);
         }
-        if (Math.floor(scene.game.player.earlyPos.x) != this.earlyPos) {
-            this.earlyPos = Math.floor(scene.game.player.earlyPos.x);
+        if (Math.floor(scene.game.player.earlyPos.x) != Audio.earlyPos) {
+            Audio.earlyPos = Math.floor(scene.game.player.earlyPos.x);
             this.stingerMovement = true;
         }
     }
     //Propeller:
     static propellerFliying(scene) {
         if (scene.game.player.activatedJet && !this.earlyPropeller) {
-            this.earlyPropeller = true;
-            this.load.engineLoop.setDetune(-25 + (Math.random() * 50));
-            this.load.engineLoop.volume = Audio.volumeSFX;
-            this.load.engineLoop.play();
-            this.load.propellerLoop.setDetune(-25 + (Math.random() * 50));
-            this.load.propellerLoop.volume = Audio.volumeSFX;
-            this.load.propellerLoop.play();
+            Audio.earlyPropeller = true;
+            Audio.load.engineLoop.setDetune(-25 + (Math.random() * 50));
+            Audio.load.engineLoop.volume = Audio.volumeSFX;
+            Audio.load.engineLoop.play();
+            Audio.load.propellerLoop.setDetune(-25 + (Math.random() * 50));
+            Audio.load.propellerLoop.volume = Audio.volumeSFX;
+            Audio.load.propellerLoop.play();
             Audio.play2Dinstance(71);
             Audio.play2DinstanceRate(9, 0.4);
         } else if (!scene.game.player.activatedJet && this.earlyPropeller) {
-            this.earlyPropeller = false;
-            this.propellerTween = false;
+            Audio.earlyPropeller = false;
+            Audio.propellerTween = false;
             Audio.play2Dinstance(11);
             Audio.play2Dinstance(82);
             Audio.load.propellerLoop.stop();
             Audio.load.propellerLoop.setRate(1.0);
             Audio.load.engineLoop.stop();
-        } else if (this.earlyPropeller && !this.propellerTween) {
-            this.propellerTween = true;
+        } else if (Audio.earlyPropeller && !Audio.propellerTween) {
+            Audio.propellerTween = true;
             scene.tweens.add({
                 targets: Audio.load.propellerLoop,
-                volume: this.volumeSFX,
+                volume: Audio.volumeSFX,
                 rate: 0.4,
-                duration: this.barRateDiv[2],
+                duration: Audio.barRateDiv[2],
             });
         }
     }
@@ -509,7 +517,7 @@ export default class Audio extends Phaser.Scene {
         load.soundInstance[num] = [];
         for (var i = 0; i < Audio.maxSFXinstances; i++) {
             load.soundInstance[num][i] = load.sound.add(name, {
-                volume: this.volumeSFX,
+                volume: Audio.volumeSFX,
                 loop: true
             })
         }

@@ -236,7 +236,7 @@ export default class Sith extends Enemy {
   damage(dmg, v){
       //AUDIO
         if(Math.random()>0.85){
-          Audio.chat(1,this.scene,15);
+          Audio.chat(1,this.scene,"sithDroid");
         }
         if(Math.random()>0.75){
           var auxSfx=Audio.play3DinstanceRnd(this,45);
@@ -257,7 +257,7 @@ export default class Sith extends Enemy {
       //AUDIO
         Audio.load.lasserSufferingLoop.setDetune(-50);
         if(Math.random()>0.9875){
-          Audio.chat(1,this.scene,15);
+          Audio.chat(1,this.scene,"sithDroid");
         }
       //
     if(this.currentStateId() == 1){

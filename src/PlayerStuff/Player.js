@@ -548,7 +548,7 @@ export default class Player {
         this.playerDeath();
       }else{
       //AUDIO
-        Audio.chat(1,this.scene,1);
+        Audio.chat(1,this.scene,this.scene.game.playerName);
       //
       }
       this.hpBar.draw(this.hp);

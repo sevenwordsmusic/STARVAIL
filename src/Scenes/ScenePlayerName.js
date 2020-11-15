@@ -79,7 +79,6 @@ export default class ScenePlayerName extends Phaser.Scene {
       //AUDIO
         Audio.play2DinstanceRate(81, 1.0);
         Audio.play2DinstanceRate(83, 1.0);
-        Audio.levelZero(this);
       //
     this.game.playerName = document.getElementById("playerName").value;
     this.hideInput();
@@ -90,8 +89,8 @@ export default class ScenePlayerName extends Phaser.Scene {
 
     this.scene.sendToBack('ScenePlayerName');
 		this.scene.stop('ScenePlayerName');
-    this.scene.run("levelFirst1");
-    this.scene.bringToTop("levelFirst1");     //CAMBIAR
+    this.scene.run("tutorial1");
+    this.scene.bringToTop("tutorial1");     //CAMBIAR a tutorial? lo dejo en tutorial... ?¿?¿
   }
 
   hideInput(){
