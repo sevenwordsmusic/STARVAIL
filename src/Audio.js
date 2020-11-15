@@ -51,31 +51,31 @@ export default class Audio extends Phaser.Scene {
                 break;
             case "B0RG35":
             case "Vagrant Droid #1":
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                Chatter.letsTalk(words, scene, 0, 0.5, 0.4);
                 break;
             case "Y04K3":
             case "Vagrant Droid #2":
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                Chatter.letsTalk(words, scene, 0, 0.2, 0.3);
                 break;
             case "L41N":
             case "Vagrant Droid #3":
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                Chatter.letsTalk(words, scene, 1, 0.2, 0.3);
                 break;
             case "N14L":
             case "Vagrant Droid #4":
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                Chatter.letsTalk(words, scene, 1, 0.3, 0.2);
                 break;
             case "FR3UD":
             case "Vagrant Droid #5":
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                Chatter.letsTalk(words, scene, 0, 0.4, 0.5);
                 break;
             case "JUN6":
             case "Vagrant Droid #6":
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                Chatter.letsTalk(words, scene, 0, 0.6, 0.3);
                 break;
             case "K4N7":
             case "Vagrant Droid #7":
-                Chatter.letsTalk(words, scene, 1, 0.1, 0.1);
+                Chatter.letsTalk(words, scene, 0, 0.8, 0.7);
                 break;
             default:
                 break;
@@ -123,17 +123,6 @@ export default class Audio extends Phaser.Scene {
             var distance = (Audio.inRangeDistance - scene.game.player.getClosestEnemyDistance()) / Audio.inRangeDistance;
         }
         Audio.maxBGMvolumeByEnemies= distance * Audio.volumeBGM;
-        /*
-        if(this.load.musicLoop0000levitating.isPlaying && this.load.musicLoop0000levitating.volume>Audio.maxBGMvolumeByEnemies){
-            this.load.musicLoop0000levitating.volume=Audio.maxBGMvolumeByEnemies;
-        }
-        if(this.load.musicLoop0000moving.isPlaying && this.load.musicLoop0000moving.volume>Audio.maxBGMvolumeByEnemies){
-            this.load.musicLoop0000moving.volume=Audio.maxBGMvolumeByEnemies;
-        }
-        if(this.load.musicLoop0000flying.isPlaying && this.load.musicLoop0000flying.volume>Audio.maxBGMvolumeByEnemies){
-            this.load.musicLoop0000flying.volume=Audio.maxBGMvolumeByEnemies;
-        }
-        */
     }
     static volume2D(length) {
         if (length > this.vanishingPoint) {
@@ -186,13 +175,8 @@ export default class Audio extends Phaser.Scene {
         this.load.musicLoop0000flying.play();
         this.load.musicLoop0000chill.play();
         scene.time.addEvent({
-            delay: Audio.barRate,
-            callback: () => Audio.musicLayerHeight(scene),
-            loop: true,
-        });
-        scene.time.addEvent({
             delay: Audio.barRateDiv[0],
-            callback: () => Audio.musicLayerMovement(scene),
+            callback: () => Audio.musicLayerBar(scene),
             loop: true,
         });
         scene.time.addEvent({
@@ -201,6 +185,11 @@ export default class Audio extends Phaser.Scene {
             loop: true,
         });
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #1.", Audio.ctf, "");
+    }
+
+    static musicLayerBar(scene){
+        Audio.musicLayerHeight(scene);
+        Audio.musicLayerMovement(scene);
     }
 
     static musicLayerHeight(scene) {
@@ -390,9 +379,6 @@ export default class Audio extends Phaser.Scene {
         }
         if (scene.game.player.inRoom() && !this.stingerChill) {
             this.stingerChill = true;
-        }
-        if (scene.game.isFiring && !this.stingerShot) {
-            this.stingerShot = true;
         }
         if (scene.game.player.activatedJet && !this.stingerJet) {
             this.stingerJet = true;
@@ -720,7 +706,6 @@ export default class Audio extends Phaser.Scene {
         //INIT AUDIO
         this.soundInstance = [];
         //STINGERS
-        this.stingerShot = false;
         this.stingerJet = false;
         this.stingerMovement = false;
         this.stingerSurface = false;

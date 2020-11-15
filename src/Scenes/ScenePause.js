@@ -80,6 +80,7 @@ export default class ScenePause extends Phaser.Scene {
     console.log("Volviendo al juego desde el menu de pausa");
       //AUDIO
         Audio.play2DinstanceRate(81, 1.0);
+        Audio.resume();
       //
     this.btnResumeGamePause.alpha=0.8;
 
