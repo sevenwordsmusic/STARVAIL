@@ -154,15 +154,14 @@ export default class Dialog {
             width: wrapWidth
           },
           maxLines: 3
-        })
-          .setFixedSize(fixedWidth, fixedHeight);
+        }).setFixedSize(fixedWidth, fixedHeight);
+
       }
 
      getBBcodeText (wrapWidth, fixedWidth, fixedHeight) {
         return this.scene.rexUI.add.BBCodeText(0, 0, '', {
           fixedWidth: fixedWidth,
           fixedHeight: fixedHeight,
-
           fontSize: '22px',
           wrap: {
             mode: 'word',

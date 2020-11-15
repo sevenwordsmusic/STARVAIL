@@ -91,6 +91,7 @@ export default class Audio extends Phaser.Scene {
           default:
             break;
         }
+        return "";
     }
     //SFX instance creators:
     static createSFXinstance(name, num, load) {
@@ -237,16 +238,7 @@ export default class Audio extends Phaser.Scene {
         } else {
             var distance = (this.vanishingPoint - scene.game.player.getClosestEnemyDistance()) / this.vanishingPoint;
         }
-        scene.tweens.add({
-            targets: this.load.loopBase,
-            volume: this.volumeBGM - (this.volumeBGM * (distance / 1)),
-            duration: this.barRateDiv[1],
-        });
-        scene.tweens.add({
-            targets: this.load.loopEnemies,
-            volume: this.volumeBGM * (distance / 1),
-            duration: this.barRateDiv[2],
-        });
+
     }
     static volume2D(length) {
         if (length > this.vanishingPoint) {
