@@ -48,6 +48,7 @@ export default class Bomb extends Projectile {
     }
     this.touchDelay=1.0;
     //
+    this.scene.events.on("update", this.update, this);
   }
 
   //AUDIO
@@ -115,6 +116,7 @@ export default class Bomb extends Projectile {
             Audio.play3DinstanceRnd(this,14);
           }
           this.sfx.stop();
+          this.scene.events.off("update", this.update, this);
         //
       let bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
       bombExplosion.setDepth(10).setScale(this.area/15) //45

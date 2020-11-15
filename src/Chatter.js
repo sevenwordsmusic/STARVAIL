@@ -20,7 +20,6 @@ export default class Chatter extends Phaser.Scene {
                 callbackScope: this,
                 loop: false,
             });
-
     	}
     }
 
@@ -29,7 +28,6 @@ export default class Chatter extends Phaser.Scene {
         var rnd=Math.floor(Math.random()*Chatter.male.length);
         switch(genre){
           case 0:
-
                 Chatter.male[rnd].volume=Audio.volumeSFX;
                 Chatter.male[rnd].setDetune(1200-(weight*2400));
                 Chatter.male[rnd].play();

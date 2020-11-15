@@ -29,9 +29,10 @@ export default class SceneSplashScreen extends Phaser.Scene {
 
     this.tweens.add({
       targets: this.btnTitle,
-      duration:1000,
+      duration: Audio.barRateDiv[2],
       alpha:{ from: 0, to: 1 }
     })
+
   }
 
   //Método que se ejecuta una vez por frame.
@@ -42,10 +43,13 @@ export default class SceneSplashScreen extends Phaser.Scene {
   finishedLoading(){
     this.tweens.add({
       targets: this.btnTitle,
-      duration:1000,
+      duration: Audio.barRateDiv[2],
       alpha:{ from: 1, to: 0 },
       onComplete:()=>this.startTheGame()
     })
+    //AUDIO
+      Audio.startMusicEngine(this);
+    //
     this.game.spashScreen = undefined;
   }
 
@@ -56,11 +60,11 @@ export default class SceneSplashScreen extends Phaser.Scene {
 
 
     //SI SE QUIEREN TESTEAR MENUS
-    //this.scene.start('SceneMM');
+    this.scene.start('SceneMM');
 
     //SI SE QUIEREN TESTEAR NIVELES
     //this.scene.start("tutorial1");
-    this.scene.start("levelFirst1");
+    //this.scene.start("levelFirst1");
     //this.scene.start("levelSecond1");
     //this.scene.start("levelThird1");
     //this.scene.start("levelBoss1");

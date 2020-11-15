@@ -385,14 +385,12 @@ export default class Tutorial extends Phaser.Scene {
 
     this.input.setDefaultCursor('none');
 
-  //AUDIO:
-   //Audio.startAudioEngine(this);
    this.maxMemory = 0;
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
     //AUDIO:
-    Audio.audioUpdate(this);
+    Audio.update(this);
 
     this.moon.x += (delta*this.game.moonVelocity);
     this.game.moonPos.x = this.moon.x;

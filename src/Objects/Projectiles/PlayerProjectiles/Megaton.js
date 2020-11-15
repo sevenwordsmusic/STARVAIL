@@ -43,6 +43,7 @@ export default class Megaton extends Projectile {
       this.sfx=Audio.play3DinstanceNoRate(this, 13);
       this.touchDelay=1.0;
     //
+    this.scene.events.on("update", this.update, this);
   }
 
   //AUDIO
@@ -93,6 +94,7 @@ export default class Megaton extends Projectile {
       Audio.play3DinstanceRnd(this,15);
       Audio.play3DinstanceRnd(this,18);
       this.sfx.stop();
+      this.scene.events.off("update", this.update, this);
     //
     var bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "megatonExplosion");
     bombExplosion.setDepth(10).setScale(3) //42

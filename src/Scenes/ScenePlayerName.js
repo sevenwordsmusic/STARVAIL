@@ -78,7 +78,8 @@ export default class ScenePlayerName extends Phaser.Scene {
     console.log("Se ha pulsado start");
       //AUDIO
         Audio.play2DinstanceRate(81, 1.0);
-      Audio.play2DinstanceRate(83, 1.0);
+        Audio.play2DinstanceRate(83, 1.0);
+        Audio.levelZero(this);
       //
     this.game.playerName = document.getElementById("playerName").value;
     this.hideInput();
