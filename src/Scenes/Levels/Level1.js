@@ -368,6 +368,10 @@ export default class Level1 extends Phaser.Scene {
 
   
    this.maxMemory = 0;
+
+   //AUDIO
+      Audio.levelOne(this);
+   //
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {

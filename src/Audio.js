@@ -3,86 +3,34 @@ export default class Audio extends Phaser.Scene {
     constructor() {
         super("Audio");
     }
-    static counter = 0;
-    static earlyPos = 0.0;
-    static earlyPropeller = false;
-    static earlyWeapon = -1;
-    static propellerTween = false;
+    //MUSIC
     static bpm = 104;
     static beat = 16;
     static barRate = 60 * 1000 / this.bpm * this.beat;
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64, this.barRate / 128];
+    //DISTANCES
     static vanishingPoint = 960;
     static inRangeDistance = this.vanishingPoint * 2;
+    //PLAYER
+    static earlyPos = 0.0;
+    static earlyWeapon = -1;
+    static earlyPropeller = false;
+    static propellerTween = false;
+    static currentLevel=0;
+    //VOLUMES
     static maxVolume = 1.0;
     static volumeBGM = 0.5;
     static volumeSFX = 0.5;
     static maxBGMvolumeByEnemies = this.volumeBGM;
+    static oldVolumes=[];
+    //INSTANCES
     static load;
     static maxSFXinstances = 16;
     static SFXinstance = 0;
     static ambientLoop;
+    //
     static ctf = "background-color: #FF8000; color: #000000; font-weight: bold; font-family: Arial Black;";
 
-    static pause() {
-        Audio.play2DinstanceRate(81, 1.0);
-        this.load.musicLoop0000levitating.volume = 0.0;
-        this.load.musicLoop0000moving.volume = 0.0;
-        this.load.musicLoop0000flying.volume = 0.0;
-        this.load.musicLoop0000chill.volume = Audio.volumeBGM;
-    }
-    static resume() {
-        Audio.play2DinstanceRate(80, 1.0);
-        this.load.musicLoop0000chill.volume = 0.0;
-    }
-    static updateVolumes() {
-        if (document.getElementById("bgmSlider").value / 10 != Audio.volumeBGM) {
-            Audio.volumeBGM = document.getElementById("bgmSlider").value / 10;
-            this.load.musicLoop0000chill.volume = Audio.volumeBGM;
-        }
-        if (document.getElementById("sfxSlider").value / 10 != Audio.volumeSFX) {
-            Audio.volumeSFX = document.getElementById("sfxSlider").value / 10;
-            this.load.ambientLoop.volume = Audio.volumeSFX;
-            this.load.walkLoop.volume = Audio.volumeSFX;
-            this.load.surfaceLoop.volume = Audio.volumeSFX;
-            this.load.propellerLoop.volume = Audio.volumeSFX;
-            this.load.engineLoop.volume = Audio.volumeSFX;
-            this.load.lasserLoop.volume = Audio.volumeSFX;
-            this.load.beamLoop.volume = Audio.volumeSFX;
-        }
-    }
-
-    static maxBGMvolume(scene) {
-        if (scene.game.player.getClosestEnemyDistance() > Audio.inRangeDistance) {
-            var distance = 0.0;
-        } else if (scene.game.player.getClosestEnemyDistance() < 0.0) {
-            var distance = Audio.maxVolume;
-        } else {
-            var distance = (Audio.inRangeDistance - scene.game.player.getClosestEnemyDistance()) / Audio.inRangeDistance;
-        }
-        Audio.maxBGMvolumeByEnemies= distance * Audio.volumeBGM;
-    }
-
-    static volume2D(length) {
-        if (length > this.vanishingPoint) {
-            var distance = 0.0;
-        } else if (length < 0.0) {
-            var distance = Audio.maxVolume;
-        } else {
-            var distance = (this.vanishingPoint - length) / this.vanishingPoint;
-        }
-        return distance * Audio.volumeSFX;
-    }
-    static volume3D(scene) {
-        if (scene.distanceToPlayer() > this.vanishingPoint) {
-            var distance = 0.0;
-        } else if (scene.distanceToPlayer() < 0.0) {
-            var distance = Audio.maxVolume;
-        } else {
-            var distance = (this.vanishingPoint - scene.distanceToPlayer()) / this.vanishingPoint;
-        }
-        return distance * Audio.volumeSFX;
-    }
     //letsTalk caller:
     static chat(words, scene, character) {
         switch (character) {
@@ -133,6 +81,81 @@ export default class Audio extends Phaser.Scene {
                 break;
         }
     }
+
+    static pause() {
+        Audio.play2DinstanceRate(81, 1.0);
+        Audio.oldVolumes=[this.load.musicLoop0000levitating.volume,this.load.musicLoop0000moving.volume,this.load.musicLoop0000flying.volume];
+        this.load.musicLoop0000levitating.volume = 0.0;
+        this.load.musicLoop0000moving.volume = 0.0;
+        this.load.musicLoop0000flying.volume = 0.0;
+        this.load.musicLoop0000chill.volume = Audio.volumeBGM;
+    }
+    static resume() {
+        Audio.play2DinstanceRate(80, 1.0);
+        this.load.musicLoop0000levitating.volume = Audio.oldVolumes[0];
+        this.load.musicLoop0000moving.volume = Audio.oldVolumes[1];
+        this.load.musicLoop0000flying.volume = Audio.oldVolumes[2];
+        this.load.musicLoop0000chill.volume = 0.0;
+    }
+
+    static updateVolumes() {
+        if (document.getElementById("bgmSlider").value / 10 != Audio.volumeBGM) {
+            Audio.volumeBGM = document.getElementById("bgmSlider").value / 10;
+            this.load.musicLoop0000chill.volume = Audio.volumeBGM;
+        }
+        if (document.getElementById("sfxSlider").value / 10 != Audio.volumeSFX) {
+            Audio.volumeSFX = document.getElementById("sfxSlider").value / 10;
+            this.load.ambientLoop.volume = Audio.volumeSFX;
+            this.load.walkLoop.volume = Audio.volumeSFX;
+            this.load.surfaceLoop.volume = Audio.volumeSFX;
+            this.load.propellerLoop.volume = Audio.volumeSFX;
+            this.load.engineLoop.volume = Audio.volumeSFX;
+            this.load.lasserLoop.volume = Audio.volumeSFX;
+            this.load.beamLoop.volume = Audio.volumeSFX;
+        }
+    }
+    static maxBGMvolume(scene) {
+        if (scene.game.player.getClosestEnemyDistance() > Audio.inRangeDistance) {
+            var distance = 0.0;
+        } else if (scene.game.player.getClosestEnemyDistance() < 0.0) {
+            var distance = Audio.maxVolume;
+        } else {
+            var distance = (Audio.inRangeDistance - scene.game.player.getClosestEnemyDistance()) / Audio.inRangeDistance;
+        }
+        Audio.maxBGMvolumeByEnemies= distance * Audio.volumeBGM;
+        /*
+        if(this.load.musicLoop0000levitating.isPlaying && this.load.musicLoop0000levitating.volume>Audio.maxBGMvolumeByEnemies){
+            this.load.musicLoop0000levitating.volume=Audio.maxBGMvolumeByEnemies;
+        }
+        if(this.load.musicLoop0000moving.isPlaying && this.load.musicLoop0000moving.volume>Audio.maxBGMvolumeByEnemies){
+            this.load.musicLoop0000moving.volume=Audio.maxBGMvolumeByEnemies;
+        }
+        if(this.load.musicLoop0000flying.isPlaying && this.load.musicLoop0000flying.volume>Audio.maxBGMvolumeByEnemies){
+            this.load.musicLoop0000flying.volume=Audio.maxBGMvolumeByEnemies;
+        }
+        */
+    }
+    static volume2D(length) {
+        if (length > this.vanishingPoint) {
+            var distance = 0.0;
+        } else if (length < 0.0) {
+            var distance = Audio.maxVolume;
+        } else {
+            var distance = (this.vanishingPoint - length) / this.vanishingPoint;
+        }
+        return distance * Audio.volumeSFX;
+    }
+    static volume3D(scene) {
+        if (scene.distanceToPlayer() > this.vanishingPoint) {
+            var distance = 0.0;
+        } else if (scene.distanceToPlayer() < 0.0) {
+            var distance = Audio.maxVolume;
+        } else {
+            var distance = (this.vanishingPoint - scene.distanceToPlayer()) / this.vanishingPoint;
+        }
+        return distance * Audio.volumeSFX;
+    }
+
     //MUSIC ENGINE level #1 starter:
     static startMusicEngine(scene) {
         this.load.ambientLoop.play();
@@ -147,13 +170,14 @@ export default class Audio extends Phaser.Scene {
             volume: Audio.volumeBGM,
             duration: Audio.barRateDiv[1],
         });
-        console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : started.", Audio.ctf, "");
+        console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : activated.", Audio.ctf, "");
     }
     static levelZero(scene) {
         this.load.musicLoop0000chill.volume = 0;
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #0.", Audio.ctf, "");
     }
     static levelOne(scene) {
+        Audio.currentLevel=1;
         this.load.musicLoop0000chill.stop();
         this.load.musicLoop0000chill.play();
         this.load.musicLoop0000chill.volume = 0;
@@ -162,119 +186,74 @@ export default class Audio extends Phaser.Scene {
         this.load.musicLoop0000flying.play();
         this.load.musicLoop0000chill.play();
         scene.time.addEvent({
+            delay: Audio.barRate,
+            callback: () => Audio.musicLayerHeight(scene),
+            loop: true,
+        });
+        scene.time.addEvent({
             delay: Audio.barRateDiv[0],
-            callback: () => Audio.musicBar(scene),
+            callback: () => Audio.musicLayerMovement(scene),
             loop: true,
         });
         scene.time.addEvent({
             delay: Audio.barRateDiv[1],
-            callback: () => Audio.musicHalfBar(scene),
+            callback: () => Audio.musicLayerJet(scene),
             loop: true,
         });
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #1.", Audio.ctf, "");
     }
 
-    //EVERY BAR MUSIC UPDATES:
-    static musicBar(scene) {
-        this.counter++;
-        console.log("BAR " + this.counter);
-        //this.musicLayerHeight(scene);
-        //this.musicLayerMovement(scene);
-    }
-    //EVERY HALF BAR MUSIC UPDATES:
-    static musicHalfBar(scene) {
-        //this.musicLayerJet(scene);
-        //this.musicLayerChill(scene);
-    }
     static musicLayerHeight(scene) {
-        var volumeNormalized = this.volumeBGM - ((scene.game.player.earlyPos.y / 4096) * this.volumeBGM);
-        if (volumeNormalized <= this.volumeBGM && volumeNormalized > 0.0) {
+        var factor= 8180*(3-Audio.currentLevel);
+        if (scene.game.player.earlyPos.y > factor) {
+            var volumeNormalized = 0.0;
+        } else if (scene.game.player.earlyPos.y < 0.0) {
+            var volumeNormalized = Audio.maxVolume;
+        } else {
+            var volumeNormalized = (factor - scene.game.player.earlyPos.y) / factor;
+        }
             scene.tweens.add({
                 targets: this.load.musicLoop0000levitating,
-                volume: volumeNormalized,
-                duration: this.barRateDiv[0],
+                volume: volumeNormalized*Audio.maxBGMvolumeByEnemies,
+                duration: Audio.barRateDiv[0],
             });
-        }
     }
+
     static musicLayerMovement(scene) {
         if (this.stingerMovement) {
             this.stingerMovement = false;
             scene.tweens.add({
                 targets: this.load.musicLoop0000moving,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[1],
+                volume: Audio.maxBGMvolumeByEnemies,
+                duration: Audio.barRateDiv[1],
             });
         } else {
             scene.tweens.add({
                 targets: this.load.musicLoop0000moving,
                 volume: 0.0,
-                duration: this.barRateDiv[1],
+                duration: Audio.barRateDiv[0],
             });
         }
+
     }
+
     static musicLayerJet(scene) {
         if (this.stingerJet) {
             this.stingerJet = false;
             scene.tweens.add({
                 targets: this.load.musicLoop0000flying,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
+                volume: Audio.maxBGMvolumeByEnemies,
+                duration: Audio.barRateDiv[2],
             });
         } else {
             scene.tweens.add({
                 targets: this.load.musicLoop0000flying,
                 volume: 0.0,
-                duration: this.barRateDiv[2],
+                duration: Audio.barRateDiv[1],
             });
         }
     }
-    static musicLayerChill(scene) {
-        if (Audio.stingerChill && scene.game.player.inRoom()) {
-            Audio.stingerChill = false;
-            scene.tweens.add({
-                targets: this.load.musicLoop0000levitating,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.musicLoop0000moving,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.musicLoop0000flying,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.musicLoop0000chill,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-            console.log("IN CHILL")
-        } else if (!Audio.stingerChill && !scene.game.player.inRoom()) {
-            scene.tweens.add({
-                targets: this.load.musicLoop0000levitating,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.musicLoop0000moving,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.musicLoop0000flying,
-                volume: this.volumeBGM,
-                duration: this.barRateDiv[2],
-            });
-            scene.tweens.add({
-                targets: this.load.musicLoop0000chill,
-                volume: 0.0,
-                duration: this.barRateDiv[2],
-            });
-        }
-    }
+
     //INSTANCE PLAYERS:
     //Default 2D:
     static play2Dinstance(type) {

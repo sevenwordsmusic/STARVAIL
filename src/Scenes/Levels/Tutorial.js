@@ -393,9 +393,9 @@ export default class Tutorial extends Phaser.Scene {
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
-    //AUDIO:
-      Audio.update(this);
-    //
+      //AUDIO:
+        Audio.update(this);
+      //
     this.moon.x += (delta*this.game.moonVelocity);
     this.game.moonPos.x = this.moon.x;
 
