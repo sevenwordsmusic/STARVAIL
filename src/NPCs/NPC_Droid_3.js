@@ -32,81 +32,81 @@ export default class NPC_Droid_3 extends FiniteStateMachine{
 
     this.dialogArray = [];
     this.dialogArray[0] =
-    `[b]Vagrant Droid[/b]
-    Help me, please! I need your help!`;
+`[b]Vagrant Droid #3[/b]
+Help me, please! I need your help!`;
 
     this.dialogArray[1] =
-    `[b]Vagrant Droid[/b]
-    Thank you!
-    You must have been sent by God!
-    [b]Vagrant Droid[/b]
-    If there is a God... maybe another me
-    sent you here, would her be God then?
-    [b]Vagrant Droid[/b]
-    I don't know.
-    Hey, what is your name?
-    [b]player[/b]
-    My name is player.
+`[b]Vagrant Droid #3[/b]
+Thank you!
+You must have been sent by God!
+[b]Vagrant Droid #3[/b]
+If there is a God... maybe another me
+sent you here, would her be God then?
+[b]Vagrant Droid #3[/b]
+I don't know.
+Hey, what is your name?
+[b]`+ this.scene.game.playerName +`[/b]
+My name is `+ this.scene.game.playerName +`.
 
-    [b]L41N[/b]
-    A pleasure to meet you, player
-    My name is L41N. Do you remember me?
-    [b]L41N[/b]
-    Or maybe you met another me? In any case, I'm
-    happy to meet you! I'm a vagrant, just as you.
-    [b]L41N[/b]
-    I came here searching for the real me, but it
-    looks like I can't fight in this side as well
-    [b]L41N[/b]
-    as I do in the other. What other side, you say?
-    The Wired, of course. [b]Everyone's connected![/b]
-    [b]L41N[/b]
-    I can be anywhere, at anytime. Just like our
-    human creators. You'd say they're like gods now.
-    [b]L41N[/b]
-    But, can you remember them? Do you remember me?
-    The real me is here... but if no one remembers,
-    [b]L41N[/b]
-    It's like I never existed... Long ago, the line
-    between the real and the digital world was erased.
-    [b]L41N[/b]
-    Now I'm everywhere and nowhere at the same time.
-    The substance of existence is memory.. but you
-    [b]L41N[/b]
-    will remember me now! Does that make me the real
-    me? I hope so. I really thank you for that.
-    [b]L41N[/b]
-    Please, let me give you something in return!
-    It's easy to find these things in the other side.
-    OBTAINED PLUGIN WEAPON: [B]BOUNCING BULLETS[/b]
+[b]L41N[/b]
+A pleasure to meet you, `+ this.scene.game.playerName +`
+My name is L41N. Do you remember me?
+[b]L41N[/b]
+Or maybe you met another me? In any case, I'm
+happy to meet you! I'm a vagrant, just as you.
+[b]L41N[/b]
+I came here searching for the real me, but it
+looks like I can't fight in this side as well
+[b]L41N[/b]
+as I do in the other. What other side, you say?
+The Wired, of course. [b]Everyone's connected![/b]
+[b]L41N[/b]
+I can be anywhere, at anytime. Just like our
+human creators. You'd say they're like gods now.
+[b]L41N[/b]
+But, can you remember them? Do you remember me?
+The real me is here... but if no one remembers,
+[b]L41N[/b]
+It's like I never existed... Long ago, the line
+between the real and the digital world was erased.
+[b]L41N[/b]
+Now I'm everywhere and nowhere at the same time.
+The substance of existence is memory.. but you
+[b]L41N[/b]
+will remember me now! Does that make me the real
+me? I hope so. I really thank you for that.
+[b]L41N[/b]
+Please, let me give you something in return!
+It's easy to find these things in the other side.
+OBTAINED PLUGIN WEAPON: [B]BOUNCING BULLETS[/b]
 
 
-    [b]L41N[/b]
-    These bullets can bounce. Fire them, and soon
-    they will be everywhere... like me! Hehehe.
-    [b]L41N[/b]
-    Now, let's see... I'm here, but I'm still there?
-    Where's the real me? Does it even exist?
-    [b]L41N[/b]
-    Maybe there is not a real me... but I can
-    exist inside you now! Everyone's connected,
-    [b]L41N[/b]
-    after all. I can exist in your memories, so
-    I don't think I need to get to the top of
-    [b]L41N[/b]
-    this tower anymore. Memory means existence,
-    remember? This is me that's talking.
-    [b]L41N[/b]
-    In any case, thank you, player!
-    I'm glad that I met you!`;
+[b]L41N[/b]
+These bullets can bounce. Fire them, and soon
+they will be everywhere... like me! Hehehe.
+[b]L41N[/b]
+Now, let's see... I'm here, but I'm still there?
+Where's the real me? Does it even exist?
+[b]L41N[/b]
+Maybe there is not a real me... but I can
+exist inside you now! Everyone's connected,
+[b]L41N[/b]
+after all. I can exist in your memories, so
+I don't think I need to get to the top of
+[b]L41N[/b]
+this tower anymore. Memory means existence,
+remember? This is me that's talking.
+[b]L41N[/b]
+In any case, thank you, `+ this.scene.game.playerName +`!
+I'm glad that I met you!`;
 
     this.dialogArray[2] =
-    `[b]L41N[/b]
-    Ok... let's see, maybe I'm confused again.
-    Am I here, or am I there? Can people exist
-    [b]L41N[/b]
-    without a real body? I guess I will always
-    be with you, even if it's not really me...`;
+`[b]L41N[/b]
+Ok... let's see, maybe I'm confused again.
+Am I here, or am I there? Can people exist
+[b]L41N[/b]
+without a real body? I guess I will always
+be with you, even if it's not really me...`;
 
     this.currentDialog = -1;
 

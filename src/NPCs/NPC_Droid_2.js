@@ -32,73 +32,73 @@ export default class NPC_Droid_2 extends FiniteStateMachine{
 
     this.dialogArray = [];
     this.dialogArray[0] =
-    `[b]Vagrant Droid[/b]
-    Hey, care lending me a hand!?`;
+`[b]Vagrant Droid #2[/b]
+Hey, care lending me a hand!?`;
 
     this.dialogArray[1] =
-    `[b]Vagrant Droid[/b]
-    Thank you, friendly android!
-    I take you are a vagrant too, right?
-    [b]Vagrant Droid[/b]
-    I almost perish before realizing my dream, I
-    must thank you for that. What's your name?
-    [b]player[/b]
-    My name is player.
+`[b]Vagrant Droid #2[/b]
+Thank you, friendly android!
+I take you are a vagrant too, right?
+[b]Vagrant Droid #2[/b]
+I almost perish before realizing my dream, I
+must thank you for that. What's your name?
+[b]`+ this.scene.game.playerName +`[/b]
+My name is `+ this.scene.game.playerName +`.
 
-    [b]Y04K3[/b]
-    A pleasure to meet you, player
-    My name is Y04K3
-    [b]Y04K3[/b]
-    I'm a vagrant droid, just as you, searching
-    for the truth in this desolated tower...
-    [b]Y04K3[/b]
-    I can't believe how fogged the hive mind of
-    the droids here has come to be, they're like
-    [b]Y04K3[/b]
-    empty killing machines, hiding from the fact
-    that their purpose is now meaningless, refusing
-    [b]Y04K3[/b]
-    to face this world as it is. They're just hiding
-    in this hollow, mechanical forest...
-    [b]Y04K3[/b]
-    You know, I refuse to be like them. As painful
-    as it may be, [i]I'll reach out to the truth![/i]
-    [b]Y04K3[/b]
-    What's truth, you say? It's different for everyone.
-    The only one who really knows, is your [i]true self.[/i]
-    [b]Y04K3[/b]
-    Be sure to find your true self, player.
-    As for me, I think I feel truer than ever, now
-    [b]Y04K3[/b]
-    that I got to meet you! Thank you, really.
-    [b]Y04K3[/b]
-    Now, before you part, please let me give you
-    something to help you on your journey:
-    OBTAINED PLUGIN WEAPON: [B]EXPLOSIVE BULLETS[/b]
+[b]Y04K3[/b]
+A pleasure to meet you, `+ this.scene.game.playerName +`
+My name is Y04K3
+[b]Y04K3[/b]
+I'm a vagrant droid, just as you, searching
+for the truth in this desolated tower...
+[b]Y04K3[/b]
+I can't believe how fogged the hive mind of
+the droids here has come to be, they're like
+[b]Y04K3[/b]
+empty killing machines, hiding from the fact
+that their purpose is now meaningless, refusing
+[b]Y04K3[/b]
+to face this world as it is. They're just hiding
+in this hollow, mechanical forest...
+[b]Y04K3[/b]
+You know, I refuse to be like them. As painful
+as it may be, [i]I'll reach out to the truth![/i]
+[b]Y04K3[/b]
+What's truth, you say? It's different for everyone.
+The only one who really knows, is your [i]true self.[/i]
+[b]Y04K3[/b]
+Be sure to find your true self, `+ this.scene.game.playerName +`.
+As for me, I think I feel truer than ever, now
+[b]Y04K3[/b]
+that I got to meet you! Thank you, really.
+[b]Y04K3[/b]
+Now, before you part, please let me give you
+something to help you on your journey:
+[b]OBTAINED PLUGIN WEAPON: EXPLOSIVE BULLETS[/b]
 
 
-    [b]Y04K3[/b]
-    This explosive ammo will do more damage than
-    your normal ammo, causing damage in area as well!
-    [b]Y04K3[/b]
-    Now nothing will stay in your way to find
-    your own truth, player!
-    [b]Y04K3[/b]
-    In my case, I don't think I need to see the birth
-    of a new star to find truth, I just don't want
-    [b]Y04K3[/b]
-    to lie to myself, never again.
-    Thank you for helping realizing this!
-    [b]Y04K3[/b]
-    May you find your own truth, player.
-    Farewell!`;
+[b]Y04K3[/b]
+This explosive ammo will do more damage than
+your normal ammo, causing damage in area as well!
+[b]Y04K3[/b]
+Now nothing will stay in your way to find
+your own truth, `+ this.scene.game.playerName +`!
+[b]Y04K3[/b]
+In my case, I don't think I need to see the birth
+of a new star to find truth, I just don't want
+[b]Y04K3[/b]
+to lie to myself, never again.
+Thank you for helping realizing this!
+[b]Y04K3[/b]
+May you find your own truth, `+ this.scene.game.playerName +`.
+Farewell!`;
 
     this.dialogArray[2] =
-    `[b]Y04K3[/b]
-    May you find your own truth, player.
-    Never lie to yourself, face the truth!
-    [b]Y04K3[/b]
-    Farewell!`;
+`[b]Y04K3[/b]
+May you find your own truth, `+ this.scene.game.playerName +`.
+Never lie to yourself, face the truth!
+[b]Y04K3[/b]
+Farewell!`;
 
     this.currentDialog = -1;
 

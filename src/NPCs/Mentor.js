@@ -67,7 +67,7 @@ export default class Mentor extends FiniteStateMachine {
     this.dialogArray = [];
     this.dialogArray[0] = 
 `[b]D42K-H[/b]
-Finally... player, here we are!
+Finally... `+ this.scene.game.playerName +`, here we are!
 Behold, here rises the Starvail Tower!
 [b]D42K-H[/b]
 This is the last bastion of our creators,
@@ -75,17 +75,17 @@ the place where life is born and dies...`;
 
     this.dialogArray[1] = 
 `[b]D42K-H[/b]
-I can't wait to ascend! player,
+I can't wait to ascend! `+ this.scene.game.playerName +`,
 follow me, I'll tell you what I know.
 [b]TIP[/b]
 Use the A and D keys to run.`;
 
-this.dialogArray[2] = 
+    this.dialogArray[2] = 
 `[b]D42K-H[/b]
 Hmm... this place reeks of bad oil,
 it's more worn out than I expected...
 [b]D42K-H[/b]
-player, looks like we'll have to make
+`+ this.scene.game.playerName +`, looks like we'll have to make
 our way flying to the top of the tower.
 [b]D42K-H[/b]
 Let's look up there, follow me.
@@ -102,9 +102,9 @@ deactivate and you'll fall.
 [b]TIP[/b]
 You should never let this happen.`;
 
-this.dialogArray[3] = 
+    this.dialogArray[3] = 
 `[b]D42K-H[/b]
-Good job, player. I hope your air
+Good job, `+ this.scene.game.playerName +`. I hope your air
 navigation systems are up to date,
 [b]D42K-H[/b]
 because you'll surely need them here.
@@ -125,21 +125,21 @@ shoot, click the left mouse button.
 Defeated enemies drop energy cells, which
 you can use to keep ascending through the tower.`;
 
-this.dialogArray[4] = 
+    this.dialogArray[4] = 
 `[b]D42K-H[/b]
-Careful, player! Looks like the defence
+Careful, `+ this.scene.game.playerName +`! Looks like the defence
 systems of Starvail include laser barriers.
 [b]D42K-H[/b]
 Do you think the human gods keep those active?
 Why would they impede us ascending the tower?
 [b]D42K-H[/b]
 ...
-
+    
 [b]D42K-H[/b]
 It's not like we can ask them, anyway. All
 that is left in the physichal world is us, androids.
 [b]D42K-H[/b]
-Let's keep going, player.
+Let's keep going, `+ this.scene.game.playerName +`.
 Watch out for the lasers, fly over them.
 [b]TIP[/b]
 Lasers are harmful elements that will repel
@@ -149,8 +149,8 @@ Sometimes they will block your way, in which
 case you'll have to find another route.
 [b]TIP[/b]
 In any case, you must keep away from them.`;
-
-this.dialogArray[5] = 
+    
+    this.dialogArray[5] = 
 `[b]D42K-H[/b]
 Hmm... look at what we've got here, it's a
 support storage unit!
@@ -170,17 +170,17 @@ so you should always open them.
 To open a chest or interact with any item,
 you, click on said item.`;
 
-this.dialogArray[6] = 
+    this.dialogArray[6] = 
 `[b]D42K-H[/b]
 Keep an eye on the lasers!`;
-
-this.dialogArray[7] = 
+    
+    this.dialogArray[7] = 
 `[b]D42K-H[/b]
 Hmm, what is this? An orange laser barrier?
 From the data I can analyze, looks like
 [b]D42K-H[/b]
 these barriers can be managed by external
-handlers. Try activating this button, player.
+handlers. Try activating this button, `+ this.scene.game.playerName +`.
 [b]TIP[/b]
 Orange laser barriers, unlike red laser
 barriers, can always be deactivated using their
@@ -193,10 +193,10 @@ in your surroundings.
 [b]TIP[/b]
 Barriers, both red and orange, may appear
 randomly, so keep an eye for them!`;
-
-this.dialogArray[8] = 
+    
+    this.dialogArray[8] = 
 `[b]D42K-H[/b]
-Good job, player!
+Good job, `+ this.scene.game.playerName +`!
 ...!
 [b]D42K-H[/b]
 Watch out, there's an automaton here!
@@ -216,9 +216,9 @@ And remember, if your health bar empties...
 [b]TIP[/b]
 [b]your journey will come to an abrupt end[/b]`;
 
-this.dialogArray[9] = 
+    this.dialogArray[9] = 
 `[b]D42K-H[/b]
-Good battle performance, player!
+Good battle performance, `+ this.scene.game.playerName +`!
 Looks like this is the end of this block.
 [b]D42K-H[/b]
 From this point up, the paths begin to
@@ -229,12 +229,12 @@ one.[/b] I won't accompany you, though, as
 [b]D42K-H[/b]
 this is a trial that we must face alone in
 order to attain enlightenment.
-[b]player[/b]
+[b]`+ this.scene.game.playerName +`[/b]
 ...
 
 [b]D42K-H[/b]
 Do you think we'll find the meaning of our
-existence here, player?
+existence here, `+ this.scene.game.playerName +`?
 [b]D42K-H[/b]
 We came here to witness the 'birth of a
 new star'. We must reach the top of this
@@ -258,8 +258,8 @@ to see, but if you look carefully you'll see
 it. The moon rises from the west and hides to the east
 [b]D42K-H[/b]
 near dawn. If that happens, you'll have missed
-the opportunity, player. Keep an eye on it.
-[b]player[/b]
+the opportunity, `+ this.scene.game.playerName +`. Keep an eye on it.
+[b]`+ this.scene.game.playerName +`[/b]
 ...
 Okay.
 [b]D42K-H[/b]
@@ -284,12 +284,12 @@ time to fulfill my primordial task:
 reaching the top of this tower before
 sunrise. I advice you to do
 [b]D42K-H[/b]
-the same, player.The only thing 
+the same, `+ this.scene.game.playerName +`.The only thing 
 that matters is reaching the top of Starvail Tower.
 [b]D42K-H[/b]
 Don't let that data be ignored.
 
-[b]player[/b]
+[b]`+ this.scene.game.playerName +`[/b]
 ...
 
 [b]D42K-H[/b]
@@ -300,7 +300,7 @@ This upgrade will allow your cannon
 to shoot a new type of ammo: bombs.
 [b]D42K-H[/b]
 I hope this helps you in your way up,
-player.
+`+ this.scene.game.playerName +`.
 [b]D42K-H[/b]
 Now, it's time to part ways. I will meet
 you at the top of the tower, to witness
@@ -336,8 +336,9 @@ This concludes your introduction to the world
 of Starvail. 
 [b]TIP[/b]
 Now, go forth and discover the true meaning 
-of life, player!`;
-this.dialogArray[10] = 
+of life, `+ this.scene.game.playerName +`!`;
+
+    this.dialogArray[10] = 
 `[b]D42K-H[/b]
 I don't think you should be seeing this.`;
     this.currentDialog = -1;

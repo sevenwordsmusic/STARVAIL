@@ -32,74 +32,74 @@ export default class NPC_Droid_1 extends FiniteStateMachine{
 
     this.dialogArray = [];
     this.dialogArray[0] =
-    `[b]Vagrant Droid[/b]
-    Please, help me get rid of these bullies!`;
+`[b]Vagrant Droid #1[/b]
+Please, help me get rid of these bullies!`;
 
     this.dialogArray[1] =
-    `[b]Vagrant Droid[/b]
-    Wow, thank you, stranger fellow android!
-    I don't fear death, but as weird as it sounds,
-    [b]Vagrant Droid[/b]
-    I hate pain that brings no death.
-    What is your name, if I can know?
-    [b]player[/b]
-    My name is player.
+`[b]Vagrant Droid #1[/b]
+Wow, thank you, stranger fellow android!
+I don't fear death, but as weird as it sounds,
+[b]Vagrant Droid #1[/b]
+I hate pain that brings no death.
+What is your name, if I can know?
+[b]`+ this.scene.game.playerName + `[/b]
+My name is `+ this.scene.game.playerName + `.
 
-    [b]B0RG35[/b]
-    Nice to meet you, player!
-    My name is B0RG35.
-    [b]B0RG35[/b]
-    I'm a vagrant droid, or a infected one,
-    it depends on the unit that evaluates it.
-    [b]B0RG35[/b]
-    Seeing you are not hostile to me, I guess
-    you are similar to me, searching for meaning.
-    [b]B0RG35[/b]
-    Why do you think we vagrants search for a
-    response to our paradoxical, immortal, existence?
-    [b]B0RG35[/b]
-    If you ask me, I think it's not a malware, or
-    a system malfunction, but a curse.
-    [b]B0RG35[/b]
-    I didn't challenge Starvail Tower because I fear
-    death. [i]What I fear the most, is immortality.[/i]
-    [b]B0RG35[/b]
-    To be honest, I'm tired of being B0RG35.
-    Do you think our human creators left because
-    [b]B0RG35[/b]
-    they grew tired of their immortal existence, and
-    decided to trascend to another state of being?
-    [b]B0RG35[/b]
-    I think maybe they did. Now, looks like I'm not
-    equipped with the hardware necessary to ascend
-    [b]B0RG35[/b]
-    to the top of this tower, but you may be. Take
-    this plugin weapon, player.
-    OBTAINED PLUGIN WEAPON: [B]SONIC BULLETS [/b]
+[b]B0RG35[/b]
+Nice to meet you, `+ this.scene.game.playerName +`!
+My name is B0RG35.
+[b]B0RG35[/b]
+I'm a vagrant droid, or a infected one,
+it depends on the unit that evaluates it.
+[b]B0RG35[/b]
+Seeing you are not hostile to me, I guess
+you are similar to me, searching for meaning.
+[b]B0RG35[/b]
+Why do you think we vagrants search for a
+response to our paradoxical, immortal, existence?
+[b]B0RG35[/b]
+If you ask me, I think it's not a malware, or
+a system malfunction, but a curse.
+[b]B0RG35[/b]
+I didn't challenge Starvail Tower because I fear
+death. [i]What I fear the most, is immortality.[/i]
+[b]B0RG35[/b]
+To be honest, I'm tired of being B0RG35.
+Do you think our human creators left because
+[b]B0RG35[/b]
+they grew tired of their immortal existence, and
+decided to trascend to another state of being?
+[b]B0RG35[/b]
+I think maybe they did. Now, looks like I'm not
+equipped with the hardware necessary to ascend
+[b]B0RG35[/b]
+to the top of this tower, but you may be. Take
+this plugin weapon, `+ this.scene.game.playerName +`.
+OBTAINED PLUGIN WEAPON: [B]SONIC BULLETS [/b]
 
 
-    [b]B0RG35[/b]
-    These bullets are the fastest you can find!
-    They also do more damage, they're a 'blast'.
-    [b]B0RG35[/b]
-    This is all I can give you, player...
-    I'm so grateful for the time you gifted me.
-    [b]B0RG35[/b]
-    Even if I didn't see the birth of the new star,
-    I think I found what I searched for when you
-    [b]B0RG35[/b]
-    saved me, player.
-    May you have a fulfilling existence, if you
-    [b]B0RG35[/b]
-    can bear the pain of immortality, that is.
-    Farewell!`;
+[b]B0RG35[/b]
+These bullets are the fastest you can find!
+They also do more damage, they're a 'blast'.
+[b]B0RG35[/b]
+This is all I can give you, `+ this.scene.game.playerName +`...
+I'm so grateful for the time you gifted me.
+[b]B0RG35[/b]
+Even if I didn't see the birth of the new star,
+I think I found what I searched for when you
+[b]B0RG35[/b]
+saved me, `+ this.scene.game.playerName +`.
+May you have a fulfilling existence, if you
+[b]B0RG35[/b]
+can bear the pain of immortality, that is.
+Farewell!`;
 
     this.dialogArray[2] =
-    `[b]B0RG35[/b]
-    May you have a fulfilling existence, if you
-    can bear the pain of immortality, that is.
-    [b]B0RG35[/b]
-    Farewell!`;
+`[b]B0RG35[/b]
+May you have a fulfilling existence, if you
+can bear the pain of immortality, that is.
+[b]B0RG35[/b]
+Farewell!`;
 
     this.currentDialog = -1;
 

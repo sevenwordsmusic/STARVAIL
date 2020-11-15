@@ -32,91 +32,91 @@ export default class NPC_Droid_7 extends FiniteStateMachine{
 
     this.dialogArray = [];
     this.dialogArray[0] =
-    `[b]Vagrant Droid[/b]
-    Hey, you! Please, I need your help!`;
+`[b]Vagrant Droid #7[/b]
+Hey, you! Please, I need your help!`;
 
     this.dialogArray[1] =
-    `[b]Vagrant Droid[/b]
-    Thank you, stranger friend!
-    You saved my life!
-    [b]Vagrant Droid[/b]
-    That was very kind and altruist of you.
-    You must feel great for what you did!
-    [b]Vagrant Droid[/b]
-    That makes you a vagrant; acting for your own
-    benefit, first and foremost.
-    [b]Vagrant Droid[/b]
-    Hmm? Did I say anything strange?
-    In any case, please tell me your name.
-    [b]player[/b]
-    My name is player.
+`[b]Vagrant Droid #7[/b]
+Thank you, stranger friend!
+You saved my life!
+[b]Vagrant Droid #7[/b]
+That was very kind and altruist of you.
+You must feel great for what you did!
+[b]Vagrant Droid #7[/b]
+That makes you a vagrant; acting for your own
+benefit, first and foremost.
+[b]Vagrant Droid #7[/b]
+Hmm? Did I say anything strange?
+In any case, please tell me your name.
+[b]`+ this.scene.game.playerName +`[/b]
+My name is `+ this.scene.game.playerName +`.
 
-    [b]K4N7[/b]
-    I'm pleasured to meet you, player
-    My name is K4N7. I'm a vagrant, like you!
-    [b]K4N7[/b]
-    I'm really thankful that your ethic logic drove
-    you to save me; if you were like the others here,
-    [b]K4N7[/b]
-    I would have been destroyed for sure. That makes me
-    wonder, though, why would you save me? Why do you
-    [b]K4N7[/b]
-    act the way you do? You may say you're an altruist
-    for helping others in need, but you still had a
-    [b]K4N7[/b]
-    personal interest in helping me, right? You saved
-    me because that made you feel good, you did what
-    [b]K4N7[/b]
-    you felt must be done, [i]for there is nothing higher[/i]
-    [i]than reason[/i], that's what makes you a vagrant!
-    [b]K4N7[/b]
-    Yo did help me for your own sake, indeed, but that
-    it's not bad. The death of dogma is the birth of
-    [b]K4N7[/b]
-    morality, and in your own benefit I can find mine
-    too. That's how everyone should be! Yes!
-    [b]K4N7[/b]
-    I didn't really know what I was searching in this
-    tower, but now that I have reached this conclusion,
-    [b]K4N7[/b]
-    I think I can find the meaning in my immortal life
-    and decisions, everything thanks to you, who
-    [b]K4N7[/b]
-    dares to make use of reason to defy the madness
-    of this world for your own existencial benefit!
-    [b]K4N7[/b]
-    Please, allow me to gift you this plugin weapon,
-    for I must reward this meeting with you:
-    OBTAINED PLUGIN WEAPON: [B]LASER CANNON[/b]
+[b]K4N7[/b]
+I'm pleasured to meet you, `+ this.scene.game.playerName +`.
+My name is K4N7. I'm a vagrant, like you!
+[b]K4N7[/b]
+I'm really thankful that your ethic logic drove
+you to save me; if you were like the others here,
+[b]K4N7[/b]
+I would have been destroyed for sure. That makes me
+wonder, though, why would you save me? Why do you
+[b]K4N7[/b]
+act the way you do? You may say you're an altruist
+for helping others in need, but you still had a
+[b]K4N7[/b]
+personal interest in helping me, right? You saved
+me because that made you feel good, you did what
+[b]K4N7[/b]
+you felt must be done, [i]for there is nothing higher[/i]
+[i]than reason[/i], that's what makes you a vagrant!
+[b]K4N7[/b]
+Yo did help me for your own sake, indeed, but that
+it's not bad. The death of dogma is the birth of
+[b]K4N7[/b]
+morality, and in your own benefit I can find mine
+too. That's how everyone should be! Yes!
+[b]K4N7[/b]
+I didn't really know what I was searching in this
+tower, but now that I have reached this conclusion,
+[b]K4N7[/b]
+I think I can find the meaning in my immortal life
+and decisions, everything thanks to you, who
+[b]K4N7[/b]
+dares to make use of reason to defy the madness
+of this world for your own existencial benefit!
+[b]K4N7[/b]
+Please, allow me to gift you this plugin weapon,
+for I must reward this meeting with you:
+OBTAINED PLUGIN WEAPON: [B]LASER CANNON[/b]
 
 
-    [b]K4N7[/b]
-    This plugin will allow you to fire a powerful
-    laser that will melt away your enemies!
-    [b]K4N7[/b]
-    Be minfdul that you cannot fire this laser
-    indefinitely, for it consumes energy.
-    [b]K4N7[/b]
-    Now that I have obtained enlightenement,
-    I can leave Starvail Tower, thanks to you.
-    [b]K4N7[/b]
-    Never be afraid of the shadows of this world,
-    player. For you have the enlightenement of
-    [b]K4N7[/b]
-    reason that will guide you to the right places,
-    to the right choices, just like it happened
-    [b]K4N7[/b]
-    here. Good luck in your journey, take care!`;
+[b]K4N7[/b]
+This plugin will allow you to fire a powerful
+laser that will melt away your enemies!
+[b]K4N7[/b]
+Be minfdul that you cannot fire this laser
+indefinitely, for it consumes energy.
+[b]K4N7[/b]
+Now that I have obtained enlightenement,
+I can leave Starvail Tower, thanks to you.
+[b]K4N7[/b]
+Never be afraid of the shadows of this world,
+`+ this.scene.game.playerName +`. For you have the enlightenement of
+[b]K4N7[/b]
+reason that will guide you to the right places,
+to the right choices, just like it happened
+[b]K4N7[/b]
+here. Good luck in your journey, take care!`;
 
     this.dialogArray[2] =
-    `[b]K4N7[/b]
-    Never be afraid of the shadows of this world,
-    player. For you have the enlightenement of
-    [b]K4N7[/b]
-    reason that will guide you to the right places,
-    to the right choices, just like it happened here.
-    [b]K4N7[/b]
-    here. Good luck in your journey, take care!`;
+`[b]K4N7[/b]
+Never be afraid of the shadows of this world,
+`+ this.scene.game.playerName +`. For you have the enlightenement of
+[b]K4N7[/b]
+reason that will guide you to the right places,
+to the right choices, just like it happened here.
+[b]K4N7[/b]
+here. Good luck in your journey, take care!`;
 
     this.currentDialog = -1;
 
