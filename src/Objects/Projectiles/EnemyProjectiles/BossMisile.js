@@ -11,12 +11,12 @@ export default class BossMisile extends Projectile {
     this.knockback = knockback;
 
     //inicializacion
-    this.sprite = scene.matter.add.sprite(x,y,'missile',0);
+    this.sprite = scene.matter.add.sprite(x,y,'bullets',2);
 
     const body = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,6);
 
     this.sprite.setExistingBody(body).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
-    this.sprite.setDepth(5);
+    this.sprite.setDepth(5).setScale(1.75,1.3);
     this.sprite.setSensor(true).setIgnoreGravity(true);
     this.sprite.body.frictionAir = 0;
     this.sprite.body.collisionFilter.group = -3;
@@ -25,7 +25,7 @@ export default class BossMisile extends Projectile {
     this.pVelocity = velDir;
     this.pVelocity = this.pVelocity.normalize();
     this.sprite.setVelocity(this.pVelocity.x * speed, this.pVelocity.y * speed);
-    this.sprite.angle = this.pVelocity.angle() * 180/Math.PI + 90;
+    this.sprite.angle = this.pVelocity.angle() * 180/Math.PI;
 
     this.projectileArmed = this.scene.matterCollision.addOnCollideStart({
       objectA: this.sprite.body,

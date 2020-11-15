@@ -48,6 +48,7 @@ export default class Mecha extends Enemy {
     //No Tocar
 
     //Ajustar estas
+    this.points = 150;               //puntos al matar a enemigo
     this.patrolRouteLength = 100*this.scene.matter.world.getDelta();  //al patrullar cuanto se desplaza antes de darse la vuelta
     this.patrolSpeed = 1.5/this.scene.matter.world.getDelta();        //velocidad al patrullar
     this.detectDistance = 500;                                        //distancia a la uqe detecta el jugador cuando esta patrullando
@@ -205,15 +206,17 @@ export default class Mecha extends Enemy {
      if (bodyB.isSensor) return;
      this.leftMultiply = 1;
      this.rightMultiply = 1;
-     if(this.scene.tileBodyMatrix[Math.floor(bodyB.position.x/32) - 2][Math.floor(bodyB.position.y/32)] === undefined){
-       this.leftMultiply = 0;
-     }else{
-       this.leftMultiply = 1;
-     }
-     if(this.scene.tileBodyMatrix[Math.floor(bodyB.position.x/32) + 2][Math.floor(bodyB.position.y/32)] === undefined){
-       this.rightMultiply = 0;
-     }else{
-       this.rightMultiply = 1;
+     if(this.scene.tileBodyMatrix != undefined){
+       if(this.scene.tileBodyMatrix[Math.floor(bodyB.position.x/32) - 2][Math.floor(bodyB.position.y/32)] === undefined){
+         this.leftMultiply = 0;
+       }else{
+         this.leftMultiply = 1;
+       }
+       if(this.scene.tileBodyMatrix[Math.floor(bodyB.position.x/32) + 2][Math.floor(bodyB.position.y/32)] === undefined){
+         this.rightMultiply = 0;
+       }else{
+         this.rightMultiply = 1;
+       }
      }
   }
 
@@ -278,7 +281,7 @@ export default class Mecha extends Enemy {
         new DropableGroundHealth(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.healthDrop);
         }
         new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
-      
+
       this.gun.destroy();
     }
   }

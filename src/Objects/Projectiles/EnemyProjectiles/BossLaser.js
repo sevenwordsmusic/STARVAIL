@@ -4,13 +4,14 @@ import Audio from "../../../Audio.js";
 
 //proyectil que hereda de Projectile
 export default class BossLaser {
-  constructor(scene, x, y, dirVec){
+  constructor(scene, x, y, dirVec, gun){
     this.scene = scene;
-    this.parent = this;
+    this.gun = gun
     this.lethal = false;
 
     //inicializacion
     this.sprite = scene.matter.add.sprite(x,y,'laserNonLethal',0);
+    this.sprite.parent = this;
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this.sprite
@@ -34,10 +35,10 @@ export default class BossLaser {
         context: this
       });
       this.sprite.once('animationcomplete', function(){
-        this.scene.boss.goTo(0);
         this.projectileArmed();
         this.itemExpire(this);
         this.scene.boss.lethalLaser = false;
+        this.gun.laser = undefined;
       },this);
     },this);
   }

@@ -375,8 +375,13 @@ export default class Level2 extends Phaser.Scene {
       //AUDIO:
         Audio.update(this);
       //
-    this.moon.x += (delta*this.game.moonVelocity);
-    this.game.moonPos.x = this.moon.x;
+    if(this.moon.x < this.game.moonMaxDistance){
+      this.moon.x += (delta*this.game.moonVelocity);
+      this.game.moonPos.x = this.moon.x;
+    }
+    else if(!this.game.timeExpired) {
+      this.game.timeExpired = true;
+    }
 
 
     if (this.ESC.isDown){

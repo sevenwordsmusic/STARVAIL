@@ -9,14 +9,14 @@ export default class BossBefore extends FiniteStateMachine{
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.add.sprite(x,y,'playerIdle',0).setScale(1.5).setFlipX(true);
+    this.sprite = scene.add.sprite(x,y,'mentorIdle',0).setScale(1.5).setFlipX(true);
 
     this.isFiring = false;
 
     this.isTalking = false;
     this.dialogArray = [];
     //DIALOGO DE FINAL BUENO (Ha ayudado a 2 o mas droides)
-    this.dialogArray[0] = 
+    this.dialogArray[0] =
 `[b]D42K-H[/b]
 ...
 
@@ -51,7 +51,7 @@ Let me explain, then...
 [size=22]The meaning of life is death.[/size]
 
 [b]D42K-H[/b]
-This may strike you as dramatic, but it is 
+This may strike you as dramatic, but it is
 the truth, `+ this.scene.game.playerName +`.
 [b]D42K-H[/b]
 Think about it: life only has meaning because
@@ -87,14 +87,14 @@ Will you allow me to give you the gift of death?
 No. No!
 I don't want to die!
 [b]D42K-H[/b]
-It's a shame you still don't understand, but I 
+It's a shame you still don't understand, but I
 won't let your existence go without meaning.
 [b]D42K-H[/b]
 Fight me and die, `+ this.scene.game.playerName +`!
 That is what you exist for!`;
 
     //DIALOGO DE FINAL MALO (Ha ayudado a menos de 2 droides)
-    this.dialogArray[1] = 
+    this.dialogArray[1] =
 `[b]D42K-H[/b]
 ...
 
@@ -129,7 +129,7 @@ Let me explain, then...
 [size=22]The meaning of life is death.[/size]
 
 [b]D42K-H[/b]
-This may strike you as dramatic, but it is 
+This may strike you as dramatic, but it is
 the truth, `+ this.scene.game.playerName +`.
 [b]D42K-H[/b]
 Think about it: life only has meaning because
@@ -168,32 +168,23 @@ quickly. I'll follow you soon after.
 Let us die, `+ this.scene.game.playerName +`!
 This is what we exist for!`;
 
-    //DIALOGO EN CASO DE QUE AL JUGADOR SE LE HAYA TERMINADO EL TIEMPO:
-    //(Lo dejo aqui, pero en este caso el boss ni siquiera deberia spawnear)
-    this.dialogArray[2] = 
-`[b]`+ this.scene.game.playerName +`[/b]
-Hmm...?
-
-[size=25]Only a dark hole was there.[/size]
-
-There was no signs of D42K-H anywhere.
-
-[b]`+ this.scene.game.playerName +`[/b]
-...
-
-It looks like you ran out of time.
-Life waits no one. Remember that.`;
-
     this.currentDialog = -1;
     this.dialogDistance = 300;
     this.initX = x;
     this.initY = y;
 
+    this.sprite.anims.play("idleMentor",true);
+
     //IA
     //this.initializeAI(4);
     this.initializeAI(2);
     this.stateOnStart(0, function(){
-      this.currentDialog = 0;
+      if(this.scene.game.npcHelped>=2){
+        this.currentDialog = 0;
+      }
+      else {
+        this.currentDialog = 1;
+      }
     });
     this.stateUpdate(0, function(){
       if(Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2)) < this.dialogDistance){

@@ -114,8 +114,22 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('bossAirMove', 'assets/Sprites/Boss/boss_movefly.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bossAirDown', 'assets/Sprites/Boss/boss_movedown.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bossDeath', 'assets/Sprites/Boss/boss_death.png', { frameWidth: 64, frameHeight: 64 });
-    //this.load.image('bossFireArm', 'assets/Sprites/Boss/boss_FireArm.png', { frameWidth: 32, frameHeight: 64 });
+
+    this.load.image('bossFireArm', 'assets/Sprites/Boss/boss_FireArm.png', { frameWidth: 32, frameHeight: 64 });
+
+    this.load.spritesheet('mentorRun', 'assets/Sprites/Boss/boss_run_withgun.png', { frameWidth: 64, frameHeight: 75 });
+    this.load.spritesheet('mentorIdle', 'assets/Sprites/Boss/boss_idle_withgun.png', { frameWidth: 64, frameHeight: 75 });
+    this.load.spritesheet('mentorAirUp', 'assets/Sprites/Boss/boss_moveup_withgun.png', { frameWidth: 64, frameHeight: 75 });
+    this.load.spritesheet('mentorAirIdle', 'assets/Sprites/Boss/boss_flyidle_withgun.png', { frameWidth: 64, frameHeight: 75 });
+    this.load.spritesheet('mentorAirMove', 'assets/Sprites/Boss/boss_movefly_withgun.png', { frameWidth: 64, frameHeight: 75 });
+    this.load.spritesheet('mentorAirDown', 'assets/Sprites/Boss/boss_movedown_withgun.png', { frameWidth: 64, frameHeight: 75 });
     //BOSS
+
+    //EFCTOS FIN JUEGO
+    this.load.spritesheet('kilonova', 'assets/Sprites/VFX/kilonova_400X400_95.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole', 'assets/Sprites/VFX/dark_hole_400X400_135.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('pulsar', 'assets/Sprites/VFX/pulsar_400X400_60.png', { frameWidth: 400, frameHeight: 400 });
+    //EFCTOS FIN JUEGO
 
     //ENEMIGOS
     //GROUND
@@ -503,7 +517,73 @@ export default class SceneLoading extends Phaser.Scene {
         frameRate: 1,
         repeat: -1
     });
+
+
+
+    this.anims.create({
+        key: 'wRightMentor',
+        frames: this.anims.generateFrameNumbers('mentorRun', { start: 0, end: 7 }),
+        frameRate: 14,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'idleMentor',
+        frames: this.anims.generateFrameNumbers('mentorIdle', { start: 0, end: 6 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'propulsionMentor',
+        frames: this.anims.generateFrameNumbers('mentorAirUp', { start: 0, end: 1 }),
+        frameRate: 20,
+        repeat: 0
+    });
+    this.anims.create({
+        key: 'airIdleMentor',
+        frames: this.anims.generateFrameNumbers('mentorAirIdle', { start: 0, end: 6 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'airUpMentor',
+        frames: this.anims.generateFrameNumbers('mentorAirUp', { start: 1, end: 1 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'airMoveMentor',
+        frames: this.anims.generateFrameNumbers('mentorAirMove', { start: 0, end: 0 }),
+        frameRate: 1,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'airDownMentor',
+        frames: this.anims.generateFrameNumbers('mentorAirDown', { start: 0, end: 0 }),
+        frameRate: 1,
+        repeat: -1
+    });
     //BOSS
+
+    //EFECTOS FIN JUEGO
+    this.anims.create({
+        key: 'kilonova',
+        frames: this.anims.generateFrameNumbers('kilonova', { start: 0, end: 94 }),
+        frameRate: 8,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'darkHole',
+        frames: this.anims.generateFrameNumbers('darkHole', { start: 0, end: 134 }),
+        frameRate: 8,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'pulsar',
+        frames: this.anims.generateFrameNumbers('pulsar', { start: 0, end: 59 }),
+        frameRate: 8,
+        repeat: -1
+    });
+    //EFECTOS FIN JUEGO
 
     //ENEMIGOS
     this.anims.create({

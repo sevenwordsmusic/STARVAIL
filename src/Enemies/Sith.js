@@ -41,6 +41,7 @@ export default class Sith extends Enemy {
     //No Tocar
 
     //Ajustar estas
+    this.points = 200;               //puntos al matar a enemigo
     this.detectSpeed = 4/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.hitDistance = 80;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 1.4/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando

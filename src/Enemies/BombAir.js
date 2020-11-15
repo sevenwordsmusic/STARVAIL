@@ -44,6 +44,7 @@ export default class BombAir extends Enemy {
     //No Tocar
 
     //Ajustar estas
+    this.points = 75;               //puntos al matar a enemigo
     this.patrolRouteLength = 100;  //al patrullar cuanto se desplaza antes de darse la vuelta
     this.patrolSpeed = 2;                                             //velocidad al patrullar
     this.detectDistance = 250;                                        //distancia a la uqe detecta el jugador cuando esta patrullando

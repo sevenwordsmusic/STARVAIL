@@ -12,12 +12,12 @@ export default class BossBomb extends Projectile {
     this.area = 45;
 
     //inicializacion
-    this.sprite = scene.matter.add.sprite(x,y,'explodingBomb',0);
+    this.sprite = scene.matter.add.sprite(x,y,'bullets',7);
 
-    const body = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,6);
+    const body = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,7);
 
     this.sprite.setExistingBody(body).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
-    this.sprite.setDepth(5).setScale(0.75);
+    this.sprite.setDepth(5).setScale(1.25);
     this.sprite.body.frictionAir = 0;
     this.sprite.body.collisionFilter.group = -3;
 

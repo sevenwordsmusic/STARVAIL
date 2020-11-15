@@ -144,15 +144,18 @@ var game = new Phaser.Game(config);
 console.log(game);                      //el bug de exces memory podría deberse a que el explorador recuerda los recursos cargados en el cache del juego
 
 game.playerName = "Player";
+game.points = 0;
+game.npcHelped = 0;
+game.timeExpired = false;
 
 //Declaramos variables globales del juego.
 game.moveVelocity = 0.22;            //velocidad horizontal en el suelo
 game.moveVelocityAir = 0.275;         //velocidad horizontal en el aire
 game.jetVelocity = 0.3;             //velocidad de ascenso
 game.jetVelocityDown = 0.3;         //velocidad de descenso
-game.totalPlayerHp = 9999999999;           //1000
-game.hpRecoveryRate = 9999999999;                  //1
-game.totalPlayerEnergy = 9999999999;     //1000
+game.totalPlayerHp = 1000;           //1000
+game.hpRecoveryRate = 1;                  //1
+game.totalPlayerEnergy = 1000;     //1000
 game.energyRecoveryRate = 0.2;
 game.energyCostJetBeginning = 0;      //energia por segundo que se gasta justo al empezar (es un valor base de coste)
 game.energyJetIncrease = 1.008/*9   */   //velocidad con la que aumenta el coste del jet
@@ -176,7 +179,8 @@ for(var i=0; i<7; i++){
 }
 
 game.moonPos = new Phaser.Math.Vector2(130, 130);
-game.moonVelocity = 1/200;      //si = 1 -> avanza 50 unidades en un segundo
+game.moonVelocity = 0.032;      //si = 1 -> avanza 60 unidades en un segundo
+game.moonMaxDistance = 1050
 game.currentBgAnimation = 0;
 game.transitionToScene = function(scene, keyNext, sceneNext){
   var SceneCurrentClass = eval(scene.constructor.name);

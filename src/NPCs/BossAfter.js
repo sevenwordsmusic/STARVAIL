@@ -123,7 +123,12 @@ Even if I'm lonely now.`;
     //this.initializeAI(4);
     this.initializeAI(1);
     this.stateOnStart(0, function(){
-      this.currentDialog = 0;
+      if(this.scene.game.npcHelped>=2){
+        this.currentDialog = 0;
+      }
+      else {
+        this.currentDialog = 1;
+      }
     });
     this.startAI();
     this.scene.events.on("update", this.update, this);  //para que el update funcione
@@ -142,6 +147,9 @@ Even if I'm lonely now.`;
   finishedDialog(){
     this.isTalking = false;
     this.scene.events.off("update", this.update);
+    this.sprite.disableInteractive();
+    if(this.scene.game.player.alive)
+      this.scene.game.player.playerVictory();
   }
 
 

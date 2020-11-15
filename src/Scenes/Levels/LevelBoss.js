@@ -30,6 +30,7 @@ import NPC_Droid_8 from "../../NPCs/NPC_Droid_8.js"
 import NPC_Droid_Default1 from "../../NPCs/NPC_Droid_Default1.js"
 import NPC_Droid_Default2 from "../../NPCs/NPC_Droid_Default2.js"
 import BossBefore from "../../NPCs/BossBefore.js"
+import BadEndingTrigger from "../../NPCs/BadEndingTrigger.js"
 import LevelEnd from "../../Objects/LevelEnd.js";
 import Audio from "../../Audio.js";
 import InteractableChest from "../../Objects/Interactables/InteractableChest.js"
@@ -107,7 +108,8 @@ export default class LevelBoss extends Phaser.Scene {
     //this.add.image(1100, 320, 'bg2_e').setScale(2).setScrollFactor(0.5).setDepth(-501);
     //this.add.image(1200, 400, 'bg3_e').setScale(2).setScrollFactor(0.75).setDepth(-500);
 
-    this.moon = this.add.sprite(this.game.moonPos.x, this.game.moonPos.y, 'moon', 0).setScrollFactor(0).setDepth(-400);
+
+    this.moon = this.add.sprite(480, 150, 'kilonova', 0).setScrollFactor(0).setDepth(-400);
     this.timeBg = this.add.sprite(480, 270, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
 
 
@@ -160,7 +162,11 @@ export default class LevelBoss extends Phaser.Scene {
         //nada
       }
       else if(point.name == "BOSS"){
-        new BossBefore(this, point.x, point.y - 20);
+        if(!this.game.timeExpired){
+          new BossBefore(this, point.x, point.y - 20);
+        }else{
+          new BadEndingTrigger(this, point.x, point.y);
+        }
       }
       else if(point.name == "NPC1"){
         new NPC_Droid_Default1(this, point.x, point.y);
@@ -368,11 +374,7 @@ export default class LevelBoss extends Phaser.Scene {
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
     //AUDIO:
-    Audio.audioUpdate(this);
-
-    this.moon.x += (delta*this.game.moonVelocity);
-    this.game.moonPos.x = this.moon.x;
-
+    Audio.update(this);
 
     if (this.ESC.isDown){
       if (!this.inPause) {

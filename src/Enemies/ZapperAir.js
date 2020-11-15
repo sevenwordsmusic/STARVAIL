@@ -45,6 +45,7 @@ export default class ZapperAir extends Enemy {
     //No Tocar
 
     //Ajustar estas
+    this.points = 40;               //puntos al matar a enemigo
     this.patrolRouteLength = 100;  //al patrullar cuanto se desplaza antes de darse la vuelta
     this.patrolSpeed = 3;                                             //velocidad al patrullar
     this.detectDistance = 250;                                        //distancia a la uqe detecta el jugador cuando esta patrullando

@@ -1,6 +1,7 @@
 import Audio from "../Audio.js";
 import FiniteStateMachine from "../FiniteStateMachine.js"
 import Dialog from "../Plugins/Dialog.js"
+import TileController from "../TileController.js"
 
 //Clase padre de todos los enemigos
 export default class Mentor extends FiniteStateMachine {
@@ -8,7 +9,7 @@ export default class Mentor extends FiniteStateMachine {
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.matter.add.sprite(x, y, 'playerIdle', 0).setScale(2);
+    this.sprite = scene.matter.add.sprite(x, y, 'mentorIdle', 0).setScale(2);
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter; // Native Matter modules
     const { width: w, height: h } = this.sprite;
@@ -30,7 +31,9 @@ export default class Mentor extends FiniteStateMachine {
 
     this.touchingGround = false;
     this.sprite.setIgnoreGravity(false);
-    this.sprite.body.collisionFilter.group = -1;
+    this.sprite.body.collisionFilter.group = -2;
+    this.sprite.body.collisionFilter.mask = 1;
+    this.sprite.body.collisionFilter.category = 4;
 
     scene.matterCollision.addOnCollideStart({
       objectA: this.sensor,
@@ -65,7 +68,7 @@ export default class Mentor extends FiniteStateMachine {
     //DIALOGOS
     this.isTalking = false;
     this.dialogArray = [];
-    this.dialogArray[0] = 
+    this.dialogArray[0] =
 `[b]D42K-H[/b]
 Finally... `+ this.scene.game.playerName +`, here we are!
 Behold, here rises the Starvail Tower!
@@ -73,14 +76,14 @@ Behold, here rises the Starvail Tower!
 This is the last bastion of our creators,
 the place where life is born and dies...`;
 
-    this.dialogArray[1] = 
+    this.dialogArray[1] =
 `[b]D42K-H[/b]
 I can't wait to ascend! `+ this.scene.game.playerName +`,
 follow me, I'll tell you what I know.
 [b]TIP[/b]
 Use the A and D keys to run.`;
 
-    this.dialogArray[2] = 
+    this.dialogArray[2] =
 `[b]D42K-H[/b]
 Hmm... this place reeks of bad oil,
 it's more worn out than I expected...
@@ -102,7 +105,7 @@ deactivate and you'll fall.
 [b]TIP[/b]
 You should never let this happen.`;
 
-    this.dialogArray[3] = 
+    this.dialogArray[3] =
 `[b]D42K-H[/b]
 Good job, `+ this.scene.game.playerName +`. I hope your air
 navigation systems are up to date,
@@ -125,7 +128,7 @@ shoot, click the left mouse button.
 Defeated enemies drop energy cells, which
 you can use to keep ascending through the tower.`;
 
-    this.dialogArray[4] = 
+    this.dialogArray[4] =
 `[b]D42K-H[/b]
 Careful, `+ this.scene.game.playerName +`! Looks like the defence
 systems of Starvail include laser barriers.
@@ -134,7 +137,7 @@ Do you think the human gods keep those active?
 Why would they impede us ascending the tower?
 [b]D42K-H[/b]
 ...
-    
+
 [b]D42K-H[/b]
 It's not like we can ask them, anyway. All
 that is left in the physichal world is us, androids.
@@ -149,8 +152,8 @@ Sometimes they will block your way, in which
 case you'll have to find another route.
 [b]TIP[/b]
 In any case, you must keep away from them.`;
-    
-    this.dialogArray[5] = 
+
+    this.dialogArray[5] =
 `[b]D42K-H[/b]
 Hmm... look at what we've got here, it's a
 support storage unit!
@@ -170,11 +173,11 @@ so you should always open them.
 To open a chest or interact with any item,
 you, click on said item.`;
 
-    this.dialogArray[6] = 
+    this.dialogArray[6] =
 `[b]D42K-H[/b]
 Keep an eye on the lasers!`;
-    
-    this.dialogArray[7] = 
+
+    this.dialogArray[7] =
 `[b]D42K-H[/b]
 Hmm, what is this? An orange laser barrier?
 From the data I can analyze, looks like
@@ -193,8 +196,8 @@ in your surroundings.
 [b]TIP[/b]
 Barriers, both red and orange, may appear
 randomly, so keep an eye for them!`;
-    
-    this.dialogArray[8] = 
+
+    this.dialogArray[8] =
 `[b]D42K-H[/b]
 Good job, `+ this.scene.game.playerName +`!
 ...!
@@ -216,7 +219,7 @@ And remember, if your health bar empties...
 [b]TIP[/b]
 [b]your journey will come to an abrupt end[/b]`;
 
-    this.dialogArray[9] = 
+    this.dialogArray[9] =
 `[b]D42K-H[/b]
 Good battle performance, `+ this.scene.game.playerName +`!
 Looks like this is the end of this block.
@@ -284,7 +287,7 @@ time to fulfill my primordial task:
 reaching the top of this tower before
 sunrise. I advice you to do
 [b]D42K-H[/b]
-the same, `+ this.scene.game.playerName +`.The only thing 
+the same, `+ this.scene.game.playerName +`.The only thing
 that matters is reaching the top of Starvail Tower.
 [b]D42K-H[/b]
 Don't let that data be ignored.
@@ -333,15 +336,20 @@ do this, [b]you must conquer three levels [/b]
 
 [b]TIP[/b]
 This concludes your introduction to the world
-of Starvail. 
+of Starvail.
 [b]TIP[/b]
-Now, go forth and discover the true meaning 
+Now, go forth and discover the true meaning
 of life, `+ this.scene.game.playerName +`!`;
 
-    this.dialogArray[10] = 
+    this.dialogArray[10] =
 `[b]D42K-H[/b]
 I don't think you should be seeing this.`;
     this.currentDialog = -1;
+
+
+    this.flyFire = this.scene.add.sprite(x, y, 'fire_fly', 0);
+    this.flyFire.setScale(this.sprite.scale).setOrigin(0.5, 0.72);
+    this.flyFire.setVisible(false);
 
     //IA
     //this.initializeAI(4);
@@ -396,8 +404,9 @@ I don't think you should be seeing this.`;
       if (!this.reachedY)
         this.sprite.setVelocityY(this.speedVector.y * delta);
 
-      if (this.sprite.body.velocity.x * this.sprite.body.velocity.y == 0)
+      if (this.reachedX && this.reachedY){
         this.goTo(0);
+      }
     })
     this.startAI();
 
@@ -431,36 +440,48 @@ I don't think you should be seeing this.`;
   }
 
   update(time, delta) {
+    TileController.playerTouchBoundry(this.scene, this.sprite);
     this.updateAI(time, delta);
     this.playAnimation();
   }
 
   playAnimation() {
     if (!this.touchingGround) {
+      this.flyFire.setVisible(true);
       if (this.sprite.body.velocity.y > 0.1) {
-        this.sprite.anims.play('airDown', true);
+        this.sprite.anims.play('airDownMentor', true);
+        this.flyFire.anims.play('fire_movedown', true);
       } else if (Math.abs(this.sprite.body.velocity.x) > 0.1) {
-        this.sprite.anims.play('airMove', true);
+        this.sprite.anims.play('airMoveMentor', true);
+        this.flyFire.anims.play('fire_fly', true);
       } else if (this.sprite.body.velocity.y < -0.1) {
-        this.sprite.anims.play('airUp', true);
+        this.sprite.anims.play('airUpMentor', true);
+        this.flyFire.anims.play('fire_moveup', true);
       } else {
-        this.sprite.anims.play('airIdle', true);
+        this.sprite.anims.play('airIdleMentor', true);
+        this.flyFire.anims.play('fire_idle', true);
       }
+
     } else {
+      this.flyFire.setVisible(false);
       if (Math.abs(this.sprite.body.velocity.x) > 0.1) {
-        this.sprite.anims.play('wRight', true);
+        this.sprite.anims.play('wRightMentor', true);
       } else {
-        this.sprite.anims.play('idle', true);
+        this.sprite.anims.play('idleMentor', true);
       }
     }
+    this.flyFire.x = this.sprite.x;
+    this.flyFire.y = this.sprite.y;
 
     if (this.isFiring) {
       this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x);
     } else {
       if (this.sprite.body.velocity.x > 0.1) {
         this.sprite.setFlipX(false);
+        this.flyFire.setFlipX(false);
       } else if (this.sprite.body.velocity.x < -0.1) {
         this.sprite.setFlipX(true);
+        this.flyFire.setFlipX(true);
       }
     }
   }

@@ -11,6 +11,7 @@ var mouse;
 import Player from "../../PlayerStuff/Player.js";
 import Blackboard from "../../Enemies/Blackboard.js";
 import ZapperGround from "../../Enemies/ZapperGround.js";
+import ZapperGroundDummy from "../../Enemies/ZapperGroundDummy.js";
 import SwordGround from "../../Enemies/SwordGround.js";
 import Mecha from "../../Enemies/Mecha.js";
 import Sith from "../../Enemies/Sith.js";
@@ -164,6 +165,9 @@ export default class Tutorial extends Phaser.Scene {
         this.goalX = point.x;
         this.goalY = point.y;
       }
+      else if(point.name == "dummy"){
+        new ZapperGroundDummy(this, point.x, point.y)
+      }
       else if(point.name == "boss"){
         new BossBefore(this, point.x, point.y);
       }
@@ -228,16 +232,16 @@ export default class Tutorial extends Phaser.Scene {
         tileBody.original = undefined;
         tileBody.collisionFilter.category = 1;
         tileBody.collisionFilter.group = -4;
-        if (tileBody.position.x > this.playerStartX - 32*30 && tileBody.position.x < this.playerStartX + 32*30 && tileBody.position.y > this.playerStartY - 32*30 && tileBody.position.y < this.playerStartY + 32*30) {
+        //if (tileBody.position.x > this.playerStartX - 32*30 && tileBody.position.x < this.playerStartX + 32*30 && tileBody.position.y > this.playerStartY - 32*30 && tileBody.position.y < this.playerStartY + 32*30) {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, true);
           tileBody.collisionFilter.mask = 1;
-        } else {
+        /*} else {
           tileBodyMatrix[Math.floor(tileBody.position.x / 32)][Math.floor(tileBody.position.y / 32)] = new BodyWrapper(tileBody, false);
           tileBody.collisionFilter.mask = 0;
           tileBody.isSleeping = true;
           tileBody.gameObject.tile.setVisible(false);
           //Phaser.Physics.Matter.Matter.Composite.removeBody(tile.physics.matterBody.world.localWorld, tileBody);
-        }
+        }*/
         this.bulletInteracBodies[counerAux] = tile.physics.matterBody.body;
         counerAux++;
       }
@@ -375,10 +379,11 @@ export default class Tutorial extends Phaser.Scene {
 
       }
     //jugador
-    new Player(this, this.playerStartX, this.playerStartY);
+    new Player(this, this.playerStartX, this.playerStartY, true);
     //new Mentor(this, this.playerStartX + 400, this.playerStartY)
 
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
+    //cam.setZoom(0.25);
 
     //inicialización de meta
     new LevelEnd(this, this.goalX, this.goalY, 'star', 'testsec', Level1);
@@ -397,7 +402,7 @@ export default class Tutorial extends Phaser.Scene {
         Audio.update(this);
       //
     this.moon.x += (delta*this.game.moonVelocity);
-    this.game.moonPos.x = this.moon.x;
+    /*this.game.moonPos.x = this.moon.x;*/
 
 
     if (this.ESC.isDown){

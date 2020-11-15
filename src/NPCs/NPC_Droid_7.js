@@ -156,6 +156,7 @@ here. Good luck in your journey, take care!`;
       this.scene.game.player.recieveWeapon(this.weaponToGive);
       console.log("arma conseguida");
       this.goTo(2);
+      this.game.npcHelped++;
     }
     else if(this.currentStateId() == 0 && this.enemiesLeft<=0){
       this.goTo(1);

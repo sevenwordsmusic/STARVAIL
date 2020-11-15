@@ -11,7 +11,7 @@ export default class BossBullet extends Projectile {
     this.knockback = knockback;
 
     //inicializacion
-    this.sprite = scene.matter.add.sprite(x,y,'bullet1',0);
+    this.sprite = scene.matter.add.sprite(x,y,'bullets',6);
 
     const body = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,6);
 
@@ -25,7 +25,7 @@ export default class BossBullet extends Projectile {
     this.pVelocity = velDir;
     this.pVelocity = this.pVelocity.normalize();
     this.sprite.setVelocity(this.pVelocity.x * speed, this.pVelocity.y * speed);
-    this.sprite.angle = this.pVelocity.angle() * 180/Math.PI + 90;
+    this.sprite.angle = this.pVelocity.angle() * 180/Math.PI;
 
     this.projectileArmed = this.scene.matterCollision.addOnCollideStart({
       objectA: this.sprite.body,

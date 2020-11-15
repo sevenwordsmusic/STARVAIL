@@ -5,11 +5,12 @@ import TileController from "../TileController.js"
 import Audio from "../Audio.js";
 
 export default class Player {
-  constructor(scene, x, y) {
+  constructor(scene, x, y, tutorial = false) {
     //inicializacion
     this.scene = scene;
     this.sprite = scene.matter.add.sprite(x, y, 'playerIdle', 0);
     this.scene.game.player = this;
+    this.tutorial = tutorial;
 
     scene.matter.world.on("beforeupdate", this.resetTouching, this);
     this.scene.events.on("update", this.update, this);  //para que el update funcione
@@ -249,9 +250,6 @@ export default class Player {
     })
 
     this.recieveWeapon(0);
-    this.recieveWeapon(1);
-    this.recieveWeapon(3);
-    this.recieveWeapon(8);
     for(var i=0; i<this.scene.game.obtainedWeapons.length; i++){
       this.recieveWeapon(this.scene.game.obtainedWeapons[i]);
     }
@@ -317,20 +315,23 @@ export default class Player {
   }
 
   update(time, delta) {
-    if (!this.alive) { return; }
-    this.updateKnockback(time, delta);
+    if (this.sprite == undefined || this.sprite.body == undefined) { return; }
 
+    this.updateKnockback(time, delta);
     TileController.playerTouchBoundry(this.scene, this.sprite);
+    if (!this.alive) { return; }
 
     //this.updateBoundry();
-    if(this.sprite.body.position.x - this.earlyPos.x > 0.005)
-      TileController.xFrontiers(this.scene, 1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32));
-    else if(this.sprite.body.position.x - this.earlyPos.x < -0.005)
-      TileController.xFrontiers(this.scene, -1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
-    if(this.sprite.body.position.y - this.earlyPos.y > 0.005)
-      TileController.yFrontiers(this.scene, 1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
-    else if(this.sprite.body.position.y - this.earlyPos.y < -0.005)
-      TileController.yFrontiers(this.scene, -1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
+    if(!this.tutorial){
+      if(this.sprite.body.position.x - this.earlyPos.x > 0.005)
+        TileController.xFrontiers(this.scene, 1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32));
+      else if(this.sprite.body.position.x - this.earlyPos.x < -0.005)
+        TileController.xFrontiers(this.scene, -1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
+      if(this.sprite.body.position.y - this.earlyPos.y > 0.005)
+        TileController.yFrontiers(this.scene, 1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
+      else if(this.sprite.body.position.y - this.earlyPos.y < -0.005)
+        TileController.yFrontiers(this.scene, -1, 29, Math.floor(this.sprite.x/32), Math.floor(this.sprite.y/32))
+    }
 
     if(this.sprite.body.velocity.x > -0.01 && this.sprite.body.velocity.x < 0.01)
       this.sprite.body.velocity.x = 0;
@@ -587,6 +588,16 @@ export default class Player {
     }
   }
 
+  playerVictory(){
+    this.alive = false;
+    this.scene.input.off('pointerdown');
+    this.scene.input.off('pointerup');
+    if(this.weaponChange != undefined) {this.weaponChange.destroy();}
+    this.fireArm.destroyFireArm();
+    this.movingArm.destroy();
+    this.scene.game.changeScene(this.scene, "SceneScore");
+  }
+
   playerGainHealth(num){
     console.log(num);
     this.hp += num;
@@ -606,6 +617,7 @@ export default class Player {
     if(this.activatedJet){
       this.sprite.body.frictionAir = 0.01;
       this.sprite.setIgnoreGravity(false);
+      this.flyFire.setVisible(false);
       this.activatedJet = false;
     }
   }

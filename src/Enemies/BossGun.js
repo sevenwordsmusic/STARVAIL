@@ -6,7 +6,7 @@ import BossLaser from "../Objects/Projectiles/EnemyProjectiles/BossLaser.js"
 export default class BossGun {
   constructor(scene, x, y, dmg0, dmg1, dmg2){
     this.scene = scene;
-    this.sprite = scene.add.image(x,y,'playerFireArm')
+    this.sprite = scene.add.image(x,y,'bossFireArm')
     this.sprite.angle = Phaser.Math.Between(-180,0);
     this.sprite.setScale(1.5).setOrigin(0.05,0.5).setDepth(6);
     this.exists = true;
@@ -54,7 +54,8 @@ export default class BossGun {
     }
   }
   fireLaser(){
-    this.laser = new BossLaser(this.scene, this.sprite.x, this.sprite.y, this.aimVector);
+    if(this.laser == undefined)
+      this.laser = new BossLaser(this.scene, this.sprite.x, this.sprite.y, this.aimVector, this);
   }
 
   fireMegaLaser(){

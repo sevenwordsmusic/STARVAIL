@@ -42,6 +42,7 @@ export default class SwordGround extends Enemy {
     //No Tocar
 
     //Ajustar estas
+    this.points = 50;               //puntos al matar a enemigo
     this.patrolRouteLength = 100*this.scene.matter.world.getDelta();  //al patrullar cuanto se desplaza antes de darse la vuelta
     this.patrolSpeed = 1/this.scene.matter.world.getDelta();        //velocidad al patrullar
     this.detectDistance = 250;                                        //distancia a la uqe detecta el jugador cuando esta patrullando

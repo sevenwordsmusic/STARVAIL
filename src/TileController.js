@@ -62,6 +62,7 @@ export default class TileController {
   }
 
   static enemyHalfTouchBoundry(scene, sprite, sideNum, verNum, verDisplace = 0){
+    if(scene.tileBodyMatrix == undefined || scene.tileBodyMatrix[0] == undefined) return;
     var tileBody;
     for(var i=-sideNum; i<sideNum+1; i++){
       for(var j=0; j<verNum; j++){
@@ -76,6 +77,7 @@ export default class TileController {
   }
 
   static enemyFullTouchBoundry(scene, sprite, sideNum, verNum){
+    if(scene.tileBodyMatrix == undefined || scene.tileBodyMatrix[0] == undefined) return;
     var tileBody;
     for(var i=-sideNum; i<sideNum+1; i++){
       for(var j=-verNum; j<verNum+1; j++){
@@ -90,6 +92,7 @@ export default class TileController {
   }
 
   static playerTouchBoundry(scene, sprite){
+    if(scene.tileBodyMatrix == undefined || scene.tileBodyMatrix[0] == undefined) return;
     var tileBody;
     for(var i=-1; i<2; i++){
       for(var j=-2; j<3; j++){
@@ -104,6 +107,7 @@ export default class TileController {
   }
 
   static xFrontiers(scene, dir, boundry, xNormalized, yNormalized){
+    if(scene.tileBodyMatrix == undefined || scene.tileBodyMatrix[0] == undefined) return;
     const xBoundry = boundry*dir;
     const yBoundry = boundry + 1; //7+2
     var bodyWAdd;
@@ -134,6 +138,7 @@ export default class TileController {
   }
 
   static yFrontiers(scene, dir, boundry, xNormalized, yNormalized){
+    if(scene.tileBodyMatrix == undefined || scene.tileBodyMatrix[0] == undefined) return;
     const xBoundry = boundry + 1; //7+2
     const yBoundry = boundry*dir;
     var bodyWAdd;
