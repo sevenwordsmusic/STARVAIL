@@ -8,6 +8,8 @@ export default class LevelEnd {
     this.sprite.body.isSensor = true;
     this.sprite.body.isStatic = true;
     this.sprite.setVisible(false);
+
+    scene.add.sprite(x,y-110,"goalVFX",0).setScale(2.95).anims.play("goalVFX", true);
   }
 
   initGoal(keyNext, sceneNext, updateLife = true){

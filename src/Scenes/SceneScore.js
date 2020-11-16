@@ -165,13 +165,12 @@ export default class SceneScore extends Phaser.Scene {
 
     this.scene.stop('SceneScore');
 
-    /*
     this.scene.start('SceneMM');
     this.scene.bringToTop("SceneMM");
-    */
-   var SceneMMR = this.scene.get('SceneMM');
 
-   SceneMMR.scene.restart();
+   /*var SceneMMR = this.scene.get('SceneMM');
+
+   SceneMMR.scene.restart();*/
   }
 
   viewRankingScore(){

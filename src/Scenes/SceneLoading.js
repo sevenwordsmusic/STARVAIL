@@ -108,6 +108,9 @@ export default class SceneLoading extends Phaser.Scene {
     //PLAYER
 
     //this.load.spritesheet('dummy', 'assets/Sprites/Enemies/dummy.png', { frameWidth: 35, frameHeight: 44 });
+    //META
+    this.load.spritesheet('goalVFX', 'assets/Sprites/VFX/goal_100X100_120.png', { frameWidth: 100, frameHeight: 100 });
+    //META
 
     //BOSS
     this.load.spritesheet('bossRun', 'assets/Sprites/Boss/boss_run.png', { frameWidth: 64, frameHeight: 64 });
@@ -486,6 +489,15 @@ export default class SceneLoading extends Phaser.Scene {
         repeat: 1
     });
 
+    //META
+    this.anims.create({
+        key: 'goalVFX',
+        frames: this.anims.generateFrameNumbers('goalVFX', { start: 0, end: 119 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    //META
+
     //BOSS
     this.anims.create({
         key: 'wRightBoss',
@@ -695,31 +707,31 @@ export default class SceneLoading extends Phaser.Scene {
     this.anims.create({
         key: 'npc1',
         frames: this.anims.generateFrameNumbers('npc1', { start: 0, end: 5 }),
-        frameRate: 5,
+        frameRate: 4.75,
         repeat: -1
     });
     this.anims.create({
         key: 'npc2',
         frames: this.anims.generateFrameNumbers('npc2', { start: 0, end: 5 }),
-        frameRate: 5,
+        frameRate: 4.75,
         repeat: -1
     });
     this.anims.create({
         key: 'npc3',
         frames: this.anims.generateFrameNumbers('npc3', { start: 0, end: 5 }),
-        frameRate: 5,
+        frameRate: 4.75,
         repeat: -1
     });
     this.anims.create({
         key: 'npc4',
         frames: this.anims.generateFrameNumbers('npc4', { start: 0, end: 5 }),
-        frameRate: 5,
+        frameRate: 4.75,
         repeat: -1
     });
     this.anims.create({
         key: 'npc5',
         frames: this.anims.generateFrameNumbers('npc5', { start: 0, end: 5 }),
-        frameRate: 5,
+        frameRate: 4.75,
         repeat: -1
     });
     //NPC

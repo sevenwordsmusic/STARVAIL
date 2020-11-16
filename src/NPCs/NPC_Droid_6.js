@@ -158,8 +158,8 @@ Thank you again, and farewell, `+ this.scene.game.playerName +`!`;
       this.scene.game.player.recieveWeapon(this.weaponToGive);
       console.log("arma conseguida");
       this.goTo(2);
-      this.game.npcHelped++;
-      this.game.points += 500;
+      this.scene.game.npcHelped++;
+      this.scene.game.points += 500;
     }
     else if(this.currentStateId() == 0 && this.enemiesLeft<=0){
       this.goTo(1);

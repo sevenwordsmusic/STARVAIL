@@ -6,7 +6,7 @@ import Audio from "../../Audio.js";
 export default class InteractableChest extends Interactable {
   constructor(scene, x, y, hp, energy){
     super(scene, x, y, 'chest', true, false);
-    this.sprite.setOrigin(0.5,0.75);
+    this.sprite.setOrigin(0.5,0.75).setScale(1.5);
     this.spSize = 1.5;
     this.spChangeSpeed = 0.0025;
     this.spMaxSize = 1.5;

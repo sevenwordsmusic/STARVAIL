@@ -15,7 +15,7 @@ export default class Interactable {
     this.spMultip = 1
     this.spMaxSize = 1;
     this.spMinSize = 0.9;
-    this.scene.events.on("update", this.update, this);
+    //this.scene.events.on("update", this.update, this);
   }
 
   playerInteracted(){

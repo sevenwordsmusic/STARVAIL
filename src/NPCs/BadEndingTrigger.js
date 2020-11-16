@@ -55,7 +55,7 @@ Life waits no one. Remember that.`;
   finishedDialog(){
     this.isTalking = false;
     this.scene.events.off("update", this.updateAI);
-    this.scene.game.player.playerDamage(9999, true);
+    this.scene.game.player.playerVictory();
     this.goTo(1);
   }
 }

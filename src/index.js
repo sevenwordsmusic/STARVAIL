@@ -184,7 +184,7 @@ for(var i=0; i<7; i++){
 }
 
 game.moonPos = new Phaser.Math.Vector2(130, 130);
-game.moonVelocity = 0.032;      //si = 1 -> avanza 60 unidades en un segundo
+game.moonVelocity = 1/571.428571429;      //si = 1 -> avanza 1 unidades en un milisegundo
 game.moonMaxDistance = 1050
 game.currentBgAnimation = 0;
 game.transitionToScene = function(scene, keyNext, sceneNext){
