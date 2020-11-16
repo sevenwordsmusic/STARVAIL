@@ -122,17 +122,17 @@ export default class Player {
       'left': Phaser.Input.Keyboard.KeyCodes.A,
       'right': Phaser.Input.Keyboard.KeyCodes.D,
       'down': Phaser.Input.Keyboard.KeyCodes.S});
-      this.weaponChange = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+      //this.weaponChange = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
       this.fireArm = new PlayerFireArmPC(this.scene, x, y);
       this.firingPointer = this.scene.input.activePointer;
       this.movingPointer = undefined;
 
       //EVENTOS
-      this.weaponChange.on('down', function(event){
+      /*this.weaponChange.on('down', function(event){
         //this.playerDamageKnockback(20, 0.1, new Phaser.Math.Vector2(-1,0));
         this.changeWeapon();
-      }, this);
+      }, this);*/
 
       //DISPARO
       this.scene.input.on('pointerdown', function(pointer, gameObject){

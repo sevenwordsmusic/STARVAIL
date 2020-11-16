@@ -104,6 +104,9 @@ export default class Boss extends Enemy {
     this.stateOnStart(0, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
 
+      //AUDIO
+      //se escoge un nuevo punto al que volar
+
       this.sprite.body.frictionAir = 0.06;
       this.stopper = false;
       this.velX = Phaser.Math.FloatBetween(this.patrolSpeed/2, this.patrolSpeed);
@@ -130,10 +133,16 @@ export default class Boss extends Enemy {
         delay: Phaser.Math.Between(2000, 2400),
         callback: () => (this.resetState())
       },this);
+
+      //AUDIO
+      //deja de tener velocidad constante (se va relantizando por el rozamiento con el aire que tiene)
       this.patrolTimer2 = this.scene.time.addEvent({
         delay: Phaser.Math.Between(1800, 2200),
         callback: () => (this.stopper = true)
       },this);
+
+      //AUDIO
+      //dispara, si quieres vete a BossGun.js para meter cosas al metodo shoot())
       this.fireTimer = this.scene.time.addEvent({
         delay: this.fireRate[this.currentWeapon],
         callback: () => (this.gun.shoot(this.currentWeapon)),
@@ -166,6 +175,8 @@ export default class Boss extends Enemy {
       this.fireTimer.remove();
     });
 
+    //ADUIO
+    //empieza a irse hacia el suelo
     this.stateUpdate(1, function(time, delta){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.playAnimation1();
@@ -185,6 +196,9 @@ export default class Boss extends Enemy {
       }
     })
 
+
+    //AUDIO
+    //Aterriza y se pone a cargar el laser
     this.stateOnStart(2, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.playAnimation2();
@@ -192,6 +206,8 @@ export default class Boss extends Enemy {
       this.sprite.y = this.initPos.y + 100;
       this.sprite.setVelocityX(0);
       this.sprite.setVelocityY(0);
+      //AUDIO
+      //dispara laser (metete en BossGun.js para modificar cosas de fireLaser())
       this.laserDelayTimer = this.scene.time.addEvent({
         delay: 350,
         callback: () => (this.gun.fireLaser()),
@@ -214,6 +230,8 @@ export default class Boss extends Enemy {
       }
     })
 
+    //AUDIO
+    //Se le ha acabado la vida, se va hacia el centro de la arena
     this.stateUpdate(3, function(time, delta){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.playAnimation1();
@@ -231,6 +249,8 @@ export default class Boss extends Enemy {
       }
     })
 
+    //AUDIO
+    //se prepara para disparar 3 laseres en todas direcciones (metete en BossGun.js para cambiar fireMegaLaser())
     this.stateOnStart(4, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.x = this.initPos.x;
@@ -245,9 +265,11 @@ export default class Boss extends Enemy {
       this.playAnimation1();
     })
 
+    //AUDIO
+    //Se muere
     this.stateOnStart(5, function(){
       this.flyFire.setVisible(false);
-      
+
       const effectDuration = 2000;
 
       this.scene.cameras.main.shake(effectDuration, 0.02, true);
@@ -343,6 +365,11 @@ export default class Boss extends Enemy {
     const nextWeapon = Math.floor(Math.random()*3);
     this.currentWeapon = (this.currentWeapon+nextWeapon)%3;
     this.fireTimer.delay = this.fireRate[this.currentWeapon];
+    //AUDIO
+    //cambia de arma, el arma escogida sera this.currentWeapon (AQUI NO DISPARA, SOLO CAMBIA DE ARMA)
+    // 0 -> balas
+    // 1-> misiles
+    // 2-> bombas
     console.log("Boss ha cambiado de arma: " + this.currentWeapon);
   }
 

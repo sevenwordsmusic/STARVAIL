@@ -163,7 +163,7 @@ game.hpRecoveryRate = 1;                  //1
 game.totalPlayerEnergy = 1000;     //1000
 game.energyRecoveryRate = 0.2;    //0.2
 game.energyCostJetBeginning = 0;      //energia por segundo que se gasta justo al empezar (es un valor base de coste)
-game.energyJetIncrease = 1.00/*8   */   //velocidad con la que aumenta el coste del jet
+game.energyJetIncrease = 1.008   /**/   //velocidad con la que aumenta el coste del jet
 game.energyCostJetPropulsion = 5;     //energia de coste de propulsion, se gasta solo una vez al entrar en modo jet)
 
 game.airVelocityFraction = 0.3;   //Creo que no se usa

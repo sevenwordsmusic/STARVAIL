@@ -95,8 +95,8 @@ export default class ScenePlayerName extends Phaser.Scene {
 
     this.scene.sendToBack('ScenePlayerName');
 		this.scene.stop('ScenePlayerName');
-    this.scene.run("levelFirst1");
-    this.scene.bringToTop("levelFirst1");     //CAMBIAR
+    this.scene.run("tutorial1");
+    this.scene.bringToTop("tutorial1");     //CAMBIAR
   }
 
   hideInput(){
