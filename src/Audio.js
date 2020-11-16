@@ -187,7 +187,7 @@ export default class Audio extends Phaser.Scene {
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #1.", Audio.ctf, "");
     }
     static musicLayerBar(scene) {
-        console.log(Audio.barCounter);
+        console.log("BAR #" + Audio.barCounter);
         Audio.barCounter++;
         if (!Audio.paused) {
             Audio.musicLayerHeight(scene);
