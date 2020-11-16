@@ -88,12 +88,51 @@ export default class SceneScore extends Phaser.Scene {
     //this.add.bitmapText(480,270,'font','0',100);
 
     //No se porque no sale la fuente bien
-    this.add.text(140, 36,totalTime, {font: "30px 'LeahFat'",color: "#000000"});
-    this.add.text(160, 107,totalKills, {font: "30px 'LeahFat'",color: "#000000"});
-    this.add.text(530, 181,specialEvents, {font: "30px 'LeahFat'",color: "#000000"});
-    this.add.text(340, 251,tipoFinal, {font: "30px 'LeahFat'",color: "#000000"});
-    this.add.text(360, 330,finalScore, {font: "45px 'LeahFat'",color: "#000000"});
+    var txt1 = this.add.text(145, 36,totalTime);
+    var txt2 = this.add.text(165, 107,totalKills);
+    var txt3 = this.add.text(535, 181,specialEvents);
+    var txt4 = this.add.text(355, 251,tipoFinal);
+    var txt5 = this.add.text(365, 330,finalScore);//45LeahFat
 
+    txt1.style.font = 'LeahFat';
+    txt1.style.fontFamily = 'LeahFat';
+    txt1.style.fontSize = "30px";
+    txt1.style.stroke = '#000000';
+    txt1.style.strokeThickness = 6;
+    txt1.style.fill = '#43d637';
+    txt1.style.update(true);
+
+    txt2.style.font = 'LeahFat';
+    txt2.style.fontFamily = 'LeahFat';
+    txt2.style.fontSize = "30px";
+    txt2.style.stroke = '#000000';
+    txt2.style.strokeThickness = 6;
+    txt2.style.fill = '#43d637';
+    txt2.style.update(true);
+
+    txt3.style.font = 'LeahFat';
+    txt3.style.fontFamily = 'LeahFat';
+    txt3.style.fontSize = "30px";
+    txt3.style.stroke = '#000000';
+    txt3.style.strokeThickness = 6;
+    txt3.style.fill = '#43d637';
+    txt3.style.update(true);
+
+    txt4.style.font = 'LeahFat';
+    txt4.style.fontFamily = 'LeahFat';
+    txt4.style.fontSize = "30px";
+    txt4.style.stroke = '#000000';
+    txt4.style.strokeThickness = 6;
+    txt4.style.fill = '#43d637';
+    txt4.style.update(true);
+
+    txt5.style.font = 'LeahFat';
+    txt5.style.fontFamily = 'LeahFat';
+    txt5.style.fontSize = "45px";
+    txt5.style.stroke = '#000000';
+    txt5.style.strokeThickness = 6;
+    txt5.style.fill = '#43d637';
+    txt5.style.update(true);
   }
 
   //Método que se ejecuta una vez por frame.

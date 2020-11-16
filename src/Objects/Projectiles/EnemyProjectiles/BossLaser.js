@@ -38,7 +38,8 @@ export default class BossLaser {
         this.projectileArmed();
         this.itemExpire(this);
         this.scene.boss.lethalLaser = false;
-        this.gun.laser = undefined;
+        if(this.gun != undefined && this.gun.laser != undefined)
+          this.gun.laser = undefined;
       },this);
     },this);
   }
