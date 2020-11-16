@@ -33,67 +33,67 @@ export default class SceneCreditsScore extends Phaser.Scene {
     });
 
     //Boton linkedin victor
-    this.btnLinkedinScoreVictor = this.add.image(525,93,'btnLinkedinScore').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinScoreVictor.setInteractive()
-    .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
+    this.btnScoreVictor = this.add.image(51,45,'btnContactoScore').setScale(0.25).setAlpha(0.8);
+		this.btnScoreVictor.setInteractive()
+    .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/v%C3%ADctor-sierra-fern%C3%A1ndez-6a1a571bb/"));
 
-    this.btnLinkedinScoreVictor.on('pointerover', function(pointer){
+    this.btnScoreVictor.on('pointerover', function(pointer){
       this.alpha=1;
     });
 
-    this.btnLinkedinScoreVictor.on('pointerout', function(pointer){
-      this.alpha=0.8;
-    });
-
-    //Boton linkedin ebi
-    this.btnLinkedinScoreEbi = this.add.image(510,120,'btnLinkedinScore').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinScoreEbi.setInteractive()
-    .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
-
-    this.btnLinkedinScoreEbi.on('pointerover', function(pointer){
-      this.alpha=1;
-    });
-
-    this.btnLinkedinScoreEbi.on('pointerout', function(pointer){
-      this.alpha=0.8;
-    });
-
-    //Boton linkedin Alberto
-    this.btnLinkedinScoreAlberto = this.add.image(536,206,'btnLinkedinScore').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinScoreAlberto.setInteractive()
-    .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
-
-    this.btnLinkedinScoreAlberto.on('pointerover', function(pointer){
-      this.alpha=1;
-    });
-
-    this.btnLinkedinScoreAlberto.on('pointerout', function(pointer){
+    this.btnScoreVictor.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
 
     //Boton linkedin Nikola
-    this.btnLinkedinScoreNikola = this.add.image(525,293,'btnLinkedinScore').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinScoreNikola.setInteractive()
+    this.btnScoreNikola = this.add.image(51,128,'btnContactoScore').setScale(0.25).setAlpha(0.8);
+		this.btnScoreNikola.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
-    this.btnLinkedinScoreNikola.on('pointerover', function(pointer){
+    this.btnScoreNikola.on('pointerover', function(pointer){
       this.alpha=1;
     });
 
-    this.btnLinkedinScoreNikola.on('pointerout', function(pointer){
+    this.btnScoreNikola.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
 
     //Boton linkedin Seven
-    this.btnLinkedinScoreSeven = this.add.image(525,379,'btnLinkedinScore').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinScoreSeven.setInteractive()
+    this.btnScoreSeven = this.add.image(51,210,'btnContactoScore').setScale(0.25).setAlpha(0.8);
+		this.btnScoreSeven.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
-    this.btnLinkedinScoreSeven.on('pointerover', function(pointer){
+    this.btnScoreSeven.on('pointerover', function(pointer){
       this.alpha=1;
     });
 
-    this.btnLinkedinScoreSeven.on('pointerout', function(pointer){
+    this.btnScoreSeven.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
+
+    //Boton linkedin Alberto
+    this.btnScoreAlberto = this.add.image(51,292,'btnContactoScore').setScale(0.25).setAlpha(0.8);
+		this.btnScoreAlberto.setInteractive()
+    .on('pointerdown', () => this.irAlLink("https://twitter.com/lordarner"));
+
+    this.btnScoreAlberto.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+
+    this.btnScoreAlberto.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
+
+    //Boton linkedin ebi
+    this.btnScoreEbi = this.add.image(51,374,'btnContactoScore').setScale(0.25).setAlpha(0.8);
+		this.btnScoreEbi.setInteractive()
+    .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
+
+    this.btnScoreEbi.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+
+    this.btnScoreEbi.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
 

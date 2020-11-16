@@ -37,70 +37,69 @@ export default class SceneCredits extends Phaser.Scene {
     });
 
     //Boton linkedin victor
-    this.btnLinkedinVictor = this.add.image(525,93,'btnLinkedin').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinVictor.setInteractive()
-    .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
+    this.btnVictor = this.add.image(51,45,'btnContacto').setScale(0.25).setAlpha(0.8);
+		this.btnVictor.setInteractive()
+    .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/v%C3%ADctor-sierra-fern%C3%A1ndez-6a1a571bb/"));
 
-    this.btnLinkedinVictor.on('pointerover', function(pointer){
+    this.btnVictor.on('pointerover', function(pointer){
       this.alpha=1;
     });
 
-    this.btnLinkedinVictor.on('pointerout', function(pointer){
-      this.alpha=0.8;
-    });
-
-    //Boton linkedin ebi
-    this.btnLinkedinEbi = this.add.image(510,120,'btnLinkedin').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinEbi.setInteractive()
-    .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
-
-    this.btnLinkedinEbi.on('pointerover', function(pointer){
-      this.alpha=1;
-    });
-
-    this.btnLinkedinEbi.on('pointerout', function(pointer){
-      this.alpha=0.8;
-    });
-
-    //Boton linkedin Alberto
-    this.btnLinkedinAlberto = this.add.image(536,206,'btnLinkedin').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinAlberto.setInteractive()
-    .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
-
-    this.btnLinkedinAlberto.on('pointerover', function(pointer){
-      this.alpha=1;
-    });
-
-    this.btnLinkedinAlberto.on('pointerout', function(pointer){
+    this.btnVictor.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
 
     //Boton linkedin Nikola
-    this.btnLinkedinNikola = this.add.image(525,293,'btnLinkedin').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinNikola.setInteractive()
+    this.btnNikola = this.add.image(51,128,'btnContacto').setScale(0.25).setAlpha(0.8);
+		this.btnNikola.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
-    this.btnLinkedinNikola.on('pointerover', function(pointer){
+    this.btnNikola.on('pointerover', function(pointer){
       this.alpha=1;
     });
 
-    this.btnLinkedinNikola.on('pointerout', function(pointer){
+    this.btnNikola.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
 
     //Boton linkedin Seven
-    this.btnLinkedinSeven = this.add.image(525,379,'btnLinkedin').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinSeven.setInteractive()
+    this.btnSeven = this.add.image(51,210,'btnContacto').setScale(0.25).setAlpha(0.8);
+		this.btnSeven.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
-    this.btnLinkedinSeven.on('pointerover', function(pointer){
+    this.btnSeven.on('pointerover', function(pointer){
       this.alpha=1;
     });
 
-    this.btnLinkedinSeven.on('pointerout', function(pointer){
+    this.btnSeven.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
 
+    //Boton linkedin Alberto
+    this.btnAlberto = this.add.image(51,292,'btnContacto').setScale(0.25).setAlpha(0.8);
+		this.btnAlberto.setInteractive()
+    .on('pointerdown', () => this.irAlLink("https://twitter.com/lordarner"));
+
+    this.btnAlberto.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+
+    this.btnAlberto.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
+
+     //Boton linkedin ebi
+     this.btnEbi = this.add.image(51,374,'btnContacto').setScale(0.25).setAlpha(0.8);
+     this.btnEbi.setInteractive()
+     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
+ 
+     this.btnEbi.on('pointerover', function(pointer){
+       this.alpha=1;
+     });
+ 
+     this.btnEbi.on('pointerout', function(pointer){
+       this.alpha=0.8;
+     });
 
     this.input.setDefaultCursor('url(assets/cursor.png), pointer');
   }

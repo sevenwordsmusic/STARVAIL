@@ -56,12 +56,12 @@ export default class SceneLoading extends Phaser.Scene {
     //Credits menu
     this.load.image('CreditsScreen', 'assets/Credits menu/CMScreen.png'); //field
     this.load.image('btnExitCredits', 'assets/Credits menu/btnExitCredits.png'); //btn exit
-    this.load.image('btnLinkedin', 'assets/Credits menu/Boton linkedin.png'); //btn linkedin
+    this.load.image('btnContacto', 'assets/Credits menu/Boton contacto.png'); //btn linkedin
 
     //Credits menu
     this.load.image('CreditsScoreScreen', 'assets/Credits menu/CMScreen.png'); //field
     this.load.image('btnExitCreditsScore', 'assets/Credits menu/btnExitCredits.png'); //btn exit
-    this.load.image('btnLinkedinScore', 'assets/Credits menu/Boton linkedin.png'); //btn linkedin
+    this.load.image('btnContactoScore', 'assets/Credits menu/Boton contacto.png'); //btn linkedin
 
     //Game over menu
     this.load.image('GOScreen', 'assets/Game over menu/GOScreen.png'); //field
