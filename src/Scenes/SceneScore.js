@@ -17,7 +17,7 @@ export default class SceneScore extends Phaser.Scene {
     this.add.image(0,0,'endBackground').setOrigin(0).setDepth(-100);
 
     //Score field
-    var ScoreScreen=this.add.image(0,0,'ScoreScreen').setOrigin(0,0).setScale(0.25);
+    var ScoreScreen=this.add.image(0,0,'ScoreScreenReview').setOrigin(0,0).setScale(0.25);
 
     //Boton credits
     this.btnViewCreditsScore = this.add.image(213,459,'btnCreditsScore').setScale(0.25).setAlpha(0.8);
@@ -55,6 +55,19 @@ export default class SceneScore extends Phaser.Scene {
     });
 
     this.btnRankingScore.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
+
+    //Boton review
+    this.btnReview = this.add.image(708,353,'btnReviewScore').setScale(0.25).setAlpha(0.8);
+		this.btnReview.setInteractive()
+    .on('pointerdown', () => this.irAlLink("https://forms.gle/Eh7LPkvHq3Zvgw2TA"));
+
+    this.btnReview.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+
+    this.btnReview.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
 
@@ -181,5 +194,12 @@ export default class SceneScore extends Phaser.Scene {
     this.scene.bringToTop("SceneRanking");
     this.scene.pause("SceneScore");
 
+  }
+
+  irAlLink(urllink){
+    //window.location.href = 'https://www.youtube.com/watch?v=5XjcUvaDTK4&t=408s&ab_channel=gammafp';
+
+    this.url = urllink;
+    window.open(this.url);
   }
 }
