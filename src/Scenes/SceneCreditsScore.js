@@ -8,7 +8,7 @@ export default class SceneCreditsScore extends Phaser.Scene {
   create(){
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x000000);
+    this.cameras.main.setBackgroundColor(0xdbdace);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);

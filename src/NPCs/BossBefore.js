@@ -16,7 +16,7 @@ export default class BossBefore extends FiniteStateMachine{
     this.isTalking = false;
     this.dialogArray = [];
     //DIALOGO DE FINAL BUENO (Ha ayudado a 2 o mas droides)
-    this.dialogArray[0] =
+    /*this.dialogArray[0] =
 `[b]D42K-H[/b]
 ...
 
@@ -167,7 +167,10 @@ quickly. I'll follow you soon after.
 [b]D42K-H[/b]
 Let us die, `+ this.scene.game.playerName +`!
 This is what we exist for!`;
+*/
 
+    this.dialogArray[0] = "BUENO!"
+    this.dialogArray[1] = "NEUTRAL...."
     this.currentDialog = -1;
     this.dialogDistance = 300;
     this.initX = x;

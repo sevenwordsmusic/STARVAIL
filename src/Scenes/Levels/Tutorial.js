@@ -86,7 +86,7 @@ export default class Tutorial extends Phaser.Scene {
     this.ESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     this.inPause=false;
 
-    this.botonSkip = this.add.image(780,78,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0).setDepth(100);
+    this.botonSkip = this.add.image(760,78,'btnSkip').setScale(0.205).setAlpha(0.8).setScrollFactor(0).setDepth(100);
 		this.botonSkip.setInteractive()
     .on('pointerdown', () => this.skipTutorial());
 

@@ -35,6 +35,7 @@ export default class BossLaser {
         context: this
       });
       this.sprite.once('animationcomplete', function(){
+        console.timeEnd("asdasd");
         this.projectileArmed();
         this.itemExpire(this);
         this.scene.boss.lethalLaser = false;

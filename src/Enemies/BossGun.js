@@ -59,11 +59,11 @@ export default class BossGun {
   }
 
   fireMegaLaser(){
-    new BossLaser(this.scene, this.sprite.x, this.sprite.y, new Phaser.Math.Vector2(1,0));
-    new BossLaser(this.scene, this.sprite.x, this.sprite.y, new Phaser.Math.Vector2(3,1));
-    new BossLaser(this.scene, this.sprite.x, this.sprite.y, new Phaser.Math.Vector2(-3,1));
-    new BossLaser(this.scene, this.sprite.x, this.sprite.y, new Phaser.Math.Vector2(1,3));
-    new BossLaser(this.scene, this.sprite.x, this.sprite.y, new Phaser.Math.Vector2(-1,3));
+    new BossLaser(this.scene, this.sprite.x, this.sprite.y-30, new Phaser.Math.Vector2(1,0));
+    new BossLaser(this.scene, this.sprite.x, this.sprite.y-30, new Phaser.Math.Vector2(3,1));
+    new BossLaser(this.scene, this.sprite.x, this.sprite.y-30, new Phaser.Math.Vector2(-3,1));
+    new BossLaser(this.scene, this.sprite.x, this.sprite.y-30, new Phaser.Math.Vector2(1,3));
+    new BossLaser(this.scene, this.sprite.x, this.sprite.y-30, new Phaser.Math.Vector2(-1,3));
   }
 
   destroy(){

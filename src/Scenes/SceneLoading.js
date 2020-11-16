@@ -12,6 +12,9 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('endBackground', 'assets/HUD/scorescreen_background.png');
     this.load.image('white_rectangle', 'assets/white_rectangle.png');
 
+    //
+    this.load.image('btnSkip', 'assets/boton SKIP.png'); //btn exit
+
     //Score menu
     this.load.image('ScoreScreen', 'assets/Score screen menu/Botones Score.png'); //field
     this.load.image('btnExitScore', 'assets/Score screen menu/btnExitScoreMenu.png'); //btn exit
@@ -146,8 +149,28 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('kilonova8', 'assets/Sprites/VFX/kilonova_400X400_95_8.png', { frameWidth: 400, frameHeight: 400 });
     this.load.spritesheet('kilonova9', 'assets/Sprites/VFX/kilonova_400X400_95_9.png', { frameWidth: 400, frameHeight: 400 });
     this.load.spritesheet('kilonova10', 'assets/Sprites/VFX/kilonova_400X400_95_10_5fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole', 'assets/Sprites/VFX/dark_hole_400X400_135.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('pulsar', 'assets/Sprites/VFX/pulsar_400X400_60.png', { frameWidth: 400, frameHeight: 400 });
+
+    this.load.spritesheet('darkHole1', 'assets/Sprites/VFX/dark_hole_400X400_135_1_12fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole2', 'assets/Sprites/VFX/dark_hole_400X400_135_2_12fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole3', 'assets/Sprites/VFX/dark_hole_400X400_135_3_12fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole4', 'assets/Sprites/VFX/dark_hole_400X400_135_4_12fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole5', 'assets/Sprites/VFX/dark_hole_400X400_135_5_12fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole6', 'assets/Sprites/VFX/dark_hole_400X400_135_6_12fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole7', 'assets/Sprites/VFX/dark_hole_400X400_135_7_12fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole8', 'assets/Sprites/VFX/dark_hole_400X400_135_8_12fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole9', 'assets/Sprites/VFX/dark_hole_400X400_135_9_12fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole10', 'assets/Sprites/VFX/dark_hole_400X400_135_10_12fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole11', 'assets/Sprites/VFX/dark_hole_400X400_135_11_12fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('darkHole12', 'assets/Sprites/VFX/dark_hole_400X400_135_12_8fps.png', { frameWidth: 400, frameHeight: 400 });
+
+    this.load.spritesheet('pulsar1', 'assets/Sprites/VFX/pulsar_400X400_60_1_8fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('pulsar2', 'assets/Sprites/VFX/pulsar_400X400_60_2_8fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('pulsar3', 'assets/Sprites/VFX/pulsar_400X400_60_3_8fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('pulsar4', 'assets/Sprites/VFX/pulsar_400X400_60_4_8fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('pulsar5', 'assets/Sprites/VFX/pulsar_400X400_60_5_8fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('pulsar6', 'assets/Sprites/VFX/pulsar_400X400_60_6_8fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('pulsar7', 'assets/Sprites/VFX/pulsar_400X400_60_7_8fps.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('pulsar8', 'assets/Sprites/VFX/pulsar_400X400_60_8_4fps.png', { frameWidth: 400, frameHeight: 400 });
     //EFCTOS FIN JUEGO
 
     //ENEMIGOS
@@ -593,35 +616,60 @@ export default class SceneLoading extends Phaser.Scene {
     //BOSS
 
     //EFECTOS FIN JUEGO
-    this.kilonovaFrames = this.anims.generateFrameNumbers('kilonova1', { start: 0, end: 9 });
-    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova2', { start: 0, end: 9 }));
-    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova3', { start: 0, end: 9 }));
-    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova4', { start: 0, end: 9 }));
-    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova5', { start: 0, end: 9 }));
-    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova6', { start: 0, end: 9 }));
-    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova7', { start: 0, end: 9 }));
-    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova8', { start: 0, end: 9 }));
-    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova9', { start: 0, end: 9 }));
-    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova10', { start: 0, end: 4 }));
+    this.bigAnimationFrames = this.anims.generateFrameNumbers('kilonova1', { start: 0, end: 9 });
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('kilonova2', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('kilonova3', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('kilonova4', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('kilonova5', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('kilonova6', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('kilonova7', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('kilonova8', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('kilonova9', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('kilonova10', { start: 0, end: 4 }));
     this.anims.create({
         key: 'kilonova',
-        frames: this.kilonovaFrames,
-        frameRate: 20,
-        repeat: -1
+        frames: this.bigAnimationFrames,
+        frameRate: 7,
+        repeat: -1,
+        yoyo: true
     });
-    this.kilonovaFrames = [];
+    this.bigAnimationFrames = [];
+
+    this.bigAnimationFrames = this.anims.generateFrameNumbers('darkHole1', { start: 0, end: 11 });
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('darkHole2', { start: 0, end: 11 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('darkHole3', { start: 0, end: 11 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('darkHole4', { start: 0, end: 11 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('darkHole5', { start: 0, end: 11 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('darkHole6', { start: 0, end: 11 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('darkHole7', { start: 0, end: 11 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('darkHole8', { start: 0, end: 11 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('darkHole9', { start: 0, end: 11 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('darkHole10', { start: 0, end: 11 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('darkHole11', { start: 0, end: 11 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('darkHole12', { start: 0, end: 7 }));
     this.anims.create({
         key: 'darkHole',
-        frames: this.anims.generateFrameNumbers('darkHole', { start: 0, end: 134 }),
-        frameRate: 8,
+        frames: this.bigAnimationFrames,
+        frameRate: 7,
         repeat: -1
     });
+    this.bigAnimationFrames = [];
+
+    this.bigAnimationFrames = this.anims.generateFrameNumbers('pulsar1', { start: 0, end: 7 });
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('pulsar2', { start: 0, end: 7 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('pulsar3', { start: 0, end: 7 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('pulsar4', { start: 0, end: 7 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('pulsar5', { start: 0, end: 7 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('pulsar6', { start: 0, end: 7 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('pulsar7', { start: 0, end: 7 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('pulsar8', { start: 0, end: 3 }));
     this.anims.create({
         key: 'pulsar',
-        frames: this.anims.generateFrameNumbers('pulsar', { start: 0, end: 59 }),
-        frameRate: 8,
+        frames: this.bigAnimationFrames,
+        frameRate: 25,
         repeat: -1
     });
+    this.bigAnimationFrames = [];
     //EFECTOS FIN JUEGO
 
     //ENEMIGOS

@@ -198,7 +198,7 @@ export default class Boss extends Enemy {
         repeat: 1
       },this);
       this.laserDelayTimer2 = this.scene.time.addEvent({
-        delay: 3000,
+        delay: 4750,
         callback: () => (this.goTo(0))
       },this);
     })
@@ -239,22 +239,29 @@ export default class Boss extends Enemy {
       this.sprite.setVelocityY(0);
       this.gun.fireMegaLaser()
       this.patrolTimer1 = this.scene.time.addEvent({
-        delay: 2000,
+        delay: 3250,
         callback: () => (this.goTo(5), this.gun.destroy())
       },this);
       this.playAnimation1();
     })
 
     this.stateOnStart(5, function(){
+      this.flyFire.setVisible(false);
+      
+      const effectDuration = 2000;
+
+      this.scene.cameras.main.shake(effectDuration, 0.02, true);
+      this.scene.cameras.main.flash(effectDuration*2, 255,255,255, true);
+      this.scene.time.addEvent({
+        delay: 250,
+        callback: () => (this.checkEnding())
+      },this);
+
       this.scene.events.emit('noEnemy' + this.currentBodyIndex);
       this.scene.bulletInteracBodies[this.currentBodyIndex] = undefined;
       this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = undefined;
       this.sprite.destroy();
       new BossAfter(this.scene, this.initPos.x, this.initPos.y - 220);
-      this.scene.time.addEvent({
-        delay: 5000,
-        callback: () => (console.log("irse a escena final"))
-      },this);
     })
 
 
@@ -266,6 +273,14 @@ export default class Boss extends Enemy {
       this.sfxDetect=Audio.play2Dinstance(54);
       this.stateChanged=false;
     //
+  }
+
+  checkEnding(){
+    if(this.scene.game.npcHelped >= 2){
+      this.scene.moon.setScale(1.1).setAlpha(0.7).anims.play('pulsar',true);
+    }else{
+      this.scene.moon.setScale(1.2).setAlpha(0.7).anims.play('darkHole',true);
+    }
   }
 
   initializeLaser(){

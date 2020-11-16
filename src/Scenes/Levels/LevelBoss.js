@@ -108,8 +108,12 @@ export default class LevelBoss extends Phaser.Scene {
     //this.add.image(1100, 320, 'bg2_e').setScale(2).setScrollFactor(0.5).setDepth(-501);
     //this.add.image(1200, 400, 'bg3_e').setScale(2).setScrollFactor(0.75).setDepth(-500);
 
-
-    this.moon = this.add.sprite(480, 150, 'kilonova1', 0).setScrollFactor(0).setDepth(-400).anims.play('kilonova',true);
+    this.moon = this.add.sprite(480, 150, 'kilonova1', 0).setScrollFactor(0).setDepth(-400);
+    if(this.game.timeExpired){
+      this.moon.setScale(1.2).setAlpha(0.7).anims.play('darkHole',true);
+    }else{
+      this.moon.setScale(1.2).setAlpha(0.6).anims.play('kilonova',true);
+    }
     this.timeBg = this.add.sprite(480, 270, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
 
 
