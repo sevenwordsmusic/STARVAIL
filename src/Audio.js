@@ -8,6 +8,7 @@ export default class Audio extends Phaser.Scene {
     static beat = 16;
     static barRate = 60 * 1000 / this.bpm * this.beat;
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64, this.barRate / 128];
+    static barCounter=0;
     static paused = false;
     //DISTANCES
     static vanishingPoint = 960;
@@ -186,6 +187,8 @@ export default class Audio extends Phaser.Scene {
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #1.", Audio.ctf, "");
     }
     static musicLayerBar(scene) {
+        console.log(Audio.barCounter);
+        Audio.barCounter++;
         if (!Audio.paused) {
             Audio.musicLayerHeight(scene);
             Audio.musicLayerMovement(scene);
