@@ -103,6 +103,7 @@ export default class Audio extends Phaser.Scene {
         if (document.getElementById("bgmSlider").value / 10 != Audio.volumeBGM) {
             Audio.volumeBGM = document.getElementById("bgmSlider").value / 10;
             this.load.musicLoop0000chill.volume = Audio.volumeBGM;
+            Audio.play2DinstanceRate(88, 1.0);
         }
         if (document.getElementById("sfxSlider").value / 10 != Audio.volumeSFX) {
             Audio.volumeSFX = document.getElementById("sfxSlider").value / 10;
@@ -113,6 +114,7 @@ export default class Audio extends Phaser.Scene {
             this.load.engineLoop.volume = Audio.volumeSFX;
             this.load.lasserLoop.volume = Audio.volumeSFX;
             this.load.beamLoop.volume = Audio.volumeSFX;
+            Audio.play2DinstanceRate(88, 1.0);
         }
     }
     static maxBGMvolume(scene) {
@@ -549,6 +551,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('engineLoop_00', 'assets/audio/SFX/engineLoop_00.ogg');
         this.load.audio('lasserLoop_00', 'assets/audio/SFX/lasserLoop_00.ogg');
         this.load.audio('beamLoop_00', 'assets/audio/SFX/beamLoop_00.ogg');
+        this.load.audio('click', 'assets/audio/SFX/menu/click.ogg');
         //EXPLOSIONS
         this.load.audio('explosion_00A', 'assets/audio/SFX/explosion_00A.ogg');
         this.load.audio('explosion_00B', 'assets/audio/SFX/explosion_00B.ogg');
@@ -910,6 +913,7 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('sithSwing_07', 85, 7, this);
         Audio.createSFXloopInstance('sithHumLoop', 86, this);
         Audio.createSFXloopInstance('sithPursue', 87, this);
+        Audio.createSFXinstance('click', 88, this);
         //AMBIENT
         this.ambientLoop = this.sound.add('ambientLoop_00', {
             volume: 0.0,
