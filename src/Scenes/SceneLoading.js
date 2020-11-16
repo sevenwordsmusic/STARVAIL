@@ -129,7 +129,16 @@ export default class SceneLoading extends Phaser.Scene {
     //BOSS
 
     //EFCTOS FIN JUEGO
-    this.load.spritesheet('kilonova', 'assets/Sprites/VFX/kilonova_400X400_95.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('kilonova1', 'assets/Sprites/VFX/kilonova_400X400_95_1.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('kilonova2', 'assets/Sprites/VFX/kilonova_400X400_95_2.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('kilonova3', 'assets/Sprites/VFX/kilonova_400X400_95_3.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('kilonova4', 'assets/Sprites/VFX/kilonova_400X400_95_4.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('kilonova5', 'assets/Sprites/VFX/kilonova_400X400_95_5.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('kilonova6', 'assets/Sprites/VFX/kilonova_400X400_95_6.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('kilonova7', 'assets/Sprites/VFX/kilonova_400X400_95_7.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('kilonova8', 'assets/Sprites/VFX/kilonova_400X400_95_8.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('kilonova9', 'assets/Sprites/VFX/kilonova_400X400_95_9.png', { frameWidth: 400, frameHeight: 400 });
+    this.load.spritesheet('kilonova10', 'assets/Sprites/VFX/kilonova_400X400_95_10_5fps.png', { frameWidth: 400, frameHeight: 400 });
     this.load.spritesheet('darkHole', 'assets/Sprites/VFX/dark_hole_400X400_135.png', { frameWidth: 400, frameHeight: 400 });
     this.load.spritesheet('pulsar', 'assets/Sprites/VFX/pulsar_400X400_60.png', { frameWidth: 400, frameHeight: 400 });
     //EFCTOS FIN JUEGO
@@ -568,12 +577,23 @@ export default class SceneLoading extends Phaser.Scene {
     //BOSS
 
     //EFECTOS FIN JUEGO
+    this.kilonovaFrames = this.anims.generateFrameNumbers('kilonova1', { start: 0, end: 9 });
+    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova2', { start: 0, end: 9 }));
+    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova3', { start: 0, end: 9 }));
+    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova4', { start: 0, end: 9 }));
+    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova5', { start: 0, end: 9 }));
+    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova6', { start: 0, end: 9 }));
+    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova7', { start: 0, end: 9 }));
+    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova8', { start: 0, end: 9 }));
+    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova9', { start: 0, end: 9 }));
+    this.kilonovaFrames = this.kilonovaFrames.concat(this.anims.generateFrameNumbers('kilonova10', { start: 0, end: 4 }));
     this.anims.create({
         key: 'kilonova',
-        frames: this.anims.generateFrameNumbers('kilonova', { start: 0, end: 94 }),
-        frameRate: 8,
+        frames: this.kilonovaFrames,
+        frameRate: 20,
         repeat: -1
     });
+    this.kilonovaFrames = [];
     this.anims.create({
         key: 'darkHole',
         frames: this.anims.generateFrameNumbers('darkHole', { start: 0, end: 134 }),

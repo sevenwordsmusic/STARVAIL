@@ -109,7 +109,7 @@ export default class LevelBoss extends Phaser.Scene {
     //this.add.image(1200, 400, 'bg3_e').setScale(2).setScrollFactor(0.75).setDepth(-500);
 
 
-    this.moon = this.add.sprite(480, 150, 'kilonova', 0).setScrollFactor(0).setDepth(-400);
+    this.moon = this.add.sprite(480, 150, 'kilonova1', 0).setScrollFactor(0).setDepth(-400).anims.play('kilonova',true);
     this.timeBg = this.add.sprite(480, 270, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
 
 
