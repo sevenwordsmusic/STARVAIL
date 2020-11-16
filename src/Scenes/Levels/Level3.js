@@ -254,13 +254,13 @@ export default class Level3 extends Phaser.Scene {
     //arrays de enemigos de tierra/aire disponibles
     this.availableEnemiesGround = [];
     //this.availableEnemiesGround[0] = {name: "zapper1", probability: 0};
-    this.availableEnemiesGround[0] = {name: "sword", probability: 0.66};
-    this.availableEnemiesGround[1] = {name: "mecha", probability: 0.2};
-    this.availableEnemiesGround[2] = {name: "sith", probability: 0.2};
+    this.availableEnemiesGround[0] = {name: "sword", probability: 0.8};
+    this.availableEnemiesGround[1] = {name: "mecha", probability: 0.1};
+    this.availableEnemiesGround[2] = {name: "sith", probability: 0.1};
 
     this.availableEnemiesAir = [];
     //this.availableEnemiesAir[0] = {name: "zapper2", probability: 0};
-    this.availableEnemiesAir[0] = {name: "gunner", probability: 0.4};
+    this.availableEnemiesAir[0] = {name: "gunner", probability: 0.3};
     this.availableEnemiesAir[1] = {name: "bomb", probability: 0.75};
 
     //funcion crear enemigo
@@ -333,7 +333,7 @@ export default class Level3 extends Phaser.Scene {
         if(point.name == "tutorialSpecial")
           new InteractableChest(this, point.x, point.y, 10 ,20000);
         else
-          new InteractableChest(this, point.x, point.y, 100 ,200);
+          new InteractableChest(this, point.x, point.y, 175 ,250);
       });
 
     if(this.map.getObjectLayer("Waypoint_Layer") != null)

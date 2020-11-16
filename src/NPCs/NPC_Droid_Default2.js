@@ -23,7 +23,7 @@ Hello, stranger droid. Are you here to go
 up the tower as well?
 [b]Vagrant Droid #0[/b]
 If that's the case, please help other androids
-like me... not everyones is as capable for combat
+like me... not everyone is as capable for combat
 [b]Vagrant Droid #0[/b]
 as you are, so many like me may need your help.
 Thanks for stopping by to talk to me! Good luck!`;

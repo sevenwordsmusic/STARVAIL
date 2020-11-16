@@ -1841,8 +1841,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2506,
-                 "y":1990.67
+                 "x":2496,
+                 "y":2016
                 }, 
                 {
                  "height":0,
@@ -1996,7 +1996,7 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3109.66666666667,
+                 "x":3109.67,
                  "y":4304
                 }, 
                 {
@@ -2020,8 +2020,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1571.33333333333,
-                 "y":1169.33333333333
+                 "x":1571.33,
+                 "y":1169.33
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2091,32 +2091,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1934,
-                 "y":1174
-                }, 
-                {
-                 "height":0,
-                 "id":27,
-                 "name":"gunner",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2145,
-                 "y":1167
-                }, 
-                {
-                 "height":0,
-                 "id":40,
-                 "name":"gunner",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":780,
-                 "y":2842
+                 "x":2051.33333333333,
+                 "y":1096.66666666667
                 }, 
                 {
                  "height":0,
@@ -2211,8 +2187,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2216,
-                 "y":838
+                 "x":2217.33333333333,
+                 "y":923.333333333333
                 }, 
                 {
                  "height":0,
@@ -2223,8 +2199,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1912,
-                 "y":832
+                 "x":1878.66666666667,
+                 "y":932
                 }, 
                 {
                  "height":0,
@@ -2235,8 +2211,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2058,
-                 "y":516
+                 "x":2016.66666666667,
+                 "y":605.333333333333
                 }, 
                 {
                  "height":0,
@@ -2393,7 +2369,7 @@
                         {
                          "name":"countMin",
                          "type":"int",
-                         "value":1
+                         "value":2
                         }, 
                         {
                          "name":"encounter",
@@ -2420,7 +2396,7 @@
                         {
                          "name":"countMin",
                          "type":"int",
-                         "value":1
+                         "value":0
                         }, 
                         {
                          "name":"encounter",
@@ -2469,12 +2445,12 @@
                         {
                          "name":"countMax",
                          "type":"int",
-                         "value":3
+                         "value":2
                         }, 
                         {
                          "name":"countMin",
                          "type":"int",
-                         "value":0
+                         "value":1
                         }, 
                         {
                          "name":"encounter",
@@ -2501,7 +2477,7 @@
                         {
                          "name":"countMin",
                          "type":"int",
-                         "value":4
+                         "value":3
                         }, 
                         {
                          "name":"encounter",
@@ -2540,7 +2516,7 @@
                  "visible":true,
                  "width":356,
                  "x":2895.79,
-                 "y":3521.45
+                 "y":3523.45
                 }, 
                 {
                  "height":469.333,
@@ -2663,7 +2639,7 @@
                         {
                          "name":"countMin",
                          "type":"int",
-                         "value":2
+                         "value":1
                         }, 
                         {
                          "name":"encounter",
@@ -2744,7 +2720,7 @@
                         {
                          "name":"countMin",
                          "type":"int",
-                         "value":3
+                         "value":2
                         }, 
                         {
                          "name":"encounter",
@@ -2766,7 +2742,7 @@
                         {
                          "name":"countMax",
                          "type":"int",
-                         "value":5
+                         "value":4
                         }, 
                         {
                          "name":"countMin",
@@ -2820,12 +2796,12 @@
                         {
                          "name":"countMax",
                          "type":"int",
-                         "value":3
+                         "value":2
                         }, 
                         {
                          "name":"countMin",
                          "type":"int",
-                         "value":1
+                         "value":2
                         }, 
                         {
                          "name":"encounter",

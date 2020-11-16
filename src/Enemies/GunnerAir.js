@@ -54,7 +54,7 @@ export default class ZapperAir extends Enemy {
     this.hitDistance = 450;                                            //distancia de la cual se pone a golpear
     this.stopAndHitDistance = 250;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 1.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
-    this.hitDamage = 75;                                              //daño al golpear
+    this.hitDamage = 60;                                              //daño al golpear
     this.fireRate = 800; 
     this.healthDrop = 100;                                             //fire rate del droid
     this.energyDrop = 250;                                             //drop de energia

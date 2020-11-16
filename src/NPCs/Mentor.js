@@ -128,10 +128,10 @@ you can use to keep ascending through the tower.`;
 
     this.dialogArray[3] =
 `[b]D42K-H[/b]
-Careful, `+ this.scene.game.playerName +`! Looks like the defence
+Careful, `+ this.scene.game.playerName +`! Looks like the defense
 systems of Starvail include laser barriers.
 [b]D42K-H[/b]
-Do you think the human gods keep those active?
+Why do you think the human gods keep those active?
 Why would they impede us ascending the tower?
 [b]D42K-H[/b]
 ...
@@ -169,7 +169,7 @@ health units that will help you keep going,
 so you should always open them.
 [b]TIP[/b]
 To open a chest or interact with any item,
-you, click on said item.`;
+you must click on said item.`;
 
     this.dialogArray[5] =
 `[b]D42K-H[/b]
@@ -209,7 +209,7 @@ Fight without fear, for these droids just
 see us vagrants as disposable 'bugs'.
 [b]TIP[/b]
 You'll encounter a wide amount of enemies
-in your ascension thorough Starvail.
+in your ascension through Starvail.
 [b]TIP[/b]
 You can fight or run, but keep in
 mind they can provide you with the energy
@@ -275,7 +275,7 @@ trying to make their way to the top of
 the tower. They won't try to harm you, and
 may even call you for help, as they may
 [b]D42K-H[/b]
-be defenceless against the automatons of
+be defenseless against the automatons of
 this tower. Wether to help them or not
 [b]D42K-H[/b]
 is your [b]choice[/b]. They may even
@@ -285,10 +285,10 @@ assist any of them, as I have limited
 time to fulfill my primordial task:
 [b]D42K-H[/b]
 reaching the top of this tower before
-sunrise. I advice you to do
+sunrise. I advice you to do the same, `+ this.scene.game.playerName +`.
 [b]D42K-H[/b]
-the same, `+ this.scene.game.playerName +`.The only thing
-that matters is reaching the top of Starvail Tower.
+The only thing that matters is reaching the top 
+of Starvail Tower, to discover the meaning of 'life'.
 [b]D42K-H[/b]
 Don't let that data be ignored.
 
@@ -302,8 +302,8 @@ you a [b]plug-in weapon[/b].
 This upgrade will allow your cannon
 to shoot a new type of ammo: bombs.
 [b]D42K-H[/b]
-I hope this helps you in your way up,
-`+ this.scene.game.playerName +`.
+Keep in mind usign them will cost energy, unlike normal bullets!
+I hope this helps you in your way up,`+ this.scene.game.playerName +`.
 [b]D42K-H[/b]
 Now, it's time to part ways. I will meet
 you at the top of the tower, to witness

@@ -20,7 +20,7 @@ export default class SceneOptionsGame extends Phaser.Scene {
     //var optionsScreen=this.add.image(0,0,'OptionsScreen').setOrigin(0,0).setScale(0.25);
 
     //Boton exit
-    this.btnExitOptionsGame = this.add.image(480,455,'btnExitOptionsGame').setScale(0.25).setAlpha(0.8);
+    this.btnExitOptionsGame = this.add.image(480,455,'btnBack').setScale(0.25).setAlpha(0.8);
 		this.btnExitOptionsGame.setInteractive()
     .on('pointerdown', () => this.exitOptions());
 

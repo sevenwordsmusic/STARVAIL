@@ -8,7 +8,7 @@ import TileController from "../TileController.js"
 //enemigo que hereda de Enemy
 export default class Boss extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'bossIdle', 20);   //5º parametro del contructor == vida
+    super(scene, x, y, 'bossIdle', 3000);   //5º parametro del contructor == vida
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this.sprite
@@ -52,8 +52,8 @@ export default class Boss extends Enemy {
     //No Tocar
 
     //Ajustar estas
-    this.patrolSpeed = 3;                                           //velocidad al patrullar
-    this.patrolRouteLength = 300;                                     //al patrullar cuanto se desplaza antes de darse la vuelta
+    this.patrolSpeed = 3.5;                                           //velocidad al patrullar
+    this.patrolRouteLength = 500;                                     //al patrullar cuanto se desplaza antes de darse la vuelta
     this.landSpeed = 5/this.scene.matter.world.getDelta();           //velocidad mientras aterriza para dispara laser
     this.lastSpeed = 2/this.scene.matter.world.getDelta();           //velocidad mientras se va al punto de lanzamiento de su ultimo ataque
     /*
@@ -62,22 +62,22 @@ export default class Boss extends Enemy {
     Arma 2 = bombas
     */
     this.fireRate = [3];                                              //fire rate de cada arma
-    this.fireRate[0] = 100;
-    this.fireRate[1] = 500;
-    this.fireRate[2] = 300;
+    this.fireRate[0] = 150;
+    this.fireRate[1] = 700;
+    this.fireRate[2] = 500;
     this.fireDamage = [3]                                             //daño de cada arma
-    this.fireDamage[0] = 1;
-    this.fireDamage[1] = 10;
-    this.fireDamage[2] = 10;
+    this.fireDamage[0] = 10;
+    this.fireDamage[1] = 100;
+    this.fireDamage[2] = 50;
 
 
-    this.nextEnergy = 20;                                            //cada cuanta vida gastada suelta energia
-    this.energyDrop = 10;                                             //drop de energia
+    this.nextEnergy = 100;                                            //cada cuanta vida gastada suelta energia
+    this.energyDrop = 200;                                             //drop de energia
 
-    this.weaponSwitch = 2000;                                          //cada cuanto tiempo cambia de arm_airUp
+    this.weaponSwitch = 3800;                                          //cada cuanto tiempo cambia de arm_airUp
     this.weaponSwitchRand = 500;                                       //varianza aleatoria del cambio de arma
-    this.laserFire = 15000;                                             //cada cuanto dispara lasser
-    this.laserFireRand = 1000;                                         //varianza aleatoria de disparo de laser
+    this.laserFire = 10000;                                             //cada cuanto dispara lasser
+    this.laserFireRand = 20000;                                         //varianza aleatoria de disparo de laser
     //Ajustar estas
     //Variables de IA
 

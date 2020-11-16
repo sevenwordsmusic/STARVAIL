@@ -21,7 +21,7 @@ export default class SceneOptionsMM extends Phaser.Scene {
     //var optionsScreen=this.add.image(0,0,'OptionsScreen').setOrigin(0,0).setScale(0.25);
 
     //Boton exit
-    this.btnExitOptionsMM = this.add.image(480,455,'btnExitOptionsMM').setScale(0.25).setAlpha(0.8);
+    this.btnExitOptionsMM = this.add.image(480,455,'btnBack').setScale(0.25).setAlpha(0.8);
 		this.btnExitOptionsMM.setInteractive()
     .on('pointerdown', () => this.exitOptions());
 

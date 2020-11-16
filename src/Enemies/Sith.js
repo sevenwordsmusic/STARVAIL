@@ -34,7 +34,7 @@ export default class Sith extends Enemy {
     //Variables de IA
     //No Tocar
     this.standByReDistance = 400;
-    this.standByDistance = 410;
+    this.standByDistance = 450;
     this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
     this.playerVector = new Phaser.Math.Vector2(0, 0);
     this.targetDir = false;
@@ -45,13 +45,13 @@ export default class Sith extends Enemy {
     this.detectSpeed = 4/this.scene.matter.world.getDelta();        //velocidad al detectarlo
     this.hitDistance = 80;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 1.4/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
-    this.hitDamage = 200;                                              //daño al golpear
-    this.teleportHitDamage = 100;                                       //daño al golpear
+    this.hitDamage = 150;                                              //daño al golpear
+    this.teleportHitDamage = 90;                                       //daño al golpear
     this.healthDrop = 250;
     this.energyDrop = 500;                                             //drop de energia
     this.initialWaitTimer = 5000;                                       //tiempo de espera al descubrir enemigo antes de que te ataque
-    this.teleportWaitTimerMin = 5000;                                      //tiempo minimo que espera si no alcanza al jugador antes de teleportarse
-    this.teleportWaitTimerMax = 8000;                                      //tiempo maximo que espera si no alcanza al jugador antes de teleportarse
+    this.teleportWaitTimerMin = 3000;                                      //tiempo minimo que espera si no alcanza al jugador antes de teleportarse
+    this.teleportWaitTimerMax = 6000;                                      //tiempo maximo que espera si no alcanza al jugador antes de teleportarse
     //Ajustar estas
     //Variables de IA
 
