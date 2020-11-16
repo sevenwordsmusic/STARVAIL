@@ -8,7 +8,7 @@ export default class NPC_Droid_Default1 extends FiniteStateMachine{
     super();
     //inicializacion
     this.scene = scene;
-    this.sprite = scene.add.sprite(x,y,'npc4',0).setScale(2);
+    this.sprite = scene.add.sprite(x,y,'npc4',0).setScale(1.5);
     this.sprite.setInteractive();
     this.sprite.playerInteractable = true;
     this.isTalking = false;
@@ -19,8 +19,8 @@ export default class NPC_Droid_Default1 extends FiniteStateMachine{
     this.dialogArray = [];
     this.dialogArray[0] =
 `[b]Vagrant Droid #0[/b]
-Hello, stranger droid. Are you here to scale
-the tower as well?
+Hello, stranger droid. Are you here to go
+up the tower as well?
 [b]Vagrant Droid #0[/b]
 If that's the case, please help other androids
 like me... not everyones is as capable for combat
