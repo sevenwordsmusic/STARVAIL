@@ -11,17 +11,20 @@ export default class SceneMainMenu extends Phaser.Scene {
   create(){
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x001191);
+    this.cameras.main.setBackgroundColor(0x000000);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+
+    //Background Menu
+    this.add.image(0,0,'menuBackground').setOrigin(0).setDepth(-100);
 
     //MM field
     //var MMScreen=this.add.image(0,0,'MMScreen').setOrigin(0,0).setScale(0.25);
 
     //Boton credits
     this.botonCredits = this.add.image(770,400,'btnCredits').setScale(0.25).setAlpha(0.8);
-		this.botonCredits.setInteractive({ useHandCursor: true  } )
+		this.botonCredits.setInteractive()
     .on('pointerdown', () => this.viewCredits());
 
     this.botonCredits.on('pointerover', function(pointer){
@@ -37,7 +40,7 @@ export default class SceneMainMenu extends Phaser.Scene {
 
     //Boton start
     this.botonStart = this.add.image(480,400, 'btnStart').setScale(0.25).setAlpha(0.8);
-		this.botonStart.setInteractive({ useHandCursor: true  } )
+		this.botonStart.setInteractive()
     .on('pointerdown', () => this.startGame());
 
     this.botonStart.on('pointerover', function(pointer){
@@ -53,7 +56,7 @@ export default class SceneMainMenu extends Phaser.Scene {
 
     //Boton options
 		this.botonOptions = this.add.image(190,400, 'btnOptions').setScale(0.25).setAlpha(0.8);
-		this.botonOptions.setInteractive({ useHandCursor: true  } )
+		this.botonOptions.setInteractive()
     .on('pointerdown', () => this.viewOptions());
 
     this.botonOptions.on('pointerover', function(pointer){
@@ -66,6 +69,8 @@ export default class SceneMainMenu extends Phaser.Scene {
     this.botonOptions.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
+
+    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
   }
 
   //Método que se ejecuta una vez por frame.

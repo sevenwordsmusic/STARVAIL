@@ -94,6 +94,7 @@ export default class Enemy extends FiniteStateMachine{
     //AUDIO
     //se emite un evento avisando a las balas que tienen a este enemigo como "target" para que cambien a un target nuevo
     this.scene.game.points += this.points;
+    this.scene.game.enemiesKilled ++;
     if(this.encounterNPC !== undefined)
       this.encounterNPC.enemyKilled();
   }

@@ -376,6 +376,8 @@ export default class LevelBoss extends Phaser.Scene {
     //AUDIO:
     Audio.update(this);
 
+    this.game.time += delta;
+
     if (this.ESC.isDown){
       if (!this.inPause) {
         this.inPause = true;
@@ -411,6 +413,8 @@ export default class LevelBoss extends Phaser.Scene {
 
   pauseGame(){
     console.log("Juego pausado");
+
+    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
 
     this.game.pauseInfo = 'levelBoss' + (LevelBoss.getNumber());
 

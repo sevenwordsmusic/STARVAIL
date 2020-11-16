@@ -56,7 +56,7 @@ export default class ZapperGround extends Enemy {
       this.sprite.setIgnoreGravity(false);
       this.sprite.anims.play('zapperGroundRun', true);
     });
-    this.stateUpdate(0,function(){
+    this.stateUpdate(0,function(time, delta){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
 
       this.sprite.setVelocityX(this.patrolSpeed * this.patrolDir * delta);
@@ -92,23 +92,12 @@ export default class ZapperGround extends Enemy {
           var auxSfx=Audio.play3DinstanceRnd(this,45);
           auxSfx.setDetune(auxSfx.detune+250);
       //
-    if(this.currentStateId() == 1){
-      //AUDIO
-        this.soundChangeState();
-      //
-      this.goTo( 2);
-    }else if(this.currentStateId() != 0)
       super.damage(dmg, v);
   }
   damageLaser(dmg, v){
     //AUDIO
       Audio.load.lasserSufferingLoop.setDetune(50);
     //
-    if(this.currentStateId() == 1){
-        this.soundChangeState();
-      //
-      this.goTo(2);
-    }else if(this.currentStateId() != 0)
       super.damageLaser(dmg, v);
   }
 
@@ -138,6 +127,11 @@ export default class ZapperGround extends Enemy {
 
   updatePlayerPosition(dist){
   }
+
+  updateTouchBoundry(){
+
+  }
+
   distanceToPlayer(){
     if(this.sprite.body != undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));

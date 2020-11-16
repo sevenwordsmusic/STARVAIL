@@ -33,6 +33,7 @@ export default class SceneSplashScreen extends Phaser.Scene {
       alpha:{ from: 0, to: 1 }
     })
 
+    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
   }
 
   //Método que se ejecuta una vez por frame.
@@ -60,7 +61,7 @@ export default class SceneSplashScreen extends Phaser.Scene {
 
 
     //SI SE QUIEREN TESTEAR MENUS
-    //this.scene.start('SceneMM');
+    this.scene.start('SceneMM');
 
     //SI SE QUIEREN TESTEAR NIVELES
     //this.scene.start("tutorial1");
@@ -72,7 +73,7 @@ export default class SceneSplashScreen extends Phaser.Scene {
     //SI SE QUIERE IR AL NIVEL DE PRUEBA
     //this.scene.start("test1");
 
-    this.scene.start("SceneScore");
+    //this.scene.start("SceneScore");
 
     //PUNTUACIONES
     //this.scene.start("SceneScore");

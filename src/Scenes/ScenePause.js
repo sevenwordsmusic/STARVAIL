@@ -14,17 +14,21 @@ export default class ScenePause extends Phaser.Scene {
     //AUDIO
       Audio.pause(this);
     //
-    this.cameras.main.setBackgroundColor(0x009000);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+
+    //Background Pausa
+    const bg = this.add.image(0,0,'white_rectangle').setOrigin(0).setScale(35).setDepth(-100).setAlpha(0.25);
+    bg.tint = 0x000000;
+    bg.alpha = 0.5;
 
     //Credits field
     //var PauseScreen=this.add.image(0,0,'PauseScreen').setOrigin(0,0).setScale(0.25);
 
     //Boton resume
     this.btnResumeGamePause = this.add.image(480,140,'btnResumeGamePause').setScale(0.25).setAlpha(0.8);
-		this.btnResumeGamePause.setInteractive({ useHandCursor: true  } )
+		this.btnResumeGamePause.setInteractive()
     .on('pointerdown', () => this.resumeGamePause());
 
     this.btnResumeGamePause.on('pointerover', function(pointer){
@@ -40,7 +44,7 @@ export default class ScenePause extends Phaser.Scene {
 
     //Boton options
     this.btnOptionsGame = this.add.image(480,270,'btnOptionsGame').setScale(0.25).setAlpha(0.8);
-		this.btnOptionsGame.setInteractive({ useHandCursor: true  } )
+		this.btnOptionsGame.setInteractive()
     .on('pointerdown', () => this.viewOptions());
 
     this.btnOptionsGame.on('pointerover', function(pointer){
@@ -56,7 +60,7 @@ export default class ScenePause extends Phaser.Scene {
 
     //Boton exit
     this.btnExitPause = this.add.image(480,400,'btnExitPause').setScale(0.25).setAlpha(0.8);
-		this.btnExitPause.setInteractive({ useHandCursor: true  } )
+		this.btnExitPause.setInteractive()
     .on('pointerdown', () => this.exitGame());
 
     this.btnExitPause.on('pointerover', function(pointer){
@@ -84,6 +88,8 @@ export default class ScenePause extends Phaser.Scene {
       //
     this.btnResumeGamePause.alpha=0.8;
 
+    this.input.setDefaultCursor('none');
+
     this.scene.sendToBack('ScenePause');
 		this.scene.stop('ScenePause');
     this.scene.resume(this.game.pauseInfo);
@@ -100,6 +106,7 @@ export default class ScenePause extends Phaser.Scene {
     this.scene.run("SceneOptionsGame");
     this.scene.bringToTop("SceneOptionsGame");
     this.scene.pause("ScenePause");
+    this.scene.sendToBack("ScenePause");
   }
 
   exitGame(){

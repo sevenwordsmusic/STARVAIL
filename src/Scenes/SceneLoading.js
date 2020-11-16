@@ -8,6 +8,9 @@ export default class SceneLoading extends Phaser.Scene {
     //IMAGES, SPRITES, SPRITESHEETS
 
     //MENUS
+    this.load.image('menuBackground', 'assets/ilustracion.png');
+    this.load.image('endBackground', 'assets/HUD/scorescreen_background.png');
+    this.load.image('white_rectangle', 'assets/white_rectangle.png');
 
     //Score menu
     this.load.image('ScoreScreen', 'assets/Score screen menu/Botones Score.png'); //field
@@ -362,7 +365,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.anims.create({
             key: 'enemyExplosion',
             frames: this.anims.generateFrameNumbers('enemyExplosion', { start: 0, end: 73 }),
-            frameRate: 35,
+            frameRate: 45,
             repeat: 0
         });
 

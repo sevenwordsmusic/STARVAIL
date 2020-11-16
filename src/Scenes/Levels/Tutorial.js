@@ -12,6 +12,7 @@ import Player from "../../PlayerStuff/Player.js";
 import Blackboard from "../../Enemies/Blackboard.js";
 import ZapperGround from "../../Enemies/ZapperGround.js";
 import ZapperGroundDummy from "../../Enemies/ZapperGroundDummy.js";
+import ZapperGroundTutorial from "../../Enemies/ZapperGroundTutorial.js";
 import SwordGround from "../../Enemies/SwordGround.js";
 import Mecha from "../../Enemies/Mecha.js";
 import Sith from "../../Enemies/Sith.js";
@@ -85,6 +86,19 @@ export default class Tutorial extends Phaser.Scene {
     this.ESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     this.inPause=false;
 
+    this.botonSkip = this.add.image(780,78,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0).setDepth(100);
+		this.botonSkip.setInteractive()
+    .on('pointerdown', () => this.skipTutorial());
+
+    this.botonSkip.on('pointerover', function(pointer){
+      this.alpha=1;
+    });
+
+    this.botonSkip.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });
+
+
     //INTERFAZ
 
     new Dialog(this, 50, 400, false,5000, {
@@ -99,7 +113,7 @@ export default class Tutorial extends Phaser.Scene {
     //Camara.
     cam = this.cameras.main;
     cam.setBackgroundColor('#262626');
-    this.matter.world.setBounds(0, 0, 3776, 4800);
+    this.matter.world.setBounds(0, -500, 3776, 5300);
     cam.setBounds(0, 0, 3776, 4800);
 
     cam.fadeIn(Audio.barRateDiv[2]);  //Constante de Audio para sincronía
@@ -155,6 +169,9 @@ export default class Tutorial extends Phaser.Scene {
     //inicializamos el controlador de enemigos
     this.enemyController = new Blackboard(this);
 
+    //array de metas
+    this.goalArray = [];
+
     //se crean objetos esenciales de cada nivel como el player, los npcs, el boss....
     this.map.getObjectLayer("Special_Layer").objects.forEach(point => {
       if(point.name == "player"){
@@ -162,11 +179,7 @@ export default class Tutorial extends Phaser.Scene {
         this.playerStartY = point.y;
       }
       else if(point.name == "goal"){
-        this.goalX = point.x;
-        this.goalY = point.y;
-      }
-      else if(point.name == "dummy"){
-        new ZapperGroundDummy(this, point.x, point.y)
+        this.goalArray.push(new LevelEnd(this, point.x, point.y, 'star'));
       }
       else if(point.name == "boss"){
         new BossBefore(this, point.x, point.y);
@@ -360,6 +373,10 @@ export default class Tutorial extends Phaser.Scene {
 
 
       }
+
+    new ZapperGroundDummy(this, 1315, 1958);
+    new ZapperGroundTutorial(this, 1902, 582);
+
     //jugador
     new Player(this, this.playerStartX, this.playerStartY, true);
     //new Mentor(this, this.playerStartX + 400, this.playerStartY)
@@ -368,7 +385,9 @@ export default class Tutorial extends Phaser.Scene {
     //cam.setZoom(0.25);
 
     //inicialización de meta
-    new LevelEnd(this, this.goalX, this.goalY, 'star', 'testsec', Level1);
+    for(var i=0; i<this.goalArray.length; i++){
+      this.goalArray[i].initGoal('levelFirst', Level1, false);
+    }
 
     this.input.setDefaultCursor('none');
 
@@ -420,11 +439,22 @@ export default class Tutorial extends Phaser.Scene {
     this.touchedTiles = [];
   }
 
+  skipTutorial(){
+    if(this.game.player.nextButton <= 1){
+      this.game.obtainedWeapons.push(4);
+      this.game.player.recieveWeapon(4);
+    }
+    this.game.transitionToScene(this, 'levelFirst', Level1)
+  }
+
   pauseGame(){
     console.log("Juego pausado");
 
-    this.botonPause.alpha=0.8;
+    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
 
+    this.game.pauseInfo = 'tutorial' + (Tutorial.getNumber());
+
+    this.botonPause.alpha=0.8;
     this.scene.run("ScenePause");
     this.scene.bringToTop("ScenePause");
     this.scene.pause('tutorial' + (Tutorial.getNumber()));

@@ -177,6 +177,8 @@ Keep an eye on the lasers!`;
 
     this.dialogArray[6] =
 `[b]D42K-H[/b]
+Keep up.`;
+/*`[b]D42K-H[/b]
 Hmm, what is this? An orange laser barrier?
 From the data I can analyze, looks like
 [b]D42K-H[/b]
@@ -193,7 +195,7 @@ progress, you must search for its switch
 in your surroundings.
 [b]TIP[/b]
 Barriers, both red and orange, may appear
-randomly, so keep an eye for them!`;
+randomly, so keep an eye for them!`;*/
 
     this.dialogArray[7] =
 `[b]D42K-H[/b]
@@ -255,7 +257,7 @@ If you want to know how much time you have
 left until sunrise, you only have to look at
 the moon; the contamination makes it harder
 [b]D42K-H[/b]
-to see, but if you look carefully you'll see it. 
+to see, but if you look carefully you'll see it.
 The moon rises from the west and hides to the east
 [b]D42K-H[/b]
 near dawn. If that happens, you'll have missed
@@ -415,6 +417,12 @@ I don't think you should be seeing this.`;
   finishedDialog() {
     this.isTalking = false;
     this.goTo(2);
+    if(this.currentDialog >= (this.dialogArray.length-2)){
+      if(this.scene.game.player.nextButton <= 1){
+        this.scene.game.obtainedWeapons.push(4);
+        this.scene.game.player.recieveWeapon(4);
+      }
+    }
   }
 
   resetTouching() {

@@ -13,17 +13,20 @@ export default class ScenePlayerName extends Phaser.Scene {
     this.showInput();
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x001191);
+    this.cameras.main.setBackgroundColor(0x000000);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+
+    //Background Menu
+    this.add.image(0,0,'menuBackground').setOrigin(0).setDepth(-100);
 
     //MM field
     //var MMScreen=this.add.image(0,0,'MMScreen').setOrigin(0,0).setScale(0.25);
 
     //Boton exit
     this.btnExitOptionsMM = this.add.image(360,455,'btnExitOptionsMM').setScale(0.25).setAlpha(0.8);
-		this.btnExitOptionsMM.setInteractive({ useHandCursor: true  } )
+		this.btnExitOptionsMM.setInteractive()
     .on('pointerdown', () => this.exitOptions());
 
     this.btnExitOptionsMM.on('pointerover', function(pointer){
@@ -39,7 +42,7 @@ export default class ScenePlayerName extends Phaser.Scene {
 
     //Boton start
     this.botonStart = this.add.image(600,400, 'btnStart').setScale(0.25).setAlpha(0.8);
-		this.botonStart.setInteractive({ useHandCursor: true  } )
+		this.botonStart.setInteractive()
     .on('pointerdown', () => this.startGame());
 
     this.botonStart.on('pointerover', function(pointer){

@@ -76,6 +76,7 @@ export default class NPC_Droid_8 extends FiniteStateMachine{
       console.log("arma conseguida");
       this.goTo(2);
       this.game.npcHelped++;
+      this.game.points += 500;
     }
     else if(this.currentStateId() == 0 && this.enemiesLeft<=0){
       this.goTo(1);

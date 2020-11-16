@@ -9,17 +9,20 @@ export default class SceneCredits extends Phaser.Scene {
   create(){
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x091191);
+    this.cameras.main.setBackgroundColor(0x000000);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+
+    //Background Menu
+    this.add.image(0,0,'menuBackground').setOrigin(0).setDepth(-100);
 
     //Credits field
     var creditsScreen=this.add.image(0,0,'CreditsScreen').setOrigin(0,0).setScale(0.25).setAlpha(0.8);
 
     //Boton exit
     this.btnExitCredits = this.add.image(480,455,'btnExitCredits').setScale(0.25).setAlpha(0.8);
-		this.btnExitCredits.setInteractive({ useHandCursor: true  } )
+		this.btnExitCredits.setInteractive()
     .on('pointerdown', () => this.exitCredits());
 
     this.btnExitCredits.on('pointerover', function(pointer){
@@ -35,7 +38,7 @@ export default class SceneCredits extends Phaser.Scene {
 
     //Boton linkedin victor
     this.btnLinkedinVictor = this.add.image(525,93,'btnLinkedin').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinVictor.setInteractive({ useHandCursor: true  } )
+		this.btnLinkedinVictor.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
     this.btnLinkedinVictor.on('pointerover', function(pointer){
@@ -48,7 +51,7 @@ export default class SceneCredits extends Phaser.Scene {
 
     //Boton linkedin ebi
     this.btnLinkedinEbi = this.add.image(510,120,'btnLinkedin').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinEbi.setInteractive({ useHandCursor: true  } )
+		this.btnLinkedinEbi.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
     this.btnLinkedinEbi.on('pointerover', function(pointer){
@@ -61,7 +64,7 @@ export default class SceneCredits extends Phaser.Scene {
 
     //Boton linkedin Alberto
     this.btnLinkedinAlberto = this.add.image(536,206,'btnLinkedin').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinAlberto.setInteractive({ useHandCursor: true  } )
+		this.btnLinkedinAlberto.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
     this.btnLinkedinAlberto.on('pointerover', function(pointer){
@@ -74,7 +77,7 @@ export default class SceneCredits extends Phaser.Scene {
 
     //Boton linkedin Nikola
     this.btnLinkedinNikola = this.add.image(525,293,'btnLinkedin').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinNikola.setInteractive({ useHandCursor: true  } )
+		this.btnLinkedinNikola.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
     this.btnLinkedinNikola.on('pointerover', function(pointer){
@@ -87,7 +90,7 @@ export default class SceneCredits extends Phaser.Scene {
 
     //Boton linkedin Seven
     this.btnLinkedinSeven = this.add.image(525,379,'btnLinkedin').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinSeven.setInteractive({ useHandCursor: true  } )
+		this.btnLinkedinSeven.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
     this.btnLinkedinSeven.on('pointerover', function(pointer){
@@ -97,6 +100,9 @@ export default class SceneCredits extends Phaser.Scene {
     this.btnLinkedinSeven.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
+
+
+    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
   }
 
   //Método que se ejecuta una vez por frame.

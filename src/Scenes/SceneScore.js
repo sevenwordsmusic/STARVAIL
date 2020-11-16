@@ -8,17 +8,20 @@ export default class SceneScore extends Phaser.Scene {
   create(){
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x900990);
+    this.cameras.main.setBackgroundColor(0x000000);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+
+    //Background Final
+    this.add.image(0,0,'endBackground').setOrigin(0).setDepth(-100);
 
     //Score field
     var ScoreScreen=this.add.image(0,0,'ScoreScreen').setOrigin(0,0).setScale(0.25);
 
     //Boton credits
     this.btnViewCreditsScore = this.add.image(213,459,'btnCreditsScore').setScale(0.25).setAlpha(0.8);
-		this.btnViewCreditsScore.setInteractive({ useHandCursor: true  } )
+		this.btnViewCreditsScore.setInteractive()
     .on('pointerdown', () => this.viewCreditsScore());
 
     this.btnViewCreditsScore.on('pointerover', function(pointer){
@@ -31,7 +34,7 @@ export default class SceneScore extends Phaser.Scene {
 
     //Boton exit
     this.btnExitScore = this.add.image(746,459,'btnExitScore').setScale(0.25).setAlpha(0.8);
-		this.btnExitScore.setInteractive({ useHandCursor: true  } )
+		this.btnExitScore.setInteractive()
     .on('pointerdown', () => this.exitScore());
 
     this.btnExitScore.on('pointerover', function(pointer){
@@ -44,7 +47,7 @@ export default class SceneScore extends Phaser.Scene {
 
     //Boton ranking
     this.btnRankingScore = this.add.image(479,459,'btnRankingScore').setScale(0.25).setAlpha(0.8);
-		this.btnRankingScore.setInteractive({ useHandCursor: true  } )
+		this.btnRankingScore.setInteractive()
     .on('pointerdown', () => this.viewRankingScore());
 
     this.btnRankingScore.on('pointerover', function(pointer){
@@ -57,42 +60,43 @@ export default class SceneScore extends Phaser.Scene {
 
     //Calcular puntuacion
     //En funcion del tiempo, kills, eventos especiales y tipo de final
-    var finalScore;
+    var finalScore = this.game.points;
 
-    var totalTime=2; //considerado en minutos
-    var totalKills=20;
-    var specialEvents=1;
-    var tipoFinal="bueno";
+    const totalTime = this.game.time/1000/60; //considerado en minutos
+    const maxTime = this.game.maxTime/1000/60;
+    const scoreForBestTime = 3000;
 
-    finalScore= specialEvents*3000+totalKills*50;
+    var timeScore = Math.max(0,Math.min(scoreForBestTime, 2*scoreForBestTime - (maxTime/1000)*totalTime));
 
-    if(tipoFinal=="bueno"){
-      finalScore+=5000;
-    }else if(tipoFinal=="malo"){
-      finalScore-=5000;
+    const totalKills = this.game.enemiesKilled;
+    const specialEvents = this.game.npcHelped;
+    var tipoFinal="";
+
+    if(this.game.timeExpired){
+      tipoFinal="Bad Ending"
+      finalScore -= 1000;
+      timeScore = 0;
     }else{
-      finalScore+=1000;
+      if(this.game.npcHelped >= 2){
+        tipoFinal="Good Ending"
+        finalScore += 5000;
+        timeScore += 1000;
+      }else{
+      tipoFinal="Neutral Ending"
+        finalScore += 1000;
+      }
     }
 
-    if(totalTime<=5){
-      finalScore+=2000;
-    }else if(totalTime>5 && totalTime<=7){
-      finalScore+=1500;
-    }else if(totalTime>7 && totalTime<=10){
-      finalScore+=750;
-    }else{
-      finalScore+=300;
-    }
-
+    finalScore += timeScore;
 
     //this.add.bitmapText(480,270,'font','0',100);
 
     //No se porque no sale la fuente bien
-    var txt1 = this.add.text(130, 22,totalTime);
-    var txt2 = this.add.text(153, 94,totalKills);
-    var txt3 = this.add.text(523, 166,specialEvents);
-    var txt4 = this.add.text(332, 238,tipoFinal);
-    var txt5 = this.add.text(353, 316,finalScore);//45LeahFat
+    var txt1 = this.add.text(140, 22,totalTime.toFixed(2) + " min >>>> " +timeScore + " pt");
+    var txt2 = this.add.text(163, 94,totalKills);
+    var txt3 = this.add.text(533, 166,specialEvents);
+    var txt4 = this.add.text(342, 238,tipoFinal);
+    var txt5 = this.add.text(363, 316,finalScore + " pt");
 
     txt1.style.font = 'LeahFat';
     txt1.style.fontFamily = 'LeahFat';
@@ -133,6 +137,9 @@ export default class SceneScore extends Phaser.Scene {
     txt5.style.strokeThickness = 6;
     txt5.style.fill = '#43d637';
     txt5.style.update(true);
+
+
+    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
   }
 
   //Método que se ejecuta una vez por frame.

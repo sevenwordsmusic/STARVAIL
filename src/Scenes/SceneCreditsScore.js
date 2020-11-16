@@ -8,17 +8,20 @@ export default class SceneCreditsScore extends Phaser.Scene {
   create(){
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x091191);
+    this.cameras.main.setBackgroundColor(0x000000);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+
+    //Background Final
+    this.add.image(0,0,'endBackground').setOrigin(0).setDepth(-100);
 
     //Credits field
     var CreditsScoreScreen=this.add.image(0,0,'CreditsScoreScreen').setOrigin(0,0).setScale(0.25).setAlpha(0.8);
 
     //Boton exit
     this.btnExitCreditsScore = this.add.image(480,455,'btnExitCreditsScore').setScale(0.25).setAlpha(0.8);
-		this.btnExitCreditsScore.setInteractive({ useHandCursor: true  } )
+		this.btnExitCreditsScore.setInteractive()
     .on('pointerdown', () => this.exitCreditsScore());
 
     this.btnExitCreditsScore.on('pointerover', function(pointer){
@@ -31,7 +34,7 @@ export default class SceneCreditsScore extends Phaser.Scene {
 
     //Boton linkedin victor
     this.btnLinkedinScoreVictor = this.add.image(525,93,'btnLinkedinScore').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinScoreVictor.setInteractive({ useHandCursor: true  } )
+		this.btnLinkedinScoreVictor.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
     this.btnLinkedinScoreVictor.on('pointerover', function(pointer){
@@ -44,7 +47,7 @@ export default class SceneCreditsScore extends Phaser.Scene {
 
     //Boton linkedin ebi
     this.btnLinkedinScoreEbi = this.add.image(510,120,'btnLinkedinScore').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinScoreEbi.setInteractive({ useHandCursor: true  } )
+		this.btnLinkedinScoreEbi.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
     this.btnLinkedinScoreEbi.on('pointerover', function(pointer){
@@ -57,7 +60,7 @@ export default class SceneCreditsScore extends Phaser.Scene {
 
     //Boton linkedin Alberto
     this.btnLinkedinScoreAlberto = this.add.image(536,206,'btnLinkedinScore').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinScoreAlberto.setInteractive({ useHandCursor: true  } )
+		this.btnLinkedinScoreAlberto.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
     this.btnLinkedinScoreAlberto.on('pointerover', function(pointer){
@@ -70,7 +73,7 @@ export default class SceneCreditsScore extends Phaser.Scene {
 
     //Boton linkedin Nikola
     this.btnLinkedinScoreNikola = this.add.image(525,293,'btnLinkedinScore').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinScoreNikola.setInteractive({ useHandCursor: true  } )
+		this.btnLinkedinScoreNikola.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
     this.btnLinkedinScoreNikola.on('pointerover', function(pointer){
@@ -83,7 +86,7 @@ export default class SceneCreditsScore extends Phaser.Scene {
 
     //Boton linkedin Seven
     this.btnLinkedinScoreSeven = this.add.image(525,379,'btnLinkedinScore').setScale(0.25).setAlpha(0.8);
-		this.btnLinkedinScoreSeven.setInteractive({ useHandCursor: true  } )
+		this.btnLinkedinScoreSeven.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
 
     this.btnLinkedinScoreSeven.on('pointerover', function(pointer){
@@ -93,6 +96,9 @@ export default class SceneCreditsScore extends Phaser.Scene {
     this.btnLinkedinScoreSeven.on('pointerout', function(pointer){
       this.alpha=0.8;
     });
+
+
+    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
   }
 
   //Método que se ejecuta una vez por frame.

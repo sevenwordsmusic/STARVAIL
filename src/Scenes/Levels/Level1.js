@@ -382,7 +382,9 @@ export default class Level1 extends Phaser.Scene {
       this.moon.x += (delta*this.game.moonVelocity);
       this.game.moonPos.x = this.moon.x;
     }
-    else if(!this.game.timeExpired) {
+
+    this.game.time += delta;
+    if(this.game.time >= this.game.maxTime && !this.game.timeExpired) {
       this.game.timeExpired = true;
     }
 
@@ -422,6 +424,8 @@ export default class Level1 extends Phaser.Scene {
 
   pauseGame(){
     console.log("Juego pausado");
+
+    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
 
     this.game.pauseInfo = 'levelFirst' + (Level1.getNumber());
 

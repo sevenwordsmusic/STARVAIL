@@ -9,17 +9,20 @@ export default class SceneRanking extends Phaser.Scene {
   create(){
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x091191);
+    this.cameras.main.setBackgroundColor(0x000000);
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+
+    //Background Final
+    this.add.image(0,0,'endBackground').setOrigin(0).setDepth(-100);
 
     //Ranking field
     var creditsScreen=this.add.image(0,0,'RankingScreen').setOrigin(0,0).setScale(0.25);
 
     //Boton exit
     this.btnExitRanking = this.add.image(480,455,'btnExitRanking').setScale(0.25).setAlpha(0.8);
-		this.btnExitRanking.setInteractive({ useHandCursor: true  } )
+		this.btnExitRanking.setInteractive()
     .on('pointerdown', () => this.exitRanking());
 
     this.btnExitRanking.on('pointerover', function(pointer){
