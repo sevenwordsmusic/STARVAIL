@@ -21,11 +21,14 @@ export default class ScenePlayerName extends Phaser.Scene {
     //Background Menu
     this.add.image(0,0,'menuBackground').setOrigin(0).setDepth(-100);
 
+    //Imagen Player Name
+    this.add.image(230,130,'playerNameImg').setScale(0.25).setOrigin(0);
+
     //MM field
     //var MMScreen=this.add.image(0,0,'MMScreen').setOrigin(0,0).setScale(0.25);
 
     //Boton exit
-    this.btnExitOptionsMM = this.add.image(360,455,'btnExitOptionsMM').setScale(0.25).setAlpha(0.8);
+    this.btnExitOptionsMM = this.add.image(360,400,'btnBack').setScale(0.3).setAlpha(0.8);
 		this.btnExitOptionsMM.setInteractive()
     .on('pointerdown', () => this.exitOptions());
 

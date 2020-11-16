@@ -22,6 +22,10 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('RankingScreen', 'assets/Ranking menu/Botones Ranking.png'); //field
     this.load.image('btnExitRanking', 'assets/Ranking menu/btnExitRanking.png'); //btn exit
 
+    //PlayerName Menu
+    this.load.image('btnBack', 'assets/PlayerName/boton BACK.png'); //btn exit
+    this.load.image('playerNameImg', 'assets/PlayerName/boton PLAYER NAME.png'); //btn exit
+
     //Pause menu
     this.load.image('PauseScreen', 'assets/Pause menu/Botones Mpausa.png'); //field
     this.load.image('btnResumeGamePause', 'assets/Pause menu/btnResumePauseMenu.png'); //btn resume
