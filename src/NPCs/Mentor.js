@@ -255,8 +255,8 @@ If you want to know how much time you have
 left until sunrise, you only have to look at
 the moon; the contamination makes it harder
 [b]D42K-H[/b]
-to see, but if you look carefully you'll see
-it. The moon rises from the west and hides to the east
+to see, but if you look carefully you'll see it. 
+The moon rises from the west and hides to the east
 [b]D42K-H[/b]
 near dawn. If that happens, you'll have missed
 the opportunity, `+ this.scene.game.playerName +`. Keep an eye on it.
