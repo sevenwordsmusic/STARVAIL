@@ -291,7 +291,7 @@ export default class Player {
     if (!gameObjectB || !(gameObjectB instanceof Phaser.Tilemaps.Tile)) return;
     const tile = gameObjectB;
     if (tile.properties.Lethal) {
-      this.playerDamageKnockback(20, 0.8, new Phaser.Math.Vector2(-this.sprite.body.velocity.x, -this.sprite.body.velocity.y));
+      this.playerDamageKnockback(50, 0.8, new Phaser.Math.Vector2(-this.sprite.body.velocity.x, -this.sprite.body.velocity.y));
     }
   }
 

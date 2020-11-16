@@ -34,7 +34,7 @@ export default class Sith extends Enemy {
     //Variables de IA
     //No Tocar
     this.standByReDistance = 400;
-    this.standByDistance = 600;
+    this.standByDistance = 410;
     this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
     this.playerVector = new Phaser.Math.Vector2(0, 0);
     this.targetDir = false;

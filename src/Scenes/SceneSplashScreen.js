@@ -63,8 +63,8 @@ export default class SceneSplashScreen extends Phaser.Scene {
     //this.scene.start('SceneMM');
 
     //SI SE QUIEREN TESTEAR NIVELES
-    this.scene.start("tutorial1");
-    //this.scene.start("levelFirst1");
+    //this.scene.start("tutorial1");
+    this.scene.start("levelFirst1");
     //this.scene.start("levelSecond1");
     //this.scene.start("levelThird1");
     //this.scene.start("levelBoss1");
