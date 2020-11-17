@@ -227,7 +227,7 @@ mind they can provide you with the energy
 you need if you choose to defeat them.
 And remember, if your health bar empties...
 [b]TIP[/b]
-[b]your journey will come to an abrupt end[/b]`;
+your journey will come to an abrupt end`;
 
     this.dialogArray[8] =
 `[b]D42K-H[/b]
@@ -237,8 +237,8 @@ Looks like this is the end of this block.
 From this point up, the paths begin to
 diverge. In order to reach the top, [b]you[/b]
 [b]D42K-H[/b]
-[b]must overcome three blocks similar to this
-one.[/b] I won't accompany you, though, as
+must overcome three blocks similar to this
+one. I won't accompany you, though, as
 [b]D42K-H[/b]
 this is a trial that we must face alone in
 order to attain enlightenment.
