@@ -35,6 +35,7 @@ import LevelEnd from "../../Objects/LevelEnd.js";
 import Audio from "../../Audio.js";
 import InteractableChest from "../../Objects/Interactables/InteractableChest.js"
 import TileController from "../../TileController.js"
+import LaserTrap from "../../Objects/Interactables/LaserTrap.js"
 
 //Clase Scene2, que extiende de Phaser.Scene.
 export default class LevelBoss extends Phaser.Scene {
@@ -366,6 +367,11 @@ export default class LevelBoss extends Phaser.Scene {
     //jugador
     new Player(this, this.playerStartX, this.playerStartY);
     //new Mentor(this, this.playerStartX + 400, this.playerStartY)
+
+    if(this.map.getObjectLayer("Sound_Layer") != null)
+      this.map.getObjectLayer("Sound_Layer").objects.forEach(point => {
+        new LaserTrap(this, point.x, point.y)
+      });
 
     cam.startFollow(this.game.player.sprite, false, 0.1, 0.1, 0, 0);
 

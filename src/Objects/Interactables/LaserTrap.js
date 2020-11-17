@@ -1,6 +1,6 @@
 import Audio from "../../Audio.js";
 
-export default class LasserTrap {
+export default class LaserTrap {
   constructor(scene, x, y ){
     this.scene= scene;
     this.x= x;
@@ -21,10 +21,10 @@ export default class LasserTrap {
   //
 
   distanceToPlayer(){
-    if(this != undefined)
-      return Math.sqrt(Math.pow(this.x - this.scene.game.player.sprite.x,2) + Math.pow(this.y - this.scene.game.player.sprite.y,2));
+    if(this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)
+      return Number.MAX_SAFE_INTEGER;
     else
-      return 512;    //ARREGLAR ESTO
+      return Math.sqrt(Math.pow(this.x - this.scene.game.player.sprite.x,2) + Math.pow(this.y - this.scene.game.player.sprite.y,2));
   }
 
 }

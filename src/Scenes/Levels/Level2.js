@@ -36,6 +36,7 @@ import LevelEnd from "../../Objects/LevelEnd.js";
 import Audio from "../../Audio.js";
 import InteractableChest from "../../Objects/Interactables/InteractableChest.js"
 import TileController from "../../TileController.js"
+import LaserTrap from "../../Objects/Interactables/LaserTrap.js"
 
 //Clase Scene2, que extiende de Phaser.Scene.
 export default class Level2 extends Phaser.Scene {
@@ -362,6 +363,11 @@ export default class Level2 extends Phaser.Scene {
     for(var i=0; i<this.goalArray.length; i++){
       this.goalArray[i].initGoal('levelThird', Level3);
     }
+
+    if(this.map.getObjectLayer("Sound_Layer") != null)
+      this.map.getObjectLayer("Sound_Layer").objects.forEach(point => {
+        new LaserTrap(this, point.x, point.y)
+      });
 
     this.input.setDefaultCursor('none');
 
