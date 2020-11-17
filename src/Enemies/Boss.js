@@ -8,7 +8,7 @@ import TileController from "../TileController.js"
 //enemigo que hereda de Enemy
 export default class Boss extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'bossIdle', 2700);   //5º parametro del contructor == vida
+    super(scene, x, y, 'bossIdle', 2400);   //5º parametro del contructor == vida
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this.sprite
