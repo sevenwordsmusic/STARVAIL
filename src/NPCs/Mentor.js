@@ -7,6 +7,14 @@ import TileController from "../TileController.js"
 export default class Mentor extends FiniteStateMachine {
   constructor(scene, x, y) {
     super();
+    //AUDIO
+      this.walkLoop;
+      this.surfaceLoop;
+      this.isWalking=false;
+      this.isMoving=false;
+    //
+
+
     //inicializacion
     this.scene = scene;
     this.sprite = scene.matter.add.sprite(x, y, 'mentorIdle', 0).setScale(2);
@@ -365,8 +373,6 @@ I don't think you should be seeing this.`;
     this.stateOnEnd(0, function () {
       this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x);
       this.isTalking = true;
-              //AUDIO (número de palabras, escena, personaje);
-              //Audio.chat(20, scene, 1);
       this.scene.dialogManager.setCurrentSpeaker(this);
       this.scene.dialogManager.setSpeakerVoice(1);
       this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog], 10);
@@ -383,6 +389,14 @@ I don't think you should be seeing this.`;
     })
     this.stateUpdate(2, function (time, delta) {
       if (this.touchingGround) {
+        //AUDIO
+        if(!this.isMoving && this.isWalking){
+            this.isMoving=true;
+            this.isWalking=true;
+            this.walkLoop=Audio.play3Dinstance(this,91);
+            this.surfaceLoop=Audio.play3Dinstance(this,92);
+        }
+        //
         if (Math.abs(this.sprite.x - this.objectiveX) <= 5) {
           this.reachedX = true;
           this.sprite.setVelocityX(0);
@@ -391,6 +405,14 @@ I don't think you should be seeing this.`;
           this.reachedY = true;
         }
       } else {
+          //AUDIO
+          if (this.isMoving && this.isWalking && this.flyFire.visible){
+            this.isMoving=false;
+            this.isWalking=false;
+            this.walkLoop.stop();
+            this.surfaceLoop.stop();
+          }
+          //
         if (Math.abs(this.sprite.x - this.objectiveX) <= 5) {
           this.reachedX = true;
         }
@@ -405,14 +427,20 @@ I don't think you should be seeing this.`;
         this.sprite.setVelocityY(this.speedVector.y * delta);
 
       if (this.reachedX){
+          //AUDIO
+          if (this.isMoving && this.isWalking){
+            this.isMoving=false;
+            this.isWalking=false;
+            this.walkLoop.stop();
+            this.surfaceLoop.stop();
+          }
+          //
         this.goTo(0);
       }
     })
     this.startAI();
 
     this.scene.events.on("update", this.update, this);  //para que el update funcione
-
-
   }
   finishedDialog() {
     this.isTalking = false;
@@ -449,6 +477,14 @@ I don't think you should be seeing this.`;
     TileController.playerTouchBoundry(this.scene, this.sprite);
     this.updateAI(time, delta);
     this.playAnimation();
+          //AUDIO
+          if (this.isWalking && this.isMoving){
+            this.walkLoop.volume=Audio.volume3D(this);
+            this.surfaceLoop.volume=Audio.volume3D(this);
+          }else if(!this.touchingGround && this.isMoving){
+
+          }
+          //
   }
 
   playAnimation() {
@@ -503,6 +539,15 @@ I don't think you should be seeing this.`;
     this.speedVector.normalize().scale(this.speed);
   }
 
-
-
+  //AUDIO
+  distanceToPlayer(){
+    if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)
+      return Number.MAX_SAFE_INTEGER;
+    const distance = Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    if(distance == undefined)
+      return Number.MAX_SAFE_INTEGER;
+    else
+      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+  }
+  //
 }

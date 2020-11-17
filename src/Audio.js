@@ -760,6 +760,10 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('sithSwing_07', 'assets/audio/SFX/enemies/sithSwing_07.ogg');
         this.load.audio('sithHumLoop', 'assets/audio/SFX/enemies/sithHumLoop.ogg');
         this.load.audio('sithPursue', 'assets/audio/SFX/enemies/sithPursue.ogg');
+        //MENTOR
+        this.load.audio('mentorWalkLoop', 'assets/audio/SFX/mentor/walkLoop_00.ogg');
+        this.load.audio('mentorSurfaceLoop', 'assets/audio/SFX/mentor/surfaceLoop_00.ogg');
+        this.load.audio('mentorWalkStop', 'assets/audio/SFX/mentor/walkStop_00.ogg');
         //MUSIC LOOPS
         this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
@@ -978,6 +982,10 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstance('click', 88, this);
         Audio.createSFXloopInstance('lasserTrapLoop', 89, this);
         Audio.createSFXinstance('getWeapon', 90, this);
+        //MENTOR
+        Audio.createSFXloopInstance('mentorWalkLoop', 91, this);
+        Audio.createSFXloopInstance('mentorSurfaceLoop', 92, this);
+        Audio.createSFXinstance('mentorWalkStop', 93, this);
         //AMBIENT
         this.ambientLoop = this.sound.add('ambientLoop_00', {
             volume: 0.0,
