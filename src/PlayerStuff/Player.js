@@ -90,6 +90,9 @@ export default class Player {
     this.isTakingOf = false;
     this.jetAumulator = 1;
 
+    //jet mid air
+    this.canJetAgain = true;
+
     //disparo y brazo de disparo
     this.fireCounterTap = 0;
     this.fireCounterHold = 0;
@@ -267,6 +270,7 @@ export default class Player {
     if (bodyB.isSensor) return;
     if (bodyA === this.sensors.bottom) {
       this.isTouching.ground = true;
+      this.canJetAgain = true;
       if(this.activatedJet && this.cursors.down.isDown){
           this.flyFire.setVisible(false);
           this.sprite.body.frictionAir = 0.01;
@@ -391,7 +395,7 @@ export default class Player {
 
     //JET
     if(Phaser.Input.Keyboard.JustDown(this.cursors.up)){
-        if(!this.activatedJet && this.energy >= this.scene.game.energyCostJetPropulsion){
+        if(!this.activatedJet && this.energy >= this.scene.game.energyCostJetPropulsion && this.canJetAgain){
           this.isTakingOf = true;
           this.sprite.anims.play('propulsion', true);
           this.movingArm.anims.play('arm_airUp', true);
@@ -418,9 +422,9 @@ export default class Player {
       }
       else if(this.cursors.up.isDown && !this.isTakingOf){
         if(this.sprite.body.velocity.y >= this.braceVelocity){
-          this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * delta * this.playerMoveForceY());
+          this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * (1000/60) * this.playerMoveForceY());
         }else {
-           this.sprite.setVelocityY(-this.scene.game.jetVelocity * delta * this.playerMoveForceY());
+           this.sprite.setVelocityY(-this.scene.game.jetVelocity * (1000/60) * this.playerMoveForceY());
         }
       }
       if(this.energy > 0){
@@ -430,6 +434,7 @@ export default class Player {
         this.playerUseEnergy(this.energy);
         this.offJet();
         this.jetAumulator = 1;
+        this.canJetAgain = false;
       }
       this.flyFire.x = this.sprite.x;
       this.flyFire.y = this.sprite.y;
