@@ -21,7 +21,7 @@ export default class SceneCredits extends Phaser.Scene {
     var creditsScreen=this.add.image(0,0,'CreditsScreen').setOrigin(0,0).setScale(0.25).setAlpha(0.8);
 
     //Boton exit
-    this.btnExitCredits = this.add.image(480,455,'btnExitCredits').setScale(0.25).setAlpha(0.8);
+    this.btnExitCredits = this.add.image(480,455,'btnBack').setScale(0.25).setAlpha(0.8);
 		this.btnExitCredits.setInteractive()
     .on('pointerdown', () => this.exitCredits());
 

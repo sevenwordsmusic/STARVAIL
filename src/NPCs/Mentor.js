@@ -302,14 +302,14 @@ you a [b]plug-in weapon[/b].
 This upgrade will allow your cannon
 to shoot a new type of ammo: bombs.
 [b]D42K-H[/b]
-Keep in mind usign them will cost energy, unlike normal bullets!
+Keep in mind usign them will cost energy, 
+unlike normal bullets!
+[b]D42K-H[/b]
 I hope this helps you in your way up,`+ this.scene.game.playerName +`.
+Now, it's time to part ways.
 [b]D42K-H[/b]
-Now, it's time to part ways. I will meet
-you at the top of the tower, to witness
-[b]D42K-H[/b]
-the birth of a new star. I hope you
-make it in time...
+I will meet you at the top of the tower, to witness
+the birth of a new star. I wish you luck...
 [b]D42K-H[/b]
 for this night we will overcome the
 malware known as 'existential dread'.

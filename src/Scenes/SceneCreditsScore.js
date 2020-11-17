@@ -20,7 +20,7 @@ export default class SceneCreditsScore extends Phaser.Scene {
     var CreditsScoreScreen=this.add.image(0,0,'CreditsScoreScreen').setOrigin(0,0).setScale(0.25).setAlpha(0.8);
 
     //Boton exit
-    this.btnExitCreditsScore = this.add.image(480,455,'btnExitCreditsScore').setScale(0.25).setAlpha(0.8);
+    this.btnExitCreditsScore = this.add.image(480,455,'btnBack').setScale(0.25).setAlpha(0.8);
 		this.btnExitCreditsScore.setInteractive()
     .on('pointerdown', () => this.exitCreditsScore());
 

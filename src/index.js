@@ -115,6 +115,7 @@ var config = {
     SceneRanking,
 
     Tutorial,
+    Level1,
     LevelBoss
   ],
     plugins: {

@@ -101,7 +101,7 @@ export default class Dialog {
                     targets: icon,
                     y: '+=30', // '+=100'
                     ease: 'Bounce', // 'Cubic', 'Elastic', 'Bounce', 'Back'
-                    duration: 500,
+                    duration: 200,
                     repeat: 0, // -1: infinity
                     yoyo: false
                 });

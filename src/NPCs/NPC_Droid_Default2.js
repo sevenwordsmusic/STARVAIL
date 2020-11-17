@@ -19,14 +19,17 @@ export default class NPC_Droid_Default2 extends FiniteStateMachine{
     this.dialogArray = [];
     this.dialogArray[0] =
 `[b]Vagrant Droid #0[/b]
-Hello, stranger droid. Are you here to go
-up the tower as well?
+Oh, you found me! Congratulations!
+You must be a really curious droid.
 [b]Vagrant Droid #0[/b]
-If that's the case, please help other androids
-like me... not everyone is as capable for combat
+Are you planning to ascend to the top of
+this tower? You must be so brave as well!
 [b]Vagrant Droid #0[/b]
-as you are, so many like me may need your help.
-Thanks for stopping by to talk to me! Good luck!`;
+I don't have anything to give to you as a
+reward for finding me, but my fellow droids might
+[b]Vagrant Droid #0[/b]
+Be sure to look out for them! They need your help!
+Anyway... good luck!`;
 
     this.currentDialog = -1;
 
