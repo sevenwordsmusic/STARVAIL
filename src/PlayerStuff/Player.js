@@ -249,9 +249,9 @@ export default class Player {
       yoyo: true
     })
 
-    this.recieveWeapon(0);
+    this.recieveWeapon(0, false);
     for(var i=0; i<this.scene.game.obtainedWeapons.length; i++){
-      this.recieveWeapon(this.scene.game.obtainedWeapons[i]);
+      this.recieveWeapon(this.scene.game.obtainedWeapons[i], false);
     }
 
     this.hpBar.draw(this.hp);
@@ -742,10 +742,12 @@ export default class Player {
     console.log(this.weapons[this.weaponCounter].name);
   }
 
-  recieveWeapon(id){
+  recieveWeapon(id, playSound = true){
+    if(playSound){
       //AUDIO
         Audio.play2DinstanceRate(90, 0.8 + id * 0.05);
       //
+    }
     const aux = this.nextButton;
     this.buttons[aux].setVisible(true)
     this.buttons[aux].on('pointerdown', function () {
