@@ -77,7 +77,6 @@ export default class Boss extends Enemy {
     this.weaponSwitch = 3800;                                          //cada cuanto tiempo cambia de arm_airUp
     this.weaponSwitchRand = 500;                                       //varianza aleatoria del cambio de arma
     this.laserFire = 10000;                                             //cada cuanto dispara lasser
-    this.laserFireRand = 20000;                                         //varianza aleatoria de disparo de laser
     //Ajustar estas
     //Variables de IA
 
@@ -98,6 +97,13 @@ export default class Boss extends Enemy {
     this.flyFire = this.scene.add.sprite(x, y, 'fire_fly', 0);
     this.flyFire.setScale(this.sprite.scale).setOrigin(0.5, 0.5);
     this.flyFire.setVisible(false);
+
+
+    this.laserTimer = this.scene.time.addEvent({
+      delay: this.laserFire,
+      callback: () => (this.initializeLaser()),
+      repeat: -1
+    },this);
 
     //IA
     this.initializeAI(6);
@@ -148,10 +154,6 @@ export default class Boss extends Enemy {
         callback: () => (this.gun.shoot(this.currentWeapon)),
         repeat: -1
       },this);
-      this.laserTimer = this.scene.time.addEvent({
-        delay: Phaser.Math.Between(this.laserFire - this.laserFireRand, this.laserFire + this.laserFireRand),
-        callback: () => (this.initializeLaser())
-      },this);
     })
 
     this.stateUpdate(0, function(time, delta){
@@ -177,6 +179,10 @@ export default class Boss extends Enemy {
 
     //ADUIO
     //empieza a irse hacia el suelo
+    this.stateOnStart(1, function(){
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
+      this.laserTimer.paused = true;
+    });
     this.stateUpdate(1, function(time, delta){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.playAnimation1();
@@ -229,6 +235,10 @@ export default class Boss extends Enemy {
         this.gun.adjustLaser(this.playerVector.angle(), delta);
       }
     })
+    this.stateOnEnd(2, function(){
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
+      this.laserTimer.paused = false;
+    });
 
     //AUDIO
     //Se le ha acabado la vida, se va hacia el centro de la arena
