@@ -145,7 +145,7 @@ game.enemiesKilled = 0;
 game.npcHelped = 0;
 game.timeExpired = false;
 game.time = 0;
-game.maxTime = 600000;
+game.maxTime = 900000;
 game.bestTime = 300000;          //tiempo con el que se consigue puntuación máxima
 
 //Declaramos variables globales del juego.
@@ -176,11 +176,11 @@ for(var i=0; i<game.levelVariants.length; i++){
 
 game.npcArray = [7];
 for(var i=0; i<7; i++){
-  game.npcArray[i] = i;
+  game.npcArray[i] = i+1;
 }
 
 game.moonPos = new Phaser.Math.Vector2(130, 130);
-game.moonVelocity = 1/571.428571429;      //si = 1 -> avanza 1 unidades en un milisegundo
+game.moonVelocity = 920/900000;      //si = 1 -> avanza 1 unidades en un milisegundo
 game.moonMaxDistance = 1050
 game.currentBgAnimation = 0;
 game.transitionToScene = function(scene, keyNext, sceneNext){

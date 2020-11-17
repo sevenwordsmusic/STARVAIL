@@ -197,7 +197,7 @@ export default class Tutorial extends Phaser.Scene {
         new NPC_Droid_Default2(this, point.x, point.y);
       }
       else if(point.name == "NPC"){
-        const randNumber = Math.floor(Math.random()*this.game.npcArray.length) + 1;
+        const randNumber = Math.floor(Math.random()*this.game.npcArray.length);
         const npcNumber = this.game.npcArray[randNumber];
         switch(npcNumber){
           case 1:

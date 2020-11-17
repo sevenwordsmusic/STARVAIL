@@ -32,13 +32,11 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('playerNameImg', 'assets/PlayerName/boton PLAYER NAME.png'); //btn exit
 
     //Pause menu
-    this.load.image('PauseScreen', 'assets/Pause menu/Botones Mpausa.png'); //field
     this.load.image('btnResumeGamePause', 'assets/Pause menu/btnResumePauseMenu.png'); //btn resume
     this.load.image('btnOptionsGame', 'assets/Pause menu/btnOptionsPauseMenu.png'); //btn options
     this.load.image('btnExitPause', 'assets/Pause menu/btnExitPauseMenu.png'); //btn exit
 
     //Options menu
-    this.load.image('OptionsScreen', 'assets/Options menu/OMScreen.png'); //field
     this.load.image('btnExitOptionsMM', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
     this.load.image('btnMinus', 'assets/Options menu/btnMinusOptionsMenu.png'); //btn minus
     this.load.image('btnMusic', 'assets/Options menu/btnMusicOptionsMenu.png'); //btn music
@@ -46,11 +44,9 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('btnSFX', 'assets/Options menu/btnSFXOptionsMenu.png'); //btn sfx
 
     //Options menu
-    this.load.image('OptionsScreenGame', 'assets/Options menu/OMScreen.png'); //field
     this.load.image('btnExitOptionsGame', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
 
     //Main menu
-    this.load.image('MMScreen', 'assets/Main menu/MMScreen.png'); //field
     this.load.image('btnStart', 'assets/Main menu/btnStartMainMenu.png'); //btn start
     this.load.image('btnCredits', 'assets/Main menu/btnCreditsMainMenu.png'); //btn credits
     this.load.image('btnOptions', 'assets/Main menu/btnOptionsMainMenu.png'); //btn options
@@ -66,7 +62,6 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('btnContactoScore', 'assets/Credits menu/Boton contacto.png'); //btn linkedin
 
     //Game over menu
-    this.load.image('GOScreen', 'assets/Game over menu/GOScreen.png'); //field
     this.load.image('btnExitGameOver', 'assets/Game over menu/btnExitGameOver.png'); //btn exit
     this.load.image('btnPlayAgainGameOver','assets/Game over menu/btnPlayAgainGameOver.png'); //btn play again
 
@@ -79,10 +74,18 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('crosshair', 'assets/HUD/crosshair.png', { frameWidth: 64, frameHeight: 64 });
 
     //HUD
-    this.load.image('hpBarHUD', 'assets/HUD/hpBar.png');
-    this.load.image('energyBarHUD', 'assets/HUD/energyBar.png');
-    this.load.image('hpBarFillHUD', 'assets/HUD/hpBarFill.png');
-    this.load.image('energyBarFillHUD', 'assets/HUD/energyBarFill.png');
+    //this.load.image('hpBarHUD', 'assets/HUD/hpBar.png');
+    this.load.image('hpBarHUD', 'https://i.postimg.cc/Vvx03mGX/hpbar.png');
+
+    //this.load.image('energyBarHUD', 'assets/HUD/energyBar.png');
+    this.load.image('energyBarHUD', 'https://i.postimg.cc/VsFDyTmn/energybar.png');
+
+    //this.load.image('hpBarFillHUD', 'assets/HUD/hpBarFill.png');
+    this.load.image('hpBarFillHUD', 'https://i.postimg.cc/V5P5K4vR/hpbar-Fill.png');
+
+    //this.load.image('energyBarFillHUD', 'assets/HUD/energyBarFill.png');
+    this.load.image('energyBarFillHUD', 'https://i.postimg.cc/v8NrrdzY/energybar-Fill.png');
+
     this.load.image('weaponHUD0', 'assets/HUD/weaponselect_current.png');
     this.load.image('weaponHUD1', 'assets/HUD/weaponselect_left1.png');
     this.load.image('weaponHUD2', 'assets/HUD/weaponselect_up1.png');
@@ -191,7 +194,9 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('gunner', 'assets/Sprites/Enemies/DroidGunner/Droid_gunner.png', { frameWidth: 60, frameHeight: 40 });
     //AIR
 
-    this.load.spritesheet('enemyExplosion', 'assets/Sprites/VFX/enemy_death_80x80_74.png', { frameWidth: 80, frameHeight: 80 });
+    //this.load.spritesheet('enemyExplosion', 'assets/Sprites/VFX/enemy_death_80x80_74.png', { frameWidth: 80, frameHeight: 80 });
+    //this.load.spritesheet('enemyExplosion', 'https://i.postimg.cc/vm5bG9Y1/enemy-death-80-X80-74.png', { frameWidth: 80, frameHeight: 80 });
+    this.load.spritesheet('enemyExplosion', 'assets/enemyExplosion.png', { frameWidth: 80, frameHeight: 80 });
     //ENEMIGOS
 
     //NPC
@@ -255,7 +260,11 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('bulletImpact5', 'assets/Sprites/Impacts/clean4_100x100px.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('explosion', 'assets/Sprites/Explosions/explosion-6.png', { frameWidth: 48, frameHeight: 48 });
     //this.load.spritesheet('bombExplosion', 'assets/Sprites/VFX/bomb_explosion_80x80_77.png', { frameWidth: 80, frameHeight: 80 });
-    this.load.spritesheet('megatonExplosion', 'assets/Sprites/VFX/megaton_explosion_100x100_51.png', { frameWidth: 100, frameHeight: 100 });
+
+    //this.load.spritesheet('megatonExplosion', 'assets/Sprites/VFX/megaton_explosion_100x100_51.png', { frameWidth: 100, frameHeight: 100 })
+    //this.load.spritesheet('megatonExplosion', 'https://i.postimg.cc/SN5h8Vj2/megaton-explosion-100-X100-51.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('megatonExplosion', 'assets/megaton.png', { frameWidth: 100, frameHeight: 100 })
+
     //this.load.spritesheet('missileExplosion', 'assets/Sprites/VFX/missil_explosion_100x100_75.png', { frameWidth: 100, frameHeight: 100 });
     //this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
     this.load.spritesheet('smoke', 'assets/Sprites/Explosions/laser_smoke.png', { frameWidth: 100, frameHeight: 100 });
