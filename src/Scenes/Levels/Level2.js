@@ -111,6 +111,8 @@ export default class Level2 extends Phaser.Scene {
     this.timeBg = this.add.sprite(480, 270, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
 
 
+    console.log("A Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
+
     //Inicializacion y creacion de mapa de tiles.
     this.map = this.make.tilemap({ key: "map2" });
     const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund2", 32, 32, 1, 2);
@@ -118,6 +120,8 @@ export default class Level2 extends Phaser.Scene {
     const tileset3 = this.map.addTilesetImage("main_layer", "tilesMain2", 32, 32, 1, 2);
     const tileset4 = this.map.addTilesetImage("second_layer", "tilesSecond2", 32, 32, 1, 2);
     const tileset5 = this.map.addTilesetImage("animated_layer", "animatedLayer1", 32, 32, 1, 2);
+
+    console.log("B Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
 
     //Capas de tiles.
     const mainlayer = this.map.createDynamicLayer("Main_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);

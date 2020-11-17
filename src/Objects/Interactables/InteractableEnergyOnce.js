@@ -9,11 +9,7 @@ export default class InteractableEnergyOnce extends Interactable {
     this.spMaxSize = 2;
     this.spMinSize = 1.8;
 
-<<<<<<< Updated upstream
     this.energy = energy
-=======
-    this.energy = energy;
->>>>>>> Stashed changes
   }
 
   onActivated(){

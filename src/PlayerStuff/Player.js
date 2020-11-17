@@ -253,7 +253,7 @@ export default class Player {
     for(var i=0; i<this.scene.game.obtainedWeapons.length; i++){
       this.recieveWeapon(this.scene.game.obtainedWeapons[i]);
     }
-    
+
     this.hpBar.draw(this.hp);
     this.energyBar.draw(this.energy);
 
@@ -414,7 +414,7 @@ export default class Player {
     }
     if(this.activatedJet){
       if(this.cursors.down.isDown){
-        this.sprite.setVelocityY(this.scene.game.jetVelocityDown * delta * this.playerMoveForceY());
+        this.sprite.setVelocityY(this.scene.game.jetVelocityDown * (1000/60)/** delta*/ * this.playerMoveForceY());
       }
       else if(this.cursors.up.isDown && !this.isTakingOf){
         if(this.sprite.body.velocity.y >= this.braceVelocity){

@@ -196,6 +196,7 @@ export default class Mecha extends Enemy {
 
   onSensorCollide({ bodyA, bodyB, pair }){
     if (bodyB.isSensor) return;
+    if (this.sprite == undefined || this.sprite.body == undefined) return;
     if (bodyA === this.sensors.right)
       this.patrolDir = -1;
     else if (bodyA === this.sensors.left)
@@ -205,9 +206,10 @@ export default class Mecha extends Enemy {
 
   onSensorCollide2({ bodyA, bodyB, pair }){
      if (bodyB.isSensor) return;
+     if (this.sprite == undefined || this.sprite.body == undefined) return;
      this.leftMultiply = 1;
      this.rightMultiply = 1;
-     if(this.scene.tileBodyMatrix != undefined){
+     if(this.scene.tileBodyMatrix != undefined && this.scene.tileBodyMatrix[0] != undefined){
        if(this.scene.tileBodyMatrix[Math.floor(bodyB.position.x/32) - 2][Math.floor(bodyB.position.y/32)] === undefined){
          this.leftMultiply = 0;
        }else{
