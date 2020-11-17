@@ -122,9 +122,6 @@ here. Good luck in your journey, take care!`;
 
     this.sprite.on('pointerdown', function() {
       if(!this.isTalking){
-        //AUDIO (número de palabras, escena, personaje);
-            Audio.chat(5, scene, 0);
-         //
         this.isTalking = true;
         this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x)
         this.scene.dialogManager.setCurrentSpeaker(this);

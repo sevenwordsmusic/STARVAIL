@@ -10,11 +10,6 @@ export default class SceneOptionsGame extends Phaser.Scene {
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
 
-    //Variables de prueba
-    this.music=true;
-    this.musicVolume=0;
-    this.sfx=true;
-    this.sfxVolume=0;
 
     //Options field
     //var optionsScreen=this.add.image(0,0,'OptionsScreen').setOrigin(0,0).setScale(0.25);

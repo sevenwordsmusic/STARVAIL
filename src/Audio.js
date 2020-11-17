@@ -30,6 +30,11 @@ export default class Audio extends Phaser.Scene {
     static maxSFXinstances = 16;
     static SFXinstance = 0;
     static ambientLoop;
+    //STINGERS
+    static stingerJet = false;
+    static stingerMovement = false;
+    static stingerSurface = false;
+    static stingerChill = false;
     //
     static ctf = "background-color: #FF8000; color: #000000; font-weight: bold; font-family: Arial Black;";
     //letsTalk caller:
@@ -104,6 +109,8 @@ export default class Audio extends Phaser.Scene {
             Audio.volumeBGM = document.getElementById("bgmSlider").value / 10;
             this.load.musicLoop0000chill.volume = Audio.volumeBGM;
             Audio.play2DinstanceRate(88, 1.0);
+            var click= Audio.play2DinstanceRate(88, 1.0);
+            click.volume=document.getElementById("bgmSlider").value / 10; 
         }
         if (document.getElementById("sfxSlider").value / 10 != Audio.volumeSFX) {
             Audio.volumeSFX = document.getElementById("sfxSlider").value / 10;
@@ -114,7 +121,8 @@ export default class Audio extends Phaser.Scene {
             this.load.engineLoop.volume = Audio.volumeSFX;
             this.load.lasserLoop.volume = Audio.volumeSFX;
             this.load.beamLoop.volume = Audio.volumeSFX;
-            Audio.play2DinstanceRate(88, 1.0);
+            var click= Audio.play2DinstanceRate(88, 1.0);
+            click.volume=document.getElementById("sfxSlider").value / 10; 
         }
     }
     static maxBGMvolume(scene) {
@@ -164,18 +172,30 @@ export default class Audio extends Phaser.Scene {
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : activated.", Audio.ctf, "");
     }
     static levelZero(scene) {
+        Audio.stingerJet = false;
+        Audio.stingerMovement = false;
+        Audio.stingerSurface = false;
+        Audio.stingerChill = false;
+        //
         this.load.musicLoop0000chill.volume = 0;
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #0.", Audio.ctf, "");
     }
     static levelOne(scene) {
+        Audio.stingerJet = false;
+        Audio.stingerMovement = false;
+        Audio.stingerSurface = false;
+        Audio.stingerChill = false;
+        //
         Audio.currentLevel = 1;
         this.load.musicLoop0000chill.stop();
-        this.load.musicLoop0000chill.play();
-        this.load.musicLoop0000chill.volume = 0;
         this.load.musicLoop0000levitating.play();
         this.load.musicLoop0000moving.play();
         this.load.musicLoop0000flying.play();
         this.load.musicLoop0000chill.play();
+        this.load.musicLoop0000levitating.volume= 0.0;
+        this.load.musicLoop0000moving.volume= 0.0;
+        this.load.musicLoop0000flying.volume= 0.0;
+        this.load.musicLoop0000chill.volume= 0.0;
         scene.time.addEvent({
             delay: Audio.barRateDiv[0],
             callback: () => Audio.musicLayerBar(scene),
@@ -187,6 +207,16 @@ export default class Audio extends Phaser.Scene {
             loop: true,
         });
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #1.", Audio.ctf, "");
+    }
+    static levelTwo(scene) {
+        Audio.stingerJet = false;
+        Audio.stingerMovement = false;
+        Audio.stingerSurface = false;
+        Audio.stingerChill = false;
+        //
+        Audio.currentLevel = 2;
+        this.load.musicLoop0000chill.volume = 0;
+        console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #2.", Audio.ctf, "");
     }
     static musicLayerBar(scene) {
         console.log("BAR #" + Audio.barCounter);
@@ -264,11 +294,13 @@ export default class Audio extends Phaser.Scene {
         this.load.soundInstance[type][Audio.SFXinstance].setRate(rate);
         this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
         this.load.soundInstance[type][Audio.SFXinstance].play();
+        var instance = this.load.soundInstance[type][Audio.SFXinstance];
         if (Audio.SFXinstance == Audio.SFXinstance && Audio.SFXinstance < Audio.maxSFXinstances - 1) {
             Audio.SFXinstance++;
         } else {
             Audio.SFXinstance = 0;
         }
+        return instance;
     }
     //2D randomized:
     static play2DinstanceRnd(type) {
@@ -376,7 +408,7 @@ export default class Audio extends Phaser.Scene {
     static update(scene) {
         Audio.maxBGMvolume(scene);
         Audio.propellerFliying(scene);
-        if (scene.game.isFiring && scene.game.player.energy == 0.0 && !scene.game.player.activatedJet) {
+        if (scene.game.isFiring && scene.game.player.energy == 0.0) {
             Audio.play2DinstanceRate(10, 0.8 + scene.game.player.weaponCounter * 0.05);
         }
         if (scene.game.player.inRoom() && !this.stingerChill) {
@@ -385,7 +417,12 @@ export default class Audio extends Phaser.Scene {
         if (scene.game.player.activatedJet && !this.stingerJet) {
             this.stingerJet = true;
         }
-        if (!this.stingerSurface && Math.floor(scene.game.player.earlyPos.x) != Audio.earlyPos && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
+        if (scene.game.player.weaponCounter != Audio.earlyWeapon) {
+            Audio.earlyWeapon = scene.game.player.weaponCounter;
+            Audio.play2DinstanceRate(8, 0.8 + scene.game.player.weaponCounter * 0.05);
+            Audio.play2DinstanceRate(9, 0.8 + scene.game.player.weaponCounter * 0.05);
+        }
+        if (!this.stingerSurface && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
             this.stingerSurface = true;
             this.load.surfaceLoop.volume = Audio.volumeSFX;
             this.load.surfaceLoop.setDetune(-25 + (Math.random() * 50));
@@ -393,21 +430,17 @@ export default class Audio extends Phaser.Scene {
             this.load.walkLoop.volume = Audio.volumeSFX;
             this.load.walkLoop.setDetune(-25 + (Math.random() * 50));
             this.load.walkLoop.play();
-        }
-        if (this.stingerSurface && (Math.floor(scene.game.player.earlyPos.x) == Audio.earlyPos || scene.game.player.activatedJet || !scene.game.player.isTouching.ground)) {
+        }else if (this.stingerSurface && ((scene.game.player.activatedJet || !scene.game.player.isTouching.ground) || (!scene.game.player.cursors.right.isDown && !scene.game.player.cursors.left.isDown))) {
             this.stingerSurface = false;
             this.load.surfaceLoop.stop();
             this.load.walkLoop.stop();
             Audio.play2DinstanceRate(28, 1.0);
         }
-        if (scene.game.player.weaponCounter != Audio.earlyWeapon) {
-            Audio.earlyWeapon = scene.game.player.weaponCounter;
-            Audio.play2DinstanceRate(8, 0.8 + scene.game.player.weaponCounter * 0.05);
-            Audio.play2DinstanceRate(9, 0.8 + scene.game.player.weaponCounter * 0.05);
-        }
-        if (Math.floor(scene.game.player.earlyPos.x) != Audio.earlyPos) {
+        if (!this.stingerMovement && ((Math.floor(scene.game.player.earlyPos.x) != Audio.earlyPos))) {
             Audio.earlyPos = Math.floor(scene.game.player.earlyPos.x);
             this.stingerMovement = true;
+        }else if(this.stingerMovement) {
+            this.stingerMovement = false;
         }
     }
     //Propeller:
@@ -708,11 +741,6 @@ export default class Audio extends Phaser.Scene {
     create() {
         //INIT AUDIO
         this.soundInstance = [];
-        //STINGERS
-        this.stingerJet = false;
-        this.stingerMovement = false;
-        this.stingerSurface = false;
-        this.stingerChill = false;
         //
         this.soundInstance[0] = [];
         Audio.createSFXinstanceSub('impact_00A', 0, 0, this);

@@ -366,9 +366,9 @@ export default class Level2 extends Phaser.Scene {
     this.input.setDefaultCursor('none');
 
    this.maxMemory = 0;
-      //AUDIO:
-        Audio.currentLevel=2;
-      //
+   //AUDIO
+      Audio.levelTwo(this);
+   //
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {

@@ -75,6 +75,9 @@ export default class Tutorial extends Phaser.Scene {
 
     this.botonPause.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.0);
+      //
     });
 
     this.botonPause.on('pointerout', function(pointer){
@@ -92,6 +95,9 @@ export default class Tutorial extends Phaser.Scene {
 
     this.botonSkip.on('pointerover', function(pointer){
       this.alpha=1;
+      //AUDIO
+        Audio.play2DinstanceRate(79, 1.0);
+      //
     });
 
     this.botonSkip.on('pointerout', function(pointer){
@@ -441,6 +447,9 @@ export default class Tutorial extends Phaser.Scene {
 
   skipTutorial(){
     if(this.game.player.nextButton <= 1){
+      //AUDIO
+        Audio.play2DinstanceRate(81, 1.0);
+      //
       this.game.obtainedWeapons.push(4);
       this.game.player.recieveWeapon(4);
     }
