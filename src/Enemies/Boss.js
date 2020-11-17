@@ -8,7 +8,7 @@ import TileController from "../TileController.js"
 //enemigo que hereda de Enemy
 export default class Boss extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'bossIdle', 3000);   //5º parametro del contructor == vida
+    super(scene, x, y, 'bossIdle', 2700);   //5º parametro del contructor == vida
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this.sprite
@@ -66,9 +66,9 @@ export default class Boss extends Enemy {
     this.fireRate[1] = 700;
     this.fireRate[2] = 500;
     this.fireDamage = [3]                                             //daño de cada arma
-    this.fireDamage[0] = 10;
-    this.fireDamage[1] = 100;
-    this.fireDamage[2] = 50;
+    this.fireDamage[0] = 5;
+    this.fireDamage[1] = 75;
+    this.fireDamage[2] = 35;
 
 
     this.nextEnergy = 100;                                            //cada cuanta vida gastada suelta energia
@@ -284,6 +284,7 @@ export default class Boss extends Enemy {
 
       this.scene.cameras.main.shake(effectDuration, 0.02, true);
       this.scene.cameras.main.flash(effectDuration*2, 255,255,255, true);
+      this.scene.cameras.main.pan(2975, 1000, 2000, 'Linear', true); //182
       this.scene.time.addEvent({
         delay: 250,
         callback: () => (this.checkEnding())

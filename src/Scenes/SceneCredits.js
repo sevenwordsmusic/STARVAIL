@@ -52,7 +52,7 @@ export default class SceneCredits extends Phaser.Scene {
     //Boton linkedin Nikola
     this.btnNikola = this.add.image(51,128,'btnContacto').setScale(0.25).setAlpha(0.8);
 		this.btnNikola.setInteractive()
-    .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
+    .on('pointerdown', () => this.irAlLink("https://kilonovastudios.itch.io/"));
 
     this.btnNikola.on('pointerover', function(pointer){
       this.alpha=1;
@@ -65,7 +65,7 @@ export default class SceneCredits extends Phaser.Scene {
     //Boton linkedin Seven
     this.btnSeven = this.add.image(51,210,'btnContacto').setScale(0.25).setAlpha(0.8);
 		this.btnSeven.setInteractive()
-    .on('pointerdown', () => this.irAlLink("https://www.linkedin.com/in/eusebiu-costinel-delcea/"));
+    .on('pointerdown', () => this.irAlLink("https://www.youtube.com/channel/UC_QZH47UacK5fEiKjB37Qjg"));
 
     this.btnSeven.on('pointerover', function(pointer){
       this.alpha=1;

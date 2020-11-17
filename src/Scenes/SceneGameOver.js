@@ -8,10 +8,10 @@ export default class SceneGameOver extends Phaser.Scene {
   create(){
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x450045);
+    //this.cameras.main.setBackgroundColor(0x450045);
 
     //Corners
-    var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+    //var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
 
     //Credits field
     var GOScreen=this.add.image(0,0,'GOScreen').setOrigin(0,0).setScale(0.25);

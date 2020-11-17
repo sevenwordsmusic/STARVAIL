@@ -48,7 +48,7 @@ I do not.
 Let me explain, then...
 
 [b]D42K-H[/b]
-[size=22]The meaning of life is death.[/size]
+[size=30]The meaning of life is death.[/size]
 
 [b]D42K-H[/b]
 This may strike you as dramatic, but it is
@@ -126,7 +126,7 @@ Do you see the meaning of life in this?
 Let me explain, then...
 
 [b]D42K-H[/b]
-[size=22]The meaning of life is death.[/size]
+[size=30]The meaning of life is death.[/size]
 
 [b]D42K-H[/b]
 This may strike you as dramatic, but it is
@@ -214,7 +214,7 @@ This is what we exist for!`;
     this.sprite.destroy();
 
     this.scene.cameras.main.stopFollow();
-    this.scene.cameras.main.pan(this.initX, this.initY - 182, 2000, 'Linear', true);
+    this.scene.cameras.main.pan(this.initX, this.initY - 152, 2000, 'Linear', true); //182
     this.scene.matter.world.setBounds(this.initX-500, this.initY-450, 1000, 1000);
     console.log("Boss Fight Started");
   }

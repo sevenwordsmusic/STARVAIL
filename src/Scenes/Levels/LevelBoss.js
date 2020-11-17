@@ -387,7 +387,7 @@ export default class LevelBoss extends Phaser.Scene {
       //AUDIO:
         Audio.update(this);
       //
-    this.game.time += delta;
+    //this.game.time += delta;
 
     if (this.ESC.isDown){
       if (!this.inPause) {

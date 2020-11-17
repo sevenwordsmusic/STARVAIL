@@ -62,6 +62,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('btnContactoScore', 'assets/Credits menu/Boton contacto.png'); //btn linkedin
 
     //Game over menu
+    this.load.image('GOScreen', 'assets/Game over menu/GOScreen.png');
     this.load.image('btnExitGameOver', 'assets/Game over menu/btnExitGameOver.png'); //btn exit
     this.load.image('btnPlayAgainGameOver','assets/Game over menu/btnPlayAgainGameOver.png'); //btn play again
 
