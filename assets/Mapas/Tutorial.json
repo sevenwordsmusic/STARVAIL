@@ -146,6 +146,41 @@
         }, 
         {
          "draworder":"topdown",
+         "id":54,
+         "name":"Sound_Layer",
+         "objects":[
+                {
+                 "height":0,
+                 "id":132,
+                 "name":"laser",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":864,
+                 "y":1234
+                }, 
+                {
+                 "height":0,
+                 "id":133,
+                 "name":"laser",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":982,
+                 "y":625
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":53,
          "name":"Waypoint_Layer",
          "objects":[
@@ -415,8 +450,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":54,
- "nextobjectid":132,
+ "nextlayerid":55,
+ "nextobjectid":134,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.5",
