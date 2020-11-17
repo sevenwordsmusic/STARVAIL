@@ -538,6 +538,21 @@ export default class SceneLoading extends Phaser.Scene {
     });
     //META
 
+    //CHEST
+    this.anims.create({
+        key: 'chestClosed',
+        frames: this.anims.generateFrameNumbers('chest', { start: 0, end: 1 }),
+        frameRate: 4,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'chestOpen',
+        frames: this.anims.generateFrameNumbers('chest', { start: 2, end: 3 }),
+        frameRate: 4,
+        repeat: -1
+    });
+    //CHEST
+
     //BOSS
     this.anims.create({
         key: 'wRightBoss',

@@ -14,9 +14,12 @@ export default class InteractableChest extends Interactable {
 
     this.energy = energy;
     this.hp = hp;
+
+    this.sprite.anims.play('chestClosed', true);
   }
 
   onActivated(){
+    this.sprite.anims.play('chestOpen', true);
     //AUDIO
       Audio.play3Dinstance(this,70);
       Audio.play3Dinstance(this,78);
@@ -39,7 +42,6 @@ export default class InteractableChest extends Interactable {
 
   onPermaDeactivated(){
     super.onPermaDeactivated();
-    this.sprite.setFrame(1);
   }
 
   distanceToPlayer(){
