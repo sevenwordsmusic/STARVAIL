@@ -104,4 +104,15 @@ export default class Enemy extends FiniteStateMachine{
     this.sprite.parent = undefined;
     this.sprite = undefined;
   } //incompleto, cada enemigo deberia eliminar sus cuerpos y objetos adicionales adicionales
+
+
+  distanceToPlayer(){
+    if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)
+      return Number.MAX_SAFE_INTEGER;
+    const distance = Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    if(distance == undefined)
+      return Number.MAX_SAFE_INTEGER;
+    else
+      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+  }
 }

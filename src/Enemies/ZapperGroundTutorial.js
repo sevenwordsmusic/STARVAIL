@@ -157,6 +157,7 @@ export default class ZapperGroundTutorial extends Enemy {
   }
 
   update(time, delta){
+    if(this.sprite == undefined || this.sprite.body == undefined)return
     super.update(time, delta);
       //AUDIO
         this.sfx.volume=Audio.volume3D(this);
@@ -288,12 +289,6 @@ export default class ZapperGroundTutorial extends Enemy {
           this.goTo(0);
       break;
     }
-  }
-  distanceToPlayer(){
-    if(this.sprite.body != undefined)
-      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
-    else
-      return 512;    //ARREGLAR ESTO
   }
 
   //AUDIO

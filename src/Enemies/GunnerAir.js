@@ -55,7 +55,7 @@ export default class ZapperAir extends Enemy {
     this.stopAndHitDistance = 250;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 1.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
     this.hitDamage = 60;                                              //daño al golpear
-    this.fireRate = 800; 
+    this.fireRate = 800;
     this.healthDrop = 100;                                             //fire rate del droid
     this.energyDrop = 250;                                             //drop de energia
     //Ajustar estas
@@ -168,6 +168,7 @@ export default class ZapperAir extends Enemy {
   }
 
   update(time, delta){
+      if(this.sprite == undefined || this.sprite.body == undefined)return
       super.update(time, delta);
       //AUDIO
         this.sfx.volume=Audio.volume3D(this);
@@ -284,12 +285,6 @@ export default class ZapperAir extends Enemy {
           this.goTo(0);
       break;
     }
-  }
-  distanceToPlayer(){
-    if(this.sprite.body != undefined)
-      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
-    else
-      return 512;    //ARREGLAR ESTO
   }
 
   //AUDIO
