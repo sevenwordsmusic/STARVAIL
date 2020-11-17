@@ -742,7 +742,7 @@ export default class Audio extends Phaser.Scene {
     //CREATION:
     create() {
         if(navigator.userAgent.indexOf("Chrome") != -1 ) {
-            console.log("%c | AUDIO ENGINE | %c > GOOGLE CHROME DETECTED : max sound slots reduced, for a better sound experience switch to Firefox.", Audio.ctf, "");
+            console.log("%c | AUDIO ENGINE | %c > GOOGLE CHROME DETECTED : max sound slots reduced; for a better sound experience switch to Firefox.", Audio.ctf, "");
             Audio.maxSFXinstances = 8;
         }
         //INIT AUDIO
