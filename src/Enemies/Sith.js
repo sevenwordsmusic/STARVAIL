@@ -149,7 +149,7 @@ export default class Sith extends Enemy {
 
 
     this.stateOnStart(4, function(){
-      if(this.sprite == undefined || this.sprite.body == undefined)return;
+      if(this.sprite == undefined || this.sprite == undefined)return;
       //AUDIO
         Audio.play3Dinstance(this, 84);
       //
