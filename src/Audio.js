@@ -117,7 +117,6 @@ export default class Audio extends Phaser.Scene {
             Audio.volumeBGM = document.getElementById("bgmSlider").value / 10;
             this.load.musicLoop0000chill.volume = Audio.volumeBGM;
             this.load.musicLoop0001.volume = Audio.volumeBGM;
-            Audio.play2DinstanceRate(88, 1.0);
             var click= Audio.play2DinstanceRate(88, 1.0);
             click.volume=document.getElementById("bgmSlider").value / 10;
         }
@@ -716,30 +715,6 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('groundDeath_02A', 'assets/audio/SFX/enemies/groundDeath_02A.ogg');
         this.load.audio('groundDeath_02B', 'assets/audio/SFX/enemies/groundDeath_02B.ogg');
         this.load.audio('groundDeath_02C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_00A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_00B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_00C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_00C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_01A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_01B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_01C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_01C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_02A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_02B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_02C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_02C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_03A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_03B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_03C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_03C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_04A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_04B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_04C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_04C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_05A', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_05B', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_05C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
-        this.load.audio('explode_05C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
         this.load.audio('explode_00A', 'assets/audio/SFX/enemies/explode_00A.ogg');
         this.load.audio('explode_00B', 'assets/audio/SFX/enemies/explode_00B.ogg');
         this.load.audio('explode_00C', 'assets/audio/SFX/enemies/explode_00C.ogg');
@@ -791,10 +766,6 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
         this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg')
         this.load.audio('musicLoop0001', 'assets/audio/BGM/musicLoop0001.ogg')
-        /*this.load.audio('musicLoop0000levitating', 'assets/audio/SFX/null.ogg');
-        this.load.audio('musicLoop0000moving', 'assets/audio/SFX/null.ogg');
-        this.load.audio('musicLoop0000flying', 'assets/audio/SFX/null.ogg');
-        this.load.audio('musicLoop0000chill', 'assets/audio/SFX/null.ogg');*/
     }
     //CREATION:
     create() {
