@@ -371,15 +371,16 @@ export default class LevelBoss extends Phaser.Scene {
 
     this.input.setDefaultCursor('none');
 
-  //AUDIO:
-   //Audio.startAudioEngine(this);
    this.maxMemory = 0;
+   //AUDIO
+      Audio.levelFour(this);
+   //
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {
-    //AUDIO:
-    Audio.update(this);
-
+      //AUDIO:
+        Audio.update(this);
+      //
     this.game.time += delta;
 
     if (this.ESC.isDown){

@@ -10,6 +10,8 @@ export default class Audio extends Phaser.Scene {
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64, this.barRate / 128];
     static barCounter=0;
     static paused = false;
+    static musicLayerBarEvent;
+    static musicLayerJetEvent;
     //DISTANCES
     static vanishingPoint = 960;
     static inRangeDistance = this.vanishingPoint * 2;
@@ -196,12 +198,12 @@ export default class Audio extends Phaser.Scene {
         this.load.musicLoop0000moving.volume= 0.0;
         this.load.musicLoop0000flying.volume= 0.0;
         this.load.musicLoop0000chill.volume= 0.0;
-        scene.time.addEvent({
+        Audio.musicLayerBarEvent = scene.time.addEvent({
             delay: Audio.barRateDiv[0],
             callback: () => Audio.musicLayerBar(scene),
             loop: true,
         });
-        scene.time.addEvent({
+        Audio.musicLayerJetEvent = scene.time.addEvent({
             delay: Audio.barRateDiv[1],
             callback: () => Audio.musicLayerJet(scene),
             loop: true,
@@ -217,6 +219,33 @@ export default class Audio extends Phaser.Scene {
         Audio.currentLevel = 2;
         this.load.musicLoop0000chill.volume = 0;
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #2.", Audio.ctf, "");
+    }
+    static levelThree(scene) {
+        Audio.stingerJet = false;
+        Audio.stingerMovement = false;
+        Audio.stingerSurface = false;
+        Audio.stingerChill = false;
+        //
+        Audio.currentLevel = 3;
+        this.load.musicLoop0000chill.volume = 0;
+        console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #3.", Audio.ctf, "");
+    }
+    static levelFour(scene) {
+        Audio.stingerJet = false;
+        Audio.stingerMovement = false;
+        Audio.stingerSurface = false;
+        Audio.stingerChill = false;
+        //
+        Audio.currentLevel = 4;
+        if(Audio.musicLayerBarEvent!= undefined && Audio.musicLayerJetEvent != undefined){
+            Audio.musicLayerBarEvent.remove();
+            Audio.musicLayerJetEvent.remove();
+        }
+        this.load.musicLoop0000levitating.stop();
+        this.load.musicLoop0000moving.stop();
+        this.load.musicLoop0000flying.stop();
+        this.load.musicLoop0000chill.volume = 0;
+        console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #4.", Audio.ctf, "");
     }
     static musicLayerBar(scene) {
         console.log("BAR #" + Audio.barCounter);
