@@ -572,11 +572,13 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('hurtZap_00D', 'assets/audio/SFX/hurtZap_00D.ogg');
         this.load.audio('dead', 'assets/audio/SFX/dead.ogg');
         this.load.audio('beep', 'assets/audio/SFX/beep.ogg');
+        this.load.audio('jetStop', 'assets/audio/SFX/jetStop.ogg');
+        this.load.audio('theStart', 'assets/audio/SFX/theStart.ogg');
+        this.load.audio('getWeapon', 'assets/audio/SFX/getWeapon.ogg');
         this.load.audio('hover', 'assets/audio/SFX/menu/hover.ogg');
         this.load.audio('back', 'assets/audio/SFX/menu/back.ogg');
         this.load.audio('forth', 'assets/audio/SFX/menu/forth.ogg');
-        this.load.audio('jetStop', 'assets/audio/SFX/jetStop.ogg');
-        this.load.audio('theStart', 'assets/audio/SFX/theStart.ogg');
+        this.load.audio('click', 'assets/audio/SFX/menu/click.ogg');
         //UI LOOPS
         this.load.audio('walkLoop_00', 'assets/audio/SFX/walkLoop_00.ogg');
         this.load.audio('surfaceLoop_00', 'assets/audio/SFX/surfaceLoop_00.ogg');
@@ -584,7 +586,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('engineLoop_00', 'assets/audio/SFX/engineLoop_00.ogg');
         this.load.audio('lasserLoop_00', 'assets/audio/SFX/lasserLoop_00.ogg');
         this.load.audio('beamLoop_00', 'assets/audio/SFX/beamLoop_00.ogg');
-        this.load.audio('click', 'assets/audio/SFX/menu/click.ogg');
+        this.load.audio('lasserTrapLoop', 'assets/audio/SFX/lasserTrapLoop.ogg');
         //EXPLOSIONS
         this.load.audio('explosion_00A', 'assets/audio/SFX/explosion_00A.ogg');
         this.load.audio('explosion_00B', 'assets/audio/SFX/explosion_00B.ogg');
@@ -851,7 +853,7 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXinstanceSub('airDeath_00A', 52, 0, this);
         Audio.createSFXinstanceSub('airDeath_00B', 52, 1, this);
         Audio.createSFXinstanceSub('airDeath_00C', 52, 2, this);
-        Audio.createSFXloopInstance('shot', 53, this);
+        Audio.createSFXinstance('shot', 53, this);
         Audio.createSFXinstance('null', 54, this);
         Audio.createSFXinstance('zap', 55, this);
         Audio.createSFXinstance('zapAir', 56, this);
@@ -942,6 +944,8 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXloopInstance('sithHumLoop', 86, this);
         Audio.createSFXloopInstance('sithPursue', 87, this);
         Audio.createSFXinstance('click', 88, this);
+        Audio.createSFXloopInstance('lasserTrapLoop', 89, this);
+        Audio.createSFXinstance('getWeapon', 90, this);
         //AMBIENT
         this.ambientLoop = this.sound.add('ambientLoop_00', {
             volume: 0.0,

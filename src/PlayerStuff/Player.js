@@ -744,6 +744,9 @@ export default class Player {
   }
 
   recieveWeapon(id){
+      //AUDIO
+        Audio.play2DinstanceRate(90, 0.8 + id * 0.05);
+      //
     const aux = this.nextButton;
     this.buttons[aux].setVisible(true)
     this.buttons[aux].on('pointerdown', function () {
