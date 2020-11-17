@@ -16,7 +16,7 @@ export default class BossBefore extends FiniteStateMachine{
     this.isTalking = false;
     this.dialogArray = [];
     //DIALOGO DE FINAL BUENO (Ha ayudado a 2 o mas droides)
-    /*this.dialogArray[0] =
+    this.dialogArray[0] =
 `[b]D42K-H[/b]
 ...
 
@@ -31,7 +31,7 @@ I'm really glad that you made it on time.
 
 [b]D42K-H[/b]
 Take a moment to look at this spectacle.
-This regale of light and color is a [b]kilonova[/b],
+This regale of light and color is a kilonova,
 [b]D42K-H[/b]
 the union of two neutron stars. Or that is what
 it's supposed to be, but here I only see a fight
@@ -72,8 +72,8 @@ by putting an end to our 'life'.
 Then, and only then, will our existence have any
 meaning, `+ this.scene.game.playerName +`!
 [b]D42K-H[/b]
-[i]We, along with the stars, will die, in order to[/i]
-[i]give birth to the very meaning of our lives![/i]
+We, along with the stars, will die, in order to
+give birth to the very meaning of our lives!
 [b]D42K-H[/b]
 That is Starvail! A star's travail!
 Now, `+ this.scene.game.playerName +`...
@@ -93,8 +93,8 @@ won't let your existence go without meaning.
 Fight me and die, `+ this.scene.game.playerName +`!
 That is what you exist for!`;
 
-    //DIALOGO DE FINAL MALO (Ha ayudado a menos de 2 droides)
-    this.dialogArray[1] =
+  //DIALOGO DE FINAL MALO (Ha ayudado a menos de 2 droides)
+  this.dialogArray[1] =
 `[b]D42K-H[/b]
 ...
 
@@ -109,7 +109,7 @@ I'm really glad that you made it on time.
 
 [b]D42K-H[/b]
 Take a moment to look at this spectacle.
-This regale of light and color is a [b]kilonova[/b],
+This regale of light and color is a kilonova,
 [b]D42K-H[/b]
 the union of two neutron stars. Or that is what
 it's supposed to be, but here I only see a fight
@@ -150,8 +150,8 @@ by putting an end to our 'life'.
 Then, and only then, will our existence have any
 meaning, `+ this.scene.game.playerName +`!
 [b]D42K-H[/b]
-[i]We, along with the stars, will die, in order to[/i]
-[i]give birth to the very meaning of our lives![/i]
+We, along with the stars, will die, in order to
+give birth to the very meaning of our lives!
 [b]D42K-H[/b]
 That is Starvail! A star's travail!
 Now, `+ this.scene.game.playerName +`...
@@ -167,10 +167,10 @@ quickly. I'll follow you soon after.
 [b]D42K-H[/b]
 Let us die, `+ this.scene.game.playerName +`!
 This is what we exist for!`;
-*/
 
-    this.dialogArray[0] = "BUENO!"
-    this.dialogArray[1] = "NEUTRAL...."
+
+    //this.dialogArray[0] = "BUENO!"
+    //this.dialogArray[1] = "NEUTRAL...."
     this.currentDialog = -1;
     this.dialogDistance = 300;
     this.initX = x;

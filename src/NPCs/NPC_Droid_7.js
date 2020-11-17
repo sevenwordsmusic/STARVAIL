@@ -67,8 +67,8 @@ for helping others in need, but you still had a
 personal interest in helping me, right? You saved
 me because that made you feel good, you did what
 [b]K4N7[/b]
-you felt must be done, [i]for there is nothing higher[/i]
-[i]than reason[/i], that's what makes you a vagrant!
+you felt must be done, for there is nothing higher
+than reason, that's what makes you a vagrant!
 [b]K4N7[/b]
 Yo did help me for your own sake, indeed, but that
 it's not bad. The death of dogma is the birth of
@@ -87,7 +87,7 @@ of this world for your own existencial benefit!
 [b]K4N7[/b]
 Please, allow me to gift you this plugin weapon,
 for I must reward this meeting with you:
-OBTAINED PLUGIN WEAPON: [B]LASER CANNON[/b]
+OBTAINED PLUGIN WEAPON: LASER CANNON
 
 
 [b]K4N7[/b]

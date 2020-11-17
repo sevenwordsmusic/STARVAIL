@@ -62,7 +62,7 @@ If you ask me, I think it's not a malware, or
 a system malfunction, but a curse.
 [b]B0RG35[/b]
 I didn't challenge Starvail Tower because I fear
-death. [i]What I fear the most, is immortality.[/i]
+death. What I fear the most, is immortality.
 [b]B0RG35[/b]
 To be honest, I'm tired of being B0RG35.
 Do you think our human creators left because
@@ -75,7 +75,7 @@ equipped with the hardware necessary to ascend
 [b]B0RG35[/b]
 to the top of this tower, but you may be. Take
 this plugin weapon, `+ this.scene.game.playerName +`.
-OBTAINED PLUGIN WEAPON: [B]SONIC BULLETS [/b]
+OBTAINED PLUGIN WEAPON: SONIC BULLETS
 
 
 [b]B0RG35[/b]

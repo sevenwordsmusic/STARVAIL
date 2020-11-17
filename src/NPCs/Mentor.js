@@ -318,9 +318,9 @@ To change the type of ammo of your weapon,
 click on the icon of the ammo you want to use
 [b]TIP[/b]
 in the panel on the bottom right. Keep
-in mind, [b]some ammos requiere energy to [/b]
+in mind, some ammos requiere energy to
 [b]TIP[/b]
-[b]be used.[/b] The more energy they require,
+be used. The more energy they require,
 the more powerful they are.
 [b]TIP[/b]
 In order to obtain more weapon upgrades,

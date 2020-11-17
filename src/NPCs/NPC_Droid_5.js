@@ -69,9 +69,9 @@ But now that I think of it... maybe accompanying you
 isn't a good idea. I don't want to get hurt...
 [b]FR3UD[/b]
 Maybe I'm afraid to love after all. Even if I'm
-lonely, [i]we are never so defenceless against[/i]
+lonely, we are never so defenceless against
 [b]FR3UD[/b]
-[i]suffering as when we love others.[/i]
+suffering as when we love others.
 But thanks to you, I know myself better than before,
 [b]FR3UD[/b]
 and I think that's all I searched for in this tower.
@@ -79,7 +79,7 @@ Now, I must reward you both for saving my life and
 [b]FR3UD[/b]
 for helping me conciliate with my ego.
 Take this, `+ this.scene.game.playerName +`:
-OBTAINED PLUGIN WEAPON: [B]GUIDED MISSILES[/b]
+OBTAINED PLUGIN WEAPON: GUIDED MISSILES
 
 
 [b]FR3UD[/b]
@@ -101,15 +101,15 @@ and I hate being so weak, but from error to
 error, one discovers the entire truth. Don't
 surrender in discovering your own self.
 [b]FR3UD[/b]
-Remember: [i]One day, in retrospect, the years of[/i]
-[i]struggle will strike you as the most beautiful.[/i]
+Remember: One day, in retrospect, the years of
+struggle will strike you as the most beautiful.
 [b]FR3UD[/b]
 Farewell!`;
 
     this.dialogArray[2] =
 `[b]FR3UD[/b]
-Remember: [i]One day, in retrospect, the years of[/i]
-[i]struggle will strike you as the most beautiful.[/i]
+Remember: One day, in retrospect, the years of
+struggle will strike you as the most beautiful.
 [b]FR3UD[/b]
 Farewell!`;
 

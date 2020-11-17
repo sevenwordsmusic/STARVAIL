@@ -18,8 +18,7 @@ export default class BadEndingTrigger extends FiniteStateMachine{
 `[b]`+ this.scene.game.playerName +`[/b]
 Hmm...?
 
-[size=25]Only a dark hole was there.[/size]
-
+[size=30]Only a dark hole was there.[/size]
 There was no signs of D42K-H anywhere.
 
 [b]`+ this.scene.game.playerName +`[/b]

@@ -64,8 +64,8 @@ looking for your human creators, to ask them the
 meaning of your creation? Hahaha, that's funny.
 Did you know, your human creators don't 'exist'
 [b]N14L[/b]
-anymore? [i]After the Singularity, they vanished to[/i]
-[i]the digital plane[/i], leaving you mechanical life forms
+anymore? After the Singularity, they vanished to
+the digital plane, leaving you mechanical life forms
 [b]N14L[/b]
 behind, just to maintain the foundations of their
 digital 'heaven'. But just like me, they have been
@@ -81,7 +81,7 @@ you, nothing more. But I can give you something
 [b]N14L[/b]
 to help you find what you are looking for:
 
-OBTAINED PLUGIN WEAPON: [B]MEGATON BOMB[/b]
+OBTAINED PLUGIN WEAPON: MEGATON BOMB
 
 
 [b]N14L[/b]

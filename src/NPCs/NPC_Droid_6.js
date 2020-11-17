@@ -61,7 +61,7 @@ think that way. Or, to be more precise, I don't
 want to think that way. The reason I came to this
 tower is because I wanted to change, be more brave.
 [b]JUN6[/b]
-But in reality, to do so, I must face my [i]shadows,[/i]
+But in reality, to do so, I must face my shadows,
 I must accept them as a part of me, in order
 [b]JUN6[/b]
 to be true and to be able to change. This
@@ -87,7 +87,7 @@ for! I understand now. Thanks, `+ this.scene.game.playerName +`.
 [b]JUN6[/b]
 In return, I want you to evolve as well.
 Please, accept this gift:
-OBTAINED PLUGIN WEAPON: [B]CLUSTER MISSILES[/b]
+OBTAINED PLUGIN WEAPON: CLUSTER MISSILES
 
 
 [b]JUN6[/b]
@@ -106,18 +106,18 @@ anything for me in the first place.
 On the other hand, facing death and meeting you
 has given my life a new, truer, meaning.
 [b]JUN6[/b]
-After all, [i]the meeting of two personalities is[/i]
-[i]like the contact of two chemical substances;[/i]
+After all, the meeting of two personalities is
+like the contact of two chemical substances;
 [b]JUN6[/b]
-[i]if there is any reaction, both are transformed.[/i]
+if there is any reaction, both are transformed.
 Thank you again, and farewell, `+ this.scene.game.playerName +`!`;
 
     this.dialogArray[2] =
 `[b]JUN6[/b]
-After all, [i]the meeting of two personalities is[/i]
-[i]like the contact of two chemical substances;[/i]
+After all, the meeting of two personalities is
+like the contact of two chemical substances;
 [b]JUN6[/b]
-[i]if there is any reaction, both are transformed.[/i]
+if there is any reaction, both are transformed.
 Thank you again, and farewell, `+ this.scene.game.playerName +`!`;
 
     this.currentDialog = -1;

@@ -59,7 +59,7 @@ I came here searching for the real me, but it
 looks like I can't fight in this side as well
 [b]L41N[/b]
 as I do in the other. What other side, you say?
-The Wired, of course. [b]Everyone's connected![/b]
+The Wired, of course. Everyone's connected!
 [b]L41N[/b]
 I can be anywhere, at anytime. Just like our
 human creators. You'd say they're like gods now.
@@ -78,7 +78,7 @@ me? I hope so. I really thank you for that.
 [b]L41N[/b]
 Please, let me give you something in return!
 It's easy to find these things in the other side.
-OBTAINED PLUGIN WEAPON: [B]BOUNCING BULLETS[/b]
+OBTAINED PLUGIN WEAPON: BOUNCING BULLETS
 
 
 [b]L41N[/b]

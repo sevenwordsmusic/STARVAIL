@@ -62,10 +62,10 @@ to face this world as it is. They're just hiding
 in this hollow, mechanical forest...
 [b]Y04K3[/b]
 You know, I refuse to be like them. As painful
-as it may be, [i]I'll reach out to the truth![/i]
+as it may be, I'll reach out to the truth!
 [b]Y04K3[/b]
 What's truth, you say? It's different for everyone.
-The only one who really knows, is your [i]true self.[/i]
+The only one who really knows, is your true self.
 [b]Y04K3[/b]
 Be sure to find your true self, `+ this.scene.game.playerName +`.
 As for me, I think I feel truer than ever, now
@@ -75,7 +75,7 @@ that I got to meet you! Thank you, really.
 [b]Y04K3[/b]
 Now, before you part, please let me give you
 something to help you on your journey:
-[b]OBTAINED PLUGIN WEAPON: EXPLOSIVE BULLETS[/b]
+OBTAINED PLUGIN WEAPON: EXPLOSIVE BULLETS
 
 
 [b]Y04K3[/b]
