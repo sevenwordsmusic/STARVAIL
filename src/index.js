@@ -286,5 +286,11 @@ game.prepareScreen = function(){
     game.scale.startFullscreen();
   }
 }
+
+game.nextLevel = function(){
+  game.player.sprite.x = game.player.scene.goalArray[0].sprite.x;
+  game.player.sprite.y = game.player.scene.goalArray[0].sprite.y;
+}
+
 game.pauseInfo = '';
 window.gameDebug = game;

@@ -215,7 +215,7 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('bg1', 'assets/Backgrounds/background0.png');
     this.load.image('bg2', 'assets/Backgrounds/background1.png');
     this.load.image('bg3', 'assets/Backgrounds/background2.png');
-    this.load.spritesheet('animatedBg', 'assets/Backgrounds/dirty_sky.png', { frameWidth: 960, frameHeight: 540 });
+    this.load.spritesheet('animatedBg', 'assets/Backgrounds/dirty_sky.png', { frameWidth: 1100, frameHeight: 700 });
     this.load.image('moon', 'assets/Backgrounds/moon.png');
 
     //Tilesets de niveles y mapas de niveles
