@@ -110,7 +110,7 @@ export default class Audio extends Phaser.Scene {
             this.load.musicLoop0000chill.volume = Audio.volumeBGM;
             Audio.play2DinstanceRate(88, 1.0);
             var click= Audio.play2DinstanceRate(88, 1.0);
-            click.volume=document.getElementById("bgmSlider").value / 10; 
+            click.volume=document.getElementById("bgmSlider").value / 10;
         }
         if (document.getElementById("sfxSlider").value / 10 != Audio.volumeSFX) {
             Audio.volumeSFX = document.getElementById("sfxSlider").value / 10;
@@ -122,7 +122,7 @@ export default class Audio extends Phaser.Scene {
             this.load.lasserLoop.volume = Audio.volumeSFX;
             this.load.beamLoop.volume = Audio.volumeSFX;
             var click= Audio.play2DinstanceRate(88, 1.0);
-            click.volume=document.getElementById("sfxSlider").value / 10; 
+            click.volume=document.getElementById("sfxSlider").value / 10;
         }
     }
     static maxBGMvolume(scene) {
