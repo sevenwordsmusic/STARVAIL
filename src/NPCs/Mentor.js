@@ -10,6 +10,8 @@ export default class Mentor extends FiniteStateMachine {
     //AUDIO
       this.walkLoop;
       this.surfaceLoop;
+      this.engineLoop;
+      this.propellerLoop;
       this.isWalking=false;
       this.isMoving=false;
     //
@@ -390,7 +392,7 @@ I don't think you should be seeing this.`;
     this.stateUpdate(2, function (time, delta) {
       if (this.touchingGround) {
         //AUDIO
-        if(!this.isMoving && this.isWalking){
+        if(!this.isMoving && !this.isWalking){
             this.isMoving=true;
             this.isWalking=true;
             this.walkLoop=Audio.play3Dinstance(this,91);
@@ -405,14 +407,21 @@ I don't think you should be seeing this.`;
           this.reachedY = true;
         }
       } else {
-          //AUDIO
-          if (this.isMoving && this.isWalking && this.flyFire.visible){
+        //AUDIO
+        if(!this.isMoving && !this.isWalking){
+            this.isMoving=true;
+            this.engineLoop=Audio.play3Dinstance(this,94);
+            this.propellerLoop=Audio.play3Dinstance(this,95);
+            Audio.play3Dinstance(this,96);
+        }
+        if(this.isMoving && this.isWalking){
             this.isMoving=false;
             this.isWalking=false;
             this.walkLoop.stop();
             this.surfaceLoop.stop();
-          }
-          //
+            Audio.play3Dinstance(this,93);
+        }
+        //
         if (Math.abs(this.sprite.x - this.objectiveX) <= 5) {
           this.reachedX = true;
         }
@@ -428,11 +437,20 @@ I don't think you should be seeing this.`;
 
       if (this.reachedX){
           //AUDIO
+          if(this.engineLoop != undefined){
+            if(this.isMoving && this.engineLoop.isPlaying){
+              this.isMoving=false;
+              this.engineLoop.stop();
+              this.propellerLoop.stop();
+              Audio.play3Dinstance(this,97);
+            }
+          }
           if (this.isMoving && this.isWalking){
             this.isMoving=false;
             this.isWalking=false;
             this.walkLoop.stop();
             this.surfaceLoop.stop();
+            Audio.play3Dinstance(this,93);
           }
           //
         this.goTo(0);
@@ -478,11 +496,12 @@ I don't think you should be seeing this.`;
     this.updateAI(time, delta);
     this.playAnimation();
           //AUDIO
-          if (this.isWalking && this.isMoving){
+          if (this.isMoving && this.isWalking){
             this.walkLoop.volume=Audio.volume3D(this);
             this.surfaceLoop.volume=Audio.volume3D(this);
-          }else if(!this.touchingGround && this.isMoving){
-
+          }else if(this.isMoving && !this.touchingGround){
+            this.engineLoop.volume=Audio.volume3D(this);
+            this.propellerLoop.volume=Audio.volume3D(this);
           }
           //
   }

@@ -764,6 +764,10 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('mentorWalkLoop', 'assets/audio/SFX/mentor/walkLoop_00.ogg');
         this.load.audio('mentorSurfaceLoop', 'assets/audio/SFX/mentor/surfaceLoop_00.ogg');
         this.load.audio('mentorWalkStop', 'assets/audio/SFX/mentor/walkStop_00.ogg');
+        this.load.audio('mentorEngineLoop', 'assets/audio/SFX/mentor/engineLoop_00.ogg');
+        this.load.audio('mentorPropellerLoop', 'assets/audio/SFX/mentor/propellerLoop_00.ogg');
+        this.load.audio('mentorMovingPart', 'assets/audio/SFX/mentor/movingPart_00.ogg');
+        this.load.audio('mentorPropellerStop', 'assets/audio/SFX/mentor/propellerStop_00.ogg');
         //MUSIC LOOPS
         this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
@@ -986,6 +990,10 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXloopInstance('mentorWalkLoop', 91, this);
         Audio.createSFXloopInstance('mentorSurfaceLoop', 92, this);
         Audio.createSFXinstance('mentorWalkStop', 93, this);
+        Audio.createSFXloopInstance('mentorEngineLoop', 94, this);
+        Audio.createSFXloopInstance('mentorPropellerLoop', 95, this);
+        Audio.createSFXinstance('mentorMovingPart', 96, this);
+        Audio.createSFXinstance('mentorPropellerStop', 97, this);
         //AMBIENT
         this.ambientLoop = this.sound.add('ambientLoop_00', {
             volume: 0.0,
