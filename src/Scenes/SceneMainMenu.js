@@ -17,7 +17,7 @@ export default class SceneMainMenu extends Phaser.Scene {
     var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
 
     //Background Menu
-    this.add.image(0,0,'menuBackground').setOrigin(0).setDepth(-100);
+    this.add.image(0,0,'menuBETABackground').setOrigin(0).setDepth(-100);
 
     //MM field
     //var MMScreen=this.add.image(0,0,'MMScreen').setOrigin(0,0).setScale(0.25);

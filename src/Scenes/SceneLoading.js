@@ -8,6 +8,7 @@ export default class SceneLoading extends Phaser.Scene {
     //IMAGES, SPRITES, SPRITESHEETS
 
     //MENUS
+    this.load.image('menuBETABackground', 'assets/ilustracionBETA.png');
     this.load.image('menuBackground', 'assets/ilustracion.png');
     this.load.image('endBackground', 'assets/HUD/scorescreen_background.png');
     this.load.image('white_rectangle', 'assets/white_rectangle.png');
