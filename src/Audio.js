@@ -96,6 +96,9 @@ export default class Audio extends Phaser.Scene {
         this.load.musicLoop0000moving.volume = 0.0;
         this.load.musicLoop0000flying.volume = 0.0;
         this.load.musicLoop0000chill.volume = Audio.volumeBGM;
+        if(Audio.currentLevel==3){
+            this.load.musicLoop0001.pause();
+        }
         Audio.paused = true;
     }
     static resume() {
@@ -104,12 +107,16 @@ export default class Audio extends Phaser.Scene {
         this.load.musicLoop0000moving.volume = Audio.oldVolumes[1];
         this.load.musicLoop0000flying.volume = Audio.oldVolumes[2];
         this.load.musicLoop0000chill.volume = 0.0;
+        if(Audio.currentLevel==3){
+            this.load.musicLoop0001.resume();
+        }
         Audio.paused = false;
     }
     static updateVolumes() {
         if (document.getElementById("bgmSlider").value / 10 != Audio.volumeBGM) {
             Audio.volumeBGM = document.getElementById("bgmSlider").value / 10;
             this.load.musicLoop0000chill.volume = Audio.volumeBGM;
+            this.load.musicLoop0001.volume = Audio.volumeBGM;
             Audio.play2DinstanceRate(88, 1.0);
             var click= Audio.play2DinstanceRate(88, 1.0);
             click.volume=document.getElementById("bgmSlider").value / 10;
@@ -220,6 +227,25 @@ export default class Audio extends Phaser.Scene {
         this.load.musicLoop0000chill.volume = 0;
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #2.", Audio.ctf, "");
     }
+    static sceneChange(scene){
+        if(Audio.currentLevel == 2){
+            scene.tweens.add({
+                targets: this.load.musicLoop0000levitating,
+                volume: 0.0,
+                duration: Audio.barRateDiv[2],
+            });
+            scene.tweens.add({
+                targets: this.load.musicLoop0000moving,
+                volume: 0.0,
+                duration: Audio.barRateDiv[2],
+            });
+            scene.tweens.add({
+                targets: this.load.musicLoop0000flying,
+                volume: 0.0,
+                duration: Audio.barRateDiv[2],
+            });
+        }
+    }
     static levelThree(scene) {
         Audio.stingerJet = false;
         Audio.stingerMovement = false;
@@ -227,16 +253,6 @@ export default class Audio extends Phaser.Scene {
         Audio.stingerChill = false;
         //
         Audio.currentLevel = 3;
-        this.load.musicLoop0000chill.volume = 0;
-        console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #3.", Audio.ctf, "");
-    }
-    static levelFour(scene) {
-        Audio.stingerJet = false;
-        Audio.stingerMovement = false;
-        Audio.stingerSurface = false;
-        Audio.stingerChill = false;
-        //
-        Audio.currentLevel = 4;
         if(Audio.musicLayerBarEvent!= undefined && Audio.musicLayerJetEvent != undefined){
             Audio.musicLayerBarEvent.remove();
             Audio.musicLayerJetEvent.remove();
@@ -245,10 +261,21 @@ export default class Audio extends Phaser.Scene {
         this.load.musicLoop0000moving.stop();
         this.load.musicLoop0000flying.stop();
         this.load.musicLoop0000chill.volume = 0;
+            scene.tweens.add({
+                targets: this.load.musicLoop0001,
+                volume: Audio.volumeBGM,
+                duration: Audio.barRateDiv[2],
+            });
+        this.load.musicLoop0001.play();
+        console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #3.", Audio.ctf, "");
+    }
+    static levelFour(scene) {
+        Audio.currentLevel = 4;
+        this.load.musicLoop0000chill.volume = 0;
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #4.", Audio.ctf, "");
     }
     static musicLayerBar(scene) {
-        console.log("BAR #" + Audio.barCounter);
+        //console.log("BAR #" + Audio.barCounter);
         Audio.barCounter++;
         if (!Audio.paused) {
             Audio.musicLayerHeight(scene);
@@ -256,7 +283,7 @@ export default class Audio extends Phaser.Scene {
         }
     }
     static musicLayerHeight(scene) {
-        var factor = 8180 * (3 - Audio.currentLevel);
+        var factor = 8180;
         if (scene.game.player.earlyPos.y > factor) {
             var volumeNormalized = 0.0;
         } else if (scene.game.player.earlyPos.y < 0.0) {
@@ -763,6 +790,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
         this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
         this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg')
+        this.load.audio('musicLoop0001', 'assets/audio/BGM/musicLoop0001.ogg')
         /*this.load.audio('musicLoop0000levitating', 'assets/audio/SFX/null.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/SFX/null.ogg');
         this.load.audio('musicLoop0000flying', 'assets/audio/SFX/null.ogg');
@@ -1027,6 +1055,10 @@ export default class Audio extends Phaser.Scene {
             loop: true
         })
         this.musicLoop0000chill = this.sound.add('musicLoop0000chill', {
+            volume: 0.0,
+            loop: true
+        })
+         this.musicLoop0001 = this.sound.add('musicLoop0001', {
             volume: 0.0,
             loop: true
         })

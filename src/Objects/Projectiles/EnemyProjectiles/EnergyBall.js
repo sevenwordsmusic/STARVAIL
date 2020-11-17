@@ -35,6 +35,9 @@ export default class EnergyBall extends Projectile {
     //AUDIO
       if(expTime<1500){
           this.shotByGunner=true;
+          Audio.play3DinstanceRnd(this,76);
+      }else{
+          Audio.play3DinstanceRnd(this,75);
       }
     //
   }

@@ -154,10 +154,10 @@ game.moveVelocity = 0.22;            //velocidad horizontal en el suelo
 game.moveVelocityAir = 0.275;         //velocidad horizontal en el aire
 game.jetVelocity = 0.3;             //velocidad de ascenso
 game.jetVelocityDown = 0.3;         //velocidad de descenso
-game.totalPlayerHp = 1000;           //1000
+game.totalPlayerHp = 9999999999999999;           //1000
 game.currentPlayerHp =  game.totalPlayerHp;       //NO TOCAR!! game.totalPlayerHp
-game.hpRecoveryRate = 1;                  //1
-game.totalPlayerEnergy = 1000;     //1000
+game.hpRecoveryRate = 9999999999999999;                  //1
+game.totalPlayerEnergy = 9999999999999999;     //1000
 game.energyRecoveryRate = 0.2;    //0.2
 game.energyCostJetBeginning = 0;      //energia por segundo que se gasta justo al empezar (es un valor base de coste)
 game.energyJetIncrease = 1.008   /**/   //velocidad con la que aumenta el coste del jet
@@ -184,7 +184,7 @@ game.moonPos = new Phaser.Math.Vector2(130, 130);
 game.moonVelocity = 920/900000;      //si = 1 -> avanza 1 unidades en un milisegundo
 game.moonMaxDistance = 1050
 game.currentBgAnimation = 0;
-game.transitionToScene = function(scene, keyNext, sceneNext){
+game.transitionToScene = function(scene, keyNext, sceneNext){   //ENTRE NIVELES
   var SceneCurrentClass = eval(scene.constructor.name);
   var SceneNextClass = sceneNext;
   scene.cameras.main.once('camerafadeoutcomplete', function (camera) {
@@ -218,10 +218,10 @@ game.transitionToScene = function(scene, keyNext, sceneNext){
     scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());
     game.scene.add('', new SceneNextClass(keyNext + ((SceneNextClass.getNumber()+ 1)%5)) , true);
   }, scene);
-  scene.cameras.main.fadeOut(1000);
+  scene.cameras.main.fadeOut(Audio.barRateDiv[2]);
 }
 
-game.changeScene = function(scene, nextId){
+game.changeScene = function(scene, nextId){   //MUERTE Y RANKINGS
   var SceneCurrentClass = eval(scene.constructor.name);
   scene.cameras.main.once('camerafadeoutcomplete', function (camera) {
     game.player.alive = false;
@@ -257,7 +257,11 @@ game.changeScene = function(scene, nextId){
     game.scene.run(nextId);
     game.scene.bringToTop(nextId);
   }, scene);
-  scene.cameras.main.fadeOut(1000);
+
+  //AUDIO
+    Audio.sceneChange(scene);
+  //
+  scene.cameras.main.fadeOut(Audio.barRateDiv[2]);
 }
 
 /*game.transferComposite = Phaser.Physics.Matter.Matter.Composite.create();
