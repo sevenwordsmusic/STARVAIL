@@ -14,7 +14,7 @@ export default class LasserTrap {
 
   //AUDIO
   update(time, delta){
-    if(this.sprite!= undefined ){
+    if(this!= undefined ){
         this.sfx.volume=Audio.volume3D(this)
     }
   }
