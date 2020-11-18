@@ -90,12 +90,20 @@ export default class Audio extends Phaser.Scene {
         }
     }
     static pause() {
-        Audio.play2DinstanceRate(81, 1.0);
         Audio.oldVolumes = [this.load.musicLoop0000levitating.volume, this.load.musicLoop0000moving.volume, this.load.musicLoop0000flying.volume];
         this.load.musicLoop0000levitating.volume = 0.0;
         this.load.musicLoop0000moving.volume = 0.0;
         this.load.musicLoop0000flying.volume = 0.0;
         this.load.musicLoop0000chill.volume = Audio.volumeBGM;
+        //
+        this.load.walkLoop.volume=Audio.volumeSFX;
+        this.load.surfaceLoop.volume=Audio.volumeSFX;
+        this.load.propellerLoop.volume=Audio.volumeSFX;
+        this.load.engineLoop.volume=Audio.volumeSFX;
+        this.load.lasserLoop.volume=Audio.volumeSFX;
+        this.load.beamLoop.volume=Audio.volumeSFX;
+        this.load.lasserSufferingLoop.volume=0.0;
+        //
         if(Audio.currentLevel==3){
             this.load.musicLoop0001.pause();
         }
@@ -110,6 +118,14 @@ export default class Audio extends Phaser.Scene {
                 }
             }
         }
+        this.load.walkLoop.volume=0.0;
+        this.load.surfaceLoop.volume=0.0;
+        this.load.propellerLoop.volume=0.0;
+        this.load.engineLoop.volume=0.0;
+        this.load.lasserLoop.volume=0.0;
+        this.load.beamLoop.volume=0.0;
+        this.load.lasserSufferingLoop.volume=0.0;
+        Audio.play2DinstanceRate(81, 1.0);
         Audio.paused = true;
     }
     static resume() {
@@ -118,6 +134,15 @@ export default class Audio extends Phaser.Scene {
         this.load.musicLoop0000moving.volume = Audio.oldVolumes[1];
         this.load.musicLoop0000flying.volume = Audio.oldVolumes[2];
         this.load.musicLoop0000chill.volume = 0.0;
+        //
+        this.load.walkLoop.volume=Audio.volumeSFX;
+        this.load.surfaceLoop.volume=Audio.volumeSFX;
+        this.load.propellerLoop.volume=Audio.volumeSFX;
+        this.load.engineLoop.volume=Audio.volumeSFX;
+        this.load.lasserLoop.volume=Audio.volumeSFX;
+        this.load.beamLoop.volume=Audio.volumeSFX;
+        this.load.lasserSufferingLoop.volume=0.0;
+        //
         if(Audio.currentLevel==3){
             this.load.musicLoop0001.resume();
         }
