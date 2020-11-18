@@ -96,7 +96,11 @@
 </head>
 <body>
   <div id= 'phaserDOM'></div>
-  <input type="text" id="playerName" placeholder="Player" autocomplete="off"><br><br>
+  <input type="text" id="playerName" placeholder="Player" autocomplete="off"
+    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+    type = "number"
+    maxlength = "9"
+ /><br><br>
 
   <div>
     <div id="soundSliders">
