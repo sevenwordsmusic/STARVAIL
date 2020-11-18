@@ -140,7 +140,7 @@ export default class Audio extends Phaser.Scene {
         //
         if (Audio.currentLevel == 3) {
             this.load.musicLoop0001.resume();
-        } else if (Audio.currentLevel == 1 && Audio.currentLevel == 2) {
+        } else if (Audio.currentLevel == 1 || Audio.currentLevel == 2) {
             Audio.musicLayerResume(scene);
         }
         Audio.paused = false;
@@ -282,7 +282,7 @@ export default class Audio extends Phaser.Scene {
         this.load.musicLoop0000levitating.stop();
         this.load.musicLoop0000moving.stop();
         this.load.musicLoop0000flying.stop();
-        this.load.musicLoop0000chill.volume = 0;
+        this.load.musicLoop0000chill.volume = 0.0;
         scene.tweens.add({
             targets: this.load.musicLoop0001,
             volume: Audio.volumeBGM,
@@ -293,7 +293,7 @@ export default class Audio extends Phaser.Scene {
     }
     static levelFour(scene) {
         Audio.currentLevel = 4;
-        this.load.musicLoop0000chill.volume = 0;
+        this.load.musicLoop0000chill.volume = 0.0;
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #4.", Audio.ctf, "");
     }
     static musicLayerBar(scene) {
@@ -389,7 +389,7 @@ export default class Audio extends Phaser.Scene {
         }
         if (this.stingerJet) {
             this.stingerJet = false;
-            this.load.musicLoop0000flying = Audio.volumeBGM;
+            this.load.musicLoop0000flying.volume = Audio.volumeBGM;
         }else{
             this.load.musicLoop0000flying.volume = 0.0;
         }
