@@ -16,6 +16,19 @@ export default class SceneSplashScreen extends Phaser.Scene {
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
     //AUDIO
+        var FKey = this.input.keyboard.addKey('F');
+        FKey.on('down', function () {
+
+            if (this.scale.isFullscreen)
+            {
+                this.scale.stopFullscreen();
+            }
+            else
+            {
+                this.scale.startFullscreen();
+            }
+
+        }, this);
         Audio.musicLoop0000chill= this.sound.add('musicLoop0000chill', {
             volume: 0.0,
             loop: true

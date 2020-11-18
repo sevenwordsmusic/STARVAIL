@@ -9,7 +9,19 @@ export default class SceneMainMenu extends Phaser.Scene {
 
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
+        var FKey = this.input.keyboard.addKey('F');
+        FKey.on('down', function () {
 
+            if (this.scale.isFullscreen)
+            {
+                this.scale.stopFullscreen();
+            }
+            else
+            {
+                this.scale.startFullscreen();
+            }
+
+        }, this);
     //Color de fondo prueba
     this.cameras.main.setBackgroundColor(0x000000);
 
