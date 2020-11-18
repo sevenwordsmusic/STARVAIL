@@ -14,10 +14,10 @@ export default class SceneGameOver extends Phaser.Scene {
     //var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
 
     //Credits field
-    var GOScreen=this.add.image(0,0,'GOScreen').setOrigin(0,0).setScale(0.25);
+    var GOScreen=this.add.image(0,0,'GOScreen').setOrigin(0,0);
 
     //Boton exit
-    this.btnExitGameOver = this.add.image(746,459,'btnExitGameOver').setScale(0.25).setAlpha(0.8);
+    this.btnExitGameOver = this.add.image(746,459,'btnExitGameOver').setAlpha(0.8);
 		this.btnExitGameOver.setInteractive()
     .on('pointerdown', () => this.exitGameOver());
 
@@ -30,7 +30,7 @@ export default class SceneGameOver extends Phaser.Scene {
     });
 
     //Boton play again
-    this.btnPlayAgainGameOver = this.add.image(237,460,'btnPlayAgainGameOver').setScale(0.25).setAlpha(0.8);
+    this.btnPlayAgainGameOver = this.add.image(237,460,'btnPlayAgainGameOver').setAlpha(0.8);
 		this.btnPlayAgainGameOver.setInteractive()
     .on('pointerdown', () => this.playAgainGameOver());
 

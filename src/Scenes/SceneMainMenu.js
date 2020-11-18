@@ -14,7 +14,7 @@ export default class SceneMainMenu extends Phaser.Scene {
     this.cameras.main.setBackgroundColor(0x000000);
 
     //Corners
-    var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+    var corners =this.add.image(0,0,'corners').setOrigin(0);
 
     //Background Menu
     this.add.image(0,0,'menuBETABackground').setOrigin(0).setDepth(-100);
@@ -23,7 +23,7 @@ export default class SceneMainMenu extends Phaser.Scene {
     //var MMScreen=this.add.image(0,0,'MMScreen').setOrigin(0,0).setScale(0.25);
 
     //Boton credits
-    this.botonCredits = this.add.image(770,400,'btnCredits').setScale(0.25).setAlpha(0.8);
+    this.botonCredits = this.add.image(770,400,'btnCredits').setAlpha(0.8);
 		this.botonCredits.setInteractive()
     .on('pointerdown', () => this.viewCredits());
 
@@ -39,7 +39,7 @@ export default class SceneMainMenu extends Phaser.Scene {
     });
 
     //Boton start
-    this.botonStart = this.add.image(480,400, 'btnStart').setScale(0.25).setAlpha(0.8);
+    this.botonStart = this.add.image(480,400, 'btnStart').setAlpha(0.8);
 		this.botonStart.setInteractive()
     .on('pointerdown', () => this.startGame());
 
@@ -55,7 +55,7 @@ export default class SceneMainMenu extends Phaser.Scene {
     });
 
     //Boton options
-		this.botonOptions = this.add.image(190,400, 'btnOptions').setScale(0.25).setAlpha(0.8);
+		this.botonOptions = this.add.image(190,400, 'btnOptions').setAlpha(0.8);
 		this.botonOptions.setInteractive()
     .on('pointerdown', () => this.viewOptions());
 

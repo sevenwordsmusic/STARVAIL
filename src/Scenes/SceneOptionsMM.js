@@ -12,7 +12,7 @@ export default class SceneOptionsMM extends Phaser.Scene {
     this.cameras.main.setBackgroundColor(0x000000);
 
     //Corners
-    var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+    var corners =this.add.image(0,0,'corners').setOrigin(0);
 
     //Background Menu
     this.add.image(0,0,'menuBackground').setOrigin(0).setDepth(-100);
@@ -21,7 +21,7 @@ export default class SceneOptionsMM extends Phaser.Scene {
     //var optionsScreen=this.add.image(0,0,'OptionsScreen').setOrigin(0,0).setScale(0.25);
 
     //Boton exit
-    this.btnExitOptionsMM = this.add.image(480,455,'btnBack').setScale(0.25).setAlpha(0.8);
+    this.btnExitOptionsMM = this.add.image(480,455,'btnBack').setAlpha(0.8);
 		this.btnExitOptionsMM.setInteractive()
     .on('pointerdown', () => this.exitOptions());
 

@@ -11,16 +11,16 @@ export default class SceneScore extends Phaser.Scene {
     this.cameras.main.setBackgroundColor(0xdbdace);
 
     //Corners
-    var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+    var corners =this.add.image(0,0,'corners').setOrigin(0);
 
     //Background Final
     this.add.image(0,0,'endBackground').setOrigin(0).setDepth(-100);
 
     //Score field
-    var ScoreScreen=this.add.image(0,0,'ScoreScreenReview').setOrigin(0,0).setScale(0.25);
+    var ScoreScreen=this.add.image(0,0,'ScoreScreenReview').setOrigin(0,0);
 
     //Boton credits
-    this.btnViewCreditsScore = this.add.image(213,459,'btnCreditsScore').setScale(0.25).setAlpha(0.8);
+    this.btnViewCreditsScore = this.add.image(214,459,'btnCreditsScore').setAlpha(0.8);
 		this.btnViewCreditsScore.setInteractive()
     .on('pointerdown', () => this.viewCreditsScore());
 
@@ -33,7 +33,7 @@ export default class SceneScore extends Phaser.Scene {
     });
 
     //Boton exit
-    this.btnExitScore = this.add.image(746,459,'btnExitScore').setScale(0.25).setAlpha(0.8);
+    this.btnExitScore = this.add.image(746.8,457.5,'btnExitScore').setAlpha(0.8);
 		this.btnExitScore.setInteractive()
     .on('pointerdown', () => this.exitScore());
 
@@ -46,7 +46,7 @@ export default class SceneScore extends Phaser.Scene {
     });
 
     //Boton ranking
-    this.btnRankingScore = this.add.image(479,459,'btnRankingScore').setScale(0.25).setAlpha(0.8);
+    this.btnRankingScore = this.add.image(479,458.5,'btnRankingScore').setAlpha(0.8);
 		this.btnRankingScore.setInteractive()
     .on('pointerdown', () => this.viewRankingScore());
 
@@ -59,7 +59,7 @@ export default class SceneScore extends Phaser.Scene {
     });
 
     //Boton review
-    this.btnReview = this.add.image(708,353,'btnReviewScore').setScale(0.25).setAlpha(0.8);
+    this.btnReview = this.add.image(711,353.5,'btnReviewScore').setAlpha(0.8);
 		this.btnReview.setInteractive()
     .on('pointerdown', () => this.irAlLink("https://forms.gle/Eh7LPkvHq3Zvgw2TA"));
 
