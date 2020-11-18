@@ -16,6 +16,7 @@ export default class SceneSplashScreen extends Phaser.Scene {
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
     //AUDIO
+      Audio.fullscreenMode(this);
 
         Audio.musicLoop0000chill= this.sound.add('musicLoop0000chill', {
             volume: 0.0,

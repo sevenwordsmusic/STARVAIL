@@ -296,18 +296,3 @@ game.pauseInfo = '';
 window.gameDebug = game;
 
 
-function create(){
-        var FKey = this.input.keyboard.addKey('F');
-        FKey.on('down', function () {
-
-            if (this.scale.isFullscreen)
-            {
-                this.scale.stopFullscreen();
-            }
-            else
-            {
-                this.scale.startFullscreen();
-            }
-
-        }, this);
-}

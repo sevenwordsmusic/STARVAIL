@@ -405,6 +405,7 @@ export default class SceneTest_1 extends Phaser.Scene {
 
   //AUDIO:
    Audio.startMusicEngineLevelOne(this);
+   Audio.fullscreenMode(this);
   //
    this.maxMemory = 0;
 

@@ -106,6 +106,23 @@ export default class Audio extends Phaser.Scene {
                 break;
         }
     }
+
+static fullscreenMode(thisArg){
+        var FKey = thisArg.input.keyboard.addKey('F');
+        FKey.on('down', function () {
+
+            if (thisArg.scale.isFullscreen)
+            {
+                thisArg.scale.stopFullscreen();
+            }
+            else
+            {
+                thisArg.scale.startFullscreen();
+            }
+
+        }, thisArg);
+}
+    
     static pause() {
         Audio.musicLoop0000levitating.volume = 0.0;
         Audio.musicLoop0000moving.volume = 0.0;
