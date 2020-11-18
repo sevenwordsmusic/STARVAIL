@@ -5,6 +5,9 @@ export default class SceneSplashScreen extends Phaser.Scene {
   }
 
   preload(){
+    //AUDIO
+        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg')
+    //
     //Splash menu
     this.load.image('btnTitle', 'assets/lowResLogo.png');
     this.load.image('corners', 'assets/Menu corners.png');
@@ -12,6 +15,19 @@ export default class SceneSplashScreen extends Phaser.Scene {
 
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
+    //AUDIO
+        Audio.musicLoop0000chill= this.sound.add('musicLoop0000chill', {
+            volume: 0.0,
+            loop: true
+        })
+        Audio.musicLoop0000chill.play();
+        this.tweens.add({
+            targets: Audio.musicLoop0000chill,
+            volume: Audio.volumeBGM,
+            duration: Audio.barRateDiv[2],
+        });
+    //
+
     this.game.prepareScreen();
 
     this.scene.run("Audio");

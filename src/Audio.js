@@ -1,4 +1,6 @@
 import Chatter from "./Chatter.js";
+import SceneSplashScreen from "./Scenes/SceneSplashScreen.js";
+
 export default class Audio extends Phaser.Scene {
     constructor() {
         super("Audio");
@@ -29,7 +31,6 @@ export default class Audio extends Phaser.Scene {
     //INSTANCES
     static maxSFXinstances = 8;
     static SFXinstance = 0;
-    static ambientLoop;
     static frameCount = 0;
     //SLOTS
         //AMBIENT
@@ -203,15 +204,8 @@ export default class Audio extends Phaser.Scene {
         }
         return distance * Audio.volumeSFX;
     }
-    //MUSIC ENGINE level #1 starter:
     static startMusicEngine(scene) {
-        Audio.musicLoop0000chill.play();
         Audio.ambientLoop.play();
-        scene.tweens.add({
-            targets: Audio.musicLoop0000chill,
-            volume: Audio.volumeBGM,
-            duration: Audio.barRateDiv[1],
-        });
         scene.tweens.add({
             targets: Audio.ambientLoop,
             volume: Audio.volumeSFX,
@@ -859,7 +853,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
         this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
-        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg')
+        //this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg')
         this.load.audio('musicLoop0001', 'assets/audio/BGM/musicLoop0001.ogg')
     }
     //CREATION:
@@ -1292,7 +1286,7 @@ export default class Audio extends Phaser.Scene {
         //FIN TESTEO
         //AMBIENT
         Audio.ambientLoop = this.sound.add('ambientLoop_00', {
-            volume: Audio.volumeSFX,
+            volume: 0.0,
             loop: true
         })
         //UI LOOPS
@@ -1334,10 +1328,6 @@ export default class Audio extends Phaser.Scene {
             loop: true
         })
         Audio.musicLoop0000flying = this.sound.add('musicLoop0000flying', {
-            volume: 0.0,
-            loop: true
-        })
-        Audio.musicLoop0000chill = this.sound.add('musicLoop0000chill', {
             volume: 0.0,
             loop: true
         })
