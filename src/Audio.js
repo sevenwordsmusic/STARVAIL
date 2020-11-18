@@ -29,7 +29,7 @@ export default class Audio extends Phaser.Scene {
     static oldVolumes = [];
     //INSTANCES
     static load;
-    static maxSFXinstances = 16;
+    static maxSFXinstances = 8;
     static SFXinstance = 0;
     static ambientLoop;
     //STINGERS
@@ -98,6 +98,17 @@ export default class Audio extends Phaser.Scene {
         this.load.musicLoop0000chill.volume = Audio.volumeBGM;
         if(Audio.currentLevel==3){
             this.load.musicLoop0001.pause();
+        }
+        for(var type=0; type<this.load.soundInstance.length; type++){
+            for(var rndOrInstance=0; rndOrInstance<this.load.soundInstance[type].length; rndOrInstance++){
+                if(Array.isArray(this.load.soundInstance[type][rndOrInstance])){
+                    for(var instance=0; instance<this.load.soundInstance[type][rndOrInstance].length; instance++){
+                        this.load.soundInstance[type][rndOrInstance][instance].volume=0.0;
+                    }
+                }else{
+                    this.load.soundInstance[type][rndOrInstance].volume=0.0;
+                }
+            }
         }
         Audio.paused = true;
     }
@@ -777,10 +788,6 @@ export default class Audio extends Phaser.Scene {
     }
     //CREATION:
     create() {
-        if(navigator.userAgent.indexOf("Chrome") != -1 ) {
-            console.log("%c | AUDIO ENGINE | %c > GOOGLE CHROME DETECTED : max sound slots reduced; for a better sound experience switch to Firefox.", Audio.ctf, "");
-            Audio.maxSFXinstances = 8;
-        }
         //INIT AUDIO
         this.soundInstance = [];
         //

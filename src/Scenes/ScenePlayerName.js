@@ -86,7 +86,10 @@ export default class ScenePlayerName extends Phaser.Scene {
         Audio.play2DinstanceRate(81, 1.0);
         Audio.play2DinstanceRate(83, 1.0);
       //
-    this.game.playerName = document.getElementById("playerName").value;
+    this.game.playerName = document.getElementById("playerName").value.toUpperCase();
+    if(this.game.playerName==""){
+      this.game.playerName="PLAYER";
+    }
     this.hideInput();
 
     this.game.prepareScreen();
