@@ -130,15 +130,23 @@ export default class Player {
       this.firingPointer = this.scene.input.activePointer;
       this.movingPointer = undefined;
 
+      if(this.scene.game.playerName.localeCompare("proplayer", undefined, { sensitivity: 'base' }) === 0){
+        console.log("Cheat Mode Enabled");
 
-      this.weaponChange = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-      this.weaponChange.on('down', function(event){
-        this.changeWeapon();
-      }, this);
-      this.testMemory = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
-      this.testMemory.on('down', function(event){
-        console.log("Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
-      }, this);
+        this.weaponChange = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.weaponChange.on('down', function(event){
+          this.changeWeapon();
+        }, this);
+        this.testMemory = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.testMemory.on('down', function(event){
+          //console.log("Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
+          this.scene.startDebugLoop(true,false);
+        }, this);
+        this.skipLevel = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N);
+        this.skipLevel.on('down', function(event){
+          this.scene.game.nextLevel();
+        }, this);
+      }
 
       //DISPARO
       this.scene.input.on('pointerdown', function(pointer, gameObject){
@@ -443,10 +451,11 @@ export default class Player {
       this.flyFire.y = this.sprite.y;
     }else{
       if(this.energy < this.scene.game.totalPlayerEnergy){
+        var extraRecovery = (this.activatedJet)?0:this.scene.game.extraRecoveryOnGround;
         if(this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate + 60)
-          this.playerGainEnergy(this.scene.game.energyRecoveryRate);
+          this.playerGainEnergy(this.scene.game.energyRecoveryRate + extraRecovery);
         else
-          this.playerGainEnergy(this.scene.game.energyRecoveryRate*this.weapons[this.weaponCounter].energyRecoverProportion);
+          this.playerGainEnergy((this.scene.game.energyRecoveryRate + extraRecovery)*this.weapons[this.weaponCounter].energyRecoverProportion);
       }
     }
     /*

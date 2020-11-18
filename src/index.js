@@ -81,7 +81,7 @@ var config = {
     default: 'matter',
     matter: {
       gravity: { y: 0.98 },
-      debug: true
+      debug: false
     }
   },
   scale: {
@@ -156,6 +156,7 @@ game.currentPlayerHp =  game.totalPlayerHp;       //NO TOCAR!! game.totalPlayerH
 game.hpRecoveryRate = 99999999999;                  //1
 game.totalPlayerEnergy = 99999999999;     //1000, 1500
 game.energyRecoveryRate = 0.5;    //0.2, 0.5
+game.extraRecoveryOnGround = 0.1  //energia que se recupera al estar en el suelo
 game.energyCostJetBeginning = 0;      //energia por segundo que se gasta justo al empezar (es un valor base de coste)
 game.energyJetIncrease = 1.006   /*1.008*/   //velocidad con la que aumenta el coste del jet
 game.energyCostJetPropulsion = 5;     //energia de coste de propulsion, se gasta solo una vez al entrar en modo jet)
@@ -289,8 +290,10 @@ game.prepareScreen = function(){
 }
 
 game.nextLevel = function(){
-  game.player.sprite.x = game.player.scene.goalArray[0].sprite.x;
-  game.player.sprite.y = game.player.scene.goalArray[0].sprite.y;
+  if(game.player.scene.goalArray != undefined && game.player.scene.goalArray[0] != undefined && game.player.scene.goalArray[0].sprite != undefined && game.player.scene.goalArray[0].sprite.body != undefined){
+    game.player.sprite.x = game.player.scene.goalArray[0].sprite.x;
+    game.player.sprite.y = game.player.scene.goalArray[0].sprite.y;
+  }
 }
 
 game.pauseInfo = '';
