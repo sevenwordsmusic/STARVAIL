@@ -1,4 +1,4 @@
-import EnergyBall from "../Objects/Projectiles/EnemyProjectiles/EnergyBall.js"
+import EnergyBallMecha from "../Objects/Projectiles/EnemyProjectiles/EnergyBallMecha.js"
 import Audio from "../Audio.js";
 
 export default class MechGun {
@@ -27,7 +27,7 @@ export default class MechGun {
   }
   shoot(){
     if(this.exists)
-      new EnergyBall(this.scene, this.sprite.x + this.aimVector.x*70, this.sprite.y + this.aimVector.y*70, this.dmg, 0.1, 15, this.aimVector, 2000);
+      new EnergyBallMecha(this.scene, this.sprite.x + this.aimVector.x*70, this.sprite.y + this.aimVector.y*70, this.dmg, 0.1, 15, this.aimVector, 2000);
   }
   destroy(){
     this.exists = false;

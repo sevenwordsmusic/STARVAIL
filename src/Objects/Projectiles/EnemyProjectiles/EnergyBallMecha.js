@@ -3,7 +3,7 @@ import SuperiorQuery from "../../../SuperiorQuery.js";
 import Audio from "../../../Audio.js";
 
 //proyectil que hereda de Projectile
-export default class EnergyBall extends Projectile {
+export default class EnergyBallMecha extends Projectile {
   constructor(scene, x, y, dmg, knockback, speed, velDir, expTime){
     super(scene, x, y, expTime);
 
@@ -16,7 +16,7 @@ export default class EnergyBall extends Projectile {
     const body = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,9);
 
     this.sprite.setExistingBody(body).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
-    this.sprite.setDepth(5).setScale(0.4);
+    this.sprite.setDepth(5).setScale(0.7);
     this.sprite.setSensor(true).setIgnoreGravity(true);
     this.sprite.body.frictionAir = 0;
     this.sprite.body.collisionFilter.group = -3;

@@ -78,7 +78,7 @@ export default class Player {
 
     //miniinvulnerabilidad al ser dañado
     this.invulTimer = this.scene.time.addEvent({
-      delay: 150
+      delay: 220
     });
 
     this.adjustedFriction = 1.2/this.scene.matter.world.getDelta();
@@ -101,6 +101,7 @@ export default class Player {
     //this.weapons[2] = {name: "Ejemplo", fireRate: 10 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 1000, energyCost: 10 , chFrame: 1};
     this.weaponCounter = 0;
 
+    this.weaponIcons = [5];
     this.buttons = [5];
     this.buttons[0] = this.scene.add.sprite(885, 465, ('weaponHUD0'),0).setInteractive();
     this.buttons[0].setScrollFactor(0).setDepth(100).setVisible(false);
@@ -108,7 +109,7 @@ export default class Player {
     this.buttons[1] = this.scene.add.sprite(781, 465, ('weaponHUD1'),0).setInteractive();
     this.buttons[1].setScrollFactor(0).setDepth(100).setVisible(false);
     this.buttons[1].playerInteractable = true;
-    this.buttons[2] = this.scene.add.sprite(885, 357, ('weaponHUD2'),0).setInteractive();
+    this.buttons[2] = this.scene.add.sprite(885, 358, ('weaponHUD2'),0).setInteractive();
     this.buttons[2].setScrollFactor(0).setDepth(100).setVisible(false);
     this.buttons[2].playerInteractable = true;
     this.buttons[3] = this.scene.add.sprite(726, 465, ('weaponHUD3'),0).setInteractive();
@@ -254,8 +255,9 @@ export default class Player {
 
     this.tween = this.scene.tweens.add({
       targets: this.sprite,
-      alpha: {from: 1, to: 0.2},
-      duration: 150,
+      //alpha: {from: 1, to: 0.2},
+      tint: {from: 0xffffff, to: 0xff0000},
+      duration: 220,
       repeat: 0,
       yoyo: true
     })
@@ -264,6 +266,7 @@ export default class Player {
     for(var i=0; i<this.scene.game.obtainedWeapons.length; i++){
       this.recieveWeapon(this.scene.game.obtainedWeapons[i], false);
     }
+    this.darkener(0);
 
     this.hpBar.draw(this.hp);
     this.energyBar.draw(this.energy);
@@ -452,7 +455,7 @@ export default class Player {
     }else{
       if(this.energy < this.scene.game.totalPlayerEnergy){
         if(this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate + 60)
-          this.playerGainEnergy(this.scene.game.energyRecoveryRate + (this.activatedJet)?0:this.scene.game.extraRecoveryOnGround);
+          this.playerGainEnergy(this.scene.game.energyRecoveryRate + ((this.activatedJet)?0:this.scene.game.extraRecoveryOnGround));
         else
           this.playerGainEnergy((this.scene.game.energyRecoveryRate)*this.weapons[this.weaponCounter].energyRecoverProportion);
       }
@@ -551,7 +554,7 @@ export default class Player {
   }
 
   playerDamage(num, ignoreInvul = false) {
-    const delayT = 150;
+    const delayT = 220;
     if (this.invulTimer.elapsed == delayT || ignoreInvul) {
       //AUDIO
         Audio.play2DinstanceRnd(72);
@@ -652,7 +655,7 @@ export default class Player {
     this.weapons[5] = {name: "BombMegaton", damage: 150, area: 80, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 8, expireTime: 2000, energyCost: 100, energyRecoverProportion: 0.2, wSprite: 4, chFrame: 1};
     this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 60, energyRecoverProportion: 0.2, wSprite: 2, chFrame: 2};
     this.weapons[7] = {name: "MissileMulti", damage: 5, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.9, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 12, expireTime: 4000, energyCost: 60, energyRecoverProportion: 0.2, wSprite: 5, chFrame: 2};
-    this.weapons[8] = {name: "Lasser", damage: 1.5, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 1.4, energyRecoverProportion: 0, wSprite: "", chFrame: 3};
+    this.weapons[8] = {name: "Lasser", damage: 1.5, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 1.4, energyRecoverProportion: 0, wSprite: 8, chFrame: 3};
   }
 
   initializeFire(){
@@ -768,25 +771,40 @@ export default class Player {
     this.buttons[aux].setVisible(true)
     this.buttons[aux].on('pointerdown', function () {
       this.setWeapon(id);
+      this.darkener(aux);
     }, this);
     if(aux == 0){
-      this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(4);
+     this.weaponIcons[aux] = this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(4);
     }
     else if(aux == 1){
-      this.scene.add.sprite(this.buttons[aux].x + 10, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
+      this.weaponIcons[aux] = this.scene.add.sprite(this.buttons[aux].x + 10, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
     }
     else if(aux == 2){
-      this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y + 10, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
+      this.weaponIcons[aux] = this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y + 10, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
     }
     else if(aux == 3){
-      this.scene.add.sprite(this.buttons[aux].x - 10, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
+      this.weaponIcons[aux] = this.scene.add.sprite(this.buttons[aux].x - 10, this.buttons[aux].y, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
       this.scene.add.image(this.buttons[aux].x + 10, this.buttons[aux].y + 61, "decoHUD1" ).setScrollFactor(0).setDepth(101);
     }
     else if(aux == 4){
-      this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y - 5, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
+      this.weaponIcons[aux] = this.scene.add.sprite(this.buttons[aux].x, this.buttons[aux].y - 5, "bullets" ,this.weapons[id].wSprite).setScrollFactor(0).setDepth(101).setScale(3);
       this.scene.add.image(this.buttons[aux].x-116, this.buttons[aux].y+50, "decoHUD2" ).setScrollFactor(0).setDepth(101);
     }
     this.nextButton++;
+  }
+
+  darkener(n) {
+    for (var i = 0; i<this.buttons.length; i++) {
+      if (i == n) {
+        this.buttons[i].tint = 0x545454;
+        if(this.weaponIcons[i] != undefined)
+        this.weaponIcons[i].tint = 0x545454;
+      } else {
+        this.buttons[i].tint = 0xFFFFFF;
+        if(this.weaponIcons[i] != undefined)
+        this.weaponIcons[i].tint = 0xFFFFFF;
+      }
+    }
   }
 
   respawn() {
