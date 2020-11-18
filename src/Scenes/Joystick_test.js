@@ -1,4 +1,4 @@
-
+import Audio from "../Audio.js";
 var cursorKeys
 export default class Joystick_test extends Phaser.Scene {
   static count = 0;

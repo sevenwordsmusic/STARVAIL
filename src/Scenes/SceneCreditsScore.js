@@ -1,4 +1,4 @@
-
+import Audio from "../Audio.js";
 export default class SceneCreditsScore extends Phaser.Scene {
   constructor() {
     super("SceneCreditsScore");

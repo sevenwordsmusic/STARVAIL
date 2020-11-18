@@ -1,3 +1,5 @@
+import Audio from "../Audio.js";
+
 //escena que carga todos los recursos para el juego
 export default class SceneLoading extends Phaser.Scene {
   constructor() {

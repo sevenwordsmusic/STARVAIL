@@ -381,7 +381,8 @@ export default class Level3 extends Phaser.Scene {
    this.maxMemory = 0;
    //AUDIO
       Audio.levelThree(this);
-   //
+       Audio.fullscreenMode(this);
+      //
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {

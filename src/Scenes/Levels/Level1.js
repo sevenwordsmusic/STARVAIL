@@ -59,6 +59,7 @@ export default class Level1 extends Phaser.Scene {
 
   //Función create, que crea los elementos del propio juego.
   create() {
+
     console.log(this);
 
     //INTERFAZ
@@ -385,7 +386,8 @@ export default class Level1 extends Phaser.Scene {
 
    //AUDIO
       Audio.levelOne(this);
-   //
+       Audio.fullscreenMode(this);
+      //
   }
   //Función update, que actualiza el estado de la escena.
   update(time, delta) {

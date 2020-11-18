@@ -1,4 +1,4 @@
-
+import Audio from "../Audio.js";
 export default class SceneExample extends Phaser.Scene {
   constructor() {
     super("SceneGameEbi");

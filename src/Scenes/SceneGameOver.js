@@ -1,4 +1,4 @@
-
+import Audio from "../Audio.js";
 export default class SceneGameOver extends Phaser.Scene {
   constructor() {
     super("SceneGameOver");
