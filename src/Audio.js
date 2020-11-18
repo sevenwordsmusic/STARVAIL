@@ -25,7 +25,6 @@ export default class Audio extends Phaser.Scene {
     static maxVolume = 1.0;
     static volumeBGM = 0.5;
     static volumeSFX = 0.5;
-    static maxBGMvolumeByEnemies = this.volumeBGM;
     static oldVolumes = [];
     //INSTANCES
     static load;
@@ -169,16 +168,6 @@ export default class Audio extends Phaser.Scene {
             click.volume=document.getElementById("sfxSlider").value / 10;
         }
     }
-    static maxBGMvolume(scene) {
-        if (scene.game.player.getClosestEnemyDistance() > Audio.inRangeDistance) {
-            var distance = 0.0;
-        } else if (scene.game.player.getClosestEnemyDistance() < 0.0) {
-            var distance = Audio.maxVolume;
-        } else {
-            var distance = (Audio.inRangeDistance - scene.game.player.getClosestEnemyDistance()) / Audio.inRangeDistance;
-        }
-        Audio.maxBGMvolumeByEnemies = distance * Audio.volumeBGM;
-    }
     static volume2D(length) {
         if (length > this.vanishingPoint) {
             var distance = 0.0;
@@ -201,13 +190,7 @@ export default class Audio extends Phaser.Scene {
     }
     //MUSIC ENGINE level #1 starter:
     static startMusicEngine(scene) {
-        this.load.ambientLoop.play();
         this.load.musicLoop0000chill.play();
-        scene.tweens.add({
-            targets: this.load.ambientLoop,
-            volume: Audio.volumeSFX,
-            duration: Audio.barRateDiv[2],
-        });
         scene.tweens.add({
             targets: this.load.musicLoop0000chill,
             volume: Audio.volumeBGM,
@@ -222,6 +205,7 @@ export default class Audio extends Phaser.Scene {
         Audio.stingerChill = false;
         //
         this.load.musicLoop0000chill.volume = 0;
+        this.load.ambientLoop.play();
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #0.", Audio.ctf, "");
     }
     static levelOne(scene) {
@@ -328,7 +312,7 @@ export default class Audio extends Phaser.Scene {
         }
         scene.tweens.add({
             targets: this.load.musicLoop0000levitating,
-            volume: volumeNormalized * Audio.maxBGMvolumeByEnemies,
+            volume: volumeNormalized * Audio.volumeBGM,
             duration: Audio.barRateDiv[0],
         });
     }
@@ -337,7 +321,7 @@ export default class Audio extends Phaser.Scene {
             this.stingerMovement = false;
             scene.tweens.add({
                 targets: this.load.musicLoop0000moving,
-                volume: Audio.maxBGMvolumeByEnemies,
+                volume: Audio.volumeBGM,
                 duration: Audio.barRateDiv[1],
             });
         } else {
@@ -354,7 +338,7 @@ export default class Audio extends Phaser.Scene {
                 this.stingerJet = false;
                 scene.tweens.add({
                     targets: this.load.musicLoop0000flying,
-                    volume: Audio.maxBGMvolumeByEnemies,
+                    volume: Audio.Audio.volumeBGM,
                     duration: Audio.barRateDiv[2],
                 });
             } else {
@@ -497,7 +481,6 @@ export default class Audio extends Phaser.Scene {
     //GENERAL METHODS:
     //Frame update:
     static update(scene) {
-        Audio.maxBGMvolume(scene);
         Audio.propellerFliying(scene);
         if (scene.game.isFiring && scene.game.player.energy == 0.0) {
             Audio.play2DinstanceRate(10, 0.8 + scene.game.player.weaponCounter * 0.05);
@@ -815,7 +798,7 @@ export default class Audio extends Phaser.Scene {
     create() {
         //INIT AUDIO
         this.soundInstance = [];
-        //
+
         this.soundInstance[0] = [];
         Audio.createSFXinstanceSub('impact_00A', 0, 0, this);
         Audio.createSFXinstanceSub('impact_00B', 0, 1, this);
@@ -1026,6 +1009,221 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXloopInstance('mentorPropellerLoop', 95, this);
         Audio.createSFXinstance('mentorMovingPart', 96, this);
         Audio.createSFXinstance('mentorPropellerStop', 97, this);
+
+        //INICIO TESTEO
+        /*
+        this.soundInstance[0] = [];
+        Audio.createSFXinstanceSub('null', 0, 0, this);
+        Audio.createSFXinstanceSub('null', 0, 1, this);
+        Audio.createSFXinstanceSub('null', 0, 2, this);
+        this.soundInstance[1] = [];
+        Audio.createSFXinstanceSub('null', 1, 0, this);
+        Audio.createSFXinstanceSub('null', 1, 1, this);
+        Audio.createSFXinstanceSub('null', 1, 2, this);
+        Audio.createSFXinstance('null', 2, this);
+        this.soundInstance[3] = [];
+        Audio.createSFXinstanceSub('null', 3, 0, this);
+        Audio.createSFXinstanceSub('null', 3, 1, this);
+        Audio.createSFXinstanceSub('null', 3, 2, this);
+        Audio.createSFXinstanceSub('null', 3, 3, this);
+        Audio.createSFXinstanceSub('null', 3, 4, this);
+        Audio.createSFXinstance('null', 4, this);
+        this.soundInstance[5] = [];
+        Audio.createSFXinstanceSub('null', 5, 0, this);
+        Audio.createSFXinstanceSub('null', 5, 1, this);
+        Audio.createSFXinstanceSub('null', 5, 2, this);
+        Audio.createSFXinstance('null', 6, this);
+        Audio.createSFXinstance('null', 7, this);
+        //
+        Audio.createSFXinstance('null', 8, this);
+        Audio.createSFXinstance('null', 9, this);
+        Audio.createSFXinstance('null', 10, this);
+        Audio.createSFXinstance('null', 11, this);
+        //
+        Audio.createSFXinstance('null', 12, this);
+        Audio.createSFXinstance('null', 13, this);
+        //
+        this.soundInstance[14] = [];
+        Audio.createSFXinstanceSub('null', 14, 0, this);
+        Audio.createSFXinstanceSub('null', 14, 1, this);
+        Audio.createSFXinstanceSub('null', 14, 2, this);
+        this.soundInstance[15] = [];
+        Audio.createSFXinstanceSub('null', 15, 0, this);
+        Audio.createSFXinstanceSub('null', 15, 1, this);
+        Audio.createSFXinstanceSub('null', 15, 2, this);
+        this.soundInstance[16] = [];
+        Audio.createSFXinstanceSub('null', 16, 0, this);
+        Audio.createSFXinstanceSub('null', 16, 1, this);
+        Audio.createSFXinstanceSub('null', 16, 2, this);
+        this.soundInstance[17] = [];
+        Audio.createSFXinstanceSub('null', 17, 0, this);
+        Audio.createSFXinstanceSub('null', 17, 1, this);
+        Audio.createSFXinstanceSub('null', 17, 2, this);
+        this.soundInstance[18] = [];
+        Audio.createSFXinstanceSub('null', 18, 0, this);
+        Audio.createSFXinstanceSub('null', 18, 1, this);
+        Audio.createSFXinstanceSub('null', 18, 2, this);
+        Audio.createSFXinstance('null', 19, this);
+        //
+        Audio.createSFXinstance('null', 20, this);
+        Audio.createSFXinstance('null', 21, this);
+        Audio.createSFXinstance('null', 22, this);
+        Audio.createSFXinstance('null', 23, this);
+        Audio.createSFXinstance('null', 24, this);
+        Audio.createSFXinstance('null', 25, this);
+        Audio.createSFXinstance('null', 26, this);
+        Audio.createSFXinstance('null', 27, this);
+        //
+        Audio.createSFXinstance('null', 28, this);
+        Audio.createSFXinstance('null', 29, this);
+        Audio.createSFXinstance('null', 30, this);
+        Audio.createSFXinstance('null', 31, this);
+        Audio.createSFXinstance('null', 32, this);
+        Audio.createSFXinstance('null', 33, this);
+        //
+        Audio.createSFXloopInstance('null', 34, this);
+        Audio.createSFXloopInstance('null', 35, this);
+        this.soundInstance[36] = [];
+        Audio.createSFXinstanceSub('null', 36, 0, this);
+        Audio.createSFXinstanceSub('null', 36, 1, this);
+        Audio.createSFXinstanceSub('null', 36, 2, this);
+        this.soundInstance[37] = [];
+        Audio.createSFXinstanceSub('null', 37, 0, this);
+        Audio.createSFXinstanceSub('null', 37, 1, this);
+        Audio.createSFXinstanceSub('null', 37, 2, this);
+        this.soundInstance[38] = [];
+        Audio.createSFXinstanceSub('null', 38, 0, this);
+        Audio.createSFXinstanceSub('null', 38, 1, this);
+        Audio.createSFXinstanceSub('null', 38, 2, this);
+        this.soundInstance[39] = [];
+        Audio.createSFXinstanceSub('null', 39, 0, this);
+        Audio.createSFXinstanceSub('null', 39, 1, this);
+        Audio.createSFXinstanceSub('null', 39, 2, this);
+        Audio.createSFXloopInstance('null', 40, this);
+        Audio.createSFXloopInstance('null', 41, this);
+        Audio.createSFXloopInstance('null', 42, this);
+        Audio.createSFXloopInstance('null', 43, this);
+        this.soundInstance[44] = [];
+        Audio.createSFXinstanceSub('null', 44, 0, this);
+        Audio.createSFXinstanceSub('null', 44, 1, this);
+        Audio.createSFXinstanceSub('null', 44, 2, this);
+        this.soundInstance[45] = [];
+        Audio.createSFXinstanceSub('null', 45, 0, this);
+        Audio.createSFXinstanceSub('null', 45, 1, this);
+        Audio.createSFXinstanceSub('null', 45, 2, this);
+        Audio.createSFXloopInstance('null', 46, this);
+        Audio.createSFXloopInstance('null', 47, this);
+        Audio.createSFXloopInstance('null', 48, this);
+        Audio.createSFXloopInstance('null', 49, this);
+        Audio.createSFXloopInstance('null', 50, this);
+        Audio.createSFXloopInstance('null', 51, this);
+        this.soundInstance[52] = [];
+        Audio.createSFXinstanceSub('null', 52, 0, this);
+        Audio.createSFXinstanceSub('null', 52, 1, this);
+        Audio.createSFXinstanceSub('null', 52, 2, this);
+        Audio.createSFXinstance('null', 53, this);
+        Audio.createSFXinstance('null', 54, this);
+        Audio.createSFXinstance('null', 55, this);
+        Audio.createSFXinstance('null', 56, this);
+        this.soundInstance[57] = [];
+        Audio.createSFXinstanceSub('null', 57, 0, this);
+        Audio.createSFXinstanceSub('null', 57, 1, this);
+        Audio.createSFXinstanceSub('null', 57, 2, this);
+        this.soundInstance[58] = [];
+        Audio.createSFXinstanceSub('null', 58, 0, this);
+        Audio.createSFXinstanceSub('null', 58, 1, this);
+        Audio.createSFXinstanceSub('null', 58, 2, this);
+        this.soundInstance[59] = [];
+        Audio.createSFXinstanceSub('null', 59, 0, this);
+        Audio.createSFXinstanceSub('null', 59, 1, this);
+        Audio.createSFXinstanceSub('null', 59, 2, this);
+        this.soundInstance[60] = [];
+        Audio.createSFXinstanceSub('null', 60, 0, this);
+        Audio.createSFXinstanceSub('null', 60, 1, this);
+        Audio.createSFXinstanceSub('null', 60, 2, this);
+        Audio.createSFXinstanceSub('null', 60, 3, this);
+        this.soundInstance[61] = [];
+        Audio.createSFXinstanceSub('null', 61, 0, this);
+        Audio.createSFXinstanceSub('null', 61, 1, this);
+        Audio.createSFXinstanceSub('null', 61, 2, this);
+        Audio.createSFXinstanceSub('null', 61, 3, this);
+        this.soundInstance[62] = [];
+        Audio.createSFXinstanceSub('null', 62, 0, this);
+        Audio.createSFXinstanceSub('null', 62, 1, this);
+        Audio.createSFXinstanceSub('null', 62, 2, this);
+        Audio.createSFXinstanceSub('null', 62, 3, this);
+        this.soundInstance[63] = [];
+        Audio.createSFXinstanceSub('null', 63, 0, this);
+        Audio.createSFXinstanceSub('null', 63, 1, this);
+        Audio.createSFXinstanceSub('null', 63, 2, this);
+        Audio.createSFXinstanceSub('null', 63, 3, this);
+        this.soundInstance[64] = [];
+        Audio.createSFXinstanceSub('null', 64, 0, this);
+        Audio.createSFXinstanceSub('null', 64, 1, this);
+        Audio.createSFXinstanceSub('null', 64, 2, this);
+        Audio.createSFXinstanceSub('null', 64, 3, this);
+        this.soundInstance[65] = [];
+        Audio.createSFXinstanceSub('null', 65, 0, this);
+        Audio.createSFXinstanceSub('null', 65, 1, this);
+        Audio.createSFXinstanceSub('null', 65, 2, this);
+        Audio.createSFXinstanceSub('null', 65, 3, this);
+        Audio.createSFXinstance('null', 66, this);
+        this.soundInstance[67] = [];
+        Audio.createSFXinstanceSub('null', 67, 0, this);
+        Audio.createSFXinstanceSub('null', 67, 1, this);
+        Audio.createSFXinstance('null', 68, this);
+        Audio.createSFXinstance('null', 69, this);
+        Audio.createSFXinstance('null', 70, this);
+        Audio.createSFXinstance('null', 71, this);
+        this.soundInstance[72] = [];
+        Audio.createSFXinstanceSub('null', 72, 0, this);
+        Audio.createSFXinstanceSub('null', 72, 1, this);
+        Audio.createSFXinstanceSub('null', 72, 2, this);
+        Audio.createSFXinstanceSub('null', 72, 3, this);
+        Audio.createSFXinstance('null', 73, this);
+        Audio.createSFXinstance('null', 74, this);
+        this.soundInstance[75] = [];
+        Audio.createSFXinstanceSub('null', 75, 0, this);
+        Audio.createSFXinstanceSub('null', 75, 1, this);
+        Audio.createSFXinstanceSub('null', 75, 2, this);
+        Audio.createSFXinstanceSub('null', 75, 3, this);
+        this.soundInstance[76] = [];
+        Audio.createSFXinstanceSub('null', 76, 0, this);
+        Audio.createSFXinstanceSub('null', 76, 1, this);
+        Audio.createSFXinstanceSub('null', 76, 2, this);
+        Audio.createSFXinstanceSub('null', 76, 3, this);
+        Audio.createSFXinstance('null', 77, this);
+        Audio.createSFXinstance('null', 78, this);
+        Audio.createSFXinstance('null', 79, this);
+        Audio.createSFXinstance('null', 80, this);
+        Audio.createSFXinstance('null', 81, this);
+        Audio.createSFXinstance('null', 82, this);
+        Audio.createSFXinstance('null', 83, this);
+        Audio.createSFXinstance('null', 84, this);
+        this.soundInstance[85] = [];
+        Audio.createSFXinstanceSub('null', 85, 0, this);
+        Audio.createSFXinstanceSub('null', 85, 1, this);
+        Audio.createSFXinstanceSub('null', 85, 2, this);
+        Audio.createSFXinstanceSub('null', 85, 3, this);
+        Audio.createSFXinstanceSub('null', 85, 4, this);
+        Audio.createSFXinstanceSub('null', 85, 5, this);
+        Audio.createSFXinstanceSub('null', 85, 6, this);
+        Audio.createSFXinstanceSub('null', 85, 7, this);
+        Audio.createSFXloopInstance('null', 86, this);
+        Audio.createSFXloopInstance('null', 87, this);
+        Audio.createSFXinstance('null', 88, this);
+        Audio.createSFXloopInstance('null', 89, this);
+        Audio.createSFXinstance('null', 90, this);
+        //MENTOR
+        Audio.createSFXloopInstance('null', 91, this);
+        Audio.createSFXloopInstance('null', 92, this);
+        Audio.createSFXinstance('null', 93, this);
+        Audio.createSFXloopInstance('null', 94, this);
+        Audio.createSFXloopInstance('null', 95, this);
+        Audio.createSFXinstance('null', 96, this);
+        Audio.createSFXinstance('null', 97, this);
+        */
+        //FIN TESTEO
         //AMBIENT
         this.ambientLoop = this.sound.add('ambientLoop_00', {
             volume: 0.0,
