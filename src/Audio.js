@@ -167,9 +167,6 @@ export default class Audio extends Phaser.Scene {
             click.volume = document.getElementById("sfxSlider").value / 10;
         }
     }
-    static waitForUpdate(){
-        return Audio.frameCount%2==0;
-    }
     static volume2D(length) {
         if (length > this.vanishingPoint) {
             var distance = 0.0;
@@ -532,6 +529,9 @@ export default class Audio extends Phaser.Scene {
         return instance;
     }
     //GENERAL METHODS:
+    static waitForUpdate(){
+        return Audio.frameCount%2==0;
+    }
     //Frame update:
     static update(scene) {
         if(!Audio.waitForUpdate()){
