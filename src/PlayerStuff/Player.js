@@ -451,11 +451,10 @@ export default class Player {
       this.flyFire.y = this.sprite.y;
     }else{
       if(this.energy < this.scene.game.totalPlayerEnergy){
-        var extraRecovery = (this.activatedJet)?0:this.scene.game.extraRecoveryOnGround;
         if(this.fireCounterTap >= this.weapons[this.weaponCounter].fireRate + 60)
-          this.playerGainEnergy(this.scene.game.energyRecoveryRate + extraRecovery);
+          this.playerGainEnergy(this.scene.game.energyRecoveryRate + (this.activatedJet)?0:this.scene.game.extraRecoveryOnGround);
         else
-          this.playerGainEnergy((this.scene.game.energyRecoveryRate + extraRecovery)*this.weapons[this.weaponCounter].energyRecoverProportion);
+          this.playerGainEnergy((this.scene.game.energyRecoveryRate)*this.weapons[this.weaponCounter].energyRecoverProportion);
       }
     }
     /*
