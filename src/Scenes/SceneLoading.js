@@ -72,7 +72,6 @@ export default class SceneLoading extends Phaser.Scene {
 
     //PLAYER
     this.load.image('square', 'assets/square.jpg');
-    this.load.image('star', 'assets/star.png');
     this.load.spritesheet('crosshair', 'assets/HUD/crosshair.png', { frameWidth: 64, frameHeight: 64 });
 
     //HUD
