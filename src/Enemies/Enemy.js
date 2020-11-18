@@ -99,12 +99,17 @@ export default class Enemy extends FiniteStateMachine{
       this.encounterNPC.enemyKilled();
   }
   destroy(){
+    this.stopAudio();
     this.tween.remove();
     this.sprite.destroy();
     this.sprite.parent = undefined;
     this.sprite = undefined;
   } //incompleto, cada enemigo deberia eliminar sus cuerpos y objetos adicionales adicionales
-
+  
+  stopAudio(){
+    this.sfx.stop();
+    this.sfxDetect.stop();
+  }
 
   distanceToPlayer(){
     if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)

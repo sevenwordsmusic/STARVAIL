@@ -301,7 +301,7 @@ export default class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
                                             tileRow.forEach(
                                                 (tile) => {
                                                     // Tiled start index for tiles with 1 but animation with 0. Thus that wierd "-1"
-                                                    if ((tile.index - tileset.firstgid) === index) {
+                                                    if (tile != null && ((tile.index - tileset.firstgid) === index)) {
                                                         tiles.push(tile);
                                                     }
                                                 }

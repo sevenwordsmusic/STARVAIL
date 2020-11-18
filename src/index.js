@@ -2,36 +2,35 @@
 
 //DESTRUCTOR GLOBAL AL SALIR/REFRESCAR
 window.addEventListener("beforeunload", function (e) {
-  /*game.player.alive = false;
+  game.player.alive = false;
   //console.log(scene.scene.key);
   game.player.scene.input.keyboard.shutdown();
-  scene.input.shutdown();
-  if(scene.enemyController != undefined)
-    scene.enemyController.destroy();
+  game.player.scene.input.shutdown();
+  if(game.player.scene.enemyController != undefined)
+    game.player.scene.enemyController.destroy();
 
-  for(var i=0; i<scene.tileBodyMatrix.length; i++){
-    Phaser.Physics.Matter.Matter.World.remove(scene.matter.world.localWorld, scene.tileBodyMatrix[i].body);
-    scene.tileBodyMatrix[i].body = undefined;
-    scene.tileBodyMatrix = undefined;
+  for(var i=0; i<game.player.scene.tileBodyMatrix.length; i++){
+    Phaser.Physics.Matter.Matter.World.remove(game.player.scene.matter.world.localWorld, game.player.scene.tileBodyMatrix[i].body);
+    game.player.scene.tileBodyMatrix[i].body = undefined;
+    game.player.scene.tileBodyMatrix = undefined;
   }
-  scene.tileBodyMatrix = [];
+  game.player.scene.tileBodyMatrix = [];
   for(var i=0; i<this.matter.world.localWorld.bodies.length; i++){
-    this.matter.world.localWorld.bodies[i] = undefined;
+    game.player.scene.matter.world.localWorld.bodies[i] = undefined;
   }
-  this.matter.world.localWorld.bodies = [];
+  game.player.scene.matter.world.localWorld.bodies = [];
 
-  this.map.destroy();
-  this.map = undefined;
+  game.player.scene.map.destroy();
+  game.player.scene.map = undefined;
 
   for(var i=0; i<this.make.displayList.list.length; i++){
-    this.make.displayList.list[i] = undefined;
+    game.player.scene.make.displayList.list[i] = undefined;
   }
-  this.make.displayList.list = [];
+  game.player.scene.make.displayList.list = [];
 
+  game.player.scene.scene.remove(game.player.scene.scene.key+ SceneCurrentClass.getNumber());
 
-  scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());*/
-
-  game.cache.destroy();
+  //game.cache.destroy();
   game.destroy(true, true);
   localStorage.clear();
   sessionStorage.clear();
@@ -114,9 +113,7 @@ var config = {
     SceneGameOver,
     SceneRanking,
 
-    Tutorial,
-    Level1,
-    LevelBoss
+    Tutorial
   ],
     plugins: {
 

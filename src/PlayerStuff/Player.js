@@ -125,17 +125,20 @@ export default class Player {
       'left': Phaser.Input.Keyboard.KeyCodes.A,
       'right': Phaser.Input.Keyboard.KeyCodes.D,
       'down': Phaser.Input.Keyboard.KeyCodes.S});
-      //this.weaponChange = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
       this.fireArm = new PlayerFireArmPC(this.scene, x, y);
       this.firingPointer = this.scene.input.activePointer;
       this.movingPointer = undefined;
 
-      //EVENTOS
-      /*this.weaponChange.on('down', function(event){
-        //this.playerDamageKnockback(20, 0.1, new Phaser.Math.Vector2(-1,0));
+
+      this.weaponChange = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+      this.weaponChange.on('down', function(event){
         this.changeWeapon();
-      }, this);*/
+      }, this);
+      this.testMemory = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
+      this.testMemory.on('down', function(event){
+        console.log("Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
+      }, this);
 
       //DISPARO
       this.scene.input.on('pointerdown', function(pointer, gameObject){
@@ -153,7 +156,6 @@ export default class Player {
         }
       }, this);
       //DISPARO
-      //EVENTOS
 
       //barras vida, energía
       this.hpBar = new Bar(this.scene, 23,454, 312, 12, 0x00ff00, this.scene.game.totalPlayerHp);
@@ -185,7 +187,6 @@ export default class Player {
       this.firingPointer = undefined;
       this.movingPointer = undefined;
 
-      //EVENTOS
       //DISPARO
       this.scene.input.on('pointerdown', function(pointer, gameObject){
         if(gameObject[0] != undefined && gameObject[0].playerInteractable === true){
@@ -204,7 +205,6 @@ export default class Player {
         }
       }, this);
       //DISPARO
-      //EVENTOS
 
       //barras vida, energía
       this.energy = this.scene.game.totalPlayerEnergy;
@@ -322,6 +322,8 @@ export default class Player {
   }
 
   update(time, delta) {
+    //console.log(this.scene.matter.world.engine.pairs.list.length);
+    //console.log(this.scene.matter.world.engine.pairs.table);
     if (this.sprite == undefined || this.sprite.body == undefined) { return; }
 
     this.updateKnockback(time, delta);
@@ -418,14 +420,15 @@ export default class Player {
     }
     if(this.activatedJet){
       if(this.cursors.down.isDown){
-        this.sprite.setVelocityY(this.scene.game.jetVelocityDown * (1000/60)/** delta*/ * this.playerMoveForceY());
+        this.sprite.setVelocityY(this.scene.game.jetVelocityDown * delta * this.playerMoveForceY());
       }
       else if(this.cursors.up.isDown && !this.isTakingOf){
-        if(this.sprite.body.velocity.y >= this.braceVelocity){
-          this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * (1000/60) * this.playerMoveForceY());
+        /*if(this.sprite.body.velocity.y >= this.braceVelocity){
+          this.sprite.setVelocityY((this.sprite.body.velocity.y/this.scene.matter.world.getDelta() - this.braceVelocity) * Math.min(50,delta) * this.playerMoveForceY());
         }else {
-           this.sprite.setVelocityY(-this.scene.game.jetVelocity * (1000/60) * this.playerMoveForceY());
-        }
+           this.sprite.setVelocityY(-this.scene.game.jetVelocity * delta * this.playerMoveForceY());
+        }*/
+        this.sprite.setVelocityY(-this.scene.game.jetVelocity * delta * this.playerMoveForceY());
       }
       if(this.energy > 0){
         this.playerUseEnergy(this.scene.game.energyCostJetBeginning + this.jetAumulator - 1);

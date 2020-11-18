@@ -138,7 +138,7 @@ export default class Tutorial extends Phaser.Scene {
 
 
     //Inicializacion y creacion de mapa de tiles.
-    this.map = this.make.tilemap({ key: "map0" });
+    this.map = this.make.tilemap({ key: "map0", insertNull: true });
     const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund1", 32, 32, 1, 2);
     const tileset2 = this.map.addTilesetImage("front_layer", "tilesFront1", 32, 32, 1, 2);
     const tileset3 = this.map.addTilesetImage("main_layer", "tilesMain1", 32, 32, 1, 2);

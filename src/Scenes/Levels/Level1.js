@@ -113,7 +113,7 @@ export default class Level1 extends Phaser.Scene {
 
     console.log("A Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     //Inicializacion y creacion de mapa de tiles.
-    this.map = this.make.tilemap({ key: "map1" });
+    this.map = this.make.tilemap({ key: "map1", insertNull: true });
     console.log("A2 Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund1", 32, 32, 1, 2);
     const tileset2 = this.map.addTilesetImage("front_layer", "tilesFront1", 32, 32, 1, 2);
