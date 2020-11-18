@@ -68,6 +68,10 @@ var config = {
   //Dimensiones de la ventana de juego (ancho y alto)
   width: 960,
   height: 540,
+      scale: {
+          mode: Phaser.Scale.FIT,
+          autoCenter: Phaser.Scale.CENTER_BOTH
+      },
   fps: {
     target: 60,
   },
@@ -84,17 +88,9 @@ var config = {
       debug: false
     }
   },
-  scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-    parent: 'phaserDOM',
-    max: {
-        width: 960,
-        height: 540
-    }
-  },
   //escenas principales
   scene: [
+
     SceneSplashScreen,
 
     Audio,
@@ -298,3 +294,20 @@ game.nextLevel = function(){
 
 game.pauseInfo = '';
 window.gameDebug = game;
+
+
+function create(){
+        var FKey = this.input.keyboard.addKey('F');
+        FKey.on('down', function () {
+
+            if (this.scale.isFullscreen)
+            {
+                this.scale.stopFullscreen();
+            }
+            else
+            {
+                this.scale.startFullscreen();
+            }
+
+        }, this);
+}

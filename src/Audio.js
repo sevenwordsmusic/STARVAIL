@@ -860,6 +860,9 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
         //this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg')
         this.load.audio('musicLoop0001', 'assets/audio/BGM/musicLoop0001.ogg')
+
+
+
     }
     //CREATION:
     create() {
