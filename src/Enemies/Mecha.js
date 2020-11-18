@@ -245,7 +245,7 @@ export default class Mecha extends Enemy {
   }
   damageLaser(dmg, v){
     //AUDIO
-      Audio.load.lasserSufferingLoop.setDetune(-200);
+      Audio.lasserSufferingLoop.setDetune(-200);
     //
     if(this.currentStateId() == 1){
       //AUDIO

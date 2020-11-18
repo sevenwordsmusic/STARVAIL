@@ -175,8 +175,8 @@ export default class PlayerFireArm {
       this.laser.anims.resume();
       this.laserSmoke.setVisible(true);
       //AUDIO
-        this.sfx= Audio.lasserLoop(true);
-        this.sfxLasser= Audio.lasserSufferingLoop(true);
+        this.sfx= Audio.lasserLoopSwitch(true);
+        this.sfxLasser= Audio.lasserSufferingLoopSwitch(true);
       //
   }
   disengageLaser(){
@@ -187,8 +187,8 @@ export default class PlayerFireArm {
       this.laserSmoke.x = -9999
       this.laserSmoke.y = -9999
       //AUDIO
-        Audio.lasserLoop(false);
-        Audio.lasserSufferingLoop(false);
+        Audio.lasserLoopSwitch(false);
+        Audio.lasserSufferingLoopSwitch(false);
       //
   }
   fireBomb(spr, damage, bombArea, knockback, bombSpeed, bombExpireTime){

@@ -196,7 +196,7 @@ export default class BombAir extends Enemy {
   }
   damageLaser(dmg, v){
     //AUDIO
-      Audio.load.lasserSufferingLoop.setDetune(-150);
+      Audio.lasserSufferingLoop.setDetune(-150);
     //
     if(this.currentStateId() == 1){
       //AUDIO

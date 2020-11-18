@@ -212,7 +212,7 @@ export default class ZapperGroundTutorial extends Enemy {
   }
   damageLaser(dmg, v){
     //AUDIO
-      Audio.load.lasserSufferingLoop.setDetune(50);
+      Audio.lasserSufferingLoop.setDetune(50);
     //
     if(this.currentStateId() == 1){
         this.soundChangeState();

@@ -412,7 +412,7 @@ export default class Boss extends Enemy {
   }
   damageLaser(dmg, v){
     //AUDIO
-      Audio.load.lasserSufferingLoop.setDetune(-100);
+      Audio.lasserSufferingLoop.setDetune(-100);
     //
     if(this.sprite != undefined){
       const hpDiff = this.hpBoundry - dmg;

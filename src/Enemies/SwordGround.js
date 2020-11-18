@@ -239,7 +239,7 @@ export default class SwordGround extends Enemy {
   }
   damageLaser(dmg, v){
     //AUDIO
-      Audio.load.lasserSufferingLoop.setDetune(0);
+      Audio.lasserSufferingLoop.setDetune(0);
     //
     if(this.currentStateId() == 1){
       //AUDIO
