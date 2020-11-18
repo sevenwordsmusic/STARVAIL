@@ -79,17 +79,6 @@ export default class ZapperGround extends Enemy {
     //
   }
 
-  update(time, delta){
-    if(this.sprite == undefined || this.sprite.body == undefined)return
-    super.update(time, delta);
-      //AUDIO
-          if(Audio.waitForUpdate()){
-              this.sfx.volume=Audio.volume3D(this);
-              this.sfxDetect.volume=Audio.volume3D(this);
-          }
-      //
-  }
-
 
   damage(dmg, v){
       //AUDIO

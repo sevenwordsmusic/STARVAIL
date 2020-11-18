@@ -51,7 +51,7 @@ export default class ZapperGroundTutorial extends Enemy {
     this.hitDistance = 50;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 0.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
     this.hitDamage = 70;                                              //daño al golpear
-    this.healthDrop = 500;   
+    this.healthDrop = 500;
     this.energyDrop = 100;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
@@ -156,15 +156,6 @@ export default class ZapperGroundTutorial extends Enemy {
       this.sfxDetect=Audio.play2Dinstance(54);
       this.stateChanged=false;
     //
-  }
-
-  update(time, delta){
-    if(this.sprite == undefined || this.sprite.body == undefined)return
-    super.update(time, delta);
-      //AUDIO
-        this.sfx.volume=Audio.volume3D(this);
-        this.sfxDetect.volume=Audio.volume3D(this);
-      //
   }
 
   updateTouchBoundry(){

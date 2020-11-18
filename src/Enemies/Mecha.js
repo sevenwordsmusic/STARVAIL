@@ -180,20 +180,12 @@ export default class Mecha extends Enemy {
     //
   }
 
-  update(time, delta){
-    if(this.sprite == undefined || this.sprite.body == undefined)return
-    super.update(time, delta);
-      //AUDIO
-          if(Audio.waitForUpdate()){
-              this.sfx.volume=Audio.volume3D(this);
-              this.sfxDetect.volume=Audio.volume3D(this);
-          }
-      //
-  }
-
   updateTouchBoundry(){
-    if(this.sprite != undefined)
-      TileController.enemyFullTouchBoundry(this.scene, this.sprite, 1, 2);
+    if(this.sprite != undefined){
+      if(this.currentStateId() > 0){
+        TileController.enemyFullTouchBoundry(this.scene, this.sprite, 1, 2);
+      }
+    }
   }
 
   onSensorCollide({ bodyA, bodyB, pair }){

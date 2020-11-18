@@ -51,6 +51,16 @@ export default class Enemy extends FiniteStateMachine{
         this.knockVector.y -= this.adjustedFriction*Math.sign(this.knockVector.y);
       }
     }
+    if(this.currentStateId() > 0){
+      //AUDIO
+      if(Audio.waitForUpdate()){
+        this.sfx.volume=Audio.volume3D(this);
+        if(this.currentStateId() > 1)
+          this.sfxDetect.volume=Audio.volume3D(this);
+      }
+      this.updateTouchBoundry();
+    }
+
   }
 
   //funcion que quita vida y mata al enemigo
@@ -108,7 +118,7 @@ export default class Enemy extends FiniteStateMachine{
     this.sprite.parent = undefined;
     this.sprite = undefined;
   } //incompleto, cada enemigo deberia eliminar sus cuerpos y objetos adicionales adicionales
-  
+
   //AUDIO
   stopAudio(){
     if(this.sfx.isPlaying){

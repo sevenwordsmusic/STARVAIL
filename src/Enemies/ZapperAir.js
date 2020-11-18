@@ -54,7 +54,7 @@ export default class ZapperAir extends Enemy {
     this.hitDistance = 57;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 0.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
     this.hitDamage = 50;                                              //daño al golpear
-    this.healthDrop = 80;   
+    this.healthDrop = 80;
     this.energyDrop = 175;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
@@ -170,20 +170,12 @@ export default class ZapperAir extends Enemy {
     //
   }
 
-  update(time, delta){
-      if(this.sprite == undefined || this.sprite.body == undefined)return
-      super.update(time, delta);
-      //AUDIO
-          if(Audio.waitForUpdate()){
-              this.sfx.volume=Audio.volume3D(this);
-              this.sfxDetect.volume=Audio.volume3D(this);
-          }
-      //
-  }
-
   updateTouchBoundry(){
-    if(this.sprite != undefined)
-      TileController.enemyFullTouchBoundry(this.scene, this.sprite, 1, 1);
+    if(this.sprite != undefined){
+      if(this.currentStateId() > 0){
+        TileController.enemyFullTouchBoundry(this.scene, this.sprite, 1, 1);
+      }
+    }
   }
 
   onSensorCollide({ bodyA, bodyB, pair }){

@@ -192,20 +192,12 @@ export default class Sith extends Enemy {
     }
   }
 
-  update(time, delta){
-    if(this.sprite == undefined || this.sprite.body == undefined)return
-    super.update(time, delta);
-      //AUDIO
-          if(Audio.waitForUpdate()){
-              this.sfx.volume=Audio.volume3D(this);
-              this.sfxDetect.volume=Audio.volume3D(this);
-          }
-      //
-  }
-
   updateTouchBoundry(){
-    if(this.sprite != undefined)
-      TileController.enemyHalfTouchBoundry(this.scene, this.sprite, 1, 2, 15);
+    if(this.sprite != undefined){
+      if(this.currentStateId() > 0){
+        TileController.enemyHalfTouchBoundry(this.scene, this.sprite, 1, 2, 15);
+      }
+    }
   }
 
   inflictDamagePlayerArea(dir){

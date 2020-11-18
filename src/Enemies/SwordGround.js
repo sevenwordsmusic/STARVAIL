@@ -51,7 +51,7 @@ export default class SwordGround extends Enemy {
     this.hitDistance = 70;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 1/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
     this.hitDamage = 80;                                              //daño al golpear
-    this.healthDrop = 150;   
+    this.healthDrop = 150;
     this.energyDrop = 220;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
@@ -172,18 +172,12 @@ export default class SwordGround extends Enemy {
     }
   }
 
-  update(time, delta){
-    if(this.sprite == undefined || this.sprite.body == undefined)return
-    super.update(time, delta);
-      //AUDIO
-        this.sfx.volume=Audio.volume3D(this);
-        this.sfxDetect.volume=Audio.volume3D(this);
-      //
-  }
-
   updateTouchBoundry(){
-    if(this.sprite != undefined)
-      TileController.enemyHalfTouchBoundry(this.scene, this.sprite, 1, 2, 10);
+    if(this.sprite != undefined){
+      if(this.currentStateId() > 0){
+        TileController.enemyHalfTouchBoundry(this.scene, this.sprite, 1, 2, 10);
+      }
+    }
   }
 
   onSensorCollide({ bodyA, bodyB, pair }){

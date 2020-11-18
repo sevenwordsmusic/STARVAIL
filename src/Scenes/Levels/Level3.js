@@ -296,12 +296,12 @@ export default class Level3 extends Phaser.Scene {
     }
 
     //inicialización de enemigos y cofres de capa de enemigos
-    /*if(this.map.getObjectLayer("Enemy_Layer") != null)
+    if(this.map.getObjectLayer("Enemy_Layer") != null)
       this.map.getObjectLayer("Enemy_Layer").objects.forEach(point => {
           spawnEnemy(point.name, this, point.x, point.y);
-      });*/
+      });
 
-    /*if(this.map.getObjectLayer("EnemySpawn_Layer") != null)
+    if(this.map.getObjectLayer("EnemySpawn_Layer") != null)
       this.map.getObjectLayer("EnemySpawn_Layer").objects.forEach(area => {
           var enemiesToSpawnArray;
           if(area.name == "both"){
@@ -336,13 +336,13 @@ export default class Level3 extends Phaser.Scene {
             }
           }
       });
-*/
+
     if(this.map.getObjectLayer("Chest_Layer") != null)
       this.map.getObjectLayer("Chest_Layer").objects.forEach(point => {
         if(point.name == "tutorialSpecial")
           new InteractableChest(this, point.x, point.y, 10 ,20000);
         else
-          new InteractableChest(this, point.x, point.y, 250 ,300);
+          new InteractableChest(this, point.x, point.y, 175 ,250);
       });
 
     if(this.map.getObjectLayer("Waypoint_Layer") != null)
