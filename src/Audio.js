@@ -305,7 +305,7 @@ export default class Audio extends Phaser.Scene {
     static musicLayerBar(scene) {
         //console.log("BAR #" + Audio.barCounter);
         Audio.barCounter++;
-        if (!Audio.paused) {
+        if (!Audio.paused && Audio.volumeBGM>0.0) {
             Audio.musicLayerHeight(scene);
             Audio.musicLayerMovement(scene);
         }
@@ -342,7 +342,7 @@ export default class Audio extends Phaser.Scene {
         }
     }
     static musicLayerJet(scene) {
-        if (!Audio.paused) {
+        if (!Audio.paused && Audio.volumeBGM>0.0) {
             if (this.stingerJet) {
                 this.stingerJet = false;
                 Audio.musicTweens[2]=scene.tweens.add({

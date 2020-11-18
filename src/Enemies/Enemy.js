@@ -34,7 +34,10 @@ export default class Enemy extends FiniteStateMachine{
       repeat: 0,
       yoyo: true
     })
-
+    //AUDIO
+      this.sfx=Audio.play2Dinstance(54);
+      this.sfxDetect=Audio.play2Dinstance(54);
+    //
   }
 
   update(time, delta){
@@ -106,10 +109,16 @@ export default class Enemy extends FiniteStateMachine{
     this.sprite = undefined;
   } //incompleto, cada enemigo deberia eliminar sus cuerpos y objetos adicionales adicionales
   
+  //AUDIO
   stopAudio(){
-    this.sfx.stop();
-    this.sfxDetect.stop();
+    if(this.sfx.isPlaying){
+      this.sfx.stop();
+    }
+    if(this.sfxDetect.isPlaying){
+      this.sfxDetect.stop();
+    }
   }
+  //
 
   distanceToPlayer(){
     if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)
