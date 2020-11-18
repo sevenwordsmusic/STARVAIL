@@ -20,12 +20,7 @@ export default class SceneSplashScreen extends Phaser.Scene {
             volume: 0.0,
             loop: true
         })
-        Audio.musicLoop0000chill.play();
-        this.tweens.add({
-            targets: Audio.musicLoop0000chill,
-            volume: Audio.volumeBGM,
-            duration: Audio.barRateDiv[2],
-        });
+        Audio.splashMusic(this);
     //
 
     this.game.prepareScreen();

@@ -204,6 +204,14 @@ export default class Audio extends Phaser.Scene {
         }
         return distance * Audio.volumeSFX;
     }
+    static splashMusic(scene){
+        Audio.musicLoop0000chill.play();
+        scene.tweens.add({
+            targets: Audio.musicLoop0000chill,
+            volume: Audio.volumeBGM,
+            duration: Audio.barRateDiv[2],
+        });
+    }
     static startMusicEngine(scene) {
         Audio.ambientLoop.play();
         scene.tweens.add({
