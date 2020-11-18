@@ -46,7 +46,7 @@ import LaserTrap from "../../Objects/Interactables/LaserTrap.js"
 export default class Tutorial extends Phaser.Scene {
   static count = 0;
   static addNumber(){
-    Tutorial.count = (Tutorial.getNumber() + 1)%5 ;
+    Tutorial.count = (Tutorial.getNumber() + 1) ;
   }
   static getNumber(){
     return Tutorial.count;
@@ -90,20 +90,22 @@ export default class Tutorial extends Phaser.Scene {
     this.ESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     this.inPause=false;
 
-    this.botonSkip = this.add.image(700,78,'btnSkip').setAlpha(0.8).setScrollFactor(0).setDepth(100).setScale(0.88);
-		this.botonSkip.setInteractive()
-    .on('pointerdown', () => this.skipTutorial());
+    if(!this.game.newGame){
+      this.botonSkip = this.add.image(700,78,'btnSkip').setAlpha(0.8).setScrollFactor(0).setDepth(100).setScale(0.88);
+  		this.botonSkip.setInteractive()
+      .on('pointerdown', () => this.skipTutorial());
 
-    this.botonSkip.on('pointerover', function(pointer){
-      this.alpha=1;
-      //AUDIO
-        Audio.play2DinstanceRate(79, 1.0);
-      //
-    });
+      this.botonSkip.on('pointerover', function(pointer){
+        this.alpha=1;
+        //AUDIO
+          Audio.play2DinstanceRate(79, 1.0);
+        //
+      });
 
-    this.botonSkip.on('pointerout', function(pointer){
-      this.alpha=0.8;
-    });
+      this.botonSkip.on('pointerout', function(pointer){
+        this.alpha=0.8;
+      });
+    }
 
 
     //INTERFAZ
@@ -136,14 +138,18 @@ export default class Tutorial extends Phaser.Scene {
     this.moon = this.add.sprite(this.game.moonPos.x, this.game.moonPos.y, 'moon', 0).setScrollFactor(0).setDepth(-400);
     this.timeBg = this.add.sprite(480, 270, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
 
+    console.log("A Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
 
     //Inicializacion y creacion de mapa de tiles.
     this.map = this.make.tilemap({ key: "map0", insertNull: true });
+    console.log("A2 Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund1", 32, 32, 1, 2);
     const tileset2 = this.map.addTilesetImage("front_layer", "tilesFront1", 32, 32, 1, 2);
     const tileset3 = this.map.addTilesetImage("main_layer", "tilesMain1", 32, 32, 1, 2);
     const tileset4 = this.map.addTilesetImage("second_layer", "tilesSecond1", 32, 32, 1, 2);
     const tileset5 = this.map.addTilesetImage("animated_layer", "animatedLayer1", 32, 32, 1, 2);
+
+    console.log("B Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
 
     //Capas de tiles.
     const mainlayer = this.map.createDynamicLayer("Main_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
@@ -159,7 +165,12 @@ export default class Tutorial extends Phaser.Scene {
 
     //Colisiones de las capas.
     mainlayer.setCollisionByProperty({ Collides: true });
+
+    console.log("C Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
+
     this.matter.world.convertTilemapLayer(mainlayer);
+
+    console.log("D Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
 
     lethallayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(lethallayer);
@@ -396,9 +407,10 @@ export default class Tutorial extends Phaser.Scene {
       this.goalArray[i].initGoal('levelFirst', Level1, false);
     }
 
+    this.laserTrapArray = [];
     if(this.map.getObjectLayer("Sound_Layer") != null)
       this.map.getObjectLayer("Sound_Layer").objects.forEach(point => {
-        new LaserTrap(this, point.x, point.y)
+        this.laserTrapArray.push(new LaserTrap(this, point.x, point.y));
       });
 
     this.input.setDefaultCursor('none');
@@ -469,6 +481,7 @@ export default class Tutorial extends Phaser.Scene {
     this.input.setDefaultCursor('url(assets/cursor.png), pointer');
 
     this.game.pauseInfo = 'tutorial' + (Tutorial.getNumber());
+    this.game.pauseScene = this;
 
     this.botonPause.alpha=0.8;
     this.scene.run("ScenePause");

@@ -8,7 +8,7 @@ import TileController from "../TileController.js"
 //enemigo que hereda de Enemy
 export default class Boss extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'bossIdle', 2000);   //5º parametro del contructor == vida
+    super(scene, x, y, 'bossIdle', 20/*00*/);   //5º parametro del contructor == vida
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this.sprite
@@ -72,7 +72,7 @@ export default class Boss extends Enemy {
 
 
     this.nextEnergy = 100;                                            //cada cuanta vida gastada suelta energia
-    this.healthDrop = 100;   
+    this.healthDrop = 100;
     this.energyDrop = 250;                                             //drop de energia
 
     this.weaponSwitch = 3800;                                          //cada cuanto tiempo cambia de arm_airUp

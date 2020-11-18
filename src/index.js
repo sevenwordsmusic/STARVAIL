@@ -2,34 +2,7 @@
 
 //DESTRUCTOR GLOBAL AL SALIR/REFRESCAR
 window.addEventListener("beforeunload", function (e) {
-  game.player.alive = false;
-  //console.log(scene.scene.key);
-  game.player.scene.input.keyboard.shutdown();
-  game.player.scene.input.shutdown();
-  if(game.player.scene.enemyController != undefined)
-    game.player.scene.enemyController.destroy();
-
-  for(var i=0; i<game.player.scene.tileBodyMatrix.length; i++){
-    Phaser.Physics.Matter.Matter.World.remove(game.player.scene.matter.world.localWorld, game.player.scene.tileBodyMatrix[i].body);
-    game.player.scene.tileBodyMatrix[i].body = undefined;
-    game.player.scene.tileBodyMatrix = undefined;
-  }
-  game.player.scene.tileBodyMatrix = [];
-  for(var i=0; i<this.matter.world.localWorld.bodies.length; i++){
-    game.player.scene.matter.world.localWorld.bodies[i] = undefined;
-  }
-  game.player.scene.matter.world.localWorld.bodies = [];
-
-  game.player.scene.map.destroy();
-  game.player.scene.map = undefined;
-
-  for(var i=0; i<this.make.displayList.list.length; i++){
-    game.player.scene.make.displayList.list[i] = undefined;
-  }
-  game.player.scene.make.displayList.list = [];
-
-  game.player.scene.scene.remove(game.player.scene.scene.key+ SceneCurrentClass.getNumber());
-
+  game.destroyScene(game.player.scene);
   //game.cache.destroy();
   game.destroy(true, true);
   localStorage.clear();
@@ -107,9 +80,7 @@ var config = {
     SceneScore,
     SceneCreditsScore,
     SceneGameOver,
-    SceneRanking,
-
-    Tutorial
+    SceneRanking
   ],
     plugins: {
 
@@ -131,131 +102,133 @@ var config = {
 
 //Declaramos nuestro juego
 var game = new Phaser.Game(config);
-console.log(game);                      //el bug de exces memory podría deberse a que el explorador recuerda los recursos cargados en el cache del juego
 
-game.playerName = "Player";
-game.points = 0;
-game.enemiesKilled = 0;
-game.npcHelped = 0;
-game.timeExpired = false;
-game.time = 0;
-game.maxTime = 900000;
-game.bestTime = 300000;          //tiempo con el que se consigue puntuación máxima
+game.initializeVariables = function(newGame = true){
+  //Declaramos variables globales del juego.
 
-//Declaramos variables globales del juego.
-game.moveVelocity = 0.22;  //0.22          //velocidad horizontal en el suelo
-game.moveVelocityAir = 0.25;    //0.275     //velocidad horizontal en el aire
-game.jetVelocity = 0.26;       //0.3      //velocidad de ascenso
-game.jetVelocityDown = 0.26;   //0.3      //velocidad de descenso
-game.totalPlayerHp = 1000;           //1000
-game.currentPlayerHp =  game.totalPlayerHp;       //NO TOCAR!! game.totalPlayerHp
-game.hpRecoveryRate = 5;                  //1
-game.totalPlayerEnergy = 1500;     //1000, 1500
-game.energyRecoveryRate = 0.5;    //0.2, 0.5
-game.extraRecoveryOnGround = 0.5  //energia que se recupera al estar en el suelo
-game.energyCostJetBeginning = 0;      //energia por segundo que se gasta justo al empezar (es un valor base de coste)
-game.energyJetIncrease = 1.006   /*1.008*/   //velocidad con la que aumenta el coste del jet
-game.energyCostJetPropulsion = 5;     //energia de coste de propulsion, se gasta solo una vez al entrar en modo jet)
+  game.playerName = "PLAYER";
+  game.points = 0;
+  game.enemiesKilled = 0;
+  game.npcHelped = 0;
+  game.timeExpired = false;
+  game.time = 0;
+  game.maxTime = 900000;
+  game.bestTime = 300000;          //tiempo con el que se consigue puntuación máxima
 
-game.airVelocityFraction = 0.3;   //Creo que no se usa
+  game.moveVelocity = 0.22;  //0.22          //velocidad horizontal en el suelo
+  game.moveVelocityAir = 0.25;    //0.275     //velocidad horizontal en el aire
+  game.jetVelocity = 0.26;       //0.3      //velocidad de ascenso
+  game.jetVelocityDown = 0.26;   //0.3      //velocidad de descenso
+  game.totalPlayerHp = 1000;           //1000
+  game.currentPlayerHp =  game.totalPlayerHp;       //NO TOCAR!! game.totalPlayerHp
+  game.hpRecoveryRate = 5;                  //1
+  game.totalPlayerEnergy = 1500;     //1000, 1500
+  game.energyRecoveryRate = 0.5;    //0.2, 0.5
+  game.extraRecoveryOnGround = 0.5  //energia que se recupera al estar en el suelo
+  game.energyCostJetBeginning = 0;      //energia por segundo que se gasta justo al empezar (es un valor base de coste)
+  game.energyJetIncrease = 1.006   /*1.008*/   //velocidad con la que aumenta el coste del jet
+  game.energyCostJetPropulsion = 5;     //energia de coste de propulsion, se gasta solo una vez al entrar en modo jet)
 
-game.levelVariants = [3];
-game.levelVariants[0] = 1;
-game.levelVariants[1] = 1;
-game.levelVariants[2] = 1;
+  game.airVelocityFraction = 0.3;   //Creo que no se usa
 
-game.chosenLevels = [3];
-for(var i=0; i<game.levelVariants.length; i++){
-  game.chosenLevels[i] = Math.random()*game.levelVariants[i] + 1;
+  game.levelVariants = [3];
+  game.levelVariants[0] = 1;
+  game.levelVariants[1] = 1;
+  game.levelVariants[2] = 1;
+
+  game.chosenLevels = [3];
+  for(var i=0; i<game.levelVariants.length; i++){
+    game.chosenLevels[i] = Math.random()*game.levelVariants[i] + 1;
+  }
+
+  game.npcArray = [7];
+  for(var i=0; i<7; i++){
+    game.npcArray[i] = i+1;
+  }
+
+  game.moonPos = new Phaser.Math.Vector2(130, 130);
+  game.moonVelocity = 920/900000;      //si = 1 -> avanza 1 unidades en un milisegundo
+  game.moonMaxDistance = 1050
+  game.currentBgAnimation = 0;
+
+  game.bulletInteracBodies = [];
+  game.enemyBodies = [];
+  game.obtainedWeapons = [];
+  game.pauseInfo = '';
+  game.pauseScene;
+
+  game.newGame = newGame;
 }
 
-game.npcArray = [7];
-for(var i=0; i<7; i++){
-  game.npcArray[i] = i+1;
-}
 
-game.moonPos = new Phaser.Math.Vector2(130, 130);
-game.moonVelocity = 920/900000;      //si = 1 -> avanza 1 unidades en un milisegundo
-game.moonMaxDistance = 1050
-game.currentBgAnimation = 0;
 game.transitionToScene = function(scene, keyNext, sceneNext){   //ENTRE NIVELES
-  var SceneCurrentClass = eval(scene.constructor.name);
   var SceneNextClass = sceneNext;
   scene.cameras.main.once('camerafadeoutcomplete', function (camera) {
-    game.player.alive = false;
-    //console.log(scene.scene.key);
-    scene.input.keyboard.shutdown();
-    scene.input.shutdown();
-    if(scene.enemyController != undefined)
-      scene.enemyController.destroy();
-
-    for(var i=0; i<scene.tileBodyMatrix.length; i++){
-      Phaser.Physics.Matter.Matter.World.remove(scene.matter.world.localWorld, scene.tileBodyMatrix[i].body);
-      scene.tileBodyMatrix[i].body = undefined;
-      scene.tileBodyMatrix = undefined;
-    }
-    scene.tileBodyMatrix = [];
-    for(var i=0; i<scene.matter.world.localWorld.bodies.length; i++){
-      scene.matter.world.localWorld.bodies[i] = undefined;
-    }
-    scene.matter.world.localWorld.bodies = [];
-
-    scene.map.destroy();
-    scene.map = undefined;
-
-    for(var i=0; i<scene.make.displayList.list.length; i++){
-      scene.make.displayList.list[i] = undefined;
-    }
-    scene.make.displayList.list = [];
-
-
-    scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());
-    game.scene.add('', new SceneNextClass(keyNext + ((SceneNextClass.getNumber()+ 1)%5)) , true);
+    game.destroyScene(scene);
+    game.scene.add('', new SceneNextClass(keyNext + ((SceneNextClass.getNumber()+ 1))) , true);
   }, scene);
   scene.cameras.main.fadeOut(Audio.barRateDiv[2]);
 }
 
-game.changeScene = function(scene, nextId){   //MUERTE Y RANKINGS
-  var SceneCurrentClass = eval(scene.constructor.name);
+game.changeScene = function(scene, nextId, optionalStopPause = false){   //MUERTE Y RANKINGS
   scene.cameras.main.once('camerafadeoutcomplete', function (camera) {
-    game.player.alive = false;
-    //console.log(scene.scene.key);
-    scene.input.keyboard.shutdown();
-    scene.input.shutdown();
-    if(scene.enemyController != undefined)
-      scene.enemyController.destroy();
-
-    for(var i=0; i<scene.tileBodyMatrix.length; i++){
-      Phaser.Physics.Matter.Matter.World.remove(scene.matter.world.localWorld, scene.tileBodyMatrix[i].body);
-      scene.tileBodyMatrix[i].body = undefined;
-      scene.tileBodyMatrix = undefined;
-    }
-    scene.tileBodyMatrix = [];
-    for(var i=0; i<scene.matter.world.localWorld.bodies.length; i++){
-      scene.matter.world.localWorld.bodies[i] = undefined;
-    }
-    scene.matter.world.localWorld.bodies = [];
-
-    if(scene.map != undefined){
-      scene.map.destroy();
-      scene.map = undefined;
-    }
-
-    for(var i=0; i<scene.make.displayList.list.length; i++){
-      scene.make.displayList.list[i] = undefined;
-    }
-    scene.make.displayList.list = [];
-
-
-    scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());
+    game.destroyScene(scene);
     game.scene.run(nextId);
     game.scene.bringToTop(nextId);
+
+    if(optionalStopPause){
+		  scene.scene.stop('ScenePause');
+    }
   }, scene);
 
   //AUDIO
-    Audio.sceneChange(scene);
+    //Audio.sceneChange(scene);
   //
   scene.cameras.main.fadeOut(Audio.barRateDiv[2]);
+}
+
+game.destroyScene = function(scene){
+  var SceneCurrentClass = eval(scene.constructor.name);
+  game.player.alive = false;
+  //console.log(scene.scene.key);
+  scene.input.keyboard.shutdown();
+  scene.input.shutdown();
+  if(scene.enemyController != undefined)
+    scene.enemyController.destroy();
+
+  for(var i=0; i<scene.tileBodyMatrix.length; i++){
+    Phaser.Physics.Matter.Matter.World.remove(scene.matter.world.localWorld, scene.tileBodyMatrix[i].body);
+    scene.tileBodyMatrix[i].body = undefined;
+    scene.tileBodyMatrix = undefined;
+  }
+  scene.tileBodyMatrix = [];
+  for(var i=0; i<scene.matter.world.localWorld.bodies.length; i++){
+    scene.matter.world.localWorld.bodies[i] = undefined;
+  }
+  scene.matter.world.localWorld.bodies = [];
+
+  if(scene.map != undefined){
+    scene.map.destroy();
+    scene.map = undefined;
+  }
+
+  if(scene.laserTrapArray != undefined){
+    for(var i=0; i<scene.laserTrapArray.length; i++){
+      scene.laserTrapArray[i].destroy();
+      scene.laserTrapArray[i] = undefined;
+    }
+    scene.laserTrapArray = [];
+  }
+
+  for(var i=0; i<scene.make.displayList.list.length; i++){
+    scene.make.displayList.list[i] = undefined;
+  }
+  scene.make.displayList.list = [];
+
+  game.player.destroy();
+  this.input.keyboard.removeAllKeys(true);
+
+  scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());
 }
 
 /*game.transferComposite = Phaser.Physics.Matter.Matter.Composite.create();
@@ -263,10 +236,6 @@ game.transferBody = function(bodies1, bodies2, body){
   bodies1.push(body);
   bodies2.splice(bodies2.indexOf(body), 1);
 }*/
-game.bulletInteracBodies = [];
-game.enemyBodies = [];
-
-game.obtainedWeapons = [];
 
 function mobileTabletChek() {
   let check = false;
@@ -292,7 +261,9 @@ game.nextLevel = function(){
   }
 }
 
-game.pauseInfo = '';
+game.initializeVariables(true);
+
+console.log(game);
 window.gameDebug = game;
 
 

@@ -143,6 +143,9 @@ export default class BulletBounce extends Projectile {
   }
 
   distanceToPlayer(){
-    return this.distAcumulator;
+    if(this.distAcumulator == undefined)
+      return Number.MAX_SAFE_INTEGER;
+    else
+      return this.distAcumulator;
   }
 }

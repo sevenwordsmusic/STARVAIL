@@ -116,8 +116,16 @@ export default class ScenePause extends Phaser.Scene {
       //
     this.btnExitPause.alpha=0.8;
 
-    this.scene.start("SceneMM");
+    this.btnResumeGamePause.setVisible(false);
+    this.btnOptionsGame.setVisible(false);
+    this.btnExitPause.setVisible(false);
+
+    this.game.initializeVariables(false);
+
+    this.scene.run("SceneMM");
     this.scene.bringToTop("SceneMM");
-    this.scene.stop('test' + (SceneTest_1.getNumber()));
+		this.game.destroyScene(this.game.pauseScene)
+		this.scene.stop('tutorial1');
+    //this.game.changeScene(this.game.pauseScene, "SceneMM", true);
   }
 }

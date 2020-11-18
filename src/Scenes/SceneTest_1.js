@@ -40,7 +40,7 @@ import TileController from "../TileController.js"
 export default class SceneTest_1 extends Phaser.Scene {
   static count = 0;
   static addNumber(){
-    SceneTest_1.count = (SceneTest_1.getNumber() + 1)%5 ;
+    SceneTest_1.count = (SceneTest_1.getNumber() + 1) ;
   }
   static getNumber(){
     return SceneTest_1.count;

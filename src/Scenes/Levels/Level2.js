@@ -42,7 +42,7 @@ import LaserTrap from "../../Objects/Interactables/LaserTrap.js"
 export default class Level2 extends Phaser.Scene {
   static count = 0;
   static addNumber(){
-    Level2.count = (Level2.getNumber() + 1)%5 ;
+    Level2.count = (Level2.getNumber() + 1) ;
   }
   static getNumber(){
     return Level2.count;
@@ -372,9 +372,10 @@ export default class Level2 extends Phaser.Scene {
       this.goalArray[i].initGoal('levelThird', Level3);
     }
 
+    this.laserTrapArray = [];
     if(this.map.getObjectLayer("Sound_Layer") != null)
       this.map.getObjectLayer("Sound_Layer").objects.forEach(point => {
-        new LaserTrap(this, point.x, point.y)
+        this.laserTrapArray.push(new LaserTrap(this, point.x, point.y));
       });
 
     this.input.setDefaultCursor('none');
@@ -440,6 +441,7 @@ export default class Level2 extends Phaser.Scene {
     this.input.setDefaultCursor('url(assets/cursor.png), pointer');
 
     this.game.pauseInfo = 'levelSecond' + (Level2.getNumber());
+    this.game.pauseScene = this;
 
     this.botonPause.alpha=0.8;
     this.scene.run("ScenePause");

@@ -19,6 +19,7 @@ export default class PlayerFireArmPC extends PlayerFireArm{
   }
 
   update(time, delta){
+      if(this.scene.game.player.sprite == undefined || this.scene.game.player.sprite.body == undefined)return;
       const spX = this.scene.game.player.sprite.x + this.shoulderOffsetX;
       const spY = this.scene.game.player.sprite.y + this.shoulderOffsetY;
       //if(this.fireArmState){} //pos is hace falta

@@ -1,5 +1,5 @@
 import Audio from "../Audio.js";
-import SceneTest_1 from "./SceneTest_1.js";
+import Tutorial from "./Levels/Tutorial.js";
 
 
 export default class ScenePlayerName extends Phaser.Scene {
@@ -100,8 +100,7 @@ export default class ScenePlayerName extends Phaser.Scene {
 
     this.scene.sendToBack('ScenePlayerName');
 		this.scene.stop('ScenePlayerName');
-    this.scene.run("tutorial1");
-    this.scene.bringToTop("tutorial1");     //CAMBIAR
+    this.game.scene.add('', new Tutorial('tutorial' + ((Tutorial.getNumber()+ 1))) , true);
   }
 
   hideInput(){

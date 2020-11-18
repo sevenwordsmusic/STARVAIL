@@ -12,6 +12,12 @@ export default class SceneMainMenu extends Phaser.Scene {
     //AUDIO
       Audio.fullscreenMode(this);
       //
+
+    if(!this.game.newGame){
+      //parar musica anterior
+      //poner musica de menu principal
+    }
+
     //Color de fondo prueba
     this.cameras.main.setBackgroundColor(0x000000);
 

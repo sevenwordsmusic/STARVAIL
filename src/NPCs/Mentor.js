@@ -111,10 +111,10 @@ represented as the blue bar on your screen.
 Energy gets consumed exponentially while you fly;
 that means that the more time you spend on air,
 [b]TIP[/b]
-more energy will be consumed each second. A smart 
+more energy will be consumed each second. A smart
 android will fly frequently on short intervals,
 [b]TIP[/b]
-rather than having long flights consume all its 
+rather than having long flights consume all its
 energy. Managing of energy is key to your success,
 [b]TIP[/b]
 because if your energy runs out, your boots will
@@ -306,7 +306,7 @@ time to fulfill my primordial task:
 reaching the top of this tower before
 sunrise. I advice you to do the same, `+ this.scene.game.playerName +`.
 [b]D42K-H[/b]
-The only thing that matters is reaching the top 
+The only thing that matters is reaching the top
 of Starvail Tower, to discover the meaning of 'life'.
 [b]D42K-H[/b]
 Don't let that data be ignored.
@@ -321,7 +321,7 @@ you a [b]plug-in weapon[/b].
 This upgrade will allow your cannon
 to shoot a new type of ammo: bombs.
 [b]D42K-H[/b]
-Keep in mind usign them will cost energy, 
+Keep in mind usign them will cost energy,
 unlike normal bullets!
 [b]D42K-H[/b]
 I hope this helps you in your way up,`+ this.scene.game.playerName +`.
@@ -501,6 +501,7 @@ I don't think you should be seeing this.`;
   }
 
   update(time, delta) {
+    if(this.sprite == undefined || this.sprite.body == undefined)return;
     TileController.playerTouchBoundry(this.scene, this.sprite);
     this.updateAI(time, delta);
     this.playAnimation();

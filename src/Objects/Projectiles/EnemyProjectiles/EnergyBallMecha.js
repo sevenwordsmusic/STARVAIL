@@ -92,9 +92,12 @@ export default class EnergyBallMecha extends Projectile {
     super.itemExpire(proj);
   }
   distanceToPlayer(){
-    if(this.sprite != undefined)
-      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)
+      return Number.MAX_SAFE_INTEGER;
+    const distance = Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
+    if(distance == undefined)
+      return Number.MAX_SAFE_INTEGER;
     else
-      return 1000;    //ARREGLAR ESTO
+      return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
   }
 }

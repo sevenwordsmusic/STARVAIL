@@ -121,6 +121,7 @@ export default class Player {
     this.nextButton = 0;
 
     if(this.scene.game.onPC){
+      console.log(this.cursors);
       this.cursors = this.scene.input.keyboard.addKeys({
       'up': Phaser.Input.Keyboard.KeyCodes.W,
       'left': Phaser.Input.Keyboard.KeyCodes.A,
@@ -225,17 +226,17 @@ export default class Player {
       const energyBarFillHUD = this.scene.add.image(180, 87, 'energyBarFillHUD').setScrollFactor(0).setDepth(90);
     }
 
-    scene.matterCollision.addOnCollideStart({
+    this.collideFunc1 = scene.matterCollision.addOnCollideStart({
       objectA: [this.sensors.bottom, this.sensors.left, this.sensors.right],
       callback: this.onSensorCollide,
       context: this
     });
-    scene.matterCollision.addOnCollideActive({
+    this.collideFunc2 = scene.matterCollision.addOnCollideActive({
       objectA: [this.sensors.bottom, this.sensors.left, this.sensors.right],
       callback: this.onSensorCollide,
       context: this
     });
-    scene.matterCollision.addOnCollideStart({
+    this.collideFunc3 = scene.matterCollision.addOnCollideStart({
       objectA: this.mainBody,
       callback: this.onBodyCollide,
       context: this
@@ -278,7 +279,7 @@ export default class Player {
 */
   }
   onSensorCollide({ bodyA, bodyB, pair }) {
-    if (bodyB.isSensor) return;
+    if (bodyB.isSensor || this.sprite == undefined || this.sprite.body == undefined) return;
     if (bodyA === this.sensors.bottom) {
       this.isTouching.ground = true;
       this.canJetAgain = true;
@@ -306,7 +307,7 @@ export default class Player {
   }
 
   onBodyCollide({ gameObjectB }){
-    if (!gameObjectB || !(gameObjectB instanceof Phaser.Tilemaps.Tile)) return;
+    if (!gameObjectB || !(gameObjectB instanceof Phaser.Tilemaps.Tile) || this.sprite == undefined || this.sprite.body == undefined) return;
     const tile = gameObjectB;
     if (tile.properties.Lethal) {
       this.playerDamageKnockback(50, 0.8, new Phaser.Math.Vector2(-this.sprite.body.velocity.x, -this.sprite.body.velocity.y));
@@ -314,6 +315,7 @@ export default class Player {
   }
 
   resetTouching() {
+    if(this.sprite == undefined || this.sprite.body == undefined) return;
     this.scene.graphics.clear();
     this.isTouching.left = false;
     this.isTouching.right = false;
@@ -591,33 +593,55 @@ export default class Player {
       //AUDIO
         Audio.play2Dinstance(73);
       //
-      this.alive = false;
+      this.offJet();
+      this.sprite.anims.play('death', true);
 
       if(this.scene.boss != undefined)
         this.scene.boss.goTo(5);
 
-      this.offJet();
-      this.scene.input.off('pointerdown');
-      this.scene.input.off('pointerup');
-      if(this.weaponChange != undefined) {this.weaponChange.destroy();}
-      this.fireArm.destroyFireArm();
-      this.movingArm.destroy();
-      this.sprite.anims.play('death', true);
-      //this.sprite.body.collisionFilter.mask = 0;
+      this.destroy(false);
 
       console.log("Te has Muerto...");
+
+      this.scene.game.initializeVariables(false);
       this.scene.game.changeScene(this.scene, "SceneGameOver");
     }
   }
 
   playerVictory(){
+    this.destroy(false);
+
+    this.scene.game.initializeVariables(false);
+    this.scene.game.changeScene(this.scene, "SceneScore");
+  }
+
+  destroy(fullDestroy = true){
     this.alive = false;
+    this.scene.matter.world.off("beforeupdate", this.resetTouching);
+    this.scene.events.off("update", this.update);
     this.scene.input.off('pointerdown');
     this.scene.input.off('pointerup');
-    if(this.weaponChange != undefined) {this.weaponChange.destroy();}
-    this.fireArm.destroyFireArm();
-    this.movingArm.destroy();
-    this.scene.game.changeScene(this.scene, "SceneScore");
+    if(this.weaponChange != undefined) {this.weaponChange.destroy(); this.weaponChange = undefined;}
+    if(this.skipLevel != undefined) {this.skipLevel.destroy(); this.skipLevel = undefined;}
+    if(this.testMemory != undefined) {this.testMemory.destroy(); this.testMemory = undefined;}
+    if(this.joyStick != undefined) {this.joyStick.destroy(); this.joyStick = undefined;}
+    if(this.cursors != undefined) {this.cursors.destroy(); this.cursors = undefined;}
+    if(this.fireArm != undefined) {this.fireArm.destroyFireArm(); this.fireArm = undefined;}
+    if(this.movingArm != undefined) {this.movingArm.destroy(); this.movingArm = undefined;}
+
+    if(fullDestroy){
+      this.scene.cameras.main.stopFollow();
+      if(this.collideFunc1 != undefined)
+        this.collideFunc1();
+      if(this.collideFunc2 != undefined)
+        this.collideFunc2();
+      if(this.collideFunc3 != undefined)
+        this.collideFunc3();
+      if(this.sprite != undefined)
+        this.sprite.destroy();
+      this.mainBody = undefined;
+      this.sensors = undefined
+    }
   }
 
   playerGainHealth(num){
@@ -865,7 +889,7 @@ export default class Player {
   }
 
   inRoom(){
-    if(this.scene.encounterNPC == undefined || this.sprite == undefined) return false;
+    if(this.scene.encounterNPC == undefined || this.scene.encounterNPC.sprite == undefined || this.scene.encounterNPC.sprite.body == undefined || this.sprite == undefined || this.sprite.body == undefined) return false;
     if(Math.sqrt(Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2) + Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2)) < 500) //ajustate la distancia si quieres
       return true;
     else

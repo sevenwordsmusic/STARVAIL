@@ -92,7 +92,7 @@ export default class TileController {
   }
 
   static playerTouchBoundry(scene, sprite){
-    if(scene.tileBodyMatrix == undefined || scene.tileBodyMatrix[0] == undefined) return;
+    if(scene.tileBodyMatrix == undefined || scene.tileBodyMatrix[0] == undefined || sprite == undefined || sprite.body == undefined) return;
     var tileBody;
     for(var i=-1; i<2; i++){
       for(var j=-2; j<3; j++){
