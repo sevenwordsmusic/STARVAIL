@@ -227,8 +227,8 @@ export default class Audio extends Phaser.Scene {
         Audio.stingerSurface = false;
         //
         Audio.musicLoop0000chill.pause();
-        console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #0.", Audio.ctf, "");
         Audio.play2DinstanceRate(83, 1.0);
+        console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #0.", Audio.ctf, "");
     }
     static levelOne(scene) {
         Audio.stingerJet = false;
@@ -236,15 +236,12 @@ export default class Audio extends Phaser.Scene {
         Audio.stingerSurface = false;
         //
         Audio.currentLevel = 1;
-        Audio.musicLoop0000chill.stop();
         Audio.musicLoop0000levitating.play();
         Audio.musicLoop0000moving.play();
         Audio.musicLoop0000flying.play();
-        Audio.musicLoop0000chill.play();
         Audio.musicLoop0000levitating.volume = 0.0;
         Audio.musicLoop0000moving.volume = 0.0;
         Audio.musicLoop0000flying.volume = 0.0;
-        Audio.musicLoop0000chill.volume = 0.0;
         Audio.musicLayerBarEvent = scene.time.addEvent({
             delay: Audio.barRateDiv[0],
             callback: () => Audio.musicLayerBar(scene),
