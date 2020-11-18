@@ -16,7 +16,7 @@ export default class ScenePause extends Phaser.Scene {
     //
 
     //Corners
-    var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
+    var corners =this.add.image(0,0,'corners').setOrigin(0);
 
     //Background Pausa
     const bg = this.add.image(0,0,'white_rectangle').setOrigin(0).setScale(35).setDepth(-100).setAlpha(0.25);
@@ -27,7 +27,7 @@ export default class ScenePause extends Phaser.Scene {
     //var PauseScreen=this.add.image(0,0,'PauseScreen').setOrigin(0,0).setScale(0.25);
 
     //Boton resume
-    this.btnResumeGamePause = this.add.image(480,140,'btnResumeGamePause').setScale(0.25).setAlpha(0.8);
+    this.btnResumeGamePause = this.add.image(480,140,'btnResumeGamePause').setAlpha(0.8);
 		this.btnResumeGamePause.setInteractive()
     .on('pointerdown', () => this.resumeGamePause());
 
@@ -43,7 +43,7 @@ export default class ScenePause extends Phaser.Scene {
     });
 
     //Boton options
-    this.btnOptionsGame = this.add.image(480,270,'btnOptionsGame').setScale(0.25).setAlpha(0.8);
+    this.btnOptionsGame = this.add.image(480,270,'btnOptionsGame').setAlpha(0.8);
 		this.btnOptionsGame.setInteractive()
     .on('pointerdown', () => this.viewOptions());
 
@@ -59,7 +59,7 @@ export default class ScenePause extends Phaser.Scene {
     });
 
     //Boton exit
-    this.btnExitPause = this.add.image(480,400,'btnExitPause').setScale(0.25).setAlpha(0.8);
+    this.btnExitPause = this.add.image(480,400,'btnExitPause').setAlpha(0.8);
 		this.btnExitPause.setInteractive()
     .on('pointerdown', () => this.exitGame());
 
