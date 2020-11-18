@@ -339,7 +339,7 @@ export default class Level2 extends Phaser.Scene {
         if(point.name == "tutorialSpecial")
           new InteractableChest(this, point.x, point.y, 10 ,20000);
         else
-          new InteractableChest(this, point.x, point.y, 100 ,200);
+          new InteractableChest(this, point.x, point.y, 200 ,300);
       });
 
     if(this.map.getObjectLayer("Waypoint_Layer") != null)

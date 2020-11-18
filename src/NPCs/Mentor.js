@@ -108,7 +108,16 @@ To activate them, press the W key.
 But, beware, for this consumes energy,
 represented as the blue bar on your screen.
 [b]TIP[/b]
-If your energy runs out, your boots will
+Energy gets consumed exponentially while you fly;
+that means that the more time you spend on air,
+[b]TIP[/b]
+more energy will be consumed each second. A smart 
+android will fly frequently on short intervals,
+[b]TIP[/b]
+rather than having long flights consume all its 
+energy. Managing of energy is key to your success,
+[b]TIP[/b]
+because if your energy runs out, your boots will
 deactivate and you'll fall.
 [b]TIP[/b]
 You should never let this happen.`;
@@ -377,7 +386,7 @@ I don't think you should be seeing this.`;
       this.isTalking = true;
       this.scene.dialogManager.setCurrentSpeaker(this);
       this.scene.dialogManager.setSpeakerVoice(1);
-      this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog], 10);
+      this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog], 30);
       //this.scene.game.player.alive = false;
       this.scene.dialogManager.showDialogBox();
     })

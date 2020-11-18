@@ -43,7 +43,7 @@ export default class ZapperGround extends Enemy {
     this.points = 20;               //puntos al matar a enemigo
     this.patrolRouteLength = 60*this.scene.matter.world.getDelta();  //al patrullar cuanto se desplaza antes de darse la vuelta
     this.patrolSpeed = 1/this.scene.matter.world.getDelta();        //velocidad al patrullar
-    this.energyDrop = 100;                                             //drop de energia
+    this.energyDrop = 1500;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
 

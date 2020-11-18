@@ -1,5 +1,6 @@
 import Enemy from "./Enemy.js";
 import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
+import DropableGroundHealth from "../Objects/Dropables/DropableGroundHealth.js"
 import Audio from "../Audio.js";
 import TileController from "../TileController.js"
 
@@ -50,7 +51,8 @@ export default class SwordGround extends Enemy {
     this.hitDistance = 70;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 1/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
     this.hitDamage = 80;                                              //daño al golpear
-    this.energyDrop = 150;                                             //drop de energia
+    this.healthDrop = 150;   
+    this.energyDrop = 220;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
 
@@ -272,6 +274,9 @@ export default class SwordGround extends Enemy {
       //animacion de explosion
       explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
+      if(Math.random() < 0.7){
+        new DropableGroundHealth(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.healthDrop);
+        }
       new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);
     }
   }

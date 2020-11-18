@@ -1,5 +1,6 @@
 import Enemy from "./Enemy.js";
 import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
+import DropableGroundHealth from "../Objects/Dropables/DropableGroundHealth.js"
 import Audio from "../Audio.js";
 import TileController from "../TileController.js"
 
@@ -50,7 +51,8 @@ export default class ZapperGround extends Enemy {
     this.hitDistance = 50;                                            //distancia de la cual se pone a golpear
     this.hitSpeed = 0.5/this.scene.matter.world.getDelta();           //pequeña velocidad mientras está golpeando
     this.hitDamage = 70;                                              //daño al golpear
-    this.energyDrop = 100;                                             //drop de energia
+    this.healthDrop = 80;   
+    this.energyDrop = 150;                                             //drop de energia
     //Ajustar estas
     //Variables de IA
 
@@ -251,7 +253,10 @@ export default class ZapperGround extends Enemy {
       //animacion de explosion
       explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
-      new DropableGroundEnergy(this.scene, xPos, yPos, Math.sign(vXDmg),  this.energyDrop);
+      if(Math.random() < 0.5){
+        new DropableGroundHealth(this.scene, this.sprite.x, this.sprite.y, Math.sign(-vXDmg),  this.healthDrop);
+        }
+      new DropableGroundEnergy(this.scene, xPos, yPos, Math.sign(-vXDmg),  this.energyDrop);
     }
   }
 

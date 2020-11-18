@@ -121,7 +121,7 @@ Bye!`;
         this.isTalking = true;
         this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x)
         this.scene.dialogManager.setCurrentSpeaker(this);
-        this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
+        this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],30);
         this.scene.dialogManager.showDialogBox();
       }
     }, this);

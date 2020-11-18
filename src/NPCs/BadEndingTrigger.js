@@ -19,7 +19,10 @@ export default class BadEndingTrigger extends FiniteStateMachine{
 Hmm...?
 
 [size=30]Only a dark hole was there.[/size]
+
+
 There was no signs of D42K-H anywhere.
+
 
 [b]`+ this.scene.game.playerName +`[/b]
 ...
@@ -39,7 +42,7 @@ Life waits no one. Remember that.`;
       if(Math.sqrt(Math.pow(this.initX - this.scene.game.player.sprite.x,2) + Math.pow(this.initY - this.scene.game.player.sprite.y,2)) < 300){
         this.isTalking = true;
         this.scene.dialogManager.setCurrentSpeaker(this);
-        this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],10);
+        this.scene.dialogManager.textBox.start(this.dialogArray[this.currentDialog],50);
         this.scene.dialogManager.showDialogBox();
         this.goTo(1);
       }

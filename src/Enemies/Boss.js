@@ -72,7 +72,8 @@ export default class Boss extends Enemy {
 
 
     this.nextEnergy = 100;                                            //cada cuanta vida gastada suelta energia
-    this.energyDrop = 200;                                             //drop de energia
+    this.healthDrop = 100;   
+    this.energyDrop = 250;                                             //drop de energia
 
     this.weaponSwitch = 3800;                                          //cada cuanto tiempo cambia de arm_airUp
     this.weaponSwitchRand = 500;                                       //varianza aleatoria del cambio de arma
