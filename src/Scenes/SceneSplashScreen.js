@@ -17,13 +17,11 @@ export default class SceneSplashScreen extends Phaser.Scene {
     this.scene.run("Audio");
 
     //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0x697ca1);
+    this.cameras.main.setBackgroundColor(0x000000);
 
-    //Corners
-    var corners =this.add.image(0,0,'corners').setOrigin(0).setScale(0.25);
 
     //Boton exit
-    this.btnTitle = this.add.image(480,270,'btnTitle').setScale(0.5).setAlpha(0);
+    this.btnTitle = this.add.image(480,270,'btnTitle').setScale(1.0).setAlpha(0);
 
     this.game.spashScreen = this;
 
