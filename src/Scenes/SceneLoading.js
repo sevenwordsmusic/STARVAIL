@@ -283,9 +283,6 @@ export default class SceneLoading extends Phaser.Scene {
   }
 
   create(){
-    //AUDIO
-      Audio.fullscreenMode(this);
-      //
     //BG ANIMADO
     this.anims.create({
         key: 'bgAnimation',
