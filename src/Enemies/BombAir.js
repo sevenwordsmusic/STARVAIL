@@ -157,8 +157,10 @@ export default class BombAir extends Enemy {
       if(this.sprite == undefined || this.sprite.body == undefined)return
       super.update(time, delta);
       //AUDIO
-        this.sfx.volume=Audio.volume3D(this);
-        this.sfxDetect.volume=Audio.volume3D(this);
+          if(Audio.waitForUpdate()){
+              this.sfx.volume=Audio.volume3D(this);
+              this.sfxDetect.volume=Audio.volume3D(this);
+          }
       //
   }
   updateTouchBoundry(){

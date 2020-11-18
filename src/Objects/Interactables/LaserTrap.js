@@ -7,14 +7,14 @@ export default class LaserTrap {
     this.y= y;
 
     //AUDIO
-      this.sfx=Audio.play3Dinstance(this, 89);
+      this.sfx=Audio.play3DinstanceNoRate(this, 89);
     //
     this.scene.events.on("update", this.update, this);
   }
 
   //AUDIO
   update(time, delta){
-    if(this!= undefined ){
+    if(this!= undefined && Audio.waitForUpdate()){
         this.sfx.volume=Audio.volume3D(this)
     }
   }

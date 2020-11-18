@@ -49,7 +49,7 @@ export default class MultiMissile extends Projectile {
 
   //AUDIO
   update(time, delta){
-    if(this.sprite!= undefined && this.sprite.body != undefined)
+    if(this.sprite!= undefined && this.sprite.body != undefined && Audio.waitForUpdate())
       this.sfx.volume=Audio.volume3D(this)
   }
   //

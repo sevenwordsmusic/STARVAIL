@@ -53,7 +53,7 @@ export default class Bomb extends Projectile {
 
   //AUDIO
   update(time, delta){
-    if(this.sprite!= undefined ){
+    if(this.sprite!= undefined && Audio.waitForUpdate() ){
         this.sfx.volume=Audio.volume3D(this)
     }
   }

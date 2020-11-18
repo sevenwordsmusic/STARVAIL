@@ -86,7 +86,9 @@ export default class Missile extends Projectile {
         this.sprite.angle = (currentAngle - this.autoAim) * 180/Math.PI;
       }
       //AUDIO
-        this.sfx.volume=Audio.volume3D(this)
+          if(Audio.waitForUpdate()){
+            this.sfx.volume=Audio.volume3D(this);
+          }
       //
     }
   }

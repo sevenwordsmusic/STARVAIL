@@ -31,6 +31,7 @@ export default class Audio extends Phaser.Scene {
     static maxSFXinstances = 8;
     static SFXinstance = 0;
     static ambientLoop;
+    static frameCount=0;
     //STINGERS
     static stingerJet = false;
     static stingerMovement = false;
@@ -166,6 +167,9 @@ export default class Audio extends Phaser.Scene {
             click.volume = document.getElementById("sfxSlider").value / 10;
         }
     }
+    static waitForUpdate(){
+        return Audio.frameCount%2==0;
+    }
     static volume2D(length) {
         if (length > this.vanishingPoint) {
             var distance = 0.0;
@@ -210,6 +214,7 @@ export default class Audio extends Phaser.Scene {
         //
         this.load.musicLoop0000chill.volume = 0;
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #0.", Audio.ctf, "");
+        Audio.play2DinstanceRate(83, 1.0);
     }
     static levelOne(scene) {
         Audio.stingerJet = false;
@@ -238,6 +243,7 @@ export default class Audio extends Phaser.Scene {
             loop: true,
         });
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #1.", Audio.ctf, "");
+        Audio.play2DinstanceRate(83, 1.0);
     }
     static levelTwo(scene) {
         Audio.stingerJet = false;
@@ -248,6 +254,7 @@ export default class Audio extends Phaser.Scene {
         Audio.currentLevel = 2;
         this.load.musicLoop0000chill.volume = 0;
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #2.", Audio.ctf, "");
+        Audio.play2DinstanceRate(83, 1.0);
     }
     static sceneChange(scene) {
         if (Audio.currentLevel == 2) {
@@ -290,11 +297,13 @@ export default class Audio extends Phaser.Scene {
         });
         this.load.musicLoop0001.play();
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #3.", Audio.ctf, "");
+        Audio.play2DinstanceRate(83, 1.0);
     }
     static levelFour(scene) {
         Audio.currentLevel = 4;
         this.load.musicLoop0000chill.volume = 0.0;
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #4.", Audio.ctf, "");
+        Audio.play2DinstanceRate(83, 1.0);
     }
     static musicLayerBar(scene) {
         //console.log("BAR #" + Audio.barCounter);
@@ -525,41 +534,44 @@ export default class Audio extends Phaser.Scene {
     //GENERAL METHODS:
     //Frame update:
     static update(scene) {
-        Audio.propellerFliying(scene);
-        if (scene.game.isFiring && scene.game.player.energy == 0.0) {
-            Audio.play2DinstanceRate(10, 0.8 + scene.game.player.weaponCounter * 0.05);
+        if(!Audio.waitForUpdate()){
+            Audio.propellerFliying(scene);
+            if (scene.game.isFiring && scene.game.player.energy == 0.0) {
+                Audio.play2DinstanceRate(10, 0.8 + scene.game.player.weaponCounter * 0.05);
+            }
+            if (scene.game.player.inRoom() && !this.stingerChill) {
+                this.stingerChill = true;
+            }
+            if (scene.game.player.activatedJet && !this.stingerJet) {
+                this.stingerJet = true;
+            }
+            if (scene.game.player.weaponCounter != Audio.earlyWeapon) {
+                Audio.earlyWeapon = scene.game.player.weaponCounter;
+                Audio.play2DinstanceRate(8, 0.8 + scene.game.player.weaponCounter * 0.05);
+                Audio.play2DinstanceRate(9, 0.8 + scene.game.player.weaponCounter * 0.05);
+            }
+            if (!this.stingerSurface && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
+                this.stingerSurface = true;
+                this.load.surfaceLoop.volume = Audio.volumeSFX;
+                this.load.surfaceLoop.setDetune(-25 + (Math.random() * 50));
+                this.load.surfaceLoop.play();
+                this.load.walkLoop.volume = Audio.volumeSFX;
+                this.load.walkLoop.setDetune(-25 + (Math.random() * 50));
+                this.load.walkLoop.play();
+            } else if (this.stingerSurface && ((scene.game.player.activatedJet || !scene.game.player.isTouching.ground) || (!scene.game.player.cursors.right.isDown && !scene.game.player.cursors.left.isDown))) {
+                this.stingerSurface = false;
+                this.load.surfaceLoop.stop();
+                this.load.walkLoop.stop();
+                Audio.play2DinstanceRate(28, 1.0);
+            }
+            if (!this.stingerMovement && ((Math.floor(scene.game.player.earlyPos.x) != Audio.earlyPos))) {
+                Audio.earlyPos = Math.floor(scene.game.player.earlyPos.x);
+                this.stingerMovement = true;
+            } else if (this.stingerMovement) {
+                this.stingerMovement = false;
+            }
         }
-        if (scene.game.player.inRoom() && !this.stingerChill) {
-            this.stingerChill = true;
-        }
-        if (scene.game.player.activatedJet && !this.stingerJet) {
-            this.stingerJet = true;
-        }
-        if (scene.game.player.weaponCounter != Audio.earlyWeapon) {
-            Audio.earlyWeapon = scene.game.player.weaponCounter;
-            Audio.play2DinstanceRate(8, 0.8 + scene.game.player.weaponCounter * 0.05);
-            Audio.play2DinstanceRate(9, 0.8 + scene.game.player.weaponCounter * 0.05);
-        }
-        if (!this.stingerSurface && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
-            this.stingerSurface = true;
-            this.load.surfaceLoop.volume = Audio.volumeSFX;
-            this.load.surfaceLoop.setDetune(-25 + (Math.random() * 50));
-            this.load.surfaceLoop.play();
-            this.load.walkLoop.volume = Audio.volumeSFX;
-            this.load.walkLoop.setDetune(-25 + (Math.random() * 50));
-            this.load.walkLoop.play();
-        } else if (this.stingerSurface && ((scene.game.player.activatedJet || !scene.game.player.isTouching.ground) || (!scene.game.player.cursors.right.isDown && !scene.game.player.cursors.left.isDown))) {
-            this.stingerSurface = false;
-            this.load.surfaceLoop.stop();
-            this.load.walkLoop.stop();
-            Audio.play2DinstanceRate(28, 1.0);
-        }
-        if (!this.stingerMovement && ((Math.floor(scene.game.player.earlyPos.x) != Audio.earlyPos))) {
-            Audio.earlyPos = Math.floor(scene.game.player.earlyPos.x);
-            this.stingerMovement = true;
-        } else if (this.stingerMovement) {
-            this.stingerMovement = false;
-        }
+        Audio.frameCount++;
     }
     //Propeller:
     static propellerFliying(scene) {

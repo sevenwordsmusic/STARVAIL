@@ -455,7 +455,6 @@ export default class Tutorial extends Phaser.Scene {
     if(this.game.player.nextButton <= 1){
       //AUDIO
         Audio.play2DinstanceRate(81, 1.0);
-        Audio.play2DinstanceRate(83, 1.0);
       //
       this.game.obtainedWeapons.push(4);
       this.game.player.recieveWeapon(4);

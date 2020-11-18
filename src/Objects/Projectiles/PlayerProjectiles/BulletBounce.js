@@ -116,7 +116,9 @@ export default class BulletBounce extends Projectile {
       this.sprite.x += (this.pVelocity.x * delta);
       this.sprite.y += (this.pVelocity.y * delta);
       //AUDIO
-        this.sfx.volume=Audio.volume3D(this);
+          if(Audio.waitForUpdate()){
+              this.sfx.volume=Audio.volume3D(this);
+          }
       //
     }
   }
