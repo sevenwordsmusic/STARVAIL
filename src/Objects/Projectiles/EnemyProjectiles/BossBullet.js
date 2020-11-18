@@ -16,7 +16,8 @@ export default class BossBullet extends Projectile {
     const body = Phaser.Physics.Matter.Matter.Bodies.circle(0,0,6);
 
     this.sprite.setExistingBody(body).setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
-    this.sprite.setDepth(5);
+    this.sprite.setDepth(5).setScale(1.6,1.2);
+    this.sprite.tint = 0xF5D214;
     this.sprite.setSensor(true).setIgnoreGravity(true);
     this.sprite.body.frictionAir = 0;
     this.sprite.body.collisionFilter.group = -3;

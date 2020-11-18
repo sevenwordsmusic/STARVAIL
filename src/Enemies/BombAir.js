@@ -143,7 +143,7 @@ export default class BombAir extends Enemy {
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.setFlipX(this.targetDir);
       this.inflictDamagePlayerArea();
-      this.enemyDead(0,0, false);
+      this.enemyDead(0,0, false, true);
     });
     this.startAI();
     //IA
@@ -207,7 +207,7 @@ export default class BombAir extends Enemy {
       super.damageLaser(dmg, v);
   }
 
-  enemyDead(vXDmg, vYDmg, drop = true){
+  enemyDead(vXDmg, vYDmg, drop = true, kamikaze = false){
     this.goTo(0);
     if(!this.dead){
       //AUDIO
@@ -217,7 +217,12 @@ export default class BombAir extends Enemy {
           this.sfxDetect.stop();
       //
       let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "enemyExplosion");
-      explosion.setDepth(10).setScale(4);
+      explosion.setDepth(10);
+      if(kamikaze) {
+        explosion.setScale(4);
+      } else {
+        explosion.setScale(1);
+      }
       //al completar su animacion de explsion, dicha instancia se autodestruye
       explosion.on('animationcomplete', function(){
         explosion.destroy();
