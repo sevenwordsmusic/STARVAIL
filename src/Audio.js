@@ -460,7 +460,7 @@ export default class Audio extends Phaser.Scene {
     static play3DenemyInstance(scene, type) {
         this.load.soundInstance[type][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
         this.load.soundInstance[type][Audio.SFXinstance].setDetune(-100 + (Math.random() * 200));
-        this.load.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
+        this.load.soundInstance[type][Audio.SFXinstance].volume = 0.0;
         this.load.soundInstance[type][Audio.SFXinstance].play();
         var instance = this.load.soundInstance[type][Audio.SFXinstance];
         if (Audio.SFXinstance < Audio.maxSFXinstances - 1) {
@@ -647,7 +647,7 @@ export default class Audio extends Phaser.Scene {
         load.soundInstance[num] = [];
         for (var i = 0; i < Audio.maxSFXinstances; i++) {
             load.soundInstance[num][i] = load.sound.add(name, {
-                volume: Audio.volumeSFX,
+                volume: 0.0,
                 loop: true
             })
         }
