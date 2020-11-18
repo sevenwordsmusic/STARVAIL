@@ -4,7 +4,7 @@ export default class DropableAirHealth extends DropableAir{
   constructor(scene, x, y, dirX, dirY, hp){
     super(scene, x, y, 'drop', 10000);
     this.hp = hp;
-    this.bounce(5.01, dirX, 5.01, dirY);
+    this.bounce(13, 13, (new Phaser.Math.Vector2(dirX,dirY)).normalize()); //5.01
     this.sprite.setFrame(0);
   }
 
@@ -12,7 +12,7 @@ export default class DropableAirHealth extends DropableAir{
     //AUDIO
       Audio.play3DinstanceNoRate(this,69);
     //
-    this.scene.game.player.playerGainEnergy(Math.min(this.energy, this.scene.game.totalPlayerEnergy-this.scene.game.player.energy));
+    this.scene.game.player.playerGainHealth(Math.min(this.hp, this.scene.game.totalPlayerHp-this.scene.game.player.hp));
     super.dropablePicked(drop);
   }
 

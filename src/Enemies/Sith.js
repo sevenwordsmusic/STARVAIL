@@ -1,6 +1,6 @@
 import Enemy from "./Enemy.js";
-import DropableGroundEnergy from "../Objects/Dropables/DropableGroundEnergy.js"
-import DropableGroundHealth from "../Objects/Dropables/DropableGroundHealth.js"
+import DropableAirEnergy from "../Objects/Dropables/DropableAirEnergy.js"
+import DropableAirHealth from "../Objects/Dropables/DropableAirHealth.js"
 import TileController from "../TileController.js"
 import Audio from "../Audio.js";
 
@@ -292,9 +292,9 @@ export default class Sith extends Enemy {
       explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
       if(Math.random() < 0.85){
-        new DropableGroundHealth(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.healthDrop);
+        new DropableAirHealth(this.scene, this.sprite.x, this.sprite.y, (this.scene.game.player.sprite.x - this.sprite.x), (this.scene.game.player.sprite.y - this.sprite.y), this.healthDrop);
         }
-        new DropableGroundEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(vXDmg),  this.energyDrop);;
+      new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, (this.scene.game.player.sprite.x - this.sprite.x), (this.scene.game.player.sprite.y - this.sprite.y),  this.energyDrop);
     }
   }
 

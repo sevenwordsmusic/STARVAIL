@@ -4,7 +4,7 @@ export default class DropableGroundEnergy extends DropableGround{
   constructor(scene, x, y, dir, energy){
     super(scene, x, y, 'drop', 10000);
     this.energy = energy;
-    this.bounce(1.51, dir, 4.5, 0.5);
+    this.bounce(1.51, dir, 10, 0.5);
     this.sprite.setFrame(1);
   }
 

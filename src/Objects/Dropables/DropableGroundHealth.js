@@ -4,7 +4,7 @@ export default class DropableGroundHealth extends DropableGround{
   constructor(scene, x, y, dir, hp){
     super(scene, x, y, 'drop', 10000);
     this.hp = hp;
-    this.bounce(1.51, dir, 4.5, 0.5);
+    this.bounce(1.51, dir, 10, 0.5);
     this.sprite.setFrame(0);
   }
 

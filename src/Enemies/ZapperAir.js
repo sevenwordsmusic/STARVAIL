@@ -1,6 +1,6 @@
 import Enemy from "./Enemy.js";
 import DropableAirEnergy from "../Objects/Dropables/DropableAirEnergy.js"
-import DropableGroundHealth from "../Objects/Dropables/DropableGroundHealth.js"
+import DropableAirHealth from "../Objects/Dropables/DropableAirHealth.js"
 import Audio from "../Audio.js";
 import TileController from "../TileController.js"
 
@@ -257,9 +257,9 @@ export default class ZapperAir extends Enemy {
       explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
       if(Math.random() < 0.5){
-        new DropableGroundHealth(this.scene, this.sprite.x, this.sprite.y, Math.sign(-vXDmg),  this.healthDrop);
+        new DropableAirHealth(this.scene, this.sprite.x, this.sprite.y, (this.scene.game.player.sprite.x - this.sprite.x), (this.scene.game.player.sprite.y - this.sprite.y), this.healthDrop);
         }
-      new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, Math.sign(-vXDmg), Math.sign(vYDmg),  this.energyDrop);
+      new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y,(this.scene.game.player.sprite.x - this.sprite.x), (this.scene.game.player.sprite.y - this.sprite.y),  this.energyDrop);
     }
   }
 

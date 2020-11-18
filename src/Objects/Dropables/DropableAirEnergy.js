@@ -4,7 +4,7 @@ export default class DropableAirEnergy extends DropableAir{
   constructor(scene, x, y, dirX, dirY, energy){
     super(scene, x, y, 'drop', 10000);
     this.energy = energy;
-    this.bounce(5.01, dirX, 5.01, dirY);
+    this.bounce(13, 13, (new Phaser.Math.Vector2(dirX,dirY)).normalize()); //5.01
     this.sprite.setFrame(1);
   }
 
