@@ -221,7 +221,7 @@ export default class BombAir extends Enemy {
       if(kamikaze) {
         explosion.setScale(4);
       } else {
-        explosion.setScale(1);
+        explosion.setScale(2);
       }
       //al completar su animacion de explsion, dicha instancia se autodestruye
       explosion.on('animationcomplete', function(){
