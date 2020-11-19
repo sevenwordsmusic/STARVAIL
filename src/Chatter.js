@@ -25,11 +25,12 @@ export default class Chatter extends Phaser.Scene {
 
 
     static speakWord(genre, size, weight){
+        var tone= size+weight;
         var rnd=Math.floor(Math.random()*Chatter.male.length);
         switch(genre){
           case 0:
                 if(!Chatter.male[rnd].isPlaying){
-                    Chatter.male[rnd].volume=Audio.volumeSFX;
+                    Chatter.male[rnd].volume=Audio.volumeSFX*tone;
                     Chatter.male[rnd].setRate(1.5-size);
                     Chatter.male[rnd].setDetune(1200-(weight*2400));
                     Chatter.male[rnd].play();
@@ -37,7 +38,7 @@ export default class Chatter extends Phaser.Scene {
             break;
           case 1:
                 if(!Chatter.female[rnd].isPlaying){
-                    Chatter.female[rnd].volume=Audio.volumeSFX;
+                    Chatter.female[rnd].volume=Audio.volumeSFX*tone;
                     Chatter.female[rnd].setRate(1.5-size);
                     Chatter.female[rnd].setDetune(1200-(weight*2400));
                     Chatter.female[rnd].play();

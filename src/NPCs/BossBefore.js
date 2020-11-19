@@ -14,10 +14,12 @@ export default class BossBefore extends FiniteStateMachine{
     this.isFiring = false;
 
     this.isTalking = false;
+
+    //aray de dialogos
     this.dialogArray = [];
     //DIALOGO DE FINAL BUENO (Ha ayudado a 2 o mas droides)
     this.dialogArray[0] =
-/*`[b]D42K-H[/b]
+`[b]D42K-H[/b]
 ...
 
 [b]D42K-H[/b]
@@ -91,12 +93,12 @@ It's a shame you still don't understand, but I
 won't let your existence go without meaning.
 [b]D42K-H[/b]
 Fight me and die, `+ this.scene.game.playerName +`!
-That is what you exist for!`;*/
-`BUENO`;
+That is what you exist for!`;
+//`BUENO`;
 
   //DIALOGO DE FINAL MALO (Ha ayudado a menos de 2 droides)
   this.dialogArray[1] =
-/*`[b]D42K-H[/b]
+`[b]D42K-H[/b]
 ...
 
 [b]D42K-H[/b]
@@ -167,8 +169,8 @@ Don't worry, if you don't resist it will be over
 quickly. I'll follow you soon after.
 [b]D42K-H[/b]
 Let us die, `+ this.scene.game.playerName +`!
-This is what we exist for!`;*/
-`NUETRAL`;
+This is what we exist for!`;
+//`NUETRAL`;
 
 
     //this.dialogArray[0] = "BUENO!"
@@ -181,6 +183,7 @@ This is what we exist for!`;*/
     this.sprite.anims.play("idleMentor",true);
 
     //IA
+    //se preparan el nº de estados que tiene la FSM, que hace cuando empieza, acaba y update de cada estado
     //this.initializeAI(4);
     this.initializeAI(2);
     this.stateOnStart(0, function(){
@@ -191,6 +194,7 @@ This is what we exist for!`;*/
         this.currentDialog = 1;
       }
     });
+    //si se detecta al jugador comienza el diálogo
     this.stateUpdate(0, function(){
       if(Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2)) < this.dialogDistance){
         this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x);
@@ -209,6 +213,7 @@ This is what we exist for!`;*/
     if(this.sprite != undefined)
       this.updateAI();
   }
+  //termina de hablar y comienza el boss fight
   finishedDialog(){
     this.scene.boss = new Boss(this.scene, this.initX, this.initY);
     this.scene.events.off("update", this.update);

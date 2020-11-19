@@ -31,10 +31,31 @@ export default class BossBomb extends Projectile {
       callback: this.onSensorCollide,
       context: this
     });
+
+    //AUDIO
+    Audio.play3DinstanceBoss(this, 24);
+    this.sfx=Audio.play3DinstanceNoRate(this, 12);
+    this.touchDelay=1.0;
+    //
+    this.scene.events.on("update", this.update, this);
   }
+
+  //AUDIO
+  update(time, delta){
+    if(this.sprite!= undefined && Audio.waitForUpdate() ){
+        this.sfx.volume=Audio.volume3D(this)
+    }
+  }
+  //
+
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
+    //AUDIO
+        this.touchDelay=this.touchDelay*0.6;
+        this.sfx.volume=Audio.volume3D(this);
+        Audio.play3DinstanceVolume(this, 4, this.touchDelay);
+    //
     if(bodyB === this.scene.game.player.mainBody){
       this.timer.remove();
       this.itemExpire(this);
@@ -42,6 +63,12 @@ export default class BossBomb extends Projectile {
   }
 
   itemExpire(proj){
+        //AUDIO
+          Audio.play3DinstanceRnd(this,14);
+          this.sfx.stop();
+          this.scene.events.off("update", this.update, this);
+        //
+
     this.projectileArmed();
     var damagedPlayer = SuperiorQuery.superiorRegion(this.sprite.x, this.sprite.y, this.area, [this.scene.game.player.mainBody]);
     if(damagedPlayer != undefined && damagedPlayer[0] != undefined && damagedPlayer[0].gameObject != null)

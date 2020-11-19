@@ -9,8 +9,10 @@ import TileController from "../TileController.js"
 export default class Mecha extends Enemy {
   constructor(scene, x, y){
     super(scene, x, y, 'mecha', 300);
+    //inicialización de variables
     this.sprite.setScale(2.5);
 
+    //array de "scraps", pedazos que vuelan cuando muere
     if(this.scene.game.onPC){
       this.scrapArray[0] = 'mechScrap1';
       this.scrapArray[1] = 'mechScrap2';
@@ -19,7 +21,7 @@ export default class Mecha extends Enemy {
       this.scrapArray[4] = 'mechScrap5';
     }
 
-    //this.sprite.setBounce(1.01735).setFixedRotation().setFriction(0).setFrictionAir(0).setFrictionStatic(0);
+    //cuerpo de del enemigo que se añade al sprite y a los arrays de enemigos correspondientes
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const body = Bodies.rectangle(0, 0, 45, 100, {chamfer: { radius: 10 } });
     /*this.sensors = {
@@ -28,6 +30,7 @@ export default class Mecha extends Enemy {
       bottom: Bodies.rectangle(0, 60, 10, 10, { isSensor: true })
     };*/
 
+    //sensor especial para que no se caiga como el resto de enemigos
     this.sensor = Bodies.rectangle(0, 65, 10, 10, { isSensor: true });
     const compoundBody = Body.create({
       parts: [body, this.sensor]
@@ -40,11 +43,11 @@ export default class Mecha extends Enemy {
     this.sprite.body.restitution = 0.4;
     this.sprite.setOrigin(0.5,0.62);
 
+    //variables de físicas
     this.adjustedFriction = this.sprite.body.friction / this.scene.matter.world.getDelta();
 
 
     //Variables de IA
-    //No Tocar
     this.patrolDir = (Math.round(Math.random()) == 1)?1:-1;
     this.standByReDistance = 950;
     this.patrolDistance = 900;
@@ -53,7 +56,6 @@ export default class Mecha extends Enemy {
     this.playerVector = new Phaser.Math.Vector2(0, 0);
     this.leftMultiply = 1;
     this.rightMultiply = 1;
-    //No Tocar
 
     //Ajustar estas
     this.points = 150;               //puntos al matar a enemigo
@@ -69,6 +71,7 @@ export default class Mecha extends Enemy {
     //Ajustar estas
     //Variables de IA
 
+    //arma del mecha, clase separada con sus propios metodos
     this.gun = new MechGun(scene, this.sprite.x, this.sprite.y, this.hitDamage);
 
 
@@ -77,6 +80,7 @@ export default class Mecha extends Enemy {
       callback: this.onSensorCollide,
       context: this
     });*/
+    //funcion para el sensor
     this.scene.matterCollision.addOnCollideEnd({
       objectA: this.sensor,
       callback: this.onSensorCollide2,
@@ -85,7 +89,9 @@ export default class Mecha extends Enemy {
 
     //IA
     //this.initializeAI(4);
+    //se preparan el nº de estados que tiene la FSM, que hace cuando empieza, acaba y update de cada estado
     this.initializeAI(3);
+    //se paran todos los procesos del enemigo
     this.stateOnStart(0, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.stop();
@@ -103,6 +109,7 @@ export default class Mecha extends Enemy {
       this.sprite.setIgnoreGravity(false);
       this.gun.followPosition(this.sprite.x, this.sprite.y);
     })
+    //modo patrulla
     this.stateOnStart(1, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.body.friction = 0.1;
@@ -130,6 +137,8 @@ export default class Mecha extends Enemy {
         this.sprite.anims.play('mechaWalk', true);
       }
     })
+
+    //modo ataque
     this.stateOnStart(2, function(){
       this.fireTimer = this.scene.time.addEvent({
         delay: this.fireRate,
@@ -188,6 +197,7 @@ export default class Mecha extends Enemy {
     //
   }
 
+  //método para filtrado de collisiones con el tileado del mapa
   updateTouchBoundry(){
     if(this.sprite != undefined){
       if(this.currentStateId() > 0){
@@ -206,6 +216,7 @@ export default class Mecha extends Enemy {
     this.traveledDistance = 0;
   }
 
+  //funcion para el sensor especial para que se caiga
   onSensorCollide2({ bodyA, bodyB, pair }){
      if (bodyB.isSensor) return;
      if (this.sprite == undefined || this.sprite.body == undefined) return;
@@ -224,7 +235,7 @@ export default class Mecha extends Enemy {
        }
      }
   }
-
+  //método para infligir daño al jugador
   inflictDamagePlayerArea(position){
     if(this.sprite == undefined || this.sprite.body == undefined)return;
     this.scene.graphics.clear();
@@ -233,7 +244,7 @@ export default class Mecha extends Enemy {
       this.scene.game.player.playerDamage(this.hitDamage);
   }
 
-
+  //método que se invoca al recibir daño
   damage(dmg, v){
       //AUDIO
         if(Math.random()>0.5){
@@ -251,6 +262,7 @@ export default class Mecha extends Enemy {
     }else if(this.currentStateId() != 0)
       super.damage(dmg, v);
   }
+  //método que se invoca al recibir daño con el laser
   damageLaser(dmg, v){
     //AUDIO
       Audio.lasserSufferingLoop.setDetune(-200);
@@ -264,6 +276,7 @@ export default class Mecha extends Enemy {
       super.damageLaser(dmg, v);
   }
 
+  //método que se invoca al morir el enemigo
   enemyDead(vXDmg){
     this.goTo(0);
     if(!this.dead){
@@ -273,6 +286,7 @@ export default class Mecha extends Enemy {
           this.sfx.stop();
           this.sfxDetect.stop();
       //
+      //explosion al morir
       let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "enemyExplosion");
       explosion.setDepth(10).setScale(3);
       //al completar su animacion de explsion, dicha instancia se autodestruye
@@ -282,6 +296,7 @@ export default class Mecha extends Enemy {
       //animacion de explosion
       explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
+      //drops de energía y vida
       if(Math.random() < 0.7){
         new DropableAirHealth(this.scene, this.sprite.x, this.sprite.y, (this.scene.game.player.sprite.x - this.sprite.x), (this.scene.game.player.sprite.y - this.sprite.y), this.healthDrop);
         }
@@ -290,7 +305,7 @@ export default class Mecha extends Enemy {
       this.gun.destroy();
     }
   }
-
+  //método llamado desde Blackboard.js para ajustar la distancia con el jugador
   updatePlayerPosition(dist){
     switch (this.currentStateId()) {
       case 0:

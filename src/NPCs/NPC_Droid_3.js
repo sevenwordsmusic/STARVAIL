@@ -17,6 +17,7 @@ export default class NPC_Droid_3 extends FiniteStateMachine{
     this.sprite.setOrigin(0.5,0.75);
     this.sprite.anims.play('npc3',true);
 
+    //arma que proporciona al jugador
     this.weaponToGive = 3;
     /*
     0 - balas normales
@@ -30,6 +31,7 @@ export default class NPC_Droid_3 extends FiniteStateMachine{
     8 - laser
     */
 
+    //aray de dialogos
     this.dialogArray = [];
     this.dialogArray[0] =
 `[b]Vagrant Droid #3[/b]
@@ -110,6 +112,7 @@ be with you, even if it's not really me...`;
 
     this.currentDialog = -1;
 
+    //al presionar el sprite se activa el dialogo
     this.sprite.on('pointerdown', function() {
       if(!this.isTalking){
         this.isTalking = true;
@@ -121,6 +124,7 @@ be with you, even if it's not really me...`;
     }, this);
 
     //IA
+    //se preparan el nº de estados que tiene la FSM, que hace cuando empieza, acaba y update de cada estado
     //this.initializeAI(4);
     this.initializeAI(3);
     this.stateOnStart(0, function(){
@@ -136,6 +140,7 @@ be with you, even if it's not really me...`;
 
 
   }
+  //termina de hablar y al matar los enemigos que le rodean da su arma al jugador
   finishedDialog(){
     this.isTalking = false;
     if(this.currentStateId()==1){
@@ -151,6 +156,7 @@ be with you, even if it's not really me...`;
     }
   }
 
+  //al matar a un enemigo que le rodea se actualiza este valor
   enemyKilled(){
     this.enemiesLeft --;
     if(this.enemiesLeft<=0){

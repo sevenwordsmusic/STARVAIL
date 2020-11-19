@@ -93,7 +93,7 @@ export default class ScenePlayerName extends Phaser.Scene {
       //
     this.game.playerName = document.getElementById("playerName").value.toUpperCase();
     if(this.game.playerName==""){
-      this.game.playerName="PLAYER";
+      this.game.playerName="4ULS0R";
     }
     this.hideInput();
 

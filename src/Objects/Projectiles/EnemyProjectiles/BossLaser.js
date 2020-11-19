@@ -43,7 +43,23 @@ export default class BossLaser {
           this.gun.laser = undefined;
       },this);
     },this);
+
+    //AUDIO
+      this.sfx=Audio.play3Dinstance(this, 98);
+      this.scene.events.on("update", this.update, this);
+    //
   }
+
+  update(time, delta){
+      //AUDIO
+          if(!Audio.waitForUpdate()){
+            this.sfx.volume=Audio.volume3D(this);
+          }
+      //
+
+  }
+
+
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
