@@ -44,7 +44,7 @@ export default class ScenePause extends Phaser.Scene {
     });
 
     //Boton options
-    this.btnOptionsGame = this.add.image(480,270,'btnOptionsGame').setAlpha(0.8);
+    this.btnOptionsGame = this.add.image(480,270,'btnOptions').setAlpha(0.8);
 		this.btnOptionsGame.setInteractive()
     .on('pointerdown', () => this.viewOptions());
 
@@ -60,7 +60,7 @@ export default class ScenePause extends Phaser.Scene {
     });
 
     //Boton exit
-    this.btnExitPause = this.add.image(480,400,'btnExitPause').setAlpha(0.8);
+    this.btnExitPause = this.add.image(480,400,'btnExit').setAlpha(0.8);
 		this.btnExitPause.setInteractive()
     .on('pointerdown', () => this.exitGame());
 
