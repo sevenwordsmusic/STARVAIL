@@ -307,7 +307,6 @@ export default class Player {
     for(var i=0; i<this.scene.game.obtainedWeapons.length; i++){
       this.recieveWeapon(this.scene.game.obtainedWeapons[i], false);
     }
-    console.log(this.wheelWeaponArray);
     this.darkener(0);
 
     this.hpBar.draw(this.hp);
@@ -376,8 +375,6 @@ export default class Player {
   }
 
   update(time, delta) {
-    //console.log(this.scene.matter.world.engine.pairs.list.length);
-    //console.log(this.scene.matter.world.engine.pairs.table);
     if (this.sprite == undefined || this.sprite.body == undefined) { return; }
 
     this.updateKnockback(time, delta);
@@ -654,10 +651,11 @@ export default class Player {
   }
 
   playerVictory(){
+    this.sprite.body.ignoreGravity = true;
+    this.sprite.setVelocityX(0);
+    this.sprite.setVelocityY(0);
     this.destroy(false);
-    this.scene.scene.run("SceneEffectBackground");
-    this.scene.scene.sendToBack("SceneEffectBackground");
-    this.scene.game.changeScene(this.scene, "SceneScore");
+    this.scene.game.changeScene(this.scene, "SceneScore", false, true);
   }
 
   destroy(fullDestroy = true){
@@ -967,9 +965,8 @@ export default class Player {
   }
 
   inRoom(){
-    if(this.scene.encounterNPC == undefined || this.scene.encounterNPC.sprite == undefined || this.scene.encounterNPC.sprite.body == undefined || this.sprite == undefined || this.sprite.body == undefined) return false;
-    console.log(Math.sqrt(Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2) + Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2)));
-    if(Math.sqrt(Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2) + Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2)) < Audio.vanishingPoint)
+    if(this.scene.encounterNPC == undefined || this.scene.encounterNPC.sprite == undefined || this.sprite == undefined || this.sprite.body == undefined) return false;
+    if(Math.sqrt(Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2) + Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2)) < Audio.vanishingPoint){
       return true;
     else
       return false;

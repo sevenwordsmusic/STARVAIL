@@ -60,16 +60,16 @@ export default class SceneScore extends Phaser.Scene {
 
     //Boton review
     //this.btnReview = this.add.image(711,353.5,'btnReviewScore').setAlpha(0.8);
-		// this.btnReview.setInteractive()
-    // .on('pointerdown', () => this.irAlLink("https://forms.gle/Eh7LPkvHq3Zvgw2TA"));
+		/*this.btnReview.setInteractive()
+    .on('pointerdown', () => this.irAlLink("https://forms.gle/Eh7LPkvHq3Zvgw2TA"));
 
     // this.btnReview.on('pointerover', function(pointer){
     //   this.alpha=1;
     // });
 
-    // this.btnReview.on('pointerout', function(pointer){
-    //   this.alpha=0.8;
-    // });
+    this.btnReview.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });*/
 
     //Calcular puntuacion
     //En funcion del tiempo, kills, eventos especiales y tipo de final

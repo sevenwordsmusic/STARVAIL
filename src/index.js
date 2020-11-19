@@ -120,9 +120,9 @@ game.initializeVariables = function(newGame = true){
   game.enemiesKilled = 0;
   game.npcHelped = 0;
   game.timeExpired = false;
-  game.clock = new Date();
   game.time = 0;
-  game.timeStart = game.clock.getTime();
+  var clockTimer = new Date();
+  game.timeStart = clockTimer.getTime();
   game.pauseClock = 0;
   game.acumulatedPauseTime = 0;
   game.maxTime = 900000;
@@ -185,8 +185,13 @@ game.transitionToScene = function(scene, keyNext, sceneNext){   //ENTRE NIVELES
   scene.cameras.main.fadeOut(Audio.barRateDiv[2]);
 }
 
-game.changeScene = function(scene, nextId, optionalStopPause = false){   //MUERTE Y RANKINGS
+game.changeScene = function(scene, nextId, optionalStopPause = false, optionalFinalEffectScene = false){   //MUERTE Y RANKINGS
   scene.cameras.main.once('camerafadeoutcomplete', function (camera) {
+    if(optionalFinalEffectScene){
+    this.scene.scene.run("SceneEffectBackground");
+    this.scene.scene.bringToTop("SceneEffectBackground");
+    }
+
     game.destroyScene(scene);
     game.scene.run(nextId);
     game.scene.bringToTop(nextId);
@@ -262,7 +267,11 @@ function mobileTabletChek() {
 
 
 game.onPC =!mobileTabletChek();
+if (game.onPC == undefined) {
+  game.onPC = true;
+}
 
+console.log("onPC:  " +game.onPC);
 
 game.prepareScreen = function(){
   if(!game.onPC){

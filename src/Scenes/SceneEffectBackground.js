@@ -25,6 +25,7 @@ export default class SceneEffectBackground extends Phaser.Scene {
         this.effect.setScale(1.8).setAlpha(0.7).anims.play('kilonova', true);
       }
     }
+    //console.log(this.effect);
 
   }
 }
