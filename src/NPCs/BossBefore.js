@@ -224,6 +224,10 @@ This is what we exist for!`;
     this.scene.cameras.main.pan(this.initX, this.initY - 152, 2000, 'Linear', true); //182
     this.scene.matter.world.setBounds(this.initX-500, this.initY-450, 1000, 1000);
     console.log("Boss Fight Started");
+
+    //EMPIEZA LA PELEA
+      Audio.bossFightStart();
+    //
   }
 
 

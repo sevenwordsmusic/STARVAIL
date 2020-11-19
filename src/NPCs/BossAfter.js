@@ -7,6 +7,18 @@ import Boss from "../Enemies/Boss.js"
 export default class BossAfter extends FiniteStateMachine{
   constructor(scene, x, y){
     super();
+
+
+          
+        //AUDIO
+
+
+          Audio.play3DinstanceRnd(this, 59);
+          Audio.play3DinstanceRnd(this, 65);
+          //
+
+
+
     //inicializacion
     this.scene = scene;
     this.sprite = scene.matter.add.sprite(x,y,'bossDeath',0).setScale(1.5);
@@ -130,6 +142,7 @@ Even if I'm lonely now.`;
     this.initializeAI(1);
     this.stateOnStart(0, function(){
       if(this.scene.game.npcHelped>=2){
+        Audio.musicLoop0000chill.resume();
         this.currentDialog = 0;
       }
       else {
