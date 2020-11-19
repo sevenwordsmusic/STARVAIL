@@ -1765,6 +1765,18 @@
                  "width":0,
                  "x":2285.33,
                  "y":854.667
+                }, 
+                {
+                 "height":0,
+                 "id":200,
+                 "name":"sword",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1347,
+                 "y":552
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2400,33 +2412,6 @@
                  "y":919.637
                 }, 
                 {
-                 "height":86.6667,
-                 "id":127,
-                 "name":"ground",
-                 "properties":[
-                        {
-                         "name":"countMax",
-                         "type":"int",
-                         "value":2
-                        }, 
-                        {
-                         "name":"countMin",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
-                         "name":"encounter",
-                         "type":"bool",
-                         "value":false
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":244.667,
-                 "x":1219.67,
-                 "y":466.667
-                }, 
-                {
                  "height":77.333,
                  "id":128,
                  "name":"both",
@@ -2499,7 +2484,7 @@
          "y":0
         }],
  "nextlayerid":13,
- "nextobjectid":200,
+ "nextobjectid":201,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.5",

@@ -18,6 +18,7 @@ export default class BadEndingTrigger extends FiniteStateMachine{
 `[b]`+ this.scene.game.playerName +`[/b]
 Hmm...?
 
+
 [size=30]Only a dark hole was there.[/size]
 
 

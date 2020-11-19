@@ -48,7 +48,7 @@ I do not.
 Let me explain, then...
 
 [b]D42K-H[/b]
-[size=30]The meaning of life is death.[/size]
+The meaning of life is death.
 
 [b]D42K-H[/b]
 This may strike you as dramatic, but it is
@@ -126,7 +126,7 @@ Do you see the meaning of life in this?
 Let me explain, then...
 
 [b]D42K-H[/b]
-[size=30]The meaning of life is death.[/size]
+The meaning of life is death.
 
 [b]D42K-H[/b]
 This may strike you as dramatic, but it is

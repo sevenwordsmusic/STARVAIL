@@ -42,7 +42,7 @@ export default class Dialog {
             // text: this.getBuiltInText(wrapWidth, fixedWidth, fixedHeight),
             text: this.getBBcodeText(wrapWidth, fixedWidth, fixedHeight),
 
-            action: scene.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
+            action: scene.add.image(0, 0, 'textNext').setTint(COLOR_LIGHT).setVisible(false).setScale(0.7),
 
             space: {
                 left: 20,

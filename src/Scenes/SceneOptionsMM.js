@@ -18,6 +18,10 @@ export default class SceneOptionsMM extends Phaser.Scene {
 
     //Background Menu
     this.add.image(0,0,'menuBackground').setOrigin(0).setDepth(-100);
+    //Oscurecer background
+    const bg = this.add.image(0,0,'white_rectangle').setOrigin(0).setScale(35).setDepth(-100).setAlpha(0.25);
+    bg.tint = 0x000000;
+    bg.alpha = 0.7;
 
     //Options field
     //var optionsScreen=this.add.image(0,0,'OptionsScreen').setOrigin(0,0).setScale(0.25);

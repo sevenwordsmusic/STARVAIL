@@ -192,7 +192,28 @@ you must click on said item.`;
 
     this.dialogArray[5] =
 `[b]D42K-H[/b]
-Keep an eye on the lasers!`;
+You know, `+ this.scene.game.playerName +`, I have noticed something
+about the estructure of this tower.
+[b]D42K-H[/b]
+If at some point you feel lost, or don't know
+where to go, I think you should look for 
+[b]D42K-H[/b]
+the colorful circuits, like the ones I'm standing
+on. They seem to be here to guide us, vagrants,
+[b]D42K-H[/b]
+to the top of the tower. In any case, let's keep
+going. Look out for these lasers!
+[b]TIP[/b]
+In your way up Starvail Tower, you must remember
+two things if you get lost:
+[b]TIP[/b]
+First: your goal is to get to the top of the tower,
+so you should always go up.
+[b]TIP[/b]
+Second: if you don't know where to go up, look for
+the colorful circuits scattered across all Starvail:
+[b]TIP[/b]
+They know the way!`;
 
     this.dialogArray[6] =
 `[b]D42K-H[/b]
@@ -306,8 +327,8 @@ time to fulfill my primordial task:
 reaching the top of this tower before
 sunrise. I advice you to do the same, `+ this.scene.game.playerName +`.
 [b]D42K-H[/b]
-The only thing that matters is reaching the top
-of Starvail Tower, to discover the meaning of 'life'.
+The only thing that matters is reaching the top of 
+Starvail Tower, to discover the meaning of 'life'.
 [b]D42K-H[/b]
 Don't let that data be ignored.
 
@@ -362,7 +383,7 @@ of life, `+ this.scene.game.playerName +`!`;
 
     this.dialogArray[9] =
 `[b]D42K-H[/b]
-I don't think you should be seeing this.`;
+Good luck!`;
     this.currentDialog = -1;
 
 

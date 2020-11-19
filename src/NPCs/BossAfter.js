@@ -86,10 +86,13 @@ on your way here, `+ this.scene.game.playerName +`.
 I intented to save you the pain of 'suicide',
 but it seems I wasn't strong enough.
 [b]D42K-H[/b]
-Now, go ahead and end my life, `+ this.scene.game.playerName +`. This
-will finally put an end to my existential dread.
+Now that you have ended my life, `+ this.scene.game.playerName +`,
+I can finally be free from this existential dread.
+[b]D42K-H[/b]
+I hope you are strong enough to die, `+ this.scene.game.playerName +`.
+...Goodbye
 [b]`+ this.scene.game.playerName +`[/b]
-I hope that gave your life meaning, D42K-H.
+I hope this gives your life meaning, D42K-H.
 ...
 [b]`+ this.scene.game.playerName +`[/b]
 But... I don't want to die.

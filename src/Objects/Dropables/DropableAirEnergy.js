@@ -6,6 +6,7 @@ export default class DropableAirEnergy extends DropableAir{
     this.energy = energy;
     this.bounce(13, 13, (new Phaser.Math.Vector2(dirX,dirY)).normalize()); //5.01
     this.sprite.setFrame(1);
+    this.sprite.setScale(Phaser.Math.Clamp((energy/200),1,2.5));
   }
 
   dropablePicked(drop){

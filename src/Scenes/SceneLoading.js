@@ -89,6 +89,7 @@ export default class SceneLoading extends Phaser.Scene {
     //this.load.image('energyBarFillHUD', 'assets/HUD/energyBarFill.png');
     this.load.image('energyBarFillHUD', 'https://i.postimg.cc/v8NrrdzY/energybar-Fill.png');
 
+    this.load.image('textNext', 'assets/HUD/textNext.png');
     this.load.image('weaponHUD0', 'assets/HUD/weaponselect_current.png');
     this.load.image('weaponHUD1', 'assets/HUD/weaponselect_left1.png');
     this.load.image('weaponHUD2', 'assets/HUD/weaponselect_up1.png');

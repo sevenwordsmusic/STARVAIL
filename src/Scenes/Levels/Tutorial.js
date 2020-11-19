@@ -496,7 +496,7 @@ export default class Tutorial extends Phaser.Scene {
     console.log("Last Delta:  " + (Math.round(delta))+ " ms");
   }
   printMemory(time, delta){
-    console.log("Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
+    //console.log("Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
   }
 }
 

@@ -6,6 +6,7 @@ export default class DropableGroundEnergy extends DropableGround{
     this.energy = energy;
     this.bounce(1.51, dir, 10, 0.5);
     this.sprite.setFrame(1);
+    this.sprite.setScale(Phaser.Math.Clamp((energy/200),1,2.5));
   }
 
   dropablePicked(drop){

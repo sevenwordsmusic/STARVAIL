@@ -6,6 +6,7 @@ export default class DropableGroundHealth extends DropableGround{
     this.hp = hp;
     this.bounce(1.51, dir, 10, 0.5);
     this.sprite.setFrame(0);
+    this.sprite.setScale(Phaser.Math.Clamp((hp/100),1,2.5));
   }
 
   dropablePicked(drop){

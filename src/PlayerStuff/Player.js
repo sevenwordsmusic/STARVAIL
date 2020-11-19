@@ -148,6 +148,21 @@ export default class Player {
         this.skipLevel.on('down', function(event){
           this.scene.game.nextLevel();
         }, this);
+
+        this.skipLevel = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
+        this.skipLevel.on('down', function(event){
+          this.scene.game.totalPlayerHp = 999999999999999;
+          this.hp = 999999999999999;
+          console.log("INFINITE LIFE CHEAT ENABLED.");
+        }, this);
+
+        this.skipLevel = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        this.skipLevel.on('down', function(event){
+          this.scene.game.totalPlayerEnergy = 99999999999999999;
+          this.scene.game.energyRecoveryRate = 99999999999999;
+          console.log("INFINITE ENERGY CHEAT ENABLED.");
+        }, this);
+
       }
 
       //DISPARO
@@ -704,7 +719,7 @@ export default class Player {
     this.weapons[3] = {name: "BulletBounce", damage: 10, bounce: 3, spread: 0.075, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 1, energyRecoverProportion: 0, wSprite: 1, chFrame: 0};
     this.weapons[4] = {name: "BombNormal", damage: 25, area: 45, knockback:  2 / this.scene.matter.world.getDelta(), fireRate: 25 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 20, energyRecoverProportion: 0.8, wSprite: 7, chFrame: 1};
     this.weapons[5] = {name: "BombMegaton", damage: 150, area: 80, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 8, expireTime: 2000, energyCost: 100, energyRecoverProportion: 0.2, wSprite: 4, chFrame: 1};
-    this.weapons[6] = {name: "Misil", damage: 40, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 60, energyRecoverProportion: 0.2, wSprite: 2, chFrame: 2};
+    this.weapons[6] = {name: "Misil", damage: 50, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 60, energyRecoverProportion: 0.2, wSprite: 2, chFrame: 2};
     this.weapons[7] = {name: "MissileMulti", damage: 5, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.9, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 12, expireTime: 4000, energyCost: 60, energyRecoverProportion: 0.2, wSprite: 5, chFrame: 2};
     this.weapons[8] = {name: "Lasser", damage: 1.5, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 1.4, energyRecoverProportion: 0, wSprite: 8, chFrame: 3};
   }
@@ -774,6 +789,9 @@ export default class Player {
     }
     else{
       this.playerUseEnergy(this.energy);
+      //PINPOINT
+      this.setWeapon(0);
+      this.darkener(0);
       this.offJet();
     }
   }
@@ -847,13 +865,13 @@ export default class Player {
   darkener(n) {
     for (var i = 0; i<this.buttons.length; i++) {
       if (i == n) {
-        this.buttons[i].tint = 0x545454;
-        if(this.weaponIcons[i] != undefined)
-        this.weaponIcons[i].tint = 0x545454;
-      } else {
         this.buttons[i].tint = 0xFFFFFF;
         if(this.weaponIcons[i] != undefined)
         this.weaponIcons[i].tint = 0xFFFFFF;
+      } else {
+        this.buttons[i].tint = 0x545454;
+        if(this.weaponIcons[i] != undefined)
+        this.weaponIcons[i].tint = 0x545454;
       }
     }
   }

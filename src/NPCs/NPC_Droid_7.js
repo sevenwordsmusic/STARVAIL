@@ -116,7 +116,7 @@ Never be afraid of the shadows of this world,
 reason that will guide you to the right places,
 to the right choices, just like it happened here.
 [b]K4N7[/b]
-here. Good luck in your journey, take care!`;
+Good luck in your journey, take care!`;
 
     this.currentDialog = -1;
 
