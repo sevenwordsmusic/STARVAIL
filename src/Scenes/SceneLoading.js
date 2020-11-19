@@ -11,34 +11,34 @@ export default class SceneLoading extends Phaser.Scene {
 
     //MENUS
     //this.load.image('menuBETABackground', 'assets/ilustracionBETA.png');
-    this.load.image('menuBackground', 'assets/ilustracion.png');
+    this.load.image('menuBackground', 'assets/HUD/ilustracion.png');
     this.load.image('endBackground', 'assets/HUD/scorescreen_background.png');
     this.load.image('white_rectangle', 'assets/white_rectangle.png');
 
     //Score menu
-    this.load.image('ScoreScreen', 'assets/Score screen menu/Botones Score.png'); //field
+    this.load.image('ScoreScreen', 'assets/HUD/Score screen menu/Botones Score.png'); //field
     //this.load.image('ScoreScreenReview', 'assets/Score screen menu/Botones Score Review.png'); //field + review
-    this.load.image('btnExitScore', 'assets/Score screen menu/btnExitScoreMenu.png'); //btn exit
-    this.load.image('btnCreditsScore', 'assets/Score screen menu/btnCreditsScoreMenu.png'); //btn credits
-    this.load.image('btnRankingScore', 'assets/Score screen menu/btnRankingScoreMenu.png'); //btn ranking
+    this.load.image('btnExitScore', 'assets/HUD/Score screen menu/btnExitScoreMenu.png'); //btn exit
+    this.load.image('btnCreditsScore', 'assets/HUD/Score screen menu/btnCreditsScoreMenu.png'); //btn credits
+    this.load.image('btnRankingScore', 'assets/HUD/Score screen menu/btnRankingScoreMenu.png'); //btn ranking
     //this.load.image('btnReviewScore', 'assets/Score screen menu/btnReviewScoreMenu.png'); //btn review
 
     //GENERAL MENU RESOURCES
-    this.load.image('btnExit', 'assets/btnExit.png');
-    this.load.image('btnSkip', 'assets/boton SKIP.png'); //btn skip tutorial
-    this.load.image('btnBack', 'assets/btnBack.png');
+    this.load.image('btnExit', 'assets/HUD/btnExit.png');
+    this.load.image('btnSkip', 'assets/HUD/boton SKIP.png'); //btn skip tutorial
+    this.load.image('btnBack', 'assets/HUD/btnBack.png');
 
     //Credits menu
-    this.load.image('RankingScreen', 'assets/Ranking menu/Botones Ranking.png'); //field
+    this.load.image('RankingScreen', 'assets/HUD/Ranking menu/Botones Ranking.png'); //field
     //this.load.image('btnExitRanking', 'assets/Ranking menu/btnExitRanking.png'); //btn exit
 
     //PlayerName Menu
-    this.load.image('playerNameImg', 'assets/PlayerName/boton PLAYER NAME.png'); //btn exit
+    this.load.image('playerNameImg', 'assets/HUD/PlayerName/boton PLAYER NAME.png'); //btn exit
 
     //Pause menu
-    this.load.image('btnResumeGamePause', 'assets/Pause menu/btnResumePauseMenu.png'); //btn resume
-    this.load.image('btnOptionsGame', 'assets/Pause menu/btnOptionsPauseMenu.png'); //btn options
-    this.load.image('btnExitPause', 'assets/Pause menu/btnExitPauseMenu.png'); //btn exit
+    this.load.image('btnResumeGamePause', 'assets/HUD/Pause menu/btnResumePauseMenu.png'); //btn resume
+    this.load.image('btnOptionsGame', 'assets/HUD/Pause menu/btnOptionsPauseMenu.png'); //btn options
+    this.load.image('btnExitPause', 'assets/HUD/Pause menu/btnExitPauseMenu.png'); //btn exit
 
     //Options menu
     //this.load.image('btnExitOptionsMM', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
@@ -47,26 +47,26 @@ export default class SceneLoading extends Phaser.Scene {
     //this.load.image('btnExitOptionsGame', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
 
     //Main menu
-    this.load.image('btnStart', 'assets/Main menu/btnStartMainMenu.png'); //btn start
-    this.load.image('btnCredits', 'assets/Main menu/btnCreditsMainMenu.png'); //btn credits
-    this.load.image('btnOptions', 'assets/Main menu/btnOptionsMainMenu.png'); //btn options
+    this.load.image('btnStart', 'assets/HUD/Main menu/btnStartMainMenu.png'); //btn start
+    this.load.image('btnCredits', 'assets/HUD/Main menu/btnCreditsMainMenu.png'); //btn credits
+    this.load.image('btnOptions', 'assets/HUD/Main menu/btnOptionsMainMenu.png'); //btn options
 
     //Credits menu
-    this.load.image('CreditsScreen', 'assets/Credits menu/CMScreen.png'); //field
+    this.load.image('CreditsScreen', 'assets/HUD/Credits menu/CMScreen.png'); //field
     //this.load.image('btnExitCredits', 'assets/Credits menu/btnExitCredits.png'); //btn exit
-    this.load.image('btnContacto', 'assets/Credits menu/Boton contacto.png'); //btn linkedin
+    this.load.image('btnContacto', 'assets/HUD/Credits menu/Boton contacto.png'); //btn linkedin
 
     //Credits menu
-    this.load.image('CreditsScoreScreen', 'assets/Credits menu/CMScreen.png'); //field
+    this.load.image('CreditsScoreScreen', 'assets/HUD/Credits menu/CMScreen.png'); //field
     //this.load.image('btnExitCreditsScore', 'assets/Credits menu/btnExitCredits.png'); //btn exit
-    this.load.image('btnContactoScore', 'assets/Credits menu/Boton contacto.png'); //btn linkedin
+    this.load.image('btnContactoScore', 'assets/HUD/Credits menu/Boton contacto.png'); //btn linkedin
 
     //Game over menu
-    this.load.image('GOScreen', 'assets/Game over menu/GOScreen.png');
+    this.load.image('GOScreen', 'assets/HUD/Game over menu/GOScreen.png');
     //this.load.image('btnExitGameOver', 'assets/Game over menu/btnExitGameOver.png'); //btn exit
-    this.load.image('btnPlayAgainGameOver','assets/Game over menu/btnPlayAgainGameOver.png'); //btn play again
+    this.load.image('btnPlayAgainGameOver','assets/HUD/Game over menu/btnPlayAgainGameOver.png'); //btn play again
 
-    this.load.image('btnPause', 'assets/BtnPauseGame.png'); //btn pause
+    this.load.image('btnPause', 'assets/HUD/BtnPauseGame.png'); //btn pause
     //MENUS
 
     //PLAYER

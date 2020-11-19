@@ -115,7 +115,7 @@ var game = new Phaser.Game(config);
 game.initializeVariables = function(newGame = true){
   //Declaramos variables globales del juego.
 
-  game.playerName = "PLAYER";
+  game.playerName = "4ULS0R";
   game.points = 0;
   game.enemiesKilled = 0;
   game.npcHelped = 0;
@@ -132,10 +132,10 @@ game.initializeVariables = function(newGame = true){
   game.moveVelocityAir = 0.25;    //0.275     //velocidad horizontal en el aire
   game.jetVelocity = 0.26;       //0.3      //velocidad de ascenso
   game.jetVelocityDown = 0.26;   //0.3      //velocidad de descenso
-  game.totalPlayerHp = 1000;           //1000
+  game.totalPlayerHp = 9999999999999999;           //1000
   game.currentPlayerHp =  game.totalPlayerHp;       //NO TOCAR!! game.totalPlayerHp
-  game.hpRecoveryRate = 5;                  //1
-  game.totalPlayerEnergy = 1500;     //1000, 1500
+  game.hpRecoveryRate = 99999999999999999;                  //1
+  game.totalPlayerEnergy = 9999999999999999;     //1000, 1500
   game.energyRecoveryRate = 0.5;    //0.2, 0.5
   game.extraRecoveryOnGround = 0.5  //energia que se recupera al estar en el suelo
   game.energyCostJetBeginning = 0;      //energia por segundo que se gasta justo al empezar (es un valor base de coste)

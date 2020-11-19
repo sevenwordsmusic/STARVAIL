@@ -45,7 +45,7 @@ export default class SceneGameOver extends Phaser.Scene {
     });
 
 
-    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
+    this.input.setDefaultCursor('url(assets/HUD/cursor.png), pointer');
   }
 
   //Método que se ejecuta una vez por frame.
