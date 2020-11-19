@@ -113,6 +113,7 @@ export default class ScenePause extends Phaser.Scene {
   exitGame(){
       //AUDIO
         Audio.play2DinstanceRate(81, 1.0);
+        Audio.exit(this.scene);
       //
     this.btnExitPause.alpha=0.8;
 

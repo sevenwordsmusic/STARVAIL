@@ -125,23 +125,68 @@ static fullscreenMode(thisArg){
 
         }, thisArg);
 }
-
+    static exit(scene) {    //EXIT FROM PAUSE
+        if (Audio.currentLevel == 3) {
+            Audio.musicLoop0001.stop();
+        } else if (Audio.currentLevel == 1 || Audio.currentLevel == 2) {
+            Audio.musicLayerStop(scene);
+        }
+    }
+    static musicLayerStop(scene) {
+        if (Audio.musicTweens[0] != undefined) {
+            if (Audio.musicTweens[0].isPlaying()) {
+                Audio.musicTweens[0].pause();
+                Audio.musicTweens[0].remove();
+            }
+        }
+        if (Audio.musicTweens[1] != undefined) {
+            if (Audio.musicTweens[1].isPlaying()) {
+                Audio.musicTweens[1].pause();
+                Audio.musicTweens[1].remove();
+            }
+        }
+        if (Audio.musicTweens[2] != undefined) {
+            if (Audio.musicTweens[2].isPlaying()) {
+                Audio.musicTweens[2].pause();
+                Audio.musicTweens[2].remove();
+            }
+        }
+        if (Audio.musicLayerBarEvent != undefined && Audio.musicLayerJetEvent != undefined) {
+            Audio.musicLayerBarEvent.remove();
+            Audio.musicLayerJetEvent.remove();
+        }
+        Audio.musicLoop0000levitating.stop();
+        Audio.musicLoop0000moving.stop();
+        Audio.musicLoop0000flying.stop();
+        Audio.paused = false;
+    }
     static pause() {
-        Audio.musicLoop0000levitating.volume = 0.0;
-        Audio.musicLoop0000moving.volume = 0.0;
-        Audio.musicLoop0000flying.volume = 0.0;
         Audio.musicLoop0000chill.resume();
-        //
-        Audio.walkLoop.volume = Audio.volumeSFX;
-        Audio.surfaceLoop.volume = Audio.volumeSFX;
-        Audio.propellerLoop.volume = Audio.volumeSFX;
-        Audio.engineLoop.volume = Audio.volumeSFX;
-        Audio.lasserLoop.volume = Audio.volumeSFX;
-        Audio.beamLoop.volume = Audio.volumeSFX;
-        Audio.lasserSufferingLoop.volume = 0.0;
         //
         if (Audio.currentLevel == 3) {
             Audio.musicLoop0001.pause();
+        } else if (Audio.currentLevel == 1 || Audio.currentLevel == 2) {
+            if (Audio.musicTweens[0] != undefined) {
+                if (Audio.musicTweens[0].isPlaying()) {
+                    Audio.musicTweens[0].pause();
+                    Audio.musicTweens[0].remove();
+                }
+            }
+            if (Audio.musicTweens[1] != undefined) {
+                if (Audio.musicTweens[1].isPlaying()) {
+                    Audio.musicTweens[1].pause();
+                    Audio.musicTweens[1].remove();
+                }
+            }
+            if (Audio.musicTweens[2] != undefined) {
+                if (Audio.musicTweens[2].isPlaying()) {
+                    Audio.musicTweens[2].pause();
+                    Audio.musicTweens[2].remove();
+                }
+            }    
+            Audio.musicLoop0000levitating.volume = 0.0;
+            Audio.musicLoop0000moving.volume = 0.0;
+            Audio.musicLoop0000flying.volume = 0.0;
         }
         for (var type = 0; type < Audio.soundInstance.length; type++) {
             for (var rndOrInstance = 0; rndOrInstance < Audio.soundInstance[type].length; rndOrInstance++) {
@@ -182,6 +227,47 @@ static fullscreenMode(thisArg){
             Audio.musicLayerResume(scene);
         }
         Audio.paused = false;
+    }
+    static musicLayerResume(scene) {
+        if (Audio.musicTweens[0] != undefined) {
+            if (Audio.musicTweens[0].isPlaying()) {
+                Audio.musicTweens[0].pause();
+                Audio.musicTweens[0].remove();
+            }
+        }
+        if (Audio.musicTweens[1] != undefined) {
+            if (Audio.musicTweens[1].isPlaying()) {
+                Audio.musicTweens[1].pause();
+                Audio.musicTweens[1].remove();
+            }
+        }
+        if (Audio.musicTweens[2] != undefined) {
+            if (Audio.musicTweens[2].isPlaying()) {
+                Audio.musicTweens[2].pause();
+                Audio.musicTweens[2].remove();
+            }
+        }
+        var factor = 8180;
+        if (scene.game.player.earlyPos.y > factor) {
+            var volumeNormalized = 0.0;
+        } else if (scene.game.player.earlyPos.y < 0.0) {
+            var volumeNormalized = Audio.maxVolume;
+        } else {
+            var volumeNormalized = (factor - scene.game.player.earlyPos.y) / factor;
+        }
+        Audio.musicLoop0000levitating.volume = volumeNormalized * Audio.volumeBGM;
+        if (Audio.stingerMovement) {
+            Audio.stingerMovement = false;
+            Audio.musicLoop0000moving.volume = Audio.volumeBGM;
+        } else {
+            Audio.musicLoop0000moving.volume = 0.0;
+        }
+        if (Audio.stingerJet) {
+            Audio.stingerJet = false;
+            Audio.musicLoop0000flying.volume = Audio.volumeBGM;
+        } else {
+            Audio.musicLoop0000flying.volume = 0.0;
+        }
     }
     static updateVolumes() {
         if (document.getElementById("bgmSlider").value / 10 != Audio.volumeBGM) {
@@ -388,47 +474,6 @@ static fullscreenMode(thisArg){
                     duration: Audio.barRateDiv[1],
                 });
             }
-        }
-    }
-    static musicLayerResume(scene) {
-        if (Audio.musicTweens[0] != undefined) {
-            if (Audio.musicTweens[0].isPlaying()) {
-                Audio.musicTweens[0].pause();
-                Audio.musicTweens[0].remove();
-            }
-        }
-        if (Audio.musicTweens[1] != undefined) {
-            if (Audio.musicTweens[1].isPlaying()) {
-                Audio.musicTweens[1].pause();
-                Audio.musicTweens[1].remove();
-            }
-        }
-        if (Audio.musicTweens[2] != undefined) {
-            if (Audio.musicTweens[2].isPlaying()) {
-                Audio.musicTweens[2].pause();
-                Audio.musicTweens[2].remove();
-            }
-        }
-        var factor = 8180;
-        if (scene.game.player.earlyPos.y > factor) {
-            var volumeNormalized = 0.0;
-        } else if (scene.game.player.earlyPos.y < 0.0) {
-            var volumeNormalized = Audio.maxVolume;
-        } else {
-            var volumeNormalized = (factor - scene.game.player.earlyPos.y) / factor;
-        }
-        Audio.musicLoop0000levitating.volume = volumeNormalized * Audio.volumeBGM;
-        if (Audio.stingerMovement) {
-            Audio.stingerMovement = false;
-            Audio.musicLoop0000moving.volume = Audio.volumeBGM;
-        } else {
-            Audio.musicLoop0000moving.volume = 0.0;
-        }
-        if (Audio.stingerJet) {
-            Audio.stingerJet = false;
-            Audio.musicLoop0000flying.volume = Audio.volumeBGM;
-        } else {
-            Audio.musicLoop0000flying.volume = 0.0;
         }
     }
     //INSTANCE PLAYERS:
