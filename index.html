@@ -21,6 +21,7 @@
       font-weight:normal;
       }
       #playerName {
+          z-index: 63 !Important;
           position: absolute;
           left: 50.4%;
           top: 50%;
@@ -34,6 +35,7 @@
           color: #E96B00;
       }
       #soundSliders{
+        z-index: 63 !Important;
         font-family: "LeahFat";
         position: absolute;
         left: 50%;
@@ -51,6 +53,7 @@
         display: none;
       }
       #soundSliders input{
+        z-index: 63 !Important;
         position: relative;
         width: 500%;
         height: 200%;
@@ -58,6 +61,7 @@
         background-color: #74524b;
       }
       .slider {
+        z-index: 64 !Important;
         -webkit-appearance: none;
         width: 52px;
         height: 52px;
@@ -67,9 +71,11 @@
         border: 2px solid #000000;
       }
       .slider:hover {
+        z-index: 64 !Important;
         opacity: 1.0;
       }
       .slider::-webkit-slider-thumb {
+        z-index: 65 !Important;
         -webkit-appearance: none;
         appearance: none;
         width: 52px;
@@ -78,19 +84,21 @@
         cursor: pointer;
       }
       .slider::-moz-range-thumb {
+        z-index: 65 !Important;
         width: 52px;
         height: 52px;
         background: #E96B00;
         cursor: pointer;
       }
       #phaserDOM{
+        z-index: 0 !Important;
         position: absolute;
         font-family:LeahFat;
         -webkit-text-stroke: 1px black;
       }
-
-    
-
+      #phaserDOM canvas{
+        z-index: 0 !Important;
+      }
     </style>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.20.0/dist/phaser.js"></script>
     <script src="src/phaser-matter-collision-plugin.min.js"></script>
