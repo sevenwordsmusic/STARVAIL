@@ -33,17 +33,27 @@ export default class BossBullet extends Projectile {
       callback: this.onSensorCollide,
       context: this
     });
+
+      //AUDIO
+        Audio.play3Dinstance(this,20);
+      //
   }
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
     if(bodyB === this.scene.game.player.mainBody){
+      //AUDIO
+        Audio.play3DinstanceRnd(this,36);
+      //
       this.projectileArmed();
       this.timer.remove();
       this.scene.game.player.playerDamage(this.dmg, this.pVelocity);   //this.scene.game.player.playerDamage(this.dmg);
       this.itemExpire(this);
     }
     else if(bodyB.gameObject.parent == undefined){
+      //AUDIO
+        Audio.play3DinstanceRnd(this, 0);
+      //
       this.projectileArmed();
       this.timer.remove();
       this.itemExpire(this);

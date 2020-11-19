@@ -32,7 +32,27 @@ export default class BossMisile extends Projectile {
       callback: this.onSensorCollide,
       context: this
     });
+
+    //AUDIO
+      Audio.play3Dinstance(26);
+      this.scene.events.on("update", this.update, this);
+      this.sfx=Audio.play3Dinstance(this, 29);
+    //
+
   }
+
+
+
+  update(time, delta){
+      //AUDIO
+          if(!Audio.waitForUpdate()){
+            this.sfx.volume=Audio.volume3D(this);
+          }
+      //
+
+  }
+
+
 
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
@@ -50,6 +70,11 @@ export default class BossMisile extends Projectile {
   }
 
   itemExpire(proj){
+      //AUDIO
+        Audio.play3DinstanceRnd(this,16);
+        this.sfx.volume= 0.0;
+      //
+
     this.projectileArmed();
 
     const bombExplosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "explosion");
