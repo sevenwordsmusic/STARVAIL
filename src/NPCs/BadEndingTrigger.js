@@ -13,6 +13,7 @@ export default class BadEndingTrigger extends FiniteStateMachine{
     this.initX = x;
     this.initY = y;
 
+    //aray de dialogos
     this.dialogArray = [];
     this.dialogArray[0] =
 `[b]`+ this.scene.game.playerName +`[/b]
@@ -34,11 +35,13 @@ Life waits no one. Remember that.`;
     this.currentDialog = -1;
 
     //IA
+    //se preparan el nº de estados que tiene la FSM, que hace cuando empieza, acaba y update de cada estado
     //this.initializeAI(4);
     this.initializeAI(2);
     this.stateOnStart(0, function(){
       this.currentDialog = 0;
     });
+    //si se detecta al jugador comienza el diálogo
     this.stateUpdate(0, function(){
       if(Math.sqrt(Math.pow(this.initX - this.scene.game.player.sprite.x,2) + Math.pow(this.initY - this.scene.game.player.sprite.y,2)) < 300){
         this.isTalking = true;
@@ -55,6 +58,7 @@ Life waits no one. Remember that.`;
   update(){
     this.updateAI();
   }
+  //termina de hablar y se va a la escena de puntuación
   finishedDialog(){
     this.isTalking = false;
     this.scene.events.off("update", this.updateAI);
