@@ -15,6 +15,7 @@ export default class Bar {
         //this.decrease (20);
     }
 
+    //dibujar barra de vida
     draw(num){
       this.bar.clear();
 
@@ -22,6 +23,7 @@ export default class Bar {
       this.bar.fillRect(this.x + 2, this.y + 2, num * this.proportion, this.height);
     }
 
+    //resetear barra de vida
     reset(){
       this.bar.clear();
 

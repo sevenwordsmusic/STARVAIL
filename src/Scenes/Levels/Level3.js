@@ -365,6 +365,7 @@ export default class Level3 extends Phaser.Scene {
       this.goalArray[i].initGoal('levelBoss', LevelBoss);
     }
 
+    //laseres y sonidos de laseres
     this.laserTrapArray = [];
     if(this.map.getObjectLayer("Sound_Layer") != null)
       this.map.getObjectLayer("Sound_Layer").objects.forEach(point => {

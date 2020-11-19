@@ -3,6 +3,7 @@ import DropableGroundEnergy from "../Dropables/DropableGroundEnergy.js"
 import DropableGroundHealth from "../Dropables/DropableGroundHealth.js"
 import Audio from "../../Audio.js";
 
+//cofres sueltan energia y vida
 export default class InteractableChest extends Interactable {
   constructor(scene, x, y, hp, energy){
     super(scene, x, y, 'chest', true, false);
@@ -18,6 +19,7 @@ export default class InteractableChest extends Interactable {
     this.sprite.anims.play('chestClosed', true);
   }
 
+  //al activarse
   onActivated(){
     this.sprite.anims.play('chestOpen', true);
     //AUDIO
@@ -44,6 +46,7 @@ export default class InteractableChest extends Interactable {
     super.onPermaDeactivated();
   }
 
+  //distancia al jugador
   distanceToPlayer(){
     if(this.sprite != undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));

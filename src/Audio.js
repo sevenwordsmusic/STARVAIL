@@ -117,7 +117,7 @@ export default class Audio extends Phaser.Scene {
         }
     }
     static gameOver() {
-        
+
 
         if (Audio.currentLevel == 4 && Audio.bossMusic) {
             Audio.musicLoop0002.stop();
@@ -279,7 +279,7 @@ export default class Audio extends Phaser.Scene {
             if (!Audio.visitingNPC) {
                 Audio.musicLoop0001.volume = Audio.volumeBGM;
             }else{
-                Audio.musicLoop0001.volume = 0.0; 
+                Audio.musicLoop0001.volume = 0.0;
             }
             Audio.musicLoop0001.resume();
         } else if (Audio.currentLevel == 1 || Audio.currentLevel == 2) {
@@ -869,7 +869,7 @@ export default class Audio extends Phaser.Scene {
                     volume: 0.0,
                     loop: true
                 })
-            } 
+            }
         }
     }
     //LOAD:

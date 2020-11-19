@@ -176,6 +176,7 @@ export default class LevelBoss extends Phaser.Scene {
         //nada
       }
       else if(point.name == "BOSS"){
+        //boss dependiendo del ending
         if(!this.game.timeExpired){
           new BossBefore(this, point.x, point.y - 20);
         }else{
@@ -390,7 +391,7 @@ export default class LevelBoss extends Phaser.Scene {
    this.maxMemory = 0;
    //AUDIO
       Audio.levelFour(this);
-       
+
       //
   }
   //Función update, que actualiza el estado de la escena.

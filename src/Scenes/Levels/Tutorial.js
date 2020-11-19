@@ -369,6 +369,7 @@ export default class Tutorial extends Phaser.Scene {
           new InteractableChest(this, point.x, point.y, 10 ,20);
       });
 
+      //mentor del tutorial y su array de posiciones
       if(this.map.getObjectLayer("Waypoint_Layer") != null) {
         var arrayPuntos = [8];
         var counter = 0;
@@ -414,7 +415,7 @@ export default class Tutorial extends Phaser.Scene {
 
    //AUDIO
       Audio.levelZero(this);
-       
+
       //
   }
   //Función update, que actualiza el estado de la escena.

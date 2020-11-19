@@ -1,4 +1,4 @@
-
+//clase de interactuable por defecto
 export default class Interactable {
   constructor(scene, x, y, spr, singleUse, toggle){
     //inicializacion
@@ -18,6 +18,7 @@ export default class Interactable {
     //this.scene.events.on("update", this.update, this);
   }
 
+  //metodo que determina como se comporta al ser presionado por el raton del usuario
   playerInteracted(){
     if(this.singleUse){
       this.onActivated();

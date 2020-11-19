@@ -125,6 +125,7 @@ export default class Player {
     this.wheelWeaponArray = [];
     this.wheelArrayCounter = 0;
 
+    //if general que crea unos controles u otros dependiendo de si estamos en pc o movil (tambien se encarga del HUD)
     if(this.scene.game.onPC){
       console.log(this.cursors);
       this.cursors = this.scene.input.keyboard.addKeys({
@@ -263,6 +264,7 @@ export default class Player {
       const energyBarFillHUD = this.scene.add.image(180, 87, 'energyBarFillHUD').setScrollFactor(0).setDepth(90);
     }
 
+    //funciones de collision con otros cuerpos
     this.collideFunc1 = scene.matterCollision.addOnCollideStart({
       objectA: [this.sensors.bottom, this.sensors.left, this.sensors.right],
       callback: this.onSensorCollide,
@@ -377,9 +379,11 @@ export default class Player {
     else return 1;
   }
 
+  //update general del player
   update(time, delta) {
     if (this.sprite == undefined || this.sprite.body == undefined) { return; }
 
+    //filtrado de collisiones
     this.updateKnockback(time, delta);
     TileController.playerTouchBoundry(this.scene, this.sprite);
     if (!this.alive) { return; }
@@ -518,6 +522,7 @@ export default class Player {
 
     //JET
   }
+  //funcion de animaciones del jugador
   playAnimation(isFiring){
     if(this.activatedJet){
       this.sprite.anims.setTimeScale(1);
@@ -589,6 +594,7 @@ export default class Player {
     }
   }
 
+  //knockback por balas enemigas
   updateKnockback(time, delta){
     if(this.knockVector.length() > this.adjustedFriction){
       this.knockVector.x -= this.knockVecNomralized.x * this.adjustedFriction;
@@ -600,6 +606,7 @@ export default class Player {
     }
   }
 
+  //funcion de daño
   playerDamage(num, ignoreInvul = false) {
     const delayT = 220;
     if (this.invulTimer.elapsed == delayT || ignoreInvul) {
@@ -624,6 +631,7 @@ export default class Player {
       this.hpBar.draw(this.hp);
     }
   }
+  //funcion de daño y empuje
   playerDamageKnockback(num, knockback, knockVec , ignoreInvul = false) {
     this.knockVector.x = knockVec.x;
     this.knockVector.y = knockVec.y;
@@ -633,6 +641,7 @@ export default class Player {
     this.playerDamage(num, ignoreInvul);
   }
 
+  //muerte del jugador
   playerDeath(){
     if(this.alive){
       //AUDIO
@@ -653,6 +662,7 @@ export default class Player {
     }
   }
 
+  //victoria al derrotar el boss
   playerVictory(){
     this.sprite.body.ignoreGravity = true;
     this.sprite.setVelocityX(0);
@@ -661,6 +671,7 @@ export default class Player {
     this.scene.game.changeScene(this.scene, "SceneScore", false, true);
   }
 
+  //funcion que destruye parcial o completamente el jugador
   destroy(fullDestroy = true){
     this.alive = false;
     this.scene.matter.world.off("beforeupdate", this.resetTouching);
@@ -719,6 +730,7 @@ export default class Player {
     }
   }
 
+  //funciones de uso de energia, gasto de vida....
   playerGainHealth(num){
     console.log(num);
     this.hp += num;
@@ -743,6 +755,7 @@ export default class Player {
     }
   }
 
+  //array de armas con todas sus variables
   initializeWeaponsArray(){
     //creacion de armas con nombre, "rate" de ataque (cuanto más grande más lento), velocidad de proyectil, tiempo de vida de proyectil, coste de energia por disparo,
     //cuanta proporción de "recovery de energía" hay al disparar (por ej: si es 0.5 recuperamos la mitad de energía que de normal cada update), el sprite del proyectil, el frame del crosshair.png que se usa
@@ -757,6 +770,7 @@ export default class Player {
     this.weapons[8] = {name: "Lasser", damage: 1.5, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 1.4, energyRecoverProportion: 0, wSprite: 8, chFrame: 3};
   }
 
+  //inicializacion de disparo
   initializeFire(){
     //inicializacón de disparo
     if(!this.fireArm.fireArmActive){
@@ -782,6 +796,7 @@ export default class Player {
     }
     this.fireCounterHold = 0;
   }
+  //disparar proyectil segun arma seleccionada
   fireProjectile(){
     const currentWeapon = this.weapons[this.weaponCounter];
     if(this.energy >= currentWeapon.energyCost){
@@ -828,6 +843,7 @@ export default class Player {
       this.offJet();
     }
   }
+  //cambio de arma
   changeWeapon(){
     this.scene.game.anims.resumeAll();
 
@@ -846,6 +862,7 @@ export default class Player {
     console.log(this.weapons[this.weaponCounter].name);
   }
 
+  //cambio de arma
   setWeapon(num){
     this.scene.game.anims.resumeAll();
     if(this.weaponCounter == 8){
@@ -863,6 +880,7 @@ export default class Player {
     console.log(this.weapons[this.weaponCounter].name);
   }
 
+  //recibir arma de npc
   recieveWeapon(id, playSound = true){
     if(playSound){
       //AUDIO
@@ -969,6 +987,7 @@ export default class Player {
     */
   }
 
+  //metodo que comprueba si estamos en una habitacion con npc
   inRoom(){
     if(this.scene.encounterNPC == undefined || this.scene.encounterNPC.sprite == undefined || this.sprite == undefined || this.sprite.body == undefined) return false;
     if(Math.sqrt(Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2) + Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2)) < Audio.vanishingPoint){
@@ -979,6 +998,7 @@ export default class Player {
     }
   }
 
+  //funciones para enemigo mas cercano
   initPosibleClosestEnemy(){
     var closeseEnemyDistance = Number.MAX_SAFE_INTEGER;
     for(var i=0; i<this.scene.enemyController.enemyBodies.length; i++){

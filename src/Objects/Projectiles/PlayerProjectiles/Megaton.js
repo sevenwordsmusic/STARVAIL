@@ -53,7 +53,7 @@ export default class Megaton extends Projectile {
     }
   }
   //
-
+  //funciones de collision
   armBomb(){
     this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
       objectA: this.sensor,
@@ -67,7 +67,7 @@ export default class Megaton extends Projectile {
       context: this
     });
   }
-
+  //al collisionar con algo
   onSensorCollide({ bodyA, bodyB, pair }) {
     if(bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
     this.timer.remove();
@@ -137,7 +137,7 @@ export default class Megaton extends Projectile {
     }
   }*/
 
-
+  //distancia al jugador
   distanceToPlayer(){
     if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)
       return Number.MAX_SAFE_INTEGER;

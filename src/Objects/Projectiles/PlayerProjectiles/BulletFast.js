@@ -86,7 +86,7 @@ export default class BulletFast extends Projectile {
     },this);
     //mejorar esto si las balas hacen mucho daño
   }
-
+  //distancia al jugador
   distanceToPlayer(){
     if(this.distAcumulator == undefined)
       return Number.MAX_SAFE_INTEGER;

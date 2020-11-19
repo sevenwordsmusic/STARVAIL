@@ -13,6 +13,7 @@ export default class LevelEnd {
     scene.add.sprite(x,y-110,"goalVFX",0).setScale(6.00).setDepth(-15).anims.play("goalVFX", true);
   }
 
+  //inicialización de la meta (sucede después de que se haya creado el jugador)
   initGoal(keyNext, sceneNext, updateLife = true){
     this.updateLife = updateLife;
     this.collisionTracker = this.scene.matterCollision.addOnCollideStart({         //si da problemas al colisonar con player añadir el resto de cuerpos de player al collider
@@ -23,6 +24,7 @@ export default class LevelEnd {
   });
   }
 
+  //funcion que controla la transicion de niveles
   goToLevel(scene, keyNext, sceneNext){
     if(this.updateLife)
       this.updatePlayerLife();
@@ -39,10 +41,12 @@ export default class LevelEnd {
     this.collisionTracker();
   }
 
+  //si mantener la vida de ljugador al pasar de nivel
   updatePlayerLife(){
     this.scene.game.currentPlayerHp = this.scene.game.player.hp;
   }
 
+  //si darle el arma bomba (necesario para el turial)
   enableGiveBomb(){
     this.giveBomb = true;
   }

@@ -159,39 +159,63 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('kilonova1', 'assets/Sprites/VFX/kilonova_400X400_95_1.png', { frameWidth: 400, frameHeight: 400 });
 
 
-    //EFCTOS FIN JUEGO
-    this.load.spritesheet('kilonova1', 'assets/Sprites/VFX/kilonova_400X400_95_1.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('kilonova2', 'assets/Sprites/VFX/kilonova_400X400_95_2.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('kilonova3', 'assets/Sprites/VFX/kilonova_400X400_95_3.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('kilonova4', 'assets/Sprites/VFX/kilonova_400X400_95_4.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('kilonova5', 'assets/Sprites/VFX/kilonova_400X400_95_5.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('kilonova6', 'assets/Sprites/VFX/kilonova_400X400_95_6.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('kilonova7', 'assets/Sprites/VFX/kilonova_400X400_95_7.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('kilonova8', 'assets/Sprites/VFX/kilonova_400X400_95_8.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('kilonova9', 'assets/Sprites/VFX/kilonova_400X400_95_9.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('kilonova10', 'assets/Sprites/VFX/kilonova_400X400_95_10_5fps.png', { frameWidth: 400, frameHeight: 400 });
+    //EFCTOS FIN JUEGO//carga solo si estamos en pc
+      this.load.spritesheet('kilonova1', 'assets/Sprites/VFX/kilonova_400X400_95_1.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('kilonova2', 'assets/Sprites/VFX/kilonova_400X400_95_2.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('kilonova3', 'assets/Sprites/VFX/kilonova_400X400_95_3.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('kilonova4', 'assets/Sprites/VFX/kilonova_400X400_95_4.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('kilonova5', 'assets/Sprites/VFX/kilonova_400X400_95_5.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('kilonova6', 'assets/Sprites/VFX/kilonova_400X400_95_6.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('kilonova7', 'assets/Sprites/VFX/kilonova_400X400_95_7.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('kilonova8', 'assets/Sprites/VFX/kilonova_400X400_95_8.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('kilonova9', 'assets/Sprites/VFX/kilonova_400X400_95_9.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('kilonova10', 'assets/Sprites/VFX/kilonova_400X400_95_10_5fps.png', { frameWidth: 400, frameHeight: 400 });
 
-    this.load.spritesheet('darkHole1', 'assets/Sprites/VFX/dark_hole_400X400_135_1_12fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole2', 'assets/Sprites/VFX/dark_hole_400X400_135_2_12fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole3', 'assets/Sprites/VFX/dark_hole_400X400_135_3_12fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole4', 'assets/Sprites/VFX/dark_hole_400X400_135_4_12fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole5', 'assets/Sprites/VFX/dark_hole_400X400_135_5_12fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole6', 'assets/Sprites/VFX/dark_hole_400X400_135_6_12fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole7', 'assets/Sprites/VFX/dark_hole_400X400_135_7_12fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole8', 'assets/Sprites/VFX/dark_hole_400X400_135_8_12fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole9', 'assets/Sprites/VFX/dark_hole_400X400_135_9_12fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole10', 'assets/Sprites/VFX/dark_hole_400X400_135_10_12fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole11', 'assets/Sprites/VFX/dark_hole_400X400_135_11_12fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('darkHole12', 'assets/Sprites/VFX/dark_hole_400X400_135_12_8fps.png', { frameWidth: 400, frameHeight: 400 });
+    if(this.game.onPC){
+      this.load.spritesheet('darkHole1', 'assets/Sprites/VFX/dark_hole_400X400_135_1_12fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('darkHole2', 'assets/Sprites/VFX/dark_hole_400X400_135_2_12fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('darkHole3', 'assets/Sprites/VFX/dark_hole_400X400_135_3_12fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('darkHole4', 'assets/Sprites/VFX/dark_hole_400X400_135_4_12fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('darkHole5', 'assets/Sprites/VFX/dark_hole_400X400_135_5_12fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('darkHole6', 'assets/Sprites/VFX/dark_hole_400X400_135_6_12fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('darkHole7', 'assets/Sprites/VFX/dark_hole_400X400_135_7_12fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('darkHole8', 'assets/Sprites/VFX/dark_hole_400X400_135_8_12fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('darkHole9', 'assets/Sprites/VFX/dark_hole_400X400_135_9_12fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('darkHole10', 'assets/Sprites/VFX/dark_hole_400X400_135_10_12fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('darkHole11', 'assets/Sprites/VFX/dark_hole_400X400_135_11_12fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('darkHole12', 'assets/Sprites/VFX/dark_hole_400X400_135_12_8fps.png', { frameWidth: 400, frameHeight: 400 });
 
-    this.load.spritesheet('pulsar1', 'assets/Sprites/VFX/pulsar_400X400_60_1_8fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('pulsar2', 'assets/Sprites/VFX/pulsar_400X400_60_2_8fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('pulsar3', 'assets/Sprites/VFX/pulsar_400X400_60_3_8fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('pulsar4', 'assets/Sprites/VFX/pulsar_400X400_60_4_8fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('pulsar5', 'assets/Sprites/VFX/pulsar_400X400_60_5_8fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('pulsar6', 'assets/Sprites/VFX/pulsar_400X400_60_6_8fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('pulsar7', 'assets/Sprites/VFX/pulsar_400X400_60_7_8fps.png', { frameWidth: 400, frameHeight: 400 });
-    this.load.spritesheet('pulsar8', 'assets/Sprites/VFX/pulsar_400X400_60_8_4fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('pulsar1', 'assets/Sprites/VFX/pulsar_400X400_60_1_8fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('pulsar2', 'assets/Sprites/VFX/pulsar_400X400_60_2_8fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('pulsar3', 'assets/Sprites/VFX/pulsar_400X400_60_3_8fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('pulsar4', 'assets/Sprites/VFX/pulsar_400X400_60_4_8fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('pulsar5', 'assets/Sprites/VFX/pulsar_400X400_60_5_8fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('pulsar6', 'assets/Sprites/VFX/pulsar_400X400_60_6_8fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('pulsar7', 'assets/Sprites/VFX/pulsar_400X400_60_7_8fps.png', { frameWidth: 400, frameHeight: 400 });
+      this.load.spritesheet('pulsar8', 'assets/Sprites/VFX/pulsar_400X400_60_8_4fps.png', { frameWidth: 400, frameHeight: 400 });
+    }else{
+      this.load.spritesheet('darkHole1', 'assets/Sprites/VFX/dark_hole_400X400_135_1_12fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('darkHole2', 'assets/Sprites/VFX/dark_hole_400X400_135_2_12fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('darkHole3', 'assets/Sprites/VFX/dark_hole_400X400_135_3_12fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('darkHole4', 'assets/Sprites/VFX/dark_hole_400X400_135_4_12fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('darkHole5', 'assets/Sprites/VFX/dark_hole_400X400_135_5_12fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('darkHole6', 'assets/Sprites/VFX/dark_hole_400X400_135_6_12fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('darkHole7', 'assets/Sprites/VFX/dark_hole_400X400_135_7_12fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('darkHole8', 'assets/Sprites/VFX/dark_hole_400X400_135_8_12fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('darkHole9', 'assets/Sprites/VFX/dark_hole_400X400_135_9_12fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('darkHole10', 'assets/Sprites/VFX/dark_hole_400X400_135_10_12fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('darkHole11', 'assets/Sprites/VFX/dark_hole_400X400_135_11_12fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('darkHole12', 'assets/Sprites/VFX/dark_hole_400X400_135_12_8fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+
+      this.load.spritesheet('pulsar1', 'assets/Sprites/VFX/pulsar_400X400_60_1_8fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('pulsar2', 'assets/Sprites/VFX/pulsar_400X400_60_2_8fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('pulsar3', 'assets/Sprites/VFX/pulsar_400X400_60_3_8fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('pulsar4', 'assets/Sprites/VFX/pulsar_400X400_60_4_8fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('pulsar5', 'assets/Sprites/VFX/pulsar_400X400_60_5_8fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('pulsar6', 'assets/Sprites/VFX/pulsar_400X400_60_6_8fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+      this.load.spritesheet('pulsar7', 'assets/Sprites/VFX/pulsar_400X400_60_7_8fpsMOBILE.png', { frameWidth: 400, frameHeight: 100 });
+      this.load.spritesheet('pulsar8', 'assets/Sprites/VFX/pulsar_400X400_60_8_4fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
+    }
     //EFCTOS FIN JUEGO
 
     //ENEMIGOS
@@ -313,8 +337,11 @@ export default class SceneLoading extends Phaser.Scene {
     //this.load.spritesheet('missileExplosion', 'assets/Sprites/VFX/missil_explosion_100x100_75.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
     //this.load.spritesheet('smoke', 'assets/Sprites/Explosions/laser_smoke.png', { frameWidth: 100, frameHeight: 100 });
-
-    this.load.spritesheet('laserNonLethal', 'assets/Sprites/Bullet/laser_nonletal.png', { frameWidth: 960, frameHeight: 32 }); //62
+    if(this.game.onPC){
+      this.load.spritesheet('laserNonLethal', 'assets/Sprites/Bullet/laser_nonletal.png', { frameWidth: 960, frameHeight: 32 }); //62
+    }else{
+      this.load.spritesheet('laserNonLethal', 'assets/Sprites/Bullet/laser_nonletal.png', { frameWidth: 960, frameHeight: 32 }); //62
+    }
 
     this.load.spritesheet('laserLethal', 'assets/Sprites/Bullet/laser_letal.png', { frameWidth: 960, frameHeight: 32 }); //42*/
     this.load.spritesheet('laserLethal2', 'assets/Sprites/Bullet/laser_letal2.png', { frameWidth: 960, frameHeight: 32 }); //42*/

@@ -59,6 +59,7 @@ export default class Bomb extends Projectile {
   }
   //
 
+  //funciones de collision
   armBomb(){
     this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
       objectA: this.sensor,
@@ -79,7 +80,7 @@ export default class Bomb extends Projectile {
       callback: () => (this.armBomb())
     });
   }
-
+  //al collisionar con algo
   onSensorCollide({ bodyA, bodyB, pair }) {
     if(bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
     if (bodyB.isSensor) return;
@@ -105,7 +106,7 @@ export default class Bomb extends Projectile {
         this.sfx.volume=Audio.volume3D(this);
     //
   }
-
+  //al terminar su tiempo o destruirse por otra razon (como haber collisionado con algo)
   itemExpire(){
       this.bombArmed1();
       this.bombArmed2();
@@ -148,7 +149,7 @@ export default class Bomb extends Projectile {
     }
   }
 
-
+  //distancia al jugador
   distanceToPlayer(){
     if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)
       return Number.MAX_SAFE_INTEGER;

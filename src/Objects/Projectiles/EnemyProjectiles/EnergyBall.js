@@ -41,7 +41,7 @@ export default class EnergyBall extends Projectile {
       }
     //
   }
-
+  //al colisionar con un objeto
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
     if(bodyB === this.scene.game.player.mainBody){
@@ -70,7 +70,7 @@ export default class EnergyBall extends Projectile {
       //
     }
   }
-
+  //al terminar su tiempo o destruirse por otra razon (como haber collisionado con algo)
   itemExpire(proj){
     this.projectileArmed();
 
@@ -91,6 +91,7 @@ export default class EnergyBall extends Projectile {
     bombExplosion.anims.play('bulletImpact5', true);
     super.itemExpire(proj);
   }
+  //distancia con el jugador
   distanceToPlayer(){
     if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)
       return Number.MAX_SAFE_INTEGER;

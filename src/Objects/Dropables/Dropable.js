@@ -12,6 +12,7 @@ export default class Dropable {
     });
   }
 
+  //funcion de dropable recogido
   dropablePicked(drop){
     this.timer.destroy();
     this.sprite.destroy();

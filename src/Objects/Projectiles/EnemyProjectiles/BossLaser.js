@@ -60,18 +60,19 @@ export default class BossLaser {
   }
 
 
-
+  //al colisionar con un objeto
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
       this.scene.game.player.playerDamage(10000, true);
   }
-
+  //al terminar su tiempo o destruirse por otra razon (como haber collisionado con algo)
   itemExpire(proj){
     this.scene.boss.gun.laser = undefined;
     this.sprite.destroy();
     this.sprite = undefined;
   }
 
+  //distancia con el jugador
   distanceToPlayer(){
     if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)
       return Number.MAX_SAFE_INTEGER;

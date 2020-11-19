@@ -92,7 +92,7 @@ export default class Missile extends Projectile {
       //
     }
   }
-
+  //funciones de collision
   armBomb(){
     //this.sprite.body.collisionFilter.group = 0;
     this.bombArmed1 = this.scene.matterCollision.addOnCollideStart({
@@ -101,7 +101,7 @@ export default class Missile extends Projectile {
       context: this
     });
   }
-
+  //al collisionar con algo
   onSensorCollide({ bodyA, bodyB, pair }) {
     if(bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
     this.reachedTarget(this, bodyB, pair);
@@ -150,7 +150,7 @@ export default class Missile extends Projectile {
     }
   }
 
-
+  //distancia al jugador
   distanceToPlayer(){
     if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)
       return Number.MAX_SAFE_INTEGER;

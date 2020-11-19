@@ -15,9 +15,10 @@ export default class DropableAir extends Dropable{
     });
     this.sprite.setExistingBody(compoundBody).setFixedRotation().setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
     //this.sprite.body.isSensor = true;
+    //propiedades del cuerpo y funcion de collision con el player
     this.sprite.setIgnoreGravity(true).setFixedRotation();
     this.sprite.body.frictionAir = 0.06;
-    scene.matterCollision.addOnCollideStart({         //si da problemas al colisonar con player añadir el resto de cuerpos de player al collider
+    scene.matterCollision.addOnCollideStart({
       objectA: sensor,
       objectB: this.scene.game.player.mainBody,
       callback:() => (this.dropablePicked(this)),
@@ -26,6 +27,7 @@ export default class DropableAir extends Dropable{
     this.sprite.body.collisionFilter.group = -3;
   }
 
+  //se establecen propiedades fisicas
   bounce(spreadVelX, spreadVelY, dir){
     const randomSpeed = Phaser.Math.FloatBetween(0.5 * spreadVelX, spreadVelX);
     var randomVec = new Phaser.Math.Vector2(randomSpeed * dir.x, randomSpeed * dir.y);

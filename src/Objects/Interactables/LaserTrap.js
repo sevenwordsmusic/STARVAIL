@@ -1,8 +1,10 @@
 import Audio from "../../Audio.js";
 
+//emisor de sonido para los laseres
 export default class LaserTrap {
   static lasserTrapCount=0;
   constructor(scene, x, y ){
+    //inicializacion
     this.scene= scene;
     this.x= x;
     this.y= y;
@@ -26,7 +28,7 @@ export default class LaserTrap {
     }
   }
   //
-
+  //distancia al jugador
   distanceToPlayer(){
     if(this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined || !this.exists)
       return Number.MAX_SAFE_INTEGER;
@@ -34,6 +36,7 @@ export default class LaserTrap {
       return Math.sqrt(Math.pow(this.x - this.scene.game.player.sprite.x,2) + Math.pow(this.y - this.scene.game.player.sprite.y,2));
   }
 
+  //destruir objeto
   destroy(){
     if(this.sfx.isPlaying){
       this.sfx.stop();

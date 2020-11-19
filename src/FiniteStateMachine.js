@@ -2,7 +2,7 @@ export default class FiniteStateMachine {
   constructor(){}
 
   //se inicializa la máquina de estados con un num de estados determinados y se establece que pasa cuando se llama turnOff y turnOnn stateOnEnd
-  //si se llama en tiempo real (después de crea un enemigo, aliado ... que la use) toda la máquina de estados se reinicia (las funciones anidadas a la FSM se pierden)
+  //si se llama en tiempo real (después de crear un enemigo, aliado ... que la use) toda la máquina de estados se reinicia (las funciones anidadas a la FSM se pierden)
   initializeAI(numberStates){
     this.states = [numberStates];
     for(var i=0; i<numberStates; i++){

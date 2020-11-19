@@ -12,6 +12,7 @@ export default class DropableGround extends Dropable{
       friction: 0,
       frictionStatic: 0
     });
+    //propiedades del cuerpo y funcion de collision con el player
     this.sprite.setExistingBody(compoundBody).setFixedRotation().setPosition(x, y);/*.setFriction(0).setFrictionStatic(0)*/
     this.sprite.body.restitution = 0.5;
     scene.matterCollision.addOnCollideStart({         //si da problemas al colisonar con player añadir el resto de cuerpos de player al collider
@@ -24,6 +25,7 @@ export default class DropableGround extends Dropable{
     this.sprite.body.collisionFilter.group = -3;
   }
 
+  //se establecen propiedades fisicas
   bounce(spreadX, dir, speed, speedVar){
     var randomVec = new Phaser.Math.Vector2(Phaser.Math.FloatBetween(1, spreadX) * dir, -Phaser.Math.FloatBetween(speed, speed+speedVar));
     this.sprite.setVelocity(randomVec.x, randomVec.y);
