@@ -378,7 +378,7 @@ export default class Level2 extends Phaser.Scene {
    this.maxMemory = 0;
    //AUDIO
       Audio.levelTwo(this);
-       Audio.fullscreenMode(this);
+      Audio.fullscreenMode(this);
       //
   }
   //Función update, que actualiza el estado de la escena.

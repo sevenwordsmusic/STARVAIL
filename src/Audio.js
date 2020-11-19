@@ -11,6 +11,7 @@ export default class Audio extends Phaser.Scene {
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64, this.barRate / 128];
     static barCounter = 0;
     static paused = false;
+    static awayNPC= true;
     static musicLayerBarEvent;
     static musicLayerJetEvent;
     static musicTweens = [];
@@ -22,6 +23,7 @@ export default class Audio extends Phaser.Scene {
     static earlyWeapon = -1;
     static earlyPropeller = false;
     static propellerTween = false;
+    static earlyHelpedNPC = 0;
     static currentLevel = 0;
     //VOLUMES
     static maxVolume = 1.0;
@@ -217,11 +219,59 @@ export default class Audio extends Phaser.Scene {
         Audio.lasserSufferingLoop.volume = 0.0;
         //
         if (Audio.currentLevel == 3) {
+            if (Audio.awayNPC) {
+                Audio.musicLoop0001.volume = Audio.volumeBGM;
+            }
             Audio.musicLoop0001.resume();
         } else if (Audio.currentLevel == 1 || Audio.currentLevel == 2) {
             Audio.musicLayerResume(scene);
         }
         Audio.paused = false;
+    }
+    static clearNPC(scene) {
+        Audio.awayNPC=false;
+        if (Audio.currentLevel == 3) {
+            scene.tweens.add({
+                targets: Audio.musicLoop0001,
+                volume: 0.0,
+                duration: Audio.barRateDiv[2],
+            });
+        } else if (Audio.currentLevel == 1 || Audio.currentLevel == 2) {
+            if (Audio.musicTweens[0] != undefined) {
+                if (Audio.musicTweens[0].isPlaying()) {
+                    Audio.musicTweens[0].pause();
+                    Audio.musicTweens[0].remove();
+                }
+            }
+            if (Audio.musicTweens[1] != undefined) {
+                if (Audio.musicTweens[1].isPlaying()) {
+                    Audio.musicTweens[1].pause();
+                    Audio.musicTweens[1].remove();
+                }
+            }
+            if (Audio.musicTweens[2] != undefined) {
+                if (Audio.musicTweens[2].isPlaying()) {
+                    Audio.musicTweens[2].pause();
+                    Audio.musicTweens[2].remove();
+                }
+            }
+            Audio.musicTweens[0]=scene.tweens.add({
+                targets: Audio.musicLoop0000levitating,
+                volume: 0.0,
+                duration: Audio.barRateDiv[2],
+            });
+            Audio.musicTweens[1]=scene.tweens.add({
+                targets: Audio.musicLoop0000moving,
+                volume: 0.0,
+                duration: Audio.barRateDiv[2],
+            });
+            Audio.musicTweens[2]=scene.tweens.add({
+                targets: Audio.musicLoop0000flying,
+                volume: 0.0,
+                duration: Audio.barRateDiv[2],
+            });
+        }
+
     }
     static musicLayerResume(scene) {
         if (Audio.musicTweens[0] != undefined) {
@@ -268,7 +318,6 @@ export default class Audio extends Phaser.Scene {
         if (document.getElementById("bgmSlider").value / 10 != Audio.volumeBGM) {
             Audio.volumeBGM = document.getElementById("bgmSlider").value / 10;
             Audio.musicLoop0000chill.volume = Audio.volumeBGM;
-            Audio.musicLoop0001.volume = Audio.volumeBGM;
             var click = Audio.play2DinstanceRate(88, 1.0);
             click.volume = document.getElementById("bgmSlider").value / 10;
         }
@@ -417,7 +466,7 @@ export default class Audio extends Phaser.Scene {
     static musicLayerBar(scene) {
         //console.log("BAR #" + Audio.barCounter);
         Audio.barCounter++;
-        if (!Audio.paused && Audio.volumeBGM > 0.0) {
+        if (!Audio.paused && Audio.volumeBGM > 0.0 && Audio.awayNPC) {
             Audio.musicLayerHeight(scene);
             Audio.musicLayerMovement(scene);
         }
@@ -454,7 +503,7 @@ export default class Audio extends Phaser.Scene {
         }
     }
     static musicLayerJet(scene) {
-        if (!Audio.paused && Audio.volumeBGM > 0.0) {
+        if (!Audio.paused && Audio.volumeBGM > 0.0 && Audio.awayNPC) {
             if (Audio.stingerJet) {
                 Audio.stingerJet = false;
                 Audio.musicTweens[2] = scene.tweens.add({

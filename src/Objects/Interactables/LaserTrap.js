@@ -15,8 +15,8 @@ export default class LaserTrap {
 
   //AUDIO
   update(time, delta){
-    if(this!= undefined && Audio.waitForUpdate()){
-        this.sfx.volume=Audio.volume3D(this)
+    if(this!= undefined && !Audio.waitForUpdate()){
+        this.sfx.volume=Audio.volume3D(this);
     }
   }
   //

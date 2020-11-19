@@ -28,7 +28,11 @@ export default class Chatter extends Phaser.Scene {
         var rnd=Math.floor(Math.random()*Chatter.male.length);
         switch(genre){
           case 0:
+<<<<<<< Updated upstream
                 if(!Chatter.male[rnd].isPlaying){
+=======
+                if(!Chatter.male[rnd].isPlaying()){
+>>>>>>> Stashed changes
                     Chatter.male[rnd].volume=Audio.volumeSFX;
                     Chatter.male[rnd].setRate(1.5-size);
                     Chatter.male[rnd].setDetune(1200-(weight*2400));
@@ -36,7 +40,11 @@ export default class Chatter extends Phaser.Scene {
                 }
             break;
           case 1:
+<<<<<<< Updated upstream
                 if(!Chatter.female[rnd].isPlaying){
+=======
+                if(!Chatter.female[rnd].isPlaying()){
+>>>>>>> Stashed changes
                     Chatter.female[rnd].volume=Audio.volumeSFX;
                     Chatter.female[rnd].setRate(1.5-size);
                     Chatter.female[rnd].setDetune(1200-(weight*2400));
