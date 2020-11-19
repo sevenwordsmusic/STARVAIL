@@ -259,13 +259,9 @@ function mobileTabletChek() {
     check = true;
   return check;
 };
-<<<<<<< Updated upstream
-game.onPC=!mobileTabletChek();
-=======
 
 game.onPC=!mobileTabletChek();
 
->>>>>>> Stashed changes
 console.log("onPC:  " +game.onPC);
 
 game.prepareScreen = function(){

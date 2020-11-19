@@ -654,8 +654,8 @@ export default class Player {
 
   playerVictory(){
     this.destroy(false);
-    this.scene.run("SceneEffectBackground");
-    this.scene.sendToBack("SceneEffectBackground");
+    this.scene.scene.run("SceneEffectBackground");
+    this.scene.scene.sendToBack("SceneEffectBackground");
     this.scene.game.changeScene(this.scene, "SceneScore");
   }
 
@@ -747,7 +747,7 @@ export default class Player {
     this.weapons[2] = {name: "BulletExplosive", damage: 14, knockback: 2 / this.scene.matter.world.getDelta(),  spread: 0.1, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 2, energyRecoverProportion: 0, wSprite: 3, chFrame: 0};
     this.weapons[3] = {name: "BulletBounce", damage: 10, bounce: 3, spread: 0.075, fireRate: 8 * this.scene.matter.world.getDelta(), projectileSpeed: 25, expireTime: 800, energyCost: 1, energyRecoverProportion: 0, wSprite: 1, chFrame: 0};
     this.weapons[4] = {name: "BombNormal", damage: 25, area: 45, knockback:  2 / this.scene.matter.world.getDelta(), fireRate: 25 * this.scene.matter.world.getDelta(), projectileSpeed: 10, expireTime: 2000, energyCost: 20, energyRecoverProportion: 0.8, wSprite: 7, chFrame: 1};
-    this.weapons[5] = {name: "BombMegaton", damage: 150, area: 80, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 8, expireTime: 2000, energyCost: 100, energyRecoverProportion: 0.2, wSprite: 4, chFrame: 1};
+    this.weapons[5] = {name: "BombMegaton", damage: 100, area: 80, knockback: 3.5 / this.scene.matter.world.getDelta(), extraEffect: 1.5, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 8, expireTime: 2000, energyCost: 120, energyRecoverProportion: 0.2, wSprite: 4, chFrame: 1};
     this.weapons[6] = {name: "Misil", damage: 50, area: 30, knockback: 1 / this.scene.matter.world.getDelta(), autoAim: 0.08 / this.scene.matter.world.getDelta(), fireRate: 20 * this.scene.matter.world.getDelta(), projectileSpeed: 15, expireTime: 4000, energyCost: 60, energyRecoverProportion: 0.2, wSprite: 2, chFrame: 2};
     this.weapons[7] = {name: "MissileMulti", damage: 5, area: 25, knockback: 1 / this.scene.matter.world.getDelta(), offsprings: 7, offspringScale: 0.9, fireRate: 30 * this.scene.matter.world.getDelta(), projectileSpeed: 12, expireTime: 4000, energyCost: 60, energyRecoverProportion: 0.2, wSprite: 5, chFrame: 2};
     this.weapons[8] = {name: "Lasser", damage: 1.5, spread: 0, fireRate: 0, projectileSpeed: 0, expireTime: 0, energyCost: 1.4, energyRecoverProportion: 0, wSprite: 8, chFrame: 3};
