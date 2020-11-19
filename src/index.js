@@ -260,16 +260,9 @@ function mobileTabletChek() {
   return check;
 };
 
-game.onPC=!mobileTabletChek();
 
-<<<<<<< Updated upstream
-if (game.onPC == undefined) {
-  game.onPC = true;
-}
+game.onPC =!mobileTabletChek();
 
-=======
->>>>>>> Stashed changes
-console.log("onPC:  " +game.onPC);
 
 game.prepareScreen = function(){
   if(!game.onPC){
