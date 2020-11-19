@@ -340,7 +340,7 @@ export default class SceneLoading extends Phaser.Scene {
     if(this.game.onPC){
       this.load.spritesheet('laserNonLethal', 'assets/Sprites/Bullet/laser_nonletal.png', { frameWidth: 960, frameHeight: 32 }); //62
     }else{
-      this.load.spritesheet('laserNonLethal', 'assets/Sprites/Bullet/laser_nonletal.png', { frameWidth: 960, frameHeight: 32 }); //62
+      this.load.spritesheet('laserNonLethal', 'assets/Sprites/Bullet/laser_nonletal.png', { frameWidth: 240, frameHeight: 8 }); //62
     }
 
     this.load.spritesheet('laserLethal', 'assets/Sprites/Bullet/laser_letal.png', { frameWidth: 960, frameHeight: 32 }); //42*/
