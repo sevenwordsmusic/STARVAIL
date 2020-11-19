@@ -25,28 +25,6 @@ export default class Chatter extends Phaser.Scene {
 
 
     static speakWord(genre, size, weight){
-<<<<<<< Updated upstream
-        // var rnd=Math.floor(Math.random()*Chatter.male.length);
-        // switch(genre){
-        //   case 0:
-        //         if(!Chatter.male[rnd].isPlaying()){
-        //             Chatter.male[rnd].volume=Audio.volumeSFX;
-        //             Chatter.male[rnd].setRate(1.5-size);
-        //             Chatter.male[rnd].setDetune(1200-(weight*2400));
-        //             Chatter.male[rnd].play();
-        //         }
-        //     break;
-        //   case 1:
-        //         if(!Chatter.female[rnd].isPlaying()){
-        //             Chatter.female[rnd].volume=Audio.volumeSFX;
-        //             Chatter.female[rnd].setRate(1.5-size);
-        //             Chatter.female[rnd].setDetune(1200-(weight*2400));
-        //             Chatter.female[rnd].play();
-        //         }
-        //     break
-    	// }
-    	// Chatter.counter++;
-=======
         var rnd=Math.floor(Math.random()*Chatter.male.length);
         switch(genre){
           case 0:
@@ -67,7 +45,6 @@ export default class Chatter extends Phaser.Scene {
             break
     	}
     	Chatter.counter++;
->>>>>>> Stashed changes
     }
 
     preload() {
