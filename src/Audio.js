@@ -116,7 +116,7 @@ export default class Audio extends Phaser.Scene {
     }
     static gameOver() {
         //Audio.musicLoop0000chill.resume();
-        //
+
         if (Audio.currentLevel == 4) {
             //Audio.musicLoop0002.stop();
         } else if (Audio.currentLevel == 3) {
@@ -194,6 +194,7 @@ export default class Audio extends Phaser.Scene {
         Audio.paused = false;
     }
     static pause() {
+        Audio.musicLoop0000chill.volume = Audio.volumeBGM;
         Audio.musicLoop0000chill.resume();
         //
         if (Audio.currentLevel == 3) {
