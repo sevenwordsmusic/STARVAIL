@@ -128,14 +128,15 @@ export default class Player {
       'right': Phaser.Input.Keyboard.KeyCodes.D,
       'down': Phaser.Input.Keyboard.KeyCodes.S});
 
-      this.wheelCooldown = 125;
+      this.wheelCooldown = 100;
       this.wheelTimerCounter = 0;
       this.wheelWeaponArray = [];
       this.wheelArrayCounter = 0;
       this.scene.input.on('wheel', function(pointer){
         if(this.wheelTimerCounter > this.wheelCooldown){
           this.wheelTimerCounter = 0;
-          this.wheelArrayCounter -= (pointer.deltaY/100);
+          //console.log(pointer.deltaY);
+          this.wheelArrayCounter -= Math.sign(pointer.deltaY);
           if(this.wheelArrayCounter < 0)
             this.wheelArrayCounter = this.wheelWeaponArray.length-1;
           else if(this.wheelArrayCounter > this.wheelWeaponArray.length-1){
@@ -850,7 +851,7 @@ export default class Player {
 
     this.fireCounterHold = 0;
     this.weaponCounter = num;
-    this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame)
+    this.fireArm.changeCrosshairSpr(this.weapons[this.weaponCounter].chFrame);
 
     if(this.weaponCounter == 8 && this.firingPointer!== undefined && this.firingPointer.isDown){
       this.fireArm.engageLaser();

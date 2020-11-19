@@ -21,7 +21,7 @@ export default class SceneCredits extends Phaser.Scene {
     //Oscurecer background
     const bg = this.add.image(0,0,'white_rectangle').setOrigin(0).setScale(35).setDepth(-100).setAlpha(0.25);
     bg.tint = 0x000000;
-    bg.alpha = 0.7;
+    bg.alpha = 0.5;
     
     //Credits field
     var creditsScreen=this.add.image(0,0,'CreditsScreen').setOrigin(0,0).setAlpha(0.8);

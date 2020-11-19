@@ -262,6 +262,10 @@ function mobileTabletChek() {
 
 game.onPC=!mobileTabletChek();
 
+if (game.onPC == undefined) {
+  game.onPC = true;
+}
+
 console.log("onPC:  " +game.onPC);
 
 game.prepareScreen = function(){
