@@ -4,12 +4,16 @@ import DropableAirHealth from "../Objects/Dropables/DropableAirHealth.js"
 import Audio from "../Audio.js";
 import TileController from "../TileController.js"
 
+
+//Clase idéntica a ZapperGround.js pero sin la posibilidad de atacar al jugador
+
+
 //enemigo que hereda de Enemy
 export default class ZapperGround extends Enemy {
   constructor(scene, x, y){
     super(scene, x, y, 'zapperGround', 75);
     this.sprite.setScale(2);
-    
+
     if(this.scene.game.onPC){
       this.scrapArray[0] = 'zapper1Scrap1';
       this.scrapArray[1] = 'zapper1Scrap2';

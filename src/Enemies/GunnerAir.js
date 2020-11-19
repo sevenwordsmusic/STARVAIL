@@ -9,31 +9,26 @@ import TileController from "../TileController.js"
 export default class ZapperAir extends Enemy {
   constructor(scene, x, y){
     super(scene, x, y, 'gunner', 150);
+    //inicialización de variables
     this.sprite.setScale(1.1);
 
+    //array de "scraps", pedazos que vuelan cuando muere
     if(this.scene.game.onPC){
       this.scrapArray[0] = 'gunnerScrap1';
       this.scrapArray[1] = 'gunnerScrap1';
     }
 
+    //cuerpo de del enemigo que se añade al sprite y a los arrays de enemigos correspondientes
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 40, 30, {chamfer: { radius: 8 } });
-    /*this.sensors = {
-      left:   Bodies.rectangle(-28, 0, 10, 20, { isSensor: true }),
-      right:  Bodies.rectangle(28, 0, 10, 20, { isSensor: true }),
-      top:    Bodies.rectangle(0, -28, 20, 10, { isSensor: true }),
-      bottom: Bodies.rectangle(0, 28, 20, 10, { isSensor: true })
-    };
-    const compoundBody = Body.create({
-      parts: [body, this.sensors.left, this.sensors.right, this.sensors.top, this.sensors.bottom]
-    });
 
-    this.sprite.setExistingBody(compoundBody).setPosition(x, y).setFixedRotation();*/
+    this.sprite.setExistingBody(compoundBody).setPosition(x, y).setFixedRotation();
     this.sprite.setExistingBody(body).setPosition(x, y).setFixedRotation();
     this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
     this.sprite.body.collisionFilter.group = -3;
 
+    //variables de físicas
     this.sprite.setIgnoreGravity(true);
     this.sprite.body.frictionAir = 0.06;
     this.sprite.body.friction = 0;
@@ -41,14 +36,12 @@ export default class ZapperAir extends Enemy {
     this.adjustedFriction = this.sprite.body.frictionAir / this.scene.matter.world.getDelta();
 
     //Variables de IA
-    //No Tocar
     this.patrolDir = new Phaser.Math.Vector2(0,0);
     this.standByReDistance = 950;
     this.patrolDistance = 900;
     this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
     this.stopper = false;
     this.playerVector = new Phaser.Math.Vector2(0, 0);
-    //No Tocar
 
     //Ajustar estas
     this.points = 100;               //puntos al matar a enemigo
@@ -73,7 +66,9 @@ export default class ZapperAir extends Enemy {
     });*/
 
     //IA
+    //se preparan el nº de estados que tiene la FSM, que hace cuando empieza, acaba y update de cada estado
     this.initializeAI(4);
+    //se paran todos los procesos del enemigo
     this.stateOnStart(0, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.stop();
@@ -86,6 +81,7 @@ export default class ZapperAir extends Enemy {
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       TileController.enableEnemy(this.sprite);
     })
+    //modo patrulla
     this.stateOnStart(1, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.body.frictionAir = 0.06;
@@ -127,6 +123,7 @@ export default class ZapperAir extends Enemy {
       this.patrolTimer2.remove();
     });
 
+    //modo persecución
     this.stateUpdate(2, function(time, delta){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.playerVector.x = this.scene.game.player.sprite.x - this.sprite.x;
@@ -141,6 +138,8 @@ export default class ZapperAir extends Enemy {
         this.goTo(3);
       }
     })
+
+    //modo ataque
     this.stateOnStart(3, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.play("gunnerFire",true);
@@ -171,6 +170,7 @@ export default class ZapperAir extends Enemy {
       this.stateChanged=false;
     //
   }
+  //método para filtrado de collisiones con el tileado del mapa
   updateTouchBoundry(){
     if(this.sprite != undefined){
       if(this.currentStateId() > 0){
@@ -187,12 +187,13 @@ export default class ZapperAir extends Enemy {
       this.patrolDir.y = -this.patrolDir.y;
   }
 
+  //método para disparar balas de energía
   shoot(){
     if(this.sprite == undefined || this.sprite.body == undefined)return;
     new EnergyBall(this.scene, this.sprite.x, this.sprite.y, this.hitDamage, 0.1, 10, new Phaser.Math.Vector2(Math.cos(this.sprite.angle * Math.PI/180),Math.sin(this.sprite.angle * Math.PI/180)), 1000);
   }
 
-
+  //método que se invoca al recibir daño
   damage(dmg, v){
       //AUDIO
         if(Math.random()>0.3){
@@ -210,6 +211,8 @@ export default class ZapperAir extends Enemy {
     }else if(this.currentStateId() != 0)
       super.damage(dmg, v);
   }
+
+  //método que se invoca al recibir daño con el laser
   damageLaser(dmg, v){
     //AUDIO
       Audio.lasserSufferingLoop.setDetune(-100);
@@ -223,6 +226,7 @@ export default class ZapperAir extends Enemy {
       super.damageLaser(dmg, v);
   }
 
+  //método que se invoca al morir el enemigo
   enemyDead(vXDmg, vYDmg, drop = true){
     this.goTo(0);
     if(!this.dead){
@@ -232,6 +236,7 @@ export default class ZapperAir extends Enemy {
           this.sfx.stop();
           this.sfxDetect.stop();
       //
+      //explosion al morir
       let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "enemyExplosion");
       explosion.setDepth(10).setScale(2.25);
       //al completar su animacion de explsion, dicha instancia se autodestruye
@@ -241,6 +246,7 @@ export default class ZapperAir extends Enemy {
       //animacion de explosion
       explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
+      //drops de energía y vida
       if(drop)
       if(Math.random() < 0.6){
         new DropableAirHealth(this.scene, this.sprite.x, this.sprite.y, (this.scene.game.player.sprite.x - this.sprite.x), (this.scene.game.player.sprite.y - this.sprite.y), this.healthDrop);
@@ -248,6 +254,7 @@ export default class ZapperAir extends Enemy {
       new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, (this.scene.game.player.sprite.x - this.sprite.x), (this.scene.game.player.sprite.y - this.sprite.y),  this.energyDrop);
     }
   }
+  //método llamado desde Blackboard.js para ajustar la distancia con el jugador
   updatePlayerPosition(dist){
     switch (this.currentStateId()) {
       case 0:

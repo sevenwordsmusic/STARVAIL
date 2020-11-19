@@ -8,15 +8,17 @@ import TileController from "../TileController.js"
 export default class SwordGround extends Enemy {
   constructor(scene, x, y){
     super(scene, x, y, 'hero', 120);
+    //inicialización de variables
     this.sprite.setScale(2);
 
+    //array de "scraps", pedazos que vuelan cuando muere
     if(this.scene.game.onPC){
       this.scrapArray[0] = 'swordScrap1';
       this.scrapArray[1] = 'swordScrap2';
       this.scrapArray[2] = 'swordScrap3';
     }
 
-    //this.sprite.setBounce(1.01735).setFixedRotation().setFriction(0).setFrictionAir(0).setFrictionStatic(0);
+    //cuerpo de del enemigo que se añade al sprite y a los arrays de enemigos correspondientes
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const body = Bodies.rectangle(0, 0, 30, 50);
     /*this.sensors = {
@@ -35,10 +37,10 @@ export default class SwordGround extends Enemy {
     this.sprite.body.collisionFilter.group = -3;
     this.sprite.body.restitution = 0.4;
 
+    //variables de físicas
     this.adjustedFriction = this.sprite.body.friction / this.scene.matter.world.getDelta();
 
     //Variables de IA
-    //No Tocar
     this.patrolDir = (Math.round(Math.random()) == 1)?1:-1;
     this.standByReDistance = 950;
     this.patrolDistance = 900;
@@ -46,7 +48,6 @@ export default class SwordGround extends Enemy {
     this.traveledDistance = 0;
     this.playerVector = new Phaser.Math.Vector2(0, 0);
     this.targetDir = false;
-    //No Tocar
 
     //Ajustar estas
     this.points = 50;               //puntos al matar a enemigo
@@ -74,7 +75,9 @@ export default class SwordGround extends Enemy {
     });*/
 
     //IA
+    //se preparan el nº de estados que tiene la FSM, que hace cuando empieza, acaba y update de cada estado
     this.initializeAI(4);
+    //se paran todos los procesos del enemigo
     this.stateOnStart(0, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.stop();
@@ -90,6 +93,7 @@ export default class SwordGround extends Enemy {
       this.sprite.body.friction = 0.1;
       this.sprite.setIgnoreGravity(false);
     })
+    //modo petrulla
     this.stateOnStart(1, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.body.friction = 0.1;
@@ -108,6 +112,7 @@ export default class SwordGround extends Enemy {
       }
       this.sprite.setFlipX(this.sprite.body.velocity.x<0);
     })
+    //modo persecución
     this.stateOnStart(2, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.setTimeScale(1.5);
@@ -130,6 +135,7 @@ export default class SwordGround extends Enemy {
         this.goTo(3)
       }
     })
+    //modo ataque normal
     this.stateOnStart(3, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       //this.sprite.body.collisionFilter.group = -1;
@@ -171,6 +177,7 @@ export default class SwordGround extends Enemy {
       this.stateChanged=false;
     //
   }
+  //método que invierte el sprite al atacar la segunda vez
   tryFlipX(){
     if(this.sprite != undefined && this.sprite.body != undefined){
       this.targetDir =  this.scene.game.player.sprite.x<this.sprite.x;
@@ -178,6 +185,7 @@ export default class SwordGround extends Enemy {
     }
   }
 
+  //método para filtrado de collisiones con el tileado del mapa
   updateTouchBoundry(){
     if(this.sprite != undefined){
       if(this.currentStateId() > 0){
@@ -203,6 +211,7 @@ export default class SwordGround extends Enemy {
      }
   }
 
+  //método para infligir daño al jugador
   inflictDamagePlayerArea(dir){
     if(this.sprite == undefined || this.sprite.body == undefined)return;
         //AUDIO
@@ -225,7 +234,7 @@ export default class SwordGround extends Enemy {
     }
   }
 
-
+  //método que se invoca al recibir daño
   damage(dmg, v){
       //AUDIO
         if(Math.random()>0.1){
@@ -243,6 +252,7 @@ export default class SwordGround extends Enemy {
     }else if(this.currentStateId() != 0)
       super.damage(dmg, v);
   }
+  //método que se invoca al recibir daño con el laser
   damageLaser(dmg, v){
     //AUDIO
       Audio.lasserSufferingLoop.setDetune(0);
@@ -255,7 +265,7 @@ export default class SwordGround extends Enemy {
     }else if(this.currentStateId() != 0)
       super.damageLaser(dmg, v);
   }
-
+  //método que se invoca al morir el enemigo
   enemyDead(vXDmg){
     this.goTo(0);
     if(!this.dead){
@@ -265,6 +275,7 @@ export default class SwordGround extends Enemy {
           this.sfx.stop();
           this.sfxDetect.stop();
       //
+      //explosion al morir
       let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "enemyExplosion");
       explosion.setDepth(10).setScale(2.25);
       //al completar su animacion de explsion, dicha instancia se autodestruye
@@ -274,13 +285,14 @@ export default class SwordGround extends Enemy {
       //animacion de explosion
       explosion.anims.play('enemyExplosion', true);
       super.enemyDead();
+      //drops de energía y vida
       if(Math.random() < 0.7){
         new DropableAirHealth(this.scene, this.sprite.x, this.sprite.y, (this.scene.game.player.sprite.x - this.sprite.x), (this.scene.game.player.sprite.y - this.sprite.y), this.healthDrop);
         }
       new DropableAirEnergy(this.scene, this.sprite.x, this.sprite.y, (this.scene.game.player.sprite.x - this.sprite.x), (this.scene.game.player.sprite.y - this.sprite.y),  this.energyDrop);
     }
   }
-
+  //método llamado desde Blackboard.js para ajustar la distancia con el jugador
   updatePlayerPosition(dist){
     switch (this.currentStateId()) {
       case 0:

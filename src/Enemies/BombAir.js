@@ -8,31 +8,25 @@ import TileController from "../TileController.js"
 export default class BombAir extends Enemy {
   constructor(scene, x, y){
     super(scene, x, y, 'bomb', 50);
+    //inicialización de variables
     this.sprite.setScale(1.65);
 
+    //array de "scraps", pedazos que vuelan cuando muere
     if(this.scene.game.onPC){
       this.scrapArray[0] = 'bombScrap1';
       this.scrapArray[1] = 'bombScrap2';
     }
 
+    //cuerpo de del enemigo que se añade al sprite y a los arrays de enemigos correspondientes
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 25, 25, {chamfer: { radius: 8 } });
-    /*this.sensors = {
-      left:   Bodies.rectangle(-28, 0, 10, 20, { isSensor: true }),
-      right:  Bodies.rectangle(28, 0, 10, 20, { isSensor: true }),
-      top:    Bodies.rectangle(0, -28, 20, 10, { isSensor: true }),
-      bottom: Bodies.rectangle(0, 28, 20, 10, { isSensor: true })
-    };
-    const compoundBody = Body.create({
-      parts: [body, this.sensors.left, this.sensors.right, this.sensors.top, this.sensors.bottom]
-    });
 
-    this.sprite.setExistingBody(compoundBody).setPosition(x, y).setFixedRotation();*/
     this.sprite.setExistingBody(body).setPosition(x, y).setFixedRotation();
     this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
     this.sprite.body.collisionFilter.group = -3;
 
+    //variables de físicas
     this.sprite.setIgnoreGravity(true);
     this.sprite.body.frictionAir = 0.06;
     this.sprite.body.friction = 0;
@@ -40,14 +34,12 @@ export default class BombAir extends Enemy {
     this.adjustedFriction = this.sprite.body.frictionAir / this.scene.matter.world.getDelta();
 
     //Variables de IA
-    //No Tocar
     this.patrolDir = new Phaser.Math.Vector2(0,0);
     this.standByReDistance = 950;
     this.patrolDistance = 900;
     this.initPos = new Phaser.Math.Vector2(this.sprite.x, this.sprite.y);
     this.stopper = false;
     this.playerVector = new Phaser.Math.Vector2(0, 0);
-    //No Tocar
 
     //Ajustar estas
     this.points = 75;               //puntos al matar a enemigo
@@ -61,16 +53,11 @@ export default class BombAir extends Enemy {
     this.healthDrop = 100;
     this.energyDrop = 200;                                             //drop de energia
     //Ajustar estas
-    //Variables de IA
-    /*
-    this.scene.matterCollision.addOnCollideStart({
-      objectA: [this.sensors.left, this.sensors.right, this.sensors.top, this.sensors.bottom],
-      callback: this.onSensorCollide,
-      context: this
-    });*/
 
     //IA
+    //se preparan el nº de estados que tiene la FSM, que hace cuando empieza, acaba y update de cada estado
     this.initializeAI(4);
+    //se paran todos los procesos del enemigo
     this.stateOnStart(0, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.stop();
@@ -83,6 +70,8 @@ export default class BombAir extends Enemy {
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       TileController.enableEnemy(this.sprite);
     })
+
+    //modo patrulla
     this.stateOnStart(1, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.body.frictionAir = 0.06;
@@ -124,6 +113,7 @@ export default class BombAir extends Enemy {
       this.patrolTimer2.remove();
     });
 
+    //modo persecución
     this.stateOnStart(2, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.anims.play('bombHoming', true);
@@ -144,6 +134,8 @@ export default class BombAir extends Enemy {
         this.goTo(3);
       }
     })
+
+    //modo ataque
     this.stateOnStart(3, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
       this.sprite.setFlipX(this.targetDir);
@@ -159,6 +151,8 @@ export default class BombAir extends Enemy {
       this.stateChanged=false;
     //
   }
+
+  //método para filtrado de collisiones con el tileado del mapa
   updateTouchBoundry(){
     if(this.sprite != undefined){
       if(this.currentStateId() > 0){
@@ -175,13 +169,14 @@ export default class BombAir extends Enemy {
       this.patrolDir.y = -this.patrolDir.y;
   }
 
+  //método para infligir daño al jugador
   inflictDamagePlayerArea(position){
     if(this.sprite == undefined || this.sprite.body == undefined)return;
     if(super.playerHit(this.sprite.x-100, this.sprite.y-100, this.sprite.x+100, this.sprite.y+100))
       this.scene.game.player.playerDamage(this.hitDamage);
   }
 
-
+  //método que se invoca al recibir daño
   damage(dmg, v){
       //AUDIO
         if(Math.random()>0.4){
@@ -199,6 +194,8 @@ export default class BombAir extends Enemy {
     }else if(this.currentStateId() != 0)
       super.damage(dmg, v);
   }
+
+  //método que se invoca al recibir daño con el laser
   damageLaser(dmg, v){
     //AUDIO
       Audio.lasserSufferingLoop.setDetune(-150);
@@ -212,6 +209,7 @@ export default class BombAir extends Enemy {
       super.damageLaser(dmg, v);
   }
 
+  //método que se invoca al morir el enemigo
   enemyDead(vXDmg, vYDmg, drop = true, kamikaze = false){
     this.goTo(0);
     if(!this.dead){
@@ -221,6 +219,7 @@ export default class BombAir extends Enemy {
           this.sfx.stop();
           this.sfxDetect.stop();
       //
+      //explosion al morir
       let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, "enemyExplosion");
       explosion.setDepth(10);
       if(kamikaze) {
@@ -235,6 +234,7 @@ export default class BombAir extends Enemy {
       //animacion de explosion
       explosion.anims.play('enemyExplosion', true);
       super.enemyDead(!kamikaze);
+      //drops de energía y vida
       if(drop) {
         if(Math.random() < 0.3){
           new DropableAirHealth(this.scene, this.sprite.x, this.sprite.y, (this.scene.game.player.sprite.x - this.sprite.x), (this.scene.game.player.sprite.y - this.sprite.y), this.healthDrop);
@@ -243,6 +243,8 @@ export default class BombAir extends Enemy {
       }
     }
   }
+
+  //método llamado desde Blackboard.js para ajustar la distancia con el jugador
   updatePlayerPosition(dist){
     switch (this.currentStateId()) {
       case 0:
