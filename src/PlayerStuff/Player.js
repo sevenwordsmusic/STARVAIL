@@ -128,6 +128,24 @@ export default class Player {
       'right': Phaser.Input.Keyboard.KeyCodes.D,
       'down': Phaser.Input.Keyboard.KeyCodes.S});
 
+      this.wheelCooldown = 125;
+      this.wheelTimerCounter = 0;
+      this.wheelWeaponArray = [];
+      this.wheelArrayCounter = 0;
+      this.scene.input.on('wheel', function(pointer){
+        if(this.wheelTimerCounter > this.wheelCooldown){
+          this.wheelTimerCounter = 0;
+          this.wheelArrayCounter -= (pointer.deltaY/100);
+          if(this.wheelArrayCounter < 0)
+            this.wheelArrayCounter = this.wheelWeaponArray.length-1;
+          else if(this.wheelArrayCounter > this.wheelWeaponArray.length-1){
+            this.wheelArrayCounter = 0;
+          }
+            this.setWeapon(this.wheelWeaponArray[this.wheelArrayCounter]);
+            this.darkener(this.wheelArrayCounter);
+        }
+      }, this);
+
       this.fireArm = new PlayerFireArmPC(this.scene, x, y);
       this.firingPointer = this.scene.input.activePointer;
       this.movingPointer = undefined;
@@ -281,9 +299,14 @@ export default class Player {
     })
 
     this.recieveWeapon(0, false);
+    this.recieveWeapon(3, false);
+    this.recieveWeapon(5, false);
+    this.recieveWeapon(6, false);
+    this.recieveWeapon(7, false);
     for(var i=0; i<this.scene.game.obtainedWeapons.length; i++){
       this.recieveWeapon(this.scene.game.obtainedWeapons[i], false);
     }
+    console.log(this.wheelWeaponArray);
     this.darkener(0);
 
     this.hpBar.draw(this.hp);
@@ -424,6 +447,10 @@ export default class Player {
     }
     this.fireCounterTap += delta;
     //DISPARAR
+
+    //wheel
+    this.wheelTimerCounter += delta;
+    //wheel
 
     //JET
     if(Phaser.Input.Keyboard.JustDown(this.cursors.up)){
@@ -627,8 +654,8 @@ export default class Player {
 
   playerVictory(){
     this.destroy(false);
-
-    this.scene.game.initializeVariables(false);
+    this.scene.run("SceneEffectBackground");
+    this.scene.sendToBack("SceneEffectBackground");
     this.scene.game.changeScene(this.scene, "SceneScore");
   }
 
@@ -654,6 +681,8 @@ export default class Player {
         this.cursors.left = undefined;
         this.cursors.right.destroy();
         this.cursors.right = undefined;
+
+        this.scene.input.off('wheel');
       }
     }else{
       if(this.cursors != undefined) {
@@ -839,6 +868,7 @@ export default class Player {
     const aux = this.nextButton;
     this.buttons[aux].setVisible(true)
     this.buttons[aux].on('pointerdown', function () {
+      this.wheelArrayCounter = aux;
       this.setWeapon(id);
       this.darkener(aux);
     }, this);
@@ -860,6 +890,8 @@ export default class Player {
       this.scene.add.image(this.buttons[aux].x-116, this.buttons[aux].y+50, "decoHUD2" ).setScrollFactor(0).setDepth(101);
     }
     this.nextButton++;
+
+    this.wheelWeaponArray.push(id);
   }
 
   darkener(n) {

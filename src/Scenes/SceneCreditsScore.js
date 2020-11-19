@@ -9,12 +9,6 @@ export default class SceneCreditsScore extends Phaser.Scene {
     //AUDIO
       Audio.fullscreenMode(this);
       //
-    //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0xdbdace);
-    //Oscurecer background
-    const bg = this.add.image(0,0,'white_rectangle').setOrigin(0).setScale(35).setDepth(-100).setAlpha(0.25);
-    bg.tint = 0x000000;
-    bg.alpha = 0.7;
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0);
@@ -107,11 +101,6 @@ export default class SceneCreditsScore extends Phaser.Scene {
     this.input.setDefaultCursor('url(assets/cursor.png), pointer');
   }
 
-  //Método que se ejecuta una vez por frame.
-  update(){
-
-  }
-
   exitCreditsScore(){
     console.log("Se ha pulsado exit");
 
@@ -119,7 +108,7 @@ export default class SceneCreditsScore extends Phaser.Scene {
 
     this.scene.sendToBack('SceneCreditsScore');
 		this.scene.stop('SceneCreditsScore');
-    this.scene.resume('SceneScore');
+    this.scene.run('SceneScore');
     this.scene.bringToTop("SceneScore");
   }
 

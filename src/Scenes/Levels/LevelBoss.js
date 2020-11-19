@@ -63,6 +63,13 @@ export default class LevelBoss extends Phaser.Scene {
           this.matter.world.update30Hz();
       }
     //
+
+    const currentTime = this.game.clock.getTime();
+    this.game.time = this.game.clock.getTime() - this.game.timeStart + this.acumulatedPauseTime;
+    if(this.game.time < this.game.maxTime){
+      this.game.timeExpired = true;
+    }
+
     //INTERFAZ
 
     //Options field
@@ -434,6 +441,8 @@ export default class LevelBoss extends Phaser.Scene {
 
     this.game.pauseInfo = 'levelBoss' + (LevelBoss.getNumber());
     this.game.pauseScene = this;
+
+    this.game.pauseClock = 0;
 
     this.botonPause.alpha=0.8;
     this.scene.run("ScenePause");

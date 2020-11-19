@@ -6,7 +6,7 @@ export default class DropableAirHealth extends DropableAir{
     this.hp = hp;
     this.bounce(13, 13, (new Phaser.Math.Vector2(dirX,dirY)).normalize()); //5.01
     this.sprite.setFrame(0);
-    this.sprite.setScale(Phaser.Math.Clamp((hp/100),1,2.5));
+    this.sprite.setScale(Phaser.Math.Clamp((hp/100),1,2));
   }
 
   dropablePicked(drop){
@@ -27,5 +27,5 @@ export default class DropableAirHealth extends DropableAir{
     else
       return 1000;    //ARREGLAR ESTO
   }
-  
+
 }

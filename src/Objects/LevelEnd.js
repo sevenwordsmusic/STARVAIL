@@ -1,4 +1,4 @@
-
+import Audio from "../Audio.js"
 export default class LevelEnd {
   constructor(scene, x, y, spr){
     //inicializacion
@@ -8,6 +8,7 @@ export default class LevelEnd {
     this.sprite.body.isSensor = true;
     this.sprite.body.isStatic = true;
     this.sprite.setVisible(false);
+    this.giveBomb = false;
 
     scene.add.sprite(x,y-110,"goalVFX",0).setScale(6.00).setDepth(-15).anims.play("goalVFX", true);
   }
@@ -25,11 +26,24 @@ export default class LevelEnd {
   goToLevel(scene, keyNext, sceneNext){
     if(this.updateLife)
       this.updatePlayerLife();
+    if(this.giveBomb){
+      if(this.scene.game.player.nextButton <= 1){
+        //AUDIO
+          Audio.play2DinstanceRate(81, 1.0);
+        //
+        this.scene.game.obtainedWeapons.push(4);
+        this.scene.game.player.recieveWeapon(4);
+      }
+    }
     this.scene.game.transitionToScene(this.scene, keyNext, sceneNext);
     this.collisionTracker();
   }
 
   updatePlayerLife(){
     this.scene.game.currentPlayerHp = this.scene.game.player.hp;
+  }
+
+  enableGiveBomb(){
+    this.giveBomb = true;
   }
 }

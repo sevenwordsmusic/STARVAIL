@@ -391,11 +391,6 @@ export default class Level2 extends Phaser.Scene {
       this.game.moonPos.x = this.moon.x;
     }
 
-    this.game.time += delta;
-    if(this.game.time >= this.game.maxTime && !this.game.timeExpired) {
-      this.game.timeExpired = true;
-    }
-
 
     if (this.ESC.isDown){
       if (!this.inPause) {
@@ -437,6 +432,8 @@ export default class Level2 extends Phaser.Scene {
 
     this.game.pauseInfo = 'levelSecond' + (Level2.getNumber());
     this.game.pauseScene = this;
+
+    this.game.pauseClock = this.game.clock.getTime();
 
     this.botonPause.alpha=0.8;
     this.scene.run("ScenePause");

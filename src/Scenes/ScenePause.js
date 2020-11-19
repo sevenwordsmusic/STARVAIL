@@ -91,6 +91,9 @@ export default class ScenePause extends Phaser.Scene {
 
     this.input.setDefaultCursor('none');
 
+    if(this.game.pauseClock != 0)
+      this.acumulatedPauseTime += this.game.clock.getTime() - this.game.pauseClock;
+
     this.scene.sendToBack('ScenePause');
 		this.scene.stop('ScenePause');
     this.scene.resume(this.game.pauseInfo);

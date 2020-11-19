@@ -39,7 +39,7 @@ export default class PlayerFireArm {
       this.laser.anims.play('laser', true);
 
       this.laserSmoke = scene.add.sprite(x,y, 'smoke', 0);
-      this.laserSmoke.setScale(1).setOrigin(0.5, 0.8);
+      this.laserSmoke.setScale(0.75).setOrigin(0.5, 0.8);
       this.laserSmoke.anims.play('smoke', true);
 
       this.armExtnension = 40;

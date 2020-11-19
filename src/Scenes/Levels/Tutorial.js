@@ -399,6 +399,7 @@ export default class Tutorial extends Phaser.Scene {
     //inicialización de meta
     for(var i=0; i<this.goalArray.length; i++){
       this.goalArray[i].initGoal('levelFirst', Level1, false);
+      this.goalArray[i].enableGiveBomb();
     }
 
     this.laserTrapArray = [];
@@ -476,6 +477,8 @@ export default class Tutorial extends Phaser.Scene {
 
     this.game.pauseInfo = 'tutorial' + (Tutorial.getNumber());
     this.game.pauseScene = this;
+
+    this.game.pauseClock = 0;
 
     this.botonPause.alpha=0.8;
     this.scene.run("ScenePause");

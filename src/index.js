@@ -34,6 +34,7 @@ import SceneCreditsScore from "./Scenes/SceneCreditsScore.js"
 import SceneGameOver from "./Scenes/SceneGameOver.js"
 import SceneRanking from "./Scenes/SceneRanking.js"
 import SceneSplashScreen from "./Scenes/SceneSplashScreen.js"
+import SceneEffectBackground from "./Scenes/SceneEffectBackground.js"
 
 //FPS MOBILE LIMIT
 if(!mobileTabletChek()){
@@ -87,7 +88,8 @@ var config = {
     SceneScore,
     SceneCreditsScore,
     SceneGameOver,
-    SceneRanking
+    SceneRanking,
+    SceneEffectBackground
   ],
     plugins: {
 
@@ -118,7 +120,11 @@ game.initializeVariables = function(newGame = true){
   game.enemiesKilled = 0;
   game.npcHelped = 0;
   game.timeExpired = false;
+  game.clock = new Date();
   game.time = 0;
+  game.timeStart = game.clock.getTime();
+  game.pauseClock = 0;
+  game.acumulatedPauseTime = 0;
   game.maxTime = 900000;
   game.bestTime = 300000;          //tiempo con el que se consigue puntuación máxima
 

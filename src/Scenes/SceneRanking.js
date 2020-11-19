@@ -1,4 +1,4 @@
-
+import Audio from "../Audio.js";
 export default class SceneRanking extends Phaser.Scene {
   constructor() {
     super("SceneRanking");
@@ -7,9 +7,9 @@ export default class SceneRanking extends Phaser.Scene {
 
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
-
-    //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0xdbdace);
+    //AUDIO
+      Audio.fullscreenMode(this);
+      //
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0);
@@ -35,11 +35,6 @@ export default class SceneRanking extends Phaser.Scene {
 
   }
 
-  //Método que se ejecuta una vez por frame.
-  update(){
-
-  }
-
   exitRanking(){
     console.log("Se ha pulsado exit");
 
@@ -47,7 +42,7 @@ export default class SceneRanking extends Phaser.Scene {
 
     this.scene.sendToBack('SceneRanking');
 		this.scene.stop('SceneRanking');
-    this.scene.resume('SceneScore');
+    this.scene.run('SceneScore');
     this.scene.bringToTop("SceneScore");
   }
 }

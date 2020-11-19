@@ -249,7 +249,6 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.tilemapTiledJSON("map0", "assets/Mapas/Tutorial.json");
     this.load.tilemapTiledJSON("mapTest", "assets/Mapas/Level1Simple.json");
 
-
     this.load.image('bullet1', 'assets/Sprites/Bullet/bullet1.png');
     this.load.image('bullet2', 'assets/Sprites/Bullet/bullet2.png');
     this.load.image('bullet3', 'assets/Sprites/Bullet/bullet3.png');
@@ -270,8 +269,8 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('megatonExplosion', 'assets/megaton.png', { frameWidth: 100, frameHeight: 100 })
 
     //this.load.spritesheet('missileExplosion', 'assets/Sprites/VFX/missil_explosion_100x100_75.png', { frameWidth: 100, frameHeight: 100 });
-    //this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
-    this.load.spritesheet('smoke', 'assets/Sprites/Explosions/laser_smoke.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
+    //this.load.spritesheet('smoke', 'assets/Sprites/Explosions/laser_smoke.png', { frameWidth: 100, frameHeight: 100 });
 
     this.load.spritesheet('laserNonLethal', 'assets/Sprites/Bullet/laser_nonletal.png', { frameWidth: 960, frameHeight: 32 }); //62
     this.load.spritesheet('laserLethal', 'assets/Sprites/Bullet/laser_letal.png', { frameWidth: 960, frameHeight: 32 }); //42*/
@@ -512,8 +511,8 @@ export default class SceneLoading extends Phaser.Scene {
 
     this.anims.create({
             key: 'smoke',
-            frames: this.anims.generateFrameNumbers('smoke', { start: 0, end: 69 }),
-            frameRate: 60,
+            frames: this.anims.generateFrameNumbers('smoke', { start: 0, end: 20 }),
+            frameRate: 17,
             repeat: -1
         });
 

@@ -9,11 +9,13 @@ export default class PlayerFireArmPC extends PlayerFireArm{
     this.chMultip = 1;
     this.chSize = 1;
     this.chChangeSpeed = 0.0075;
-    this.graphics = this.scene.add.graphics({ fillStyle: { color: 0xE38989}});
+    this.graphics = this.scene.add.graphics({ fillStyle: { color: 0xff0000}});
+    this.graphics.alpha = 0.35;
     this.chLine = new Phaser.Geom.Line(this.sprite.x, this.sprite.y, this.scene.input.activePointer.x + this.cam.scrollX, this.scene.input.activePointer.y + this.cam.scrollY);
     this.crosshairSpr = this.scene.add.sprite(this.scene.input.activePointer.x + this.cam.scrollX, this.scene.input.activePointer.y + this.cam.scrollY, 'crosshair', 0);
     this.crosshairSpr.setDepth(110);
-    this.crosshairSpr.tint = 0xE38989;
+    this.crosshairSpr.tint = 0xff0000;
+    this.crosshairSpr.alpha = 0.35;
 
     this.scene.events.on("update", this.update, this);  //para que el update funcione
   }
@@ -58,12 +60,18 @@ export default class PlayerFireArmPC extends PlayerFireArm{
   enableFireArm(){
     this.sprite.setActive(true).setVisible(true);
     this.crosshairSpr.tint = 0xff0000;
+    this.crosshairSpr.alpha = 1;
     this.graphics.setDefaultStyles({ fillStyle: { color: 0xff0000}});
+    this.graphics.alpha = 1;
     this.fireArmActive = true;
   }
   disableFireArm(){
-    this.crosshairSpr.tint = 0xE38989;
-    this.graphics.setDefaultStyles({ fillStyle: { color: 0xE38989}});
+    //this.crosshairSpr.tint = 0xE38989;
+    //this.graphics.setDefaultStyles({ fillStyle: { color: 0xE38989}});
+    this.crosshairSpr.tint = 0xff0000;
+    this.crosshairSpr.alpha = 0.35;
+    this.graphics.setDefaultStyles({ fillStyle: { color: 0xff0000}});
+    this.graphics.alpha = 0.35;
     this.sprite.setActive(false).setVisible(false);
     this.fireArmActive = false;
   }

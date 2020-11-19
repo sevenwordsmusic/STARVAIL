@@ -1,4 +1,4 @@
-
+import Audio from "../Audio.js";
 export default class SceneScore extends Phaser.Scene {
   constructor() {
     super("SceneScore");
@@ -6,9 +6,9 @@ export default class SceneScore extends Phaser.Scene {
 
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
-
-    //Color de fondo prueba
-    this.cameras.main.setBackgroundColor(0xdbdace);
+    //AUDIO
+      Audio.fullscreenMode(this);
+      //
 
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0);
@@ -85,6 +85,7 @@ export default class SceneScore extends Phaser.Scene {
     const specialEvents = this.game.npcHelped;
     var tipoFinal="";
 
+    //puntuacion por tiempo
     if(this.game.timeExpired){
       tipoFinal="Bad Ending"
       finalScore -= 1000;
@@ -94,7 +95,7 @@ export default class SceneScore extends Phaser.Scene {
         tipoFinal="Good Ending"
         finalScore += 5000;
       }else{
-      tipoFinal="Neutral Ending"
+        tipoFinal="Neutral Ending"
         finalScore += 1000;
       }
     }
@@ -154,11 +155,6 @@ export default class SceneScore extends Phaser.Scene {
     this.input.setDefaultCursor('url(assets/cursor.png), pointer');
   }
 
-  //Método que se ejecuta una vez por frame.
-  update(){
-
-  }
-
   viewCreditsScore(){
     console.log("Se ha pulsado credits");
 
@@ -166,7 +162,7 @@ export default class SceneScore extends Phaser.Scene {
 
     this.scene.run("SceneCreditsScore");
     this.scene.bringToTop("SceneCreditsScore");
-    this.scene.pause("SceneScore");
+    this.scene.stop('SceneScore');
 
   }
 
@@ -175,7 +171,11 @@ export default class SceneScore extends Phaser.Scene {
 
     this.btnExitScore.alpha=0.8;
 
+    this.scene.stop("SceneEffectBackground");
+
     this.scene.stop('SceneScore');
+
+    this.game.initializeVariables(false);
 
     this.scene.start('SceneMM');
     this.scene.bringToTop("SceneMM");
@@ -192,7 +192,8 @@ export default class SceneScore extends Phaser.Scene {
 
     this.scene.run("SceneRanking");
     this.scene.bringToTop("SceneRanking");
-    this.scene.pause("SceneScore");
+    this.scene.stop('SceneScore');
+    this.scene.sendToBack("SceneScore");
 
   }
 
