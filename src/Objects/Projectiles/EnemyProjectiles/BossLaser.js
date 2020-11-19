@@ -44,23 +44,19 @@ export default class BossLaser {
       },this);
     },this);
 
-    //AUDIO
-      this.sfx=Audio.play3Dinstance(this, 98);
-      this.scene.events.on("update", this.update, this);
-    //
-  }
 
-  update(time, delta){
-      //AUDIO
-          if(!Audio.waitForUpdate()){
-            this.sfx.volume=Audio.volume3D(this);
-          }
-      //
+      Audio.play3Dinstance(this, 98);
+
 
   }
 
 
+<<<<<<< Updated upstream
   //al colisionar con un objeto
+=======
+
+
+>>>>>>> Stashed changes
   onSensorCollide({ bodyA, bodyB, pair }) {
     if (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
       this.scene.game.player.playerDamage(10000, true);

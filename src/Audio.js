@@ -170,7 +170,7 @@ export default class Audio extends Phaser.Scene {
     static postGameOver(){
         Audio.musicLoop0000chill.play();
     }
-    static bossFightStart(){
+    static bossFightStart(scene){
         Audio.bossMusic=true;
         Audio.musicLoop0002.volume=0.0;
         Audio.musicLoop0002.play();

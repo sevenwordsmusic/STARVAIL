@@ -226,7 +226,7 @@ This is what we exist for!`;
     console.log("Boss Fight Started");
 
     //EMPIEZA LA PELEA
-      Audio.bossFightStart();
+      Audio.bossFightStart(this.scene);
     //
   }
 

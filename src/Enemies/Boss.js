@@ -473,8 +473,6 @@ export default class Boss extends Enemy {
       this.goTo(3);
       //AUDIO
       Audio.play3DinstanceRnd(this, 52);
-      this.sfx.stop();
-      this.sfxDetect.stop();
       //
       this.weasponSwitchTimer.destroy();
       this.patrolTimer1.destroy();
@@ -503,12 +501,5 @@ export default class Boss extends Enemy {
       return 5000;   
   }
 
-  //AUDIO
-  soundChangeState(){
-    if(!this.stateChanged){
-      this.sfxDetect=Audio.play3Dinstance(this, 41);
-      this.stateChanged=true;
-    }
-  }
-  //
+
 }
