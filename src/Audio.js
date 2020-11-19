@@ -172,8 +172,13 @@ export default class Audio extends Phaser.Scene {
     }
     static bossFightStart(){
         Audio.bossMusic=true;
-        Audio.musicLoop0002.volume=Audio.volumeBGM;
+        Audio.musicLoop0002.volume=0.0;
         Audio.musicLoop0002.play();
+        scene.tweens.add({
+            targets: Audio.musicLoop0002,
+            volume: Audio.volumeBGM;
+            duration: Audio.barRateDiv[2],
+        });
     }
     static musicLayerStop(scene) {
         if (Audio.musicTweens[0] != undefined) {
