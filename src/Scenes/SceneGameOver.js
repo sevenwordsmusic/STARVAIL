@@ -8,7 +8,7 @@ export default class SceneGameOver extends Phaser.Scene {
   create(){
     //AUDIO
       Audio.gameOver();
-      Audio.fullscreenMode(this);
+      
       //
     //Color de fondo prueba
     //this.cameras.main.setBackgroundColor(0x450045);

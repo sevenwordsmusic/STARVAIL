@@ -414,7 +414,7 @@ export default class Tutorial extends Phaser.Scene {
 
    //AUDIO
       Audio.levelZero(this);
-       Audio.fullscreenMode(this);
+       
       //
   }
   //Función update, que actualiza el estado de la escena.

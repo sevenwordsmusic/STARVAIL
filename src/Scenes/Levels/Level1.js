@@ -384,7 +384,7 @@ export default class Level1 extends Phaser.Scene {
 
    //AUDIO
       Audio.levelOne(this);
-       Audio.fullscreenMode(this);
+       
       //
   }
   //Función update, que actualiza el estado de la escena.

@@ -12,7 +12,7 @@ export default class ScenePlayerName extends Phaser.Scene {
   create(){
     this.game.inPlayerName = true;
     //AUDIO
-      Audio.fullscreenMode(this);
+      
     //
     this.showInput();
 

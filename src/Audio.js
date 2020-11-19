@@ -106,20 +106,6 @@ export default class Audio extends Phaser.Scene {
         }
     }
 
-    static fullscreenMode(thisArg) {
-        var FKey = thisArg.input.keyboard.addKey('F');
-        FKey.on('down', function() {
-            if (!thisArg.game.inPlayerName) {
-                if (thisArg.scale.isFullscreen) {
-                    thisArg.scale.stopFullscreen();
-                } else {
-                    thisArg.scale.startFullscreen();
-                }
-            } else {
-                document.getElementById("playerName").value += 'F';
-            }
-        }, thisArg);
-    }
     static exit(scene) { //EXIT FROM PAUSE
         if (Audio.currentLevel == 3) {
             Audio.musicLoop0001.stop();

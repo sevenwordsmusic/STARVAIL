@@ -390,7 +390,7 @@ export default class LevelBoss extends Phaser.Scene {
    this.maxMemory = 0;
    //AUDIO
       Audio.levelFour(this);
-       Audio.fullscreenMode(this);
+       
       //
   }
   //Función update, que actualiza el estado de la escena.

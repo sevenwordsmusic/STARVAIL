@@ -8,7 +8,7 @@ export default class SceneCredits extends Phaser.Scene {
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
     //AUDIO
-      Audio.fullscreenMode(this);
+      
       //
     //Color de fondo prueba
     this.cameras.main.setBackgroundColor(0x000000);

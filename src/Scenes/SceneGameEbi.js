@@ -8,7 +8,7 @@ export default class SceneExample extends Phaser.Scene {
   //Se carga antes de ejecutar la escena. En este sitio se asignan las variables, se buscan los assets que se van a usar, se llama a los plugins, etc.
   preload(){
     //AUDIO
-      Audio.fullscreenMode(this);
+      
       //
     this.load.image('ebi', 'assets/Escena boton pausa.png'); //field
     this.load.image('btnPause', 'assets/BtnPauseGame.png'); //btn pause
