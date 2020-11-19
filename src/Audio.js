@@ -117,8 +117,10 @@ export default class Audio extends Phaser.Scene {
     static gameOver() {
         //Audio.musicLoop0000chill.resume();
         //
-        if (Audio.currentLevel == 3) {
-            Audio.musicLoop0001.pause();
+        if (Audio.currentLevel == 4) {
+            //Audio.musicLoop0002.stop();
+        } else if (Audio.currentLevel == 3) {
+            Audio.musicLoop0001.stop();
         } else if (Audio.currentLevel == 1 || Audio.currentLevel == 2) {
             if (Audio.musicTweens[0] != undefined) {
                 if (Audio.musicTweens[0].isPlaying()) {
@@ -509,6 +511,7 @@ export default class Audio extends Phaser.Scene {
     static levelFour(scene) {
         Audio.currentLevel = 4;
         Audio.musicLoop0000chill.volume = 0.0;
+        Audio.musicLoop0001.stop();
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #4.", Audio.ctf, "");
         Audio.play2DinstanceRate(83, 1.0);
     }
