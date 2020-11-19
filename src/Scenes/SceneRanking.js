@@ -98,8 +98,8 @@ export default class SceneRanking extends Phaser.Scene {
 
     if(nuevaPosicion != -1){
       console.log(nuevaPosicion);
-      leftTextArray[nuevaPosicion+1].style.stroke = '#ff0000';
-      rightTextArray[nuevaPosicion+1].style.stroke = '#ff0000';
+      leftTextArray[nuevaPosicion+1].style.stroke = '#ce6b01';
+      rightTextArray[nuevaPosicion+1].style.stroke = '#ce6b01';
       leftTextArray[nuevaPosicion+1].style.update(true);
       rightTextArray[nuevaPosicion+1].style.update(true);
     }

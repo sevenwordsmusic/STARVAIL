@@ -120,6 +120,11 @@ export default class Player {
     this.buttons[4].playerInteractable = true;
     this.nextButton = 0;
 
+    this.wheelCooldown = 100;
+    this.wheelTimerCounter = 0;
+    this.wheelWeaponArray = [];
+    this.wheelArrayCounter = 0;
+
     if(this.scene.game.onPC){
       console.log(this.cursors);
       this.cursors = this.scene.input.keyboard.addKeys({
@@ -128,10 +133,6 @@ export default class Player {
       'right': Phaser.Input.Keyboard.KeyCodes.D,
       'down': Phaser.Input.Keyboard.KeyCodes.S});
 
-      this.wheelCooldown = 100;
-      this.wheelTimerCounter = 0;
-      this.wheelWeaponArray = [];
-      this.wheelArrayCounter = 0;
       this.scene.input.on('wheel', function(pointer){
         if(this.wheelTimerCounter > this.wheelCooldown){
           this.wheelTimerCounter = 0;
