@@ -253,7 +253,6 @@ game.prepareScreen = function(){
   if(!game.onPC){
     game.scale.lockOrientation('landscape');
     game.scale.startFullscreen();
-    Audio.maxSFXinstances=1;
   }
 }
 

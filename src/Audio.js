@@ -1,6 +1,5 @@
 import Chatter from "./Chatter.js";
 import SceneSplashScreen from "./Scenes/SceneSplashScreen.js";
-
 export default class Audio extends Phaser.Scene {
     constructor() {
         super("Audio");
@@ -33,22 +32,22 @@ export default class Audio extends Phaser.Scene {
     static SFXinstance = 0;
     static frameCount = 0;
     //SLOTS
-        //AMBIENT
-        static ambientLoop;
-        //UI LOOPS
-        static walkLoop;
-        static surfaceLoop;
-        static propellerLoop;
-        static engineLoop;
-        static lasserLoop;
-        static beamLoop;
-        static lasserSufferingLoop;
-        //MUSIC LOOPS
-        static musicLoop0000levitating;
-        static musicLoop0000moving;
-        static musicLoop0000flying;
-        static musicLoop0000chill;
-        static musicLoop0001;
+    //AMBIENT
+    static ambientLoop;
+    //UI LOOPS
+    static walkLoop;
+    static surfaceLoop;
+    static propellerLoop;
+    static engineLoop;
+    static lasserLoop;
+    static beamLoop;
+    static lasserSufferingLoop;
+    //MUSIC LOOPS
+    static musicLoop0000levitating;
+    static musicLoop0000moving;
+    static musicLoop0000flying;
+    static musicLoop0000chill;
+    static musicLoop0001;
     //STINGERS
     static stingerJet = false;
     static stingerMovement = false;
@@ -106,26 +105,21 @@ export default class Audio extends Phaser.Scene {
                 break;
         }
     }
-
-static fullscreenMode(thisArg){
+    static fullscreenMode(thisArg) {
         var FKey = thisArg.input.keyboard.addKey('F');
-        FKey.on('down', function () {
-            if(!thisArg.game.inPlayerName){
-              if (thisArg.scale.isFullscreen)
-              {
-                  thisArg.scale.stopFullscreen();
-              }
-              else
-              {
-                  thisArg.scale.startFullscreen();
-              }
-            }else{
-              document.getElementById("playerName").value += 'F';
+        FKey.on('down', function() {
+            if (!thisArg.game.inPlayerName) {
+                if (thisArg.scale.isFullscreen) {
+                    thisArg.scale.stopFullscreen();
+                } else {
+                    thisArg.scale.startFullscreen();
+                }
+            } else {
+                document.getElementById("playerName").value += 'F';
             }
-
         }, thisArg);
-}
-    static exit(scene) {    //EXIT FROM PAUSE
+    }
+    static exit(scene) { //EXIT FROM PAUSE
         if (Audio.currentLevel == 3) {
             Audio.musicLoop0001.stop();
         } else if (Audio.currentLevel == 1 || Audio.currentLevel == 2) {
@@ -183,7 +177,7 @@ static fullscreenMode(thisArg){
                     Audio.musicTweens[2].pause();
                     Audio.musicTweens[2].remove();
                 }
-            }    
+            }
             Audio.musicLoop0000levitating.volume = 0.0;
             Audio.musicLoop0000moving.volume = 0.0;
             Audio.musicLoop0000flying.volume = 0.0;
@@ -310,7 +304,7 @@ static fullscreenMode(thisArg){
         }
         return distance * Audio.volumeSFX;
     }
-    static splashMusic(scene){
+    static splashMusic(scene) {
         Audio.musicLoop0000chill.play();
         scene.tweens.add({
             targets: Audio.musicLoop0000chill,
@@ -626,7 +620,7 @@ static fullscreenMode(thisArg){
                 Audio.play2DinstanceRate(8, 0.8 + scene.game.player.weaponCounter * 0.05);
                 Audio.play2DinstanceRate(9, 0.8 + scene.game.player.weaponCounter * 0.05);
             }
-            if(scene.game.player.cursors != undefined){
+            if (scene.game.player.cursors != undefined) {
                 if (!Audio.stingerSurface && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
                     Audio.stingerSurface = true;
                     Audio.surfaceLoop.volume = Audio.volumeSFX;
@@ -732,25 +726,68 @@ static fullscreenMode(thisArg){
     }
     //LOAD:
     preload() {
+        if (this.game.onPC) {
+            this.load.audio('airDeath_00C', 'assets/audio/SFX/enemies/airDeath_00C.ogg');
+            this.load.audio('damage_00C', 'assets/audio/SFX/enemies/damage_00C.ogg');
+            this.load.audio('damage_01C', 'assets/audio/SFX/enemies/damage_01C.ogg');
+            this.load.audio('damage_02C', 'assets/audio/SFX/enemies/damage_02C.ogg');
+            this.load.audio('damage_03C', 'assets/audio/SFX/enemies/damage_03C.ogg');
+            this.load.audio('explode_00C', 'assets/audio/SFX/enemies/explode_00C.ogg');
+            this.load.audio('explode_00D', 'assets/audio/SFX/enemies/explode_00D.ogg');
+            this.load.audio('explode_01C', 'assets/audio/SFX/enemies/explode_01C.ogg');
+            this.load.audio('explode_01D', 'assets/audio/SFX/enemies/explode_01D.ogg');
+            this.load.audio('explode_02C', 'assets/audio/SFX/enemies/explode_02C.ogg');
+            this.load.audio('explode_02D', 'assets/audio/SFX/enemies/explode_02D.ogg');
+            this.load.audio('explode_03C', 'assets/audio/SFX/enemies/explode_03C.ogg');
+            this.load.audio('explode_03D', 'assets/audio/SFX/enemies/explode_03D.ogg');
+            this.load.audio('explode_04C', 'assets/audio/SFX/enemies/explode_04C.ogg');
+            this.load.audio('explode_04D', 'assets/audio/SFX/enemies/explode_04D.ogg');
+            this.load.audio('explode_05C', 'assets/audio/SFX/enemies/explode_05C.ogg');
+            this.load.audio('explode_05D', 'assets/audio/SFX/enemies/explode_05D.ogg');
+            this.load.audio('explosion_00C', 'assets/audio/SFX/explosion_00C.ogg');
+            this.load.audio('explosion_01C', 'assets/audio/SFX/explosion_01C.ogg');
+            this.load.audio('explosion_02C', 'assets/audio/SFX/explosion_02C.ogg');
+            this.load.audio('explosion_03C', 'assets/audio/SFX/explosion_03C.ogg');
+            this.load.audio('explosion_04C', 'assets/audio/SFX/explosion_04C.ogg');
+            this.load.audio('groundDeath_00C', 'assets/audio/SFX/enemies/groundDeath_00C.ogg');
+            this.load.audio('groundDeath_01C', 'assets/audio/SFX/enemies/groundDeath_01C.ogg');
+            this.load.audio('groundDeath_02C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
+            this.load.audio('gunGun_00C', 'assets/audio/SFX/enemies/gunGun_00C.ogg');
+            this.load.audio('gunGun_00D', 'assets/audio/SFX/enemies/gunGun_00D.ogg');
+            this.load.audio('hit_00C', 'assets/audio/SFX/enemies/hit_00C.ogg');
+            this.load.audio('hit_01C', 'assets/audio/SFX/enemies/hit_01C.ogg');
+            this.load.audio('hurtZap_00C', 'assets/audio/SFX/hurtZap_00C.ogg');
+            this.load.audio('hurtZap_00D', 'assets/audio/SFX/hurtZap_00D.ogg');
+            this.load.audio('impact_00C', 'assets/audio/SFX/impact_00C.ogg');
+            this.load.audio('impact_01C', 'assets/audio/SFX/impact_01C.ogg');
+            this.load.audio('impact_03C', 'assets/audio/SFX/impact_03C.ogg');
+            this.load.audio('impact_03D', 'assets/audio/SFX/impact_03D.ogg');
+            this.load.audio('impact_03E', 'assets/audio/SFX/impact_03E.ogg');
+            this.load.audio('impact_05C', 'assets/audio/SFX/impact_05C.ogg');
+            this.load.audio('mechGun_00C', 'assets/audio/SFX/enemies/mechGun_00C.ogg');
+            this.load.audio('mechGun_00D', 'assets/audio/SFX/enemies/mechGun_00D.ogg');
+            this.load.audio('sithSwing_02', 'assets/audio/SFX/enemies/sithSwing_02.ogg');
+            this.load.audio('sithSwing_03', 'assets/audio/SFX/enemies/sithSwing_03.ogg');
+            this.load.audio('sithSwing_04', 'assets/audio/SFX/enemies/sithSwing_04.ogg');
+            this.load.audio('sithSwing_05', 'assets/audio/SFX/enemies/sithSwing_05.ogg');
+            this.load.audio('sithSwing_06', 'assets/audio/SFX/enemies/sithSwing_06.ogg');
+            this.load.audio('sithSwing_07', 'assets/audio/SFX/enemies/sithSwing_07.ogg');
+        } else {
+            Audio.maxSFXinstances = 2;
+        }
         //AMBIENT
         this.load.audio('ambientLoop_00', 'assets/audio/SFX/ambientLoop_00.ogg');
         //IMPACTS
         this.load.audio('impact_00A', 'assets/audio/SFX/impact_00A.ogg');
         this.load.audio('impact_00B', 'assets/audio/SFX/impact_00B.ogg');
-        this.load.audio('impact_00C', 'assets/audio/SFX/impact_00C.ogg');
         this.load.audio('impact_01A', 'assets/audio/SFX/impact_01A.ogg');
         this.load.audio('impact_01B', 'assets/audio/SFX/impact_01B.ogg');
-        this.load.audio('impact_01C', 'assets/audio/SFX/impact_01C.ogg');
         this.load.audio('impact_02', 'assets/audio/SFX/impact_02.ogg');
         this.load.audio('impact_03A', 'assets/audio/SFX/impact_03A.ogg');
         this.load.audio('impact_03B', 'assets/audio/SFX/impact_03B.ogg');
-        this.load.audio('impact_03C', 'assets/audio/SFX/impact_03C.ogg');
-        this.load.audio('impact_03D', 'assets/audio/SFX/impact_03D.ogg');
-        this.load.audio('impact_03E', 'assets/audio/SFX/impact_03E.ogg');
         this.load.audio('impact_04', 'assets/audio/SFX/impact_04.ogg');
         this.load.audio('impact_05A', 'assets/audio/SFX/impact_05A.ogg');
         this.load.audio('impact_05B', 'assets/audio/SFX/impact_05B.ogg');
-        this.load.audio('impact_05C', 'assets/audio/SFX/impact_05C.ogg');
         this.load.audio('impact_06', 'assets/audio/SFX/impact_06.ogg');
         this.load.audio('impact_07', 'assets/audio/SFX/impact_07.ogg');
         this.load.audio('ballBounce_00A', 'assets/audio/SFX/ballBounce_00A.ogg');
@@ -776,8 +813,6 @@ static fullscreenMode(thisArg){
         this.load.audio('openChest', 'assets/audio/SFX/openChest.ogg');
         this.load.audio('hurtZap_00A', 'assets/audio/SFX/hurtZap_00A.ogg');
         this.load.audio('hurtZap_00B', 'assets/audio/SFX/hurtZap_00B.ogg');
-        this.load.audio('hurtZap_00C', 'assets/audio/SFX/hurtZap_00C.ogg');
-        this.load.audio('hurtZap_00D', 'assets/audio/SFX/hurtZap_00D.ogg');
         this.load.audio('dead', 'assets/audio/SFX/dead.ogg');
         this.load.audio('beep', 'assets/audio/SFX/beep.ogg');
         this.load.audio('jetStop', 'assets/audio/SFX/jetStop.ogg');
@@ -798,19 +833,14 @@ static fullscreenMode(thisArg){
         //EXPLOSIONS
         this.load.audio('explosion_00A', 'assets/audio/SFX/explosion_00A.ogg');
         this.load.audio('explosion_00B', 'assets/audio/SFX/explosion_00B.ogg');
-        this.load.audio('explosion_00C', 'assets/audio/SFX/explosion_00C.ogg');
         this.load.audio('explosion_01A', 'assets/audio/SFX/explosion_01A.ogg');
         this.load.audio('explosion_01B', 'assets/audio/SFX/explosion_01B.ogg');
-        this.load.audio('explosion_01C', 'assets/audio/SFX/explosion_01C.ogg');
         this.load.audio('explosion_02A', 'assets/audio/SFX/explosion_02A.ogg');
         this.load.audio('explosion_02B', 'assets/audio/SFX/explosion_02B.ogg');
-        this.load.audio('explosion_02C', 'assets/audio/SFX/explosion_02C.ogg');
         this.load.audio('explosion_03A', 'assets/audio/SFX/explosion_03A.ogg');
         this.load.audio('explosion_03B', 'assets/audio/SFX/explosion_03B.ogg');
-        this.load.audio('explosion_03C', 'assets/audio/SFX/explosion_03C.ogg');
         this.load.audio('explosion_04A', 'assets/audio/SFX/explosion_04A.ogg');
         this.load.audio('explosion_04B', 'assets/audio/SFX/explosion_04B.ogg');
-        this.load.audio('explosion_04C', 'assets/audio/SFX/explosion_04C.ogg');
         this.load.audio('explosion_05', 'assets/audio/SFX/explosion_05.ogg');
         //SHOTS
         this.load.audio('shot_00', 'assets/audio/SFX/shot_00.ogg');
@@ -826,16 +856,12 @@ static fullscreenMode(thisArg){
         this.load.audio('droneLoopDetect', 'assets/audio/SFX/enemies/droneLoopDetect.ogg');
         this.load.audio('damage_00A', 'assets/audio/SFX/enemies/damage_00A.ogg');
         this.load.audio('damage_00B', 'assets/audio/SFX/enemies/damage_00B.ogg');
-        this.load.audio('damage_00C', 'assets/audio/SFX/enemies/damage_00C.ogg');
         this.load.audio('damage_01A', 'assets/audio/SFX/enemies/damage_01A.ogg');
         this.load.audio('damage_01B', 'assets/audio/SFX/enemies/damage_01B.ogg');
-        this.load.audio('damage_01C', 'assets/audio/SFX/enemies/damage_01C.ogg');
         this.load.audio('damage_02A', 'assets/audio/SFX/enemies/damage_02A.ogg');
         this.load.audio('damage_02B', 'assets/audio/SFX/enemies/damage_02B.ogg');
-        this.load.audio('damage_02C', 'assets/audio/SFX/enemies/damage_02C.ogg');
         this.load.audio('damage_03A', 'assets/audio/SFX/enemies/damage_03A.ogg');
         this.load.audio('damage_03B', 'assets/audio/SFX/enemies/damage_03B.ogg');
-        this.load.audio('damage_03C', 'assets/audio/SFX/enemies/damage_03C.ogg');
         this.load.audio('gunnerLoop', 'assets/audio/SFX/enemies/gunnerLoop.ogg');
         this.load.audio('gunnerLoopDetect', 'assets/audio/SFX/enemies/gunnerLoopDetect.ogg');
         this.load.audio('homingLoop', 'assets/audio/SFX/enemies/homingLoop.ogg');
@@ -848,69 +874,41 @@ static fullscreenMode(thisArg){
         this.load.audio('mechaLoopDetect', 'assets/audio/SFX/enemies/mechaLoopDetect.ogg');
         this.load.audio('hit_00A', 'assets/audio/SFX/enemies/hit_00A.ogg');
         this.load.audio('hit_00B', 'assets/audio/SFX/enemies/hit_00B.ogg');
-        this.load.audio('hit_00C', 'assets/audio/SFX/enemies/hit_00C.ogg');
         this.load.audio('hit_01A', 'assets/audio/SFX/enemies/hit_01A.ogg');
         this.load.audio('hit_01B', 'assets/audio/SFX/enemies/hit_01B.ogg');
-        this.load.audio('hit_01C', 'assets/audio/SFX/enemies/hit_01C.ogg');
         this.load.audio('airDeath_00A', 'assets/audio/SFX/enemies/airDeath_00A.ogg');
         this.load.audio('airDeath_00B', 'assets/audio/SFX/enemies/airDeath_00B.ogg');
-        this.load.audio('airDeath_00C', 'assets/audio/SFX/enemies/airDeath_00C.ogg');
         this.load.audio('shot', 'assets/audio/SFX/enemies/shot.ogg');
         this.load.audio('lasserSufferingLoop', 'assets/audio/SFX/enemies/lasserSufferingLoop.ogg');
         this.load.audio('zap', 'assets/audio/SFX/enemies/zap.ogg');
         this.load.audio('zapAir', 'assets/audio/SFX/enemies/zapAir.ogg');
         this.load.audio('groundDeath_00A', 'assets/audio/SFX/enemies/groundDeath_00A.ogg');
         this.load.audio('groundDeath_00B', 'assets/audio/SFX/enemies/groundDeath_00B.ogg');
-        this.load.audio('groundDeath_00C', 'assets/audio/SFX/enemies/groundDeath_00C.ogg');
         this.load.audio('groundDeath_01A', 'assets/audio/SFX/enemies/groundDeath_01A.ogg');
         this.load.audio('groundDeath_01B', 'assets/audio/SFX/enemies/groundDeath_01B.ogg');
-        this.load.audio('groundDeath_01C', 'assets/audio/SFX/enemies/groundDeath_01C.ogg');
         this.load.audio('groundDeath_02A', 'assets/audio/SFX/enemies/groundDeath_02A.ogg');
         this.load.audio('groundDeath_02B', 'assets/audio/SFX/enemies/groundDeath_02B.ogg');
-        this.load.audio('groundDeath_02C', 'assets/audio/SFX/enemies/groundDeath_02C.ogg');
         this.load.audio('explode_00A', 'assets/audio/SFX/enemies/explode_00A.ogg');
         this.load.audio('explode_00B', 'assets/audio/SFX/enemies/explode_00B.ogg');
-        this.load.audio('explode_00C', 'assets/audio/SFX/enemies/explode_00C.ogg');
-        this.load.audio('explode_00D', 'assets/audio/SFX/enemies/explode_00D.ogg');
         this.load.audio('explode_01A', 'assets/audio/SFX/enemies/explode_01A.ogg');
         this.load.audio('explode_01B', 'assets/audio/SFX/enemies/explode_01B.ogg');
-        this.load.audio('explode_01C', 'assets/audio/SFX/enemies/explode_01C.ogg');
-        this.load.audio('explode_01D', 'assets/audio/SFX/enemies/explode_01D.ogg');
         this.load.audio('explode_02A', 'assets/audio/SFX/enemies/explode_02A.ogg');
         this.load.audio('explode_02B', 'assets/audio/SFX/enemies/explode_02B.ogg');
-        this.load.audio('explode_02C', 'assets/audio/SFX/enemies/explode_02C.ogg');
-        this.load.audio('explode_02D', 'assets/audio/SFX/enemies/explode_02D.ogg');
         this.load.audio('explode_03A', 'assets/audio/SFX/enemies/explode_03A.ogg');
         this.load.audio('explode_03B', 'assets/audio/SFX/enemies/explode_03B.ogg');
-        this.load.audio('explode_03C', 'assets/audio/SFX/enemies/explode_03C.ogg');
-        this.load.audio('explode_03D', 'assets/audio/SFX/enemies/explode_03D.ogg');
         this.load.audio('explode_04A', 'assets/audio/SFX/enemies/explode_04A.ogg');
         this.load.audio('explode_04B', 'assets/audio/SFX/enemies/explode_04B.ogg');
-        this.load.audio('explode_04C', 'assets/audio/SFX/enemies/explode_04C.ogg');
-        this.load.audio('explode_04D', 'assets/audio/SFX/enemies/explode_04D.ogg');
         this.load.audio('explode_05A', 'assets/audio/SFX/enemies/explode_05A.ogg');
         this.load.audio('explode_05B', 'assets/audio/SFX/enemies/explode_05B.ogg');
-        this.load.audio('explode_05C', 'assets/audio/SFX/enemies/explode_05C.ogg');
-        this.load.audio('explode_05D', 'assets/audio/SFX/enemies/explode_05D.ogg');
         this.load.audio('sword', 'assets/audio/SFX/enemies/sword.ogg');
         this.load.audio('mechGun_00A', 'assets/audio/SFX/enemies/mechGun_00A.ogg');
         this.load.audio('mechGun_00B', 'assets/audio/SFX/enemies/mechGun_00B.ogg');
-        this.load.audio('mechGun_00C', 'assets/audio/SFX/enemies/mechGun_00C.ogg');
-        this.load.audio('mechGun_00D', 'assets/audio/SFX/enemies/mechGun_00D.ogg');
         this.load.audio('gunGun_00A', 'assets/audio/SFX/enemies/gunGun_00A.ogg');
         this.load.audio('gunGun_00B', 'assets/audio/SFX/enemies/gunGun_00B.ogg');
-        this.load.audio('gunGun_00C', 'assets/audio/SFX/enemies/gunGun_00C.ogg');
-        this.load.audio('gunGun_00D', 'assets/audio/SFX/enemies/gunGun_00D.ogg');
         this.load.audio('energyImpact', 'assets/audio/SFX/enemies/energyImpact.ogg');
         this.load.audio('sithVanish', 'assets/audio/SFX/enemies/sithVanish.ogg');
         this.load.audio('sithSwing_00', 'assets/audio/SFX/enemies/sithSwing_00.ogg');
         this.load.audio('sithSwing_01', 'assets/audio/SFX/enemies/sithSwing_01.ogg');
-        this.load.audio('sithSwing_02', 'assets/audio/SFX/enemies/sithSwing_02.ogg');
-        this.load.audio('sithSwing_03', 'assets/audio/SFX/enemies/sithSwing_03.ogg');
-        this.load.audio('sithSwing_04', 'assets/audio/SFX/enemies/sithSwing_04.ogg');
-        this.load.audio('sithSwing_05', 'assets/audio/SFX/enemies/sithSwing_05.ogg');
-        this.load.audio('sithSwing_06', 'assets/audio/SFX/enemies/sithSwing_06.ogg');
-        this.load.audio('sithSwing_07', 'assets/audio/SFX/enemies/sithSwing_07.ogg');
         this.load.audio('sithHumLoop', 'assets/audio/SFX/enemies/sithHumLoop.ogg');
         this.load.audio('sithPursue', 'assets/audio/SFX/enemies/sithPursue.ogg');
         //MENTOR
@@ -925,11 +923,7 @@ static fullscreenMode(thisArg){
         this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
         this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
         this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
-        //this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg')
         this.load.audio('musicLoop0001', 'assets/audio/BGM/musicLoop0001.ogg')
-
-
-
     }
     //CREATION:
     create() {
@@ -938,23 +932,17 @@ static fullscreenMode(thisArg){
         Audio.soundInstance[0] = [];
         Audio.createSFXinstanceSub('impact_00A', 0, 0, this);
         Audio.createSFXinstanceSub('impact_00B', 0, 1, this);
-        Audio.createSFXinstanceSub('impact_00C', 0, 2, this);
         Audio.soundInstance[1] = [];
         Audio.createSFXinstanceSub('impact_01A', 1, 0, this);
         Audio.createSFXinstanceSub('impact_01B', 1, 1, this);
-        Audio.createSFXinstanceSub('impact_01C', 1, 2, this);
         Audio.createSFXinstance('impact_02', 2, this);
         Audio.soundInstance[3] = [];
         Audio.createSFXinstanceSub('impact_03A', 3, 0, this);
         Audio.createSFXinstanceSub('impact_03B', 3, 1, this);
-        Audio.createSFXinstanceSub('impact_03C', 3, 2, this);
-        Audio.createSFXinstanceSub('impact_03D', 3, 3, this);
-        Audio.createSFXinstanceSub('impact_03E', 3, 4, this);
         Audio.createSFXinstance('impact_04', 4, this);
         Audio.soundInstance[5] = [];
         Audio.createSFXinstanceSub('impact_05A', 5, 0, this);
         Audio.createSFXinstanceSub('impact_05B', 5, 1, this);
-        Audio.createSFXinstanceSub('impact_05C', 5, 2, this);
         Audio.createSFXinstance('impact_06', 6, this);
         Audio.createSFXinstance('impact_07', 7, this);
         //
@@ -969,23 +957,18 @@ static fullscreenMode(thisArg){
         Audio.soundInstance[14] = [];
         Audio.createSFXinstanceSub('explosion_00A', 14, 0, this);
         Audio.createSFXinstanceSub('explosion_00B', 14, 1, this);
-        Audio.createSFXinstanceSub('explosion_00C', 14, 2, this);
         Audio.soundInstance[15] = [];
         Audio.createSFXinstanceSub('explosion_01A', 15, 0, this);
         Audio.createSFXinstanceSub('explosion_01B', 15, 1, this);
-        Audio.createSFXinstanceSub('explosion_01C', 15, 2, this);
         Audio.soundInstance[16] = [];
         Audio.createSFXinstanceSub('explosion_02A', 16, 0, this);
         Audio.createSFXinstanceSub('explosion_02B', 16, 1, this);
-        Audio.createSFXinstanceSub('explosion_02C', 16, 2, this);
         Audio.soundInstance[17] = [];
         Audio.createSFXinstanceSub('explosion_03A', 17, 0, this);
         Audio.createSFXinstanceSub('explosion_03B', 17, 1, this);
-        Audio.createSFXinstanceSub('explosion_03C', 17, 2, this);
         Audio.soundInstance[18] = [];
         Audio.createSFXinstanceSub('explosion_04A', 18, 0, this);
         Audio.createSFXinstanceSub('explosion_04B', 18, 1, this);
-        Audio.createSFXinstanceSub('explosion_04C', 18, 2, this);
         Audio.createSFXinstance('explosion_05', 19, this);
         //
         Audio.createSFXinstance('shot_00', 20, this);
@@ -1009,19 +992,15 @@ static fullscreenMode(thisArg){
         Audio.soundInstance[36] = [];
         Audio.createSFXinstanceSub('damage_00A', 36, 0, this);
         Audio.createSFXinstanceSub('damage_00B', 36, 1, this);
-        Audio.createSFXinstanceSub('damage_00C', 36, 2, this);
         Audio.soundInstance[37] = [];
         Audio.createSFXinstanceSub('damage_01A', 37, 0, this);
         Audio.createSFXinstanceSub('damage_01B', 37, 1, this);
-        Audio.createSFXinstanceSub('damage_01C', 37, 2, this);
         Audio.soundInstance[38] = [];
         Audio.createSFXinstanceSub('damage_02A', 38, 0, this);
         Audio.createSFXinstanceSub('damage_02B', 38, 1, this);
-        Audio.createSFXinstanceSub('damage_02C', 38, 2, this);
         Audio.soundInstance[39] = [];
         Audio.createSFXinstanceSub('damage_03A', 39, 0, this);
         Audio.createSFXinstanceSub('damage_03B', 39, 1, this);
-        Audio.createSFXinstanceSub('damage_03C', 39, 2, this);
         Audio.createSFXloopInstance('gunnerLoop', 40, this);
         Audio.createSFXloopInstance('gunnerLoopDetect', 41, this);
         Audio.createSFXloopInstance('homingLoop', 42, this);
@@ -1029,11 +1008,9 @@ static fullscreenMode(thisArg){
         Audio.soundInstance[44] = [];
         Audio.createSFXinstanceSub('hit_00A', 44, 0, this);
         Audio.createSFXinstanceSub('hit_00B', 44, 1, this);
-        Audio.createSFXinstanceSub('hit_00C', 44, 2, this);
         Audio.soundInstance[45] = [];
         Audio.createSFXinstanceSub('hit_01A', 45, 0, this);
         Audio.createSFXinstanceSub('hit_01B', 45, 1, this);
-        Audio.createSFXinstanceSub('hit_01C', 45, 2, this);
         Audio.createSFXloopInstance('zapperLoop', 46, this);
         Audio.createSFXloopInstance('zapperLoopDetect', 47, this);
         Audio.createSFXloopInstance('swordLoop', 48, this);
@@ -1043,7 +1020,6 @@ static fullscreenMode(thisArg){
         Audio.soundInstance[52] = [];
         Audio.createSFXinstanceSub('airDeath_00A', 52, 0, this);
         Audio.createSFXinstanceSub('airDeath_00B', 52, 1, this);
-        Audio.createSFXinstanceSub('airDeath_00C', 52, 2, this);
         Audio.createSFXinstance('shot', 53, this);
         Audio.createSFXinstance('null', 54, this);
         Audio.createSFXinstance('zap', 55, this);
@@ -1051,45 +1027,30 @@ static fullscreenMode(thisArg){
         Audio.soundInstance[57] = [];
         Audio.createSFXinstanceSub('groundDeath_00A', 57, 0, this);
         Audio.createSFXinstanceSub('groundDeath_00B', 57, 1, this);
-        Audio.createSFXinstanceSub('groundDeath_00C', 57, 2, this);
         Audio.soundInstance[58] = [];
         Audio.createSFXinstanceSub('groundDeath_01A', 58, 0, this);
         Audio.createSFXinstanceSub('groundDeath_01B', 58, 1, this);
-        Audio.createSFXinstanceSub('groundDeath_01C', 58, 2, this);
         Audio.soundInstance[59] = [];
         Audio.createSFXinstanceSub('groundDeath_02A', 59, 0, this);
         Audio.createSFXinstanceSub('groundDeath_02B', 59, 1, this);
-        Audio.createSFXinstanceSub('groundDeath_02C', 59, 2, this);
         Audio.soundInstance[60] = [];
         Audio.createSFXinstanceSub('explode_00A', 60, 0, this);
         Audio.createSFXinstanceSub('explode_00B', 60, 1, this);
-        Audio.createSFXinstanceSub('explode_00C', 60, 2, this);
-        Audio.createSFXinstanceSub('explode_00D', 60, 3, this);
         Audio.soundInstance[61] = [];
         Audio.createSFXinstanceSub('explode_01A', 61, 0, this);
         Audio.createSFXinstanceSub('explode_01B', 61, 1, this);
-        Audio.createSFXinstanceSub('explode_01C', 61, 2, this);
-        Audio.createSFXinstanceSub('explode_01D', 61, 3, this);
         Audio.soundInstance[62] = [];
         Audio.createSFXinstanceSub('explode_02A', 62, 0, this);
         Audio.createSFXinstanceSub('explode_02B', 62, 1, this);
-        Audio.createSFXinstanceSub('explode_02C', 62, 2, this);
-        Audio.createSFXinstanceSub('explode_02D', 62, 3, this);
         Audio.soundInstance[63] = [];
         Audio.createSFXinstanceSub('explode_03A', 63, 0, this);
         Audio.createSFXinstanceSub('explode_03B', 63, 1, this);
-        Audio.createSFXinstanceSub('explode_03C', 63, 2, this);
-        Audio.createSFXinstanceSub('explode_03D', 63, 3, this);
         Audio.soundInstance[64] = [];
         Audio.createSFXinstanceSub('explode_04A', 64, 0, this);
         Audio.createSFXinstanceSub('explode_04B', 64, 1, this);
-        Audio.createSFXinstanceSub('explode_04C', 64, 2, this);
-        Audio.createSFXinstanceSub('explode_04D', 64, 3, this);
         Audio.soundInstance[65] = [];
         Audio.createSFXinstanceSub('explode_05A', 65, 0, this);
         Audio.createSFXinstanceSub('explode_05B', 65, 1, this);
-        Audio.createSFXinstanceSub('explode_05C', 65, 2, this);
-        Audio.createSFXinstanceSub('explode_05D', 65, 3, this);
         Audio.createSFXinstance('wick_03', 66, this);
         Audio.soundInstance[67] = [];
         Audio.createSFXinstanceSub('ballBounce_00A', 67, 0, this);
@@ -1101,20 +1062,14 @@ static fullscreenMode(thisArg){
         Audio.soundInstance[72] = [];
         Audio.createSFXinstanceSub('hurtZap_00A', 72, 0, this);
         Audio.createSFXinstanceSub('hurtZap_00B', 72, 1, this);
-        Audio.createSFXinstanceSub('hurtZap_00C', 72, 2, this);
-        Audio.createSFXinstanceSub('hurtZap_00D', 72, 3, this);
         Audio.createSFXinstance('dead', 73, this);
         Audio.createSFXinstance('sword', 74, this);
         Audio.soundInstance[75] = [];
         Audio.createSFXinstanceSub('mechGun_00A', 75, 0, this);
         Audio.createSFXinstanceSub('mechGun_00B', 75, 1, this);
-        Audio.createSFXinstanceSub('mechGun_00C', 75, 2, this);
-        Audio.createSFXinstanceSub('mechGun_00D', 75, 3, this);
         Audio.soundInstance[76] = [];
         Audio.createSFXinstanceSub('gunGun_00A', 76, 0, this);
         Audio.createSFXinstanceSub('gunGun_00B', 76, 1, this);
-        Audio.createSFXinstanceSub('gunGun_00C', 76, 2, this);
-        Audio.createSFXinstanceSub('gunGun_00D', 76, 3, this);
         Audio.createSFXinstance('energyImpact', 77, this);
         Audio.createSFXinstance('beep', 78, this);
         Audio.createSFXinstance('hover', 79, this);
@@ -1126,12 +1081,6 @@ static fullscreenMode(thisArg){
         Audio.soundInstance[85] = [];
         Audio.createSFXinstanceSub('sithSwing_00', 85, 0, this);
         Audio.createSFXinstanceSub('sithSwing_01', 85, 1, this);
-        Audio.createSFXinstanceSub('sithSwing_02', 85, 2, this);
-        Audio.createSFXinstanceSub('sithSwing_03', 85, 3, this);
-        Audio.createSFXinstanceSub('sithSwing_04', 85, 4, this);
-        Audio.createSFXinstanceSub('sithSwing_05', 85, 5, this);
-        Audio.createSFXinstanceSub('sithSwing_06', 85, 6, this);
-        Audio.createSFXinstanceSub('sithSwing_07', 85, 7, this);
         Audio.createSFXloopInstance('sithHumLoop', 86, this);
         Audio.createSFXloopInstance('sithPursue', 87, this);
         Audio.createSFXinstance('click', 88, this);
@@ -1145,6 +1094,54 @@ static fullscreenMode(thisArg){
         Audio.createSFXloopInstance('mentorPropellerLoop', 95, this);
         Audio.createSFXinstance('mentorMovingPart', 96, this);
         Audio.createSFXinstance('mentorPropellerStop', 97, this);
+        //MOBILE CHECK
+        if (this.game.onPC) {
+            Audio.createSFXinstanceSub('airDeath_00C', 52, 2, this);
+            Audio.createSFXinstanceSub('damage_00C', 36, 2, this);
+            Audio.createSFXinstanceSub('damage_01C', 37, 2, this);
+            Audio.createSFXinstanceSub('damage_02C', 38, 2, this);
+            Audio.createSFXinstanceSub('damage_03C', 39, 2, this);
+            Audio.createSFXinstanceSub('explode_00C', 60, 2, this);
+            Audio.createSFXinstanceSub('explode_00D', 60, 3, this);
+            Audio.createSFXinstanceSub('explode_01C', 61, 2, this);
+            Audio.createSFXinstanceSub('explode_01D', 61, 3, this);
+            Audio.createSFXinstanceSub('explode_02C', 62, 2, this);
+            Audio.createSFXinstanceSub('explode_02D', 62, 3, this);
+            Audio.createSFXinstanceSub('explode_03C', 63, 2, this);
+            Audio.createSFXinstanceSub('explode_03D', 63, 3, this);
+            Audio.createSFXinstanceSub('explode_04C', 64, 2, this);
+            Audio.createSFXinstanceSub('explode_04D', 64, 3, this);
+            Audio.createSFXinstanceSub('explode_05C', 65, 2, this);
+            Audio.createSFXinstanceSub('explode_05D', 65, 3, this);
+            Audio.createSFXinstanceSub('explosion_00C', 14, 2, this);
+            Audio.createSFXinstanceSub('explosion_01C', 15, 2, this);
+            Audio.createSFXinstanceSub('explosion_02C', 16, 2, this);
+            Audio.createSFXinstanceSub('explosion_03C', 17, 2, this);
+            Audio.createSFXinstanceSub('explosion_04C', 18, 2, this);
+            Audio.createSFXinstanceSub('groundDeath_00C', 57, 2, this);
+            Audio.createSFXinstanceSub('groundDeath_01C', 58, 2, this);
+            Audio.createSFXinstanceSub('groundDeath_02C', 59, 2, this);
+            Audio.createSFXinstanceSub('gunGun_00C', 76, 2, this);
+            Audio.createSFXinstanceSub('gunGun_00D', 76, 3, this);
+            Audio.createSFXinstanceSub('hit_00C', 44, 2, this);
+            Audio.createSFXinstanceSub('hit_01C', 45, 2, this);
+            Audio.createSFXinstanceSub('hurtZap_00C', 72, 2, this);
+            Audio.createSFXinstanceSub('hurtZap_00D', 72, 3, this);
+            Audio.createSFXinstanceSub('impact_00C', 0, 2, this);
+            Audio.createSFXinstanceSub('impact_01C', 1, 2, this);
+            Audio.createSFXinstanceSub('impact_03C', 3, 2, this);
+            Audio.createSFXinstanceSub('impact_03D', 3, 3, this);
+            Audio.createSFXinstanceSub('impact_03E', 3, 4, this);
+            Audio.createSFXinstanceSub('impact_05C', 5, 2, this);
+            Audio.createSFXinstanceSub('mechGun_00C', 75, 2, this);
+            Audio.createSFXinstanceSub('mechGun_00D', 75, 3, this);
+            Audio.createSFXinstanceSub('sithSwing_02', 85, 2, this);
+            Audio.createSFXinstanceSub('sithSwing_03', 85, 3, this);
+            Audio.createSFXinstanceSub('sithSwing_04', 85, 4, this);
+            Audio.createSFXinstanceSub('sithSwing_05', 85, 5, this);
+            Audio.createSFXinstanceSub('sithSwing_06', 85, 6, this);
+            Audio.createSFXinstanceSub('sithSwing_07', 85, 7, this);
+        }
         //INICIO TESTEO
         /*
         Audio.soundInstance[0] = [];

@@ -6,7 +6,11 @@ export default class SceneSplashScreen extends Phaser.Scene {
 
   preload(){
     //AUDIO
-        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg')
+      if (this.game.onPC) {
+        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill.ogg');
+      }else{
+        this.load.audio('musicLoop0000chill', 'assets/audio/BGM/musicLoop0000chill_mobile.ogg');
+      }
     //
     //Splash menu
     this.load.image('btnTitle', 'assets/lowResLogo.png');
