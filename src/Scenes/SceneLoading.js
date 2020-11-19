@@ -122,7 +122,18 @@ export default class SceneLoading extends Phaser.Scene {
 
     //this.load.spritesheet('dummy', 'assets/Sprites/Enemies/dummy.png', { frameWidth: 35, frameHeight: 44 });
     //META
-    this.load.spritesheet('goalVFX', 'assets/Sprites/VFX/goal_100X100_120.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX', 'assets/Sprites/VFX/goal1.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX2', 'assets/Sprites/VFX/goal2.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX3', 'assets/Sprites/VFX/goal3.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX4', 'assets/Sprites/VFX/goal4.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX5', 'assets/Sprites/VFX/goal5.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX6', 'assets/Sprites/VFX/goal6.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX7', 'assets/Sprites/VFX/goal7.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX8', 'assets/Sprites/VFX/goal8.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX9', 'assets/Sprites/VFX/goal9.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX10', 'assets/Sprites/VFX/goal10.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX11', 'assets/Sprites/VFX/goal11.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('goalVFX12', 'assets/Sprites/VFX/goal12.png', { frameWidth: 100, frameHeight: 100 });
     //META
 
     //BOSS
@@ -242,7 +253,12 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.image('bg1', 'assets/Backgrounds/background0.png');
     this.load.image('bg2', 'assets/Backgrounds/background1.png');
     this.load.image('bg3', 'assets/Backgrounds/background2.png');
-    this.load.spritesheet('animatedBg', 'assets/Backgrounds/dirty_sky.png', { frameWidth: 1100, frameHeight: 700 });
+
+    this.load.spritesheet('animatedBg', 'assets/Backgrounds/dirty_sky1.png', { frameWidth: 1100, frameHeight: 700 });
+    this.load.spritesheet('animatedBg2', 'assets/Backgrounds/dirty_sky2.png', { frameWidth: 1100, frameHeight: 700 });
+    this.load.spritesheet('animatedBg3', 'assets/Backgrounds/dirty_sky3.png', { frameWidth: 1100, frameHeight: 700 });
+    this.load.spritesheet('animatedBg4', 'assets/Backgrounds/dirty_sky4.png', { frameWidth: 1100, frameHeight: 700 });
+
     this.load.image('moon', 'assets/Backgrounds/moon.png');
 
     //Tilesets de niveles y mapas de niveles
@@ -289,13 +305,32 @@ export default class SceneLoading extends Phaser.Scene {
 
     //this.load.spritesheet('megatonExplosion', 'assets/Sprites/VFX/megaton_explosion_100x100_51.png', { frameWidth: 100, frameHeight: 100 })
     //this.load.spritesheet('megatonExplosion', 'https://i.postimg.cc/SN5h8Vj2/megaton-explosion-100-X100-51.png', { frameWidth: 100, frameHeight: 100 });
-    this.load.spritesheet('megatonExplosion', 'assets/Sprites/VFX/megaton.png', { frameWidth: 100, frameHeight: 100 })
+    this.load.spritesheet('megatonExplosion', 'assets/Sprites/VFX/megaton1.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('megatonExplosion2', 'assets/Sprites/VFX/megaton2.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('megatonExplosion3', 'assets/Sprites/VFX/megaton3.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('megatonExplosion4', 'assets/Sprites/VFX/megaton4.png', { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('megatonExplosion5', 'assets/Sprites/VFX/megaton5.png', { frameWidth: 100, frameHeight: 100 });
     //this.load.spritesheet('missileExplosion', 'assets/Sprites/VFX/missil_explosion_100x100_75.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
     //this.load.spritesheet('smoke', 'assets/Sprites/Explosions/laser_smoke.png', { frameWidth: 100, frameHeight: 100 });
 
     this.load.spritesheet('laserNonLethal', 'assets/Sprites/Bullet/laser_nonletal.png', { frameWidth: 960, frameHeight: 32 }); //62
+
     this.load.spritesheet('laserLethal', 'assets/Sprites/Bullet/laser_letal.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal2', 'assets/Sprites/Bullet/laser_letal2.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal3', 'assets/Sprites/Bullet/laser_letal3.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal4', 'assets/Sprites/Bullet/laser_letal4.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal5', 'assets/Sprites/Bullet/laser_letal5.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal6', 'assets/Sprites/Bullet/laser_letal6.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal7', 'assets/Sprites/Bullet/laser_letal7.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal8', 'assets/Sprites/Bullet/laser_letal8.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal9', 'assets/Sprites/Bullet/laser_letal9.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal10', 'assets/Sprites/Bullet/laser_letal10.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal11', 'assets/Sprites/Bullet/laser_letal11.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal12', 'assets/Sprites/Bullet/laser_letal12.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal13', 'assets/Sprites/Bullet/laser_letal13.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal14', 'assets/Sprites/Bullet/laser_letal14.png', { frameWidth: 960, frameHeight: 32 }); //42*/
+    this.load.spritesheet('laserLethal15', 'assets/Sprites/Bullet/laser_letal15.png', { frameWidth: 960, frameHeight: 32 }); //42*/
 
     //preload del joystick
     this.load.plugin('rexvirtualjoystickplugin', 'src/rexvirtualjoystickplugin.min.js', true);
@@ -345,12 +380,20 @@ export default class SceneLoading extends Phaser.Scene {
 
   create(){
     //BG ANIMADO
+
+    this.bigAnimationFrames = this.anims.generateFrameNumbers('animatedBg', { start: 0, end: 0 });
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('animatedBg2', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('animatedBg3', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('animatedBg4', { start: 0, end: 0 }));
+
     this.anims.create({
         key: 'bgAnimation',
-        frames: this.anims.generateFrameNumbers('animatedBg', { start: 0, end: 3 }),
+        frames: this.bigAnimationFrames,
         frameRate: 0.35,
         repeat: -1
     });
+
+    this.bigAnimationFrames = [];
 
     //LASERES AUXILIARES
     this.anims.create({
@@ -517,12 +560,20 @@ export default class SceneLoading extends Phaser.Scene {
             repeat: 0
         });*/
 
+        this.bigAnimationFrames = this.anims.generateFrameNumbers('megatonExplosion', { start: 0, end: 9 });
+        this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('megatonExplosion2', { start: 0, end: 9 }));
+        this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('megatonExplosion3', { start: 0, end: 9 }));
+        this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('megatonExplosion4', { start: 0, end: 9 }));
+        this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('megatonExplosion5', { start: 0, end: 9 }));
+
     this.anims.create({
             key: 'megatonExplosion',
-            frames: this.anims.generateFrameNumbers('megatonExplosion', { start: 0, end: 50 }),
+            frames: this.bigAnimationFrames,
             frameRate: 35,
             repeat: 0
         });
+
+        this.bigAnimationFrames = [];
 
     /*this.anims.create({
             key: 'missileExplosion',
@@ -590,20 +641,55 @@ export default class SceneLoading extends Phaser.Scene {
         frameRate: 8,
         repeat: 1
     });
+
+    this.bigAnimationFrames = this.anims.generateFrameNumbers('laserLethal', { start: 0, end: 0 });
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal2', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal3', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal4', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal5', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal6', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal7', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal8', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal9', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal10', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal11', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal12', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal13', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal14', { start: 0, end: 0 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('laserLethal15', { start: 0, end: 0 }));
+
     this.anims.create({
         key: 'laserLethal',
-        frames: this.anims.generateFrameNumbers('laserLethal', { start: 0, end: 16 }),
+        frames: this.bigAnimationFrames,
         frameRate: 15,
         repeat: 1
     });
 
+    this.bigAnimationFrames = [];
+
     //META
+    this.bigAnimationFrames = this.anims.generateFrameNumbers('goalVFX', { start: 0, end: 9 });
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('goalVFX2', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('goalVFX3', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('goalVFX4', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('goalVFX5', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('goalVFX6', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('goalVFX7', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('goalVFX8', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('goalVFX9', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('goalVFX10', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('goalVFX11', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('goalVFX12', { start: 0, end: 5 }));
+
+
     this.anims.create({
         key: 'goalVFX',
-        frames: this.anims.generateFrameNumbers('goalVFX', { start: 0, end: 119 }),
+        frames: this.bigAnimationFrames,
         frameRate: 5,
         repeat: -1
     });
+
+    this.bigAnimationFrames = [];
     //META
 
     //CHEST
@@ -805,6 +891,7 @@ export default class SceneLoading extends Phaser.Scene {
         frames: this.bigAnimationFrames.slice(16,36),
         frameRate: 10
     });
+    this.bigAnimationFrames = [];
 
     this.anims.create({
         key: 'zapperAirMove',
