@@ -279,6 +279,9 @@ export default class SceneLoading extends Phaser.Scene {
 
     this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
 
+    //laser auxiliar
+    this.load.spritesheet('laserAux', 'assets/Tilesets/laser_red_32x32_6.png', { frameWidth: 32, frameHeight: 4 }); //42*/
+
     //carga solo si estamos en pc
     if(this.game.onPC){
       //scraps de enemigos
@@ -323,6 +326,15 @@ export default class SceneLoading extends Phaser.Scene {
         frameRate: 0.35,
         repeat: -1
     });
+
+    //LASERES AUXILIARES
+    this.anims.create({
+        key: 'laserAux',
+        frames: this.anims.generateFrameNumbers('laserAux', { start: 0, end: 5 }),
+        frameRate: 20,
+        repeat: -1
+    });
+    //LASERES AUXILIARES
 
     //ANIMS
     this.anims.create({

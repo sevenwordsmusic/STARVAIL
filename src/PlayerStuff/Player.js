@@ -348,10 +348,16 @@ export default class Player {
   }
 
   onBodyCollide({ gameObjectB }){
-    if (!gameObjectB || !(gameObjectB instanceof Phaser.Tilemaps.Tile) || this.sprite == undefined || this.sprite.body == undefined) return;
+    if (!gameObjectB || this.sprite == undefined || this.sprite.body == undefined) return;
     const tile = gameObjectB;
-    if (tile.properties.Lethal) {
-      this.playerDamageKnockback(50, 0.8, new Phaser.Math.Vector2(-this.sprite.body.velocity.x, -this.sprite.body.velocity.y));
+    if(tile.lethalLaser != undefined){
+      if(tile.lethalLaser){
+        this.playerDamageKnockback(50, 0.8, new Phaser.Math.Vector2(-this.sprite.body.velocity.x, -this.sprite.body.velocity.y));
+      }
+    }else{
+      if ((gameObjectB instanceof Phaser.Tilemaps.Tile) && tile.properties.Lethal) {
+        this.playerDamageKnockback(50, 0.8, new Phaser.Math.Vector2(-this.sprite.body.velocity.x, -this.sprite.body.velocity.y));
+      }
     }
   }
 

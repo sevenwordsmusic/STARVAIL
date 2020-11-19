@@ -377,6 +377,52 @@ export default class Level1 extends Phaser.Scene {
         this.laserTrapArray.push(new LaserTrap(this, point.x, point.y));
       });
 
+    this.randomLaser = [];
+    for(var i=0; i<40; i++){
+      this.randomLaser[i] = Math.random();
+    }
+      console.log(this.randomLaser[0]);
+    if(this.map.getObjectLayer("Laser_Layer") != null)
+      this.map.getObjectLayer("Laser_Layer").objects.forEach(point => {
+        if(this.randomLaser[parseInt(point.properties[0].value)] < 0.5){
+          console.log(point.properties[1].value);
+          if(point.properties[1].value){
+            var laserAux = this.matter.add.sprite(point.x, point.y-16, 'laserAux', 0);
+            laserAux.setDepth(-11);
+            laserAux.body.isStatic = true;
+            laserAux.body.isSensor = true;
+            laserAux.body.collisionFilter.category = 1;
+            laserAux.body.collisionFilter.group = -4;
+            laserAux.lethalLaser = true;
+            laserAux.anims.play('laserAux', true);
+            if(point.properties[2].value){
+              console.log("a");
+              this.laserTrapArray.push(new LaserTrap(this, point.x, point.y));
+            }
+          }
+        }
+        else if(this.randomLaser[parseInt(point.properties[0].value)] < 1){
+          console.log(point.properties[1].value);
+          if(!point.properties[1].value){
+            var laserAux = this.matter.add.sprite(point.x, point.y-16, 'laserAux', 0);
+            laserAux.setDepth(-11);
+            laserAux.body.isStatic = true;
+            laserAux.body.isSensor = true;
+            laserAux.body.collisionFilter.category = 1;
+            laserAux.body.collisionFilter.group = -4;
+            laserAux.lethalLaser = true;
+            laserAux.anims.play('laserAux', true);
+            if(point.properties[2].value){
+              console.log("b");
+              this.laserTrapArray.push(new LaserTrap(this, point.x, point.y));
+            }
+          }
+        }
+        else{
+          //ningun laser
+        }
+      });
+
     this.input.setDefaultCursor('none');
 
 
@@ -384,7 +430,7 @@ export default class Level1 extends Phaser.Scene {
 
    //AUDIO
       Audio.levelOne(this);
-       
+
       //
   }
   //Función update, que actualiza el estado de la escena.
