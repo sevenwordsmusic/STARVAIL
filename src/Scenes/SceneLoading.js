@@ -258,7 +258,11 @@ export default class SceneLoading extends Phaser.Scene {
 
     //this.load.spritesheet('enemyExplosion', 'assets/Sprites/VFX/enemy_death_80x80_74.png', { frameWidth: 80, frameHeight: 80 });
     //this.load.spritesheet('enemyExplosion', 'https://i.postimg.cc/vm5bG9Y1/enemy-death-80-X80-74.png', { frameWidth: 80, frameHeight: 80 });
-    this.load.spritesheet('enemyExplosion', 'assets/Sprites/VFX/enemyExplosion.png', { frameWidth: 80, frameHeight: 80 });
+    if(this.game.onPC){
+      this.load.spritesheet('enemyExplosion', 'assets/Sprites/VFX/enemyExplosion.png', { frameWidth: 80, frameHeight: 80 });
+    }else{
+      this.load.spritesheet('enemyExplosion', 'assets/Sprites/VFX/enemyExplosionMOBILE.png', { frameWidth: 20, frameHeight: 20 });
+    }
     //ENEMIGOS
 
     //NPC
