@@ -1142,6 +1142,8 @@ export default class Audio extends Phaser.Scene {
             Audio.createSFXinstanceSub('sithSwing_05', 85, 5, this);
             Audio.createSFXinstanceSub('sithSwing_06', 85, 6, this);
             Audio.createSFXinstanceSub('sithSwing_07', 85, 7, this);
+        }else{
+            console.log("%c | AUDIO ENGINE | %c > MOBILE VERSION : quality sacrificed for performance.", Audio.ctf, "");
         }
         //INICIO TESTEO
         /*
