@@ -59,8 +59,13 @@ export default class Level1 extends Phaser.Scene {
 
   //Función create, que crea los elementos del propio juego.
   create() {
-
     console.log(this);
+    //AJUSTE FÍSICAS PARA MOBILE
+      if(!this.game.onPC){
+          this.matter.world.update30Hz();
+      }
+    //
+
 
     //INTERFAZ
 

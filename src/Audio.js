@@ -773,8 +773,18 @@ export default class Audio extends Phaser.Scene {
             this.load.audio('sithSwing_05', 'assets/audio/SFX/enemies/sithSwing_05.ogg');
             this.load.audio('sithSwing_06', 'assets/audio/SFX/enemies/sithSwing_06.ogg');
             this.load.audio('sithSwing_07', 'assets/audio/SFX/enemies/sithSwing_07.ogg');
-        } else {
+            //MUSIC LOOPS PC
+                this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
+                this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
+                this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
+                this.load.audio('musicLoop0001', 'assets/audio/BGM/musicLoop0001.ogg')
+         } else {
             Audio.maxSFXinstances = 2;
+            //MUSIC LOOPS MOBILE
+                this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating_mobile.ogg');
+                this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving_mobile.ogg');
+                this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying_mobile.ogg');
+                this.load.audio('musicLoop0001', 'assets/audio/BGM/musicLoop0001_mobile.ogg')
         }
         //AMBIENT
         this.load.audio('ambientLoop_00', 'assets/audio/SFX/ambientLoop_00.ogg');
@@ -920,11 +930,6 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('mentorPropellerLoop', 'assets/audio/SFX/mentor/propellerLoop_00.ogg');
         this.load.audio('mentorMovingPart', 'assets/audio/SFX/mentor/movingPart_00.ogg');
         this.load.audio('mentorPropellerStop', 'assets/audio/SFX/mentor/propellerStop_00.ogg');
-        //MUSIC LOOPS
-        this.load.audio('musicLoop0000levitating', 'assets/audio/BGM/musicLoop0000levitating.ogg');
-        this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
-        this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
-        this.load.audio('musicLoop0001', 'assets/audio/BGM/musicLoop0001.ogg')
     }
     //CREATION:
     create() {
