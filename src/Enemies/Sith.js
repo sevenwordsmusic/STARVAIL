@@ -7,7 +7,7 @@ import Audio from "../Audio.js";
 //enemigo que hereda de Enemy
 export default class Sith extends Enemy {
   constructor(scene, x, y){
-    super(scene, x, y, 'sith', 250, 43);
+    super(scene, x, y, 'sith7', 250, 1);
     //inicialización de variables
     this.sprite.setScale(2);
 

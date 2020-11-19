@@ -144,6 +144,10 @@ export default class SceneLoading extends Phaser.Scene {
     this.load.spritesheet('mentorAirDown', 'assets/Sprites/Boss/boss_movedown_withgun.png', { frameWidth: 64, frameHeight: 64 });
     //BOSS
 
+    //SPRITESHEETS CONCATENADOS PARA REDUCIR CARGA DE RECURSOS
+    this.load.spritesheet('kilonova1', 'assets/Sprites/VFX/kilonova_400X400_95_1.png', { frameWidth: 400, frameHeight: 400 });
+
+
     //EFCTOS FIN JUEGO
     this.load.spritesheet('kilonova1', 'assets/Sprites/VFX/kilonova_400X400_95_1.png', { frameWidth: 400, frameHeight: 400 });
     this.load.spritesheet('kilonova2', 'assets/Sprites/VFX/kilonova_400X400_95_2.png', { frameWidth: 400, frameHeight: 400 });
@@ -182,10 +186,32 @@ export default class SceneLoading extends Phaser.Scene {
     //ENEMIGOS
     //GROUND
     this.load.spritesheet('zapperGround', 'assets/Sprites/Enemies/DroidZapper/DroidZapper.png', { frameWidth: 100, frameHeight: 45 });
-    this.load.spritesheet('hero', 'assets/Sprites/Enemies/DroidHero/DroidHero.png', { frameWidth: 96, frameHeight: 63 });
+
+    this.load.spritesheet('hero', 'assets/Sprites/Enemies/DroidHero/DroidHero1.png', { frameWidth: 96, frameHeight: 63 });
+    this.load.spritesheet('hero2', 'assets/Sprites/Enemies/DroidHero/DroidHero2.png', { frameWidth: 96, frameHeight: 63 });
+    this.load.spritesheet('hero3', 'assets/Sprites/Enemies/DroidHero/DroidHero3.png', { frameWidth: 96, frameHeight: 63 });
+    this.load.spritesheet('hero4', 'assets/Sprites/Enemies/DroidHero/DroidHero4.png', { frameWidth: 96, frameHeight: 63 });
+    this.load.spritesheet('hero5', 'assets/Sprites/Enemies/DroidHero/DroidHero5.png', { frameWidth: 96, frameHeight: 63 });
+
     this.load.spritesheet('mecha', 'assets/Sprites/Enemies/DroidMecha/DroidMecha.png', { frameWidth: 144, frameHeight: 60 }); //la cosa se pone interesante!
+    this.load.spritesheet('mecha2', 'assets/Sprites/Enemies/DroidMecha/DroidMecha2.png', { frameWidth: 144, frameHeight: 60 });
+    this.load.spritesheet('mecha3', 'assets/Sprites/Enemies/DroidMecha/DroidMecha3.png', { frameWidth: 144, frameHeight: 60 });
+    this.load.spritesheet('mecha4', 'assets/Sprites/Enemies/DroidMecha/DroidMecha4.png', { frameWidth: 144, frameHeight: 60 });
+    this.load.spritesheet('mecha5', 'assets/Sprites/Enemies/DroidMecha/DroidMecha5.png', { frameWidth: 144, frameHeight: 60 });
+
+
+
     this.load.spritesheet('gun', 'assets/Sprites/Enemies/gun.png', { frameWidth: 37, frameHeight: 7 });
+
     this.load.spritesheet('sith', 'assets/Sprites/Enemies/assassin/assassin.png', { frameWidth: 144, frameHeight: 107 });
+    this.load.spritesheet('sith2', 'assets/Sprites/Enemies/assassin/assassin2.png', { frameWidth: 144, frameHeight: 107 });
+    this.load.spritesheet('sith3', 'assets/Sprites/Enemies/assassin/assassin3.png', { frameWidth: 144, frameHeight: 107 });
+    this.load.spritesheet('sith4', 'assets/Sprites/Enemies/assassin/assassin4.png', { frameWidth: 144, frameHeight: 107 });
+    this.load.spritesheet('sith5', 'assets/Sprites/Enemies/assassin/assassin5.png', { frameWidth: 144, frameHeight: 107 });
+    this.load.spritesheet('sith6', 'assets/Sprites/Enemies/assassin/assassin6.png', { frameWidth: 144, frameHeight: 107 });
+    this.load.spritesheet('sith7', 'assets/Sprites/Enemies/assassin/assassin7.png', { frameWidth: 144, frameHeight: 107 });
+    this.load.spritesheet('sith8', 'assets/Sprites/Enemies/assassin/assassin8.png', { frameWidth: 144, frameHeight: 107 });
+
     //GROUND
 
     //AIR
@@ -685,6 +711,10 @@ export default class SceneLoading extends Phaser.Scene {
     });
     //BOSS
 
+    //CONCATENACIÓN DE SPRITESHEETS PARA ADAPTARLOS A MOVIL
+
+
+
     //EFECTOS FIN JUEGO
     this.bigAnimationFrames = this.anims.generateFrameNumbers('kilonova1', { start: 0, end: 9 });
     this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('kilonova2', { start: 0, end: 9 }));
@@ -755,15 +785,24 @@ export default class SceneLoading extends Phaser.Scene {
         frameRate: 8
     });
 
+    this.bigAnimationFrames = this.anims.generateFrameNumbers('hero', { start: 0, end: 9 });
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('hero2', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('hero3', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('hero4', { start: 0, end: 9 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('hero5', { start: 0, end: 5 }));
+
+
     this.anims.create({
         key: 'heroRun',
-        frames: this.anims.generateFrameNumbers('hero', { start: 1, end: 6 }),
+        //frames: this.anims.generateFrameNumbers('hero', { start: 1, end: 6 }),
+        frames: this.bigAnimationFrames.slice(1,6),
         frameRate: 8,
         repeat: -1
     });
     this.anims.create({
         key: 'heroAttack',
-        frames: this.anims.generateFrameNumbers('hero', { start: 16, end: 36 }),
+        //frames: this.anims.generateFrameNumbers('hero', { start: 16, end: 36 }),
+        frames: this.bigAnimationFrames.slice(16,36),
         frameRate: 10
     });
 
@@ -794,35 +833,60 @@ export default class SceneLoading extends Phaser.Scene {
         repeat: -1
     });
 
+    this.bigAnimationFrames = this.anims.generateFrameNumbers('mecha', { start: 0, end: 6 });
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('mecha2', { start: 0, end: 6 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('mecha3', { start: 0, end: 6 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('mecha4', { start: 0, end: 6 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('mecha5', { start: 0, end: 1 }));
+
     this.anims.create({
         key: 'mechaIdle',
-        frames: this.anims.generateFrameNumbers('mecha', { start: 0, end: 3 }),
+        //frames: this.anims.generateFrameNumbers('mecha', { start: 0, end: 3 }),
+        frames: this.bigAnimationFrames.slice(0,3),
         frameRate: 2,
         repeat: -1
     });
     this.anims.create({
         key: 'mechaWalk',
-        frames: this.anims.generateFrameNumbers('mecha', { start: 4, end: 9 }),
+        //frames: this.anims.generateFrameNumbers('mecha', { start: 4, end: 9 }),
+        frames: this.bigAnimationFrames.slice(4,9),
         frameRate: 6,
         repeat: -1
     });
 
+    this.bigAnimationFrames = [];
+
+    this.bigAnimationFrames = this.anims.generateFrameNumbers('sith', { start: 0, end: 6 });
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('sith2', { start: 0, end: 6 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('sith3', { start: 0, end: 6 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('sith4', { start: 0, end: 6 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('sith5', { start: 0, end: 6 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('sith6', { start: 0, end: 6 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('sith7', { start: 0, end: 6 }));
+    this.bigAnimationFrames = this.bigAnimationFrames.concat(this.anims.generateFrameNumbers('sith8', { start: 0, end: 2 }));
+
+
     this.anims.create({
         key: 'sithRun',
-        frames: this.anims.generateFrameNumbers('sith', { start: 12, end: 15}),
+        //frames: this.anims.generateFrameNumbers('sith', { start: 12, end: 15}),
+        frames: this.bigAnimationFrames.slice(12,15),
         frameRate: 7,
         repeat: -1
     });
     this.anims.create({
         key: 'sithAttack',
-        frames: this.anims.generateFrameNumbers('sith', { start: 17, end: 34 }),
+        //frames: this.anims.generateFrameNumbers('sith', { start: 17, end: 34 }),
+        frames: this.bigAnimationFrames.slice(17,34),
         frameRate: 8
     });
     this.anims.create({
         key: 'sithTeleport',
-        frames: this.anims.generateFrameNumbers('sith', { start: 35, end: 43 }),
+        //frames: this.anims.generateFrameNumbers('sith', { start: 35, end: 43 }),
+        frames: this.bigAnimationFrames.slice(35,43),
         frameRate: 8
     });
+
+    this.bigAnimationFrames = [];
     //ENEMIGOS
 
     //NPC

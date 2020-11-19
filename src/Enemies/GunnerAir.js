@@ -22,7 +22,7 @@ export default class ZapperAir extends Enemy {
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 40, 30, {chamfer: { radius: 8 } });
 
-    this.sprite.setExistingBody(compoundBody).setPosition(x, y).setFixedRotation();
+    //this.sprite.setExistingBody(compoundBody).setPosition(x, y).setFixedRotation();
     this.sprite.setExistingBody(body).setPosition(x, y).setFixedRotation();
     this.scene.bulletInteracBodies[this.currentBodyIndex] = body;
     this.scene.enemyController.enemyBodies[this.currentEnemyIndex] = body;
