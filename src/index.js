@@ -246,7 +246,7 @@ game.destroyScene = function(scene){
   scene.make.displayList.list = [];
 
   game.player.destroy();
-  scene.input.keyboard.removeCapture('W,S,A,D,N,M,F,SPACE');
+  scene.input.keyboard.removeCapture('W,S,A,D,N,M,O,P,F,SPACE');
 
   scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());
 }
