@@ -103,7 +103,7 @@ export default class SceneMainMenu extends Phaser.Scene {
       //AUDIO
         Audio.play2DinstanceRate(81, 1.0);
       //
-    this.game.prepareScreen();
+    //this.game.prepareScreen();
 
     this.botonStart.alpha=0.8;
 

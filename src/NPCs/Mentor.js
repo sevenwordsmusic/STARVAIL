@@ -398,6 +398,7 @@ Good luck!`;
       this.currentDialog++;
     });
     this.stateUpdate(0, function () {
+      if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player.sprite == undefined || this.scene.game.player.sprite.body == undefined)return;
       if (Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x, 2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y, 2)) < 300 && this.touchingGround) {
         this.goTo(1);
       }
@@ -420,6 +421,7 @@ Good luck!`;
         this.goTo(1);
     })
     this.stateUpdate(2, function (time, delta) {
+      if(this.sprite == undefined || this.sprite.body == undefined)return;
       if (this.touchingGround) {
         //AUDIO
         if(!this.isMoving && !this.isWalking){
@@ -506,7 +508,7 @@ Good luck!`;
   }
 
   onSensorCollideStart({ bodyA, bodyB, pair }) {
-    if (bodyB.isSensor) return;
+    if (bodyB.isSensor || this.sprite == undefined || this.sprite.body == undefined) return;
     this.touchingGround = true;
     if (this.objectiveY - this.sprite.y >= 5) {
       this.sprite.setVelocityX(0);

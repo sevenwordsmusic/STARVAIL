@@ -106,7 +106,7 @@ var game = new Phaser.Game(config);
 game.initializeVariables = function(newGame = true){
   //Declaramos variables globales del juego.
 
-  game.playerName = "4ULS0R";
+  game.playerName = "PLAYER";
   game.points = 0;
   game.enemiesKilled = 0;
   game.npcHelped = 0;
@@ -115,15 +115,15 @@ game.initializeVariables = function(newGame = true){
   game.maxTime = 900000;
   game.bestTime = 300000;          //tiempo con el que se consigue puntuación máxima
 
-  game.moveVelocity = 0.24;  //0.22          //velocidad horizontal en el suelo
-  game.moveVelocityAir = 0.27;    //0.275     //velocidad horizontal en el aire
-  game.jetVelocity = 0.3;       //0.3      //velocidad de ascenso
-  game.jetVelocityDown = 0.3;   //0.3      //velocidad de descenso
+  game.moveVelocity = 0.22;  //0.22          //velocidad horizontal en el suelo
+  game.moveVelocityAir = 0.25;    //0.275     //velocidad horizontal en el aire
+  game.jetVelocity = 0.26;       //0.3      //velocidad de ascenso
+  game.jetVelocityDown = 0.26;   //0.3      //velocidad de descenso
   game.totalPlayerHp = 1000;           //1000
   game.currentPlayerHp =  game.totalPlayerHp;       //NO TOCAR!! game.totalPlayerHp
   game.hpRecoveryRate = 5;                  //1
   game.totalPlayerEnergy = 1500;     //1000, 1500
-  game.energyRecoveryRate = 0.8;    //0.2, 0.5
+  game.energyRecoveryRate = 0.5;    //0.2, 0.5
   game.extraRecoveryOnGround = 0.5  //energia que se recupera al estar en el suelo
   game.energyCostJetBeginning = 0;      //energia por segundo que se gasta justo al empezar (es un valor base de coste)
   game.energyJetIncrease = 1.006   /*1.008*/   //velocidad con la que aumenta el coste del jet
@@ -263,7 +263,23 @@ game.nextLevel = function(){
   }
 }
 
-game.initializeVariables(false);
+game.initializeVariables(true);
+/*{
+  if(!game.onPC){
+    document.getElementById("soundSliders").style.width = "250%";
+    document.getElementById("soundSliders").style.height = "250%";
+  }
+}*/
+
+{
+  if(!game.onPC){
+    var sliders = document.getElementById("soundSliders");
+    sliders.style.width = "15%";
+    sliders.style.top = "40%";
+    var playerNameInput = document.getElementById("playerName");
+    playerNameInput.style.fontSize = "200%";
+  }
+}
 
 console.log(game);
 window.gameDebug = game;

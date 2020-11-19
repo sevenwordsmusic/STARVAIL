@@ -20,6 +20,15 @@
       font-weight:400;
       font-weight:normal;
       }
+      #phaserDOM{
+        z-index: 0 !Important;
+        position: absolute;
+        font-family:LeahFat;
+        -webkit-text-stroke: 1px black;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
       #playerName {
           z-index: 63 !Important;
           position: absolute;
@@ -36,6 +45,8 @@
       }
       #soundSliders{
         z-index: 63 !Important;
+        width: 15%;
+        height: auto;
         font-family: "LeahFat";
         position: absolute;
         left: 50%;
@@ -90,12 +101,6 @@
         background: #E96B00;
         cursor: pointer;
       }
-      #phaserDOM{
-        z-index: 0 !Important;
-        position: absolute;
-        font-family:LeahFat;
-        -webkit-text-stroke: 1px black;
-      }
       #phaserDOM canvas{
         z-index: 0 !Important;
         image-rendering: pixelated !Important;
@@ -107,14 +112,7 @@
     <link rel="icon" type="image/png" href="favicon.png"/>
 </head>
 <body>
-  <div id= 'phaserDOM'></div>
-  <input type="text" id="playerName" placeholder="Player" autocomplete="off"
-    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-    type = "number"
-    maxlength = "9"
- /><br><br>
-
-  <div>
+  <div id= 'phaserDOM'>
     <div id="soundSliders">
       BGM<br>
       <input type="range" min="0" max="10" value="5" class="slider" id="bgmSlider"><br>
@@ -122,5 +120,12 @@
       <input type="range" min="0" max="10" value="5" class="slider" id="sfxSlider">
     </div>
   </div>
+  <input type="text" id="playerName" placeholder="Player" autocomplete="off"
+    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+    type = "number"
+    maxlength = "9"
+    /><br><br>
+
+
 </body>
 </html>

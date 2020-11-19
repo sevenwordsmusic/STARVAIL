@@ -105,6 +105,7 @@ export default class Audio extends Phaser.Scene {
                 break;
         }
     }
+
     static fullscreenMode(thisArg) {
         var FKey = thisArg.input.keyboard.addKey('F');
         FKey.on('down', function() {

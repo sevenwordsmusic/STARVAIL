@@ -99,7 +99,7 @@ export default class ScenePlayerName extends Phaser.Scene {
 
     this.game.inPlayerName = false;
 
-    this.game.prepareScreen();
+    //this.game.prepareScreen();
 
     this.botonStart.alpha=0.8;
 
