@@ -33,22 +33,22 @@ export default class Audio extends Phaser.Scene {
     static SFXinstance = 0;
     static frameCount = 0;
     //SLOTS
-    //AMBIENT
-    static ambientLoop;
-    //UI LOOPS
-    static walkLoop;
-    static surfaceLoop;
-    static propellerLoop;
-    static engineLoop;
-    static lasserLoop;
-    static beamLoop;
-    static lasserSufferingLoop;
-    //MUSIC LOOPS
-    static musicLoop0000levitating;
-    static musicLoop0000moving;
-    static musicLoop0000flying;
-    static musicLoop0000chill;
-    static musicLoop0001;
+        //AMBIENT
+        static ambientLoop;
+        //UI LOOPS
+        static walkLoop;
+        static surfaceLoop;
+        static propellerLoop;
+        static engineLoop;
+        static lasserLoop;
+        static beamLoop;
+        static lasserSufferingLoop;
+        //MUSIC LOOPS
+        static musicLoop0000levitating;
+        static musicLoop0000moving;
+        static musicLoop0000flying;
+        static musicLoop0000chill;
+        static musicLoop0001;
     //STINGERS
     static stingerJet = false;
     static stingerMovement = false;
@@ -59,10 +59,11 @@ export default class Audio extends Phaser.Scene {
     static chat(words, scene, character) {
         switch (character) {
             case "D42K-H":
-                Chatter.letsTalk(words, scene, 0, 0.5, 0.6);
-                break;
-            case "D42K_H":
-                Chatter.letsTalk(words, scene, 0, 0.7, 0.8);
+                if(Audio.currentLevel<4){
+                    Chatter.letsTalk(words, scene, 0, 0.5, 0.6);
+                }else{
+                    Chatter.letsTalk(words, scene, 0, 0.7, 0.9);
+                }
                 break;
             case scene.game.playerName:
                 Chatter.letsTalk(words, scene, 1, 0.3, 0.4);
@@ -622,6 +623,20 @@ export default class Audio extends Phaser.Scene {
         }
         return instance;
     }
+    static play3DinstanceBoss(scene, type) {
+        Audio.soundInstance[type][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
+        Audio.soundInstance[type][Audio.SFXinstance].setDetune(-150 + (Math.random() * 200));
+        Audio.soundInstance[type][Audio.SFXinstance].volume = Audio.volume3D(scene);
+        Audio.soundInstance[type][Audio.SFXinstance].play();
+        var instance = Audio.soundInstance[type][Audio.SFXinstance];
+        if (Audio.SFXinstance < Audio.maxSFXinstances - 1) {
+            Audio.SFXinstance++;
+        } else {
+            Audio.SFXinstance = 0;
+        }
+        return instance;
+    }
+
     //?
     static play3DenemyInstance(scene, type) {
         Audio.soundInstance[type][Audio.SFXinstance].setRate(0.80 + (Math.random() * 0.2));
@@ -1034,6 +1049,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('mentorPropellerLoop', 'assets/audio/SFX/mentor/propellerLoop_00.ogg');
         this.load.audio('mentorMovingPart', 'assets/audio/SFX/mentor/movingPart_00.ogg');
         this.load.audio('mentorPropellerStop', 'assets/audio/SFX/mentor/propellerStop_00.ogg');
+        this.load.audio('blasser', 'assets/audio/SFX/mentor/blasser.ogg');
     }
     //CREATION:
     create() {
@@ -1204,6 +1220,7 @@ export default class Audio extends Phaser.Scene {
         Audio.createSFXloopInstance('mentorPropellerLoop', 95, this);
         Audio.createSFXinstance('mentorMovingPart', 96, this);
         Audio.createSFXinstance('mentorPropellerStop', 97, this);
+        Audio.createSFXinstance('blasser', 98, this);
         //MOBILE CHECK
         if (this.game.onPC) {
             Audio.createSFXinstanceSub('airDeath_00C', 52, 2, this);

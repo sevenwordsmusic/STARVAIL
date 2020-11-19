@@ -33,7 +33,7 @@ export default class BossBomb extends Projectile {
     });
 
     //AUDIO
-    Audio.play3Dinstance(this, 24);
+    Audio.play3DinstanceBoss(this, 24);
     this.sfx=Audio.play3DinstanceNoRate(this, 12);
     this.touchDelay=1.0;
     //

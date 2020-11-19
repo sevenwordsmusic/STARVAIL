@@ -35,7 +35,7 @@ export default class BossBullet extends Projectile {
     });
 
       //AUDIO
-        Audio.play3Dinstance(this,20);
+        Audio.play3DinstanceBoss(this,21);
       //
   }
 
@@ -43,7 +43,7 @@ export default class BossBullet extends Projectile {
     if (bodyB.isSensor ||  bodyB == undefined || bodyB.gameObject == undefined) return;
     if(bodyB === this.scene.game.player.mainBody){
       //AUDIO
-        Audio.play3DinstanceRnd(this,36);
+        Audio.play3DinstanceRnd(this,39);
       //
       this.projectileArmed();
       this.timer.remove();
@@ -52,7 +52,7 @@ export default class BossBullet extends Projectile {
     }
     else if(bodyB.gameObject.parent == undefined){
       //AUDIO
-        Audio.play3DinstanceRnd(this, 0);
+        Audio.play3DinstanceRnd(this, 1);
       //
       this.projectileArmed();
       this.timer.remove();

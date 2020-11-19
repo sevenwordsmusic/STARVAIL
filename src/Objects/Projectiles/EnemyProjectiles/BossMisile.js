@@ -34,9 +34,9 @@ export default class BossMisile extends Projectile {
     });
 
     //AUDIO
-      Audio.play3Dinstance(26);
+      Audio.play3DinstanceBoss(this, 26);
       this.scene.events.on("update", this.update, this);
-      this.sfx=Audio.play3Dinstance(this, 29);
+      this.sfx=Audio.play3DinstanceBoss(this, 29);
     //
 
   }
