@@ -213,7 +213,7 @@ export default class SceneLoading extends Phaser.Scene {
       this.load.spritesheet('pulsar4', 'assets/Sprites/VFX/pulsar_400X400_60_4_8fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
       this.load.spritesheet('pulsar5', 'assets/Sprites/VFX/pulsar_400X400_60_5_8fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
       this.load.spritesheet('pulsar6', 'assets/Sprites/VFX/pulsar_400X400_60_6_8fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
-      this.load.spritesheet('pulsar7', 'assets/Sprites/VFX/pulsar_400X400_60_7_8fpsMOBILE.png', { frameWidth: 400, frameHeight: 100 });
+      this.load.spritesheet('pulsar7', 'assets/Sprites/VFX/pulsar_400X400_60_7_8fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
       this.load.spritesheet('pulsar8', 'assets/Sprites/VFX/pulsar_400X400_60_8_4fpsMOBILE.png', { frameWidth: 100, frameHeight: 100 });
     }
     //EFCTOS FIN JUEGO
