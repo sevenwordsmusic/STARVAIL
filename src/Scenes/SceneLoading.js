@@ -197,7 +197,7 @@ export default class SceneLoading extends Phaser.Scene {
 
     //this.load.spritesheet('enemyExplosion', 'assets/Sprites/VFX/enemy_death_80x80_74.png', { frameWidth: 80, frameHeight: 80 });
     //this.load.spritesheet('enemyExplosion', 'https://i.postimg.cc/vm5bG9Y1/enemy-death-80-X80-74.png', { frameWidth: 80, frameHeight: 80 });
-    this.load.spritesheet('enemyExplosion', 'assets/enemyExplosion.png', { frameWidth: 80, frameHeight: 80 });
+    this.load.spritesheet('enemyExplosion', 'assets/Sprites/VFX/enemyExplosion.png', { frameWidth: 80, frameHeight: 80 });
     //ENEMIGOS
 
     //NPC
@@ -263,8 +263,7 @@ export default class SceneLoading extends Phaser.Scene {
 
     //this.load.spritesheet('megatonExplosion', 'assets/Sprites/VFX/megaton_explosion_100x100_51.png', { frameWidth: 100, frameHeight: 100 })
     //this.load.spritesheet('megatonExplosion', 'https://i.postimg.cc/SN5h8Vj2/megaton-explosion-100-X100-51.png', { frameWidth: 100, frameHeight: 100 });
-    this.load.spritesheet('megatonExplosion', 'assets/megaton.png', { frameWidth: 100, frameHeight: 100 })
-
+    this.load.spritesheet('megatonExplosion', 'assets/Sprites/VFX/megaton.png', { frameWidth: 100, frameHeight: 100 })
     //this.load.spritesheet('missileExplosion', 'assets/Sprites/VFX/missil_explosion_100x100_75.png', { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('smoke', 'assets/Sprites/Explosions/smoke.png', { frameWidth: 133, frameHeight: 160 });
     //this.load.spritesheet('smoke', 'assets/Sprites/Explosions/laser_smoke.png', { frameWidth: 100, frameHeight: 100 });

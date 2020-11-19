@@ -245,11 +245,26 @@ Good job, `+ this.scene.game.playerName +`!
 Watch out, there's an automaton here!
 Time to put your systems to test.
 [b]D42K-H[/b]
-Fight without fear, for these droids just
-see us vagrants as disposable 'bugs'.
+But let me give you a new weapon first,
+it'll surelly prove useful in combat situations:
+[b]D42K-H[/b]
+It's a plugin weapon that acts as a bomb launcher. 
+Use it wisely, for it consumes energy to be shot!
 [b]TIP[/b]
-You'll encounter a wide amount of enemies
-in your ascension through Starvail.
+To change weapons, click or tap them on the weapon
+selector, or simply use the mouse wheel if you're
+[b]TIP[/b]
+currently playing on PC. Special weapons will mark
+a difference in combat, so you should look for
+[b]TIP[/b]
+more of them throught Starvail. Keep in mind most
+of them require energy to be used, though.
+[b]TIP[/b]
+If you don't know where to find these weapons,
+look for the vagrant droids, they'll know more!
+[b]TIP[/b]
+Meanwhile, you'll encounter a wide amount of 
+enemies in your ascension through Starvail.
 [b]TIP[/b]
 You can fight or run, but keep in
 mind they can provide you with the energy
@@ -306,8 +321,8 @@ the opportunity, `+ this.scene.game.playerName +`. Keep an eye on it.
 ...
 Okay.
 [b]D42K-H[/b]
-Before we go, I will give you some advice,
-and a parting gift:
+Before we go, I will give you one last advice,
+`+ this.scene.game.playerName +`.
 [b]D42K-H[/b]
 You may find other vagrants, like us,
 trying to make their way to the top of
@@ -336,37 +351,13 @@ Don't let that data be ignored.
 ...
 
 [b]D42K-H[/b]
-Now, for my parting gift, I will give
-you a [b]plug-in weapon[/b].
-[b]D42K-H[/b]
-This upgrade will allow your cannon
-to shoot a new type of ammo: bombs.
-[b]D42K-H[/b]
-Keep in mind usign them will cost energy,
-unlike normal bullets!
-[b]D42K-H[/b]
-I hope this helps you in your way up,`+ this.scene.game.playerName +`.
-Now, it's time to part ways.
-[b]D42K-H[/b]
 I will meet you at the top of the tower, to witness
 the birth of a new star. I wish you luck...
 [b]D42K-H[/b]
 for this night we will overcome the
 malware known as 'existential dread'.
 [b]TIP[/b]
-To change the type of ammo of your weapon,
-click on the icon of the ammo you want to use
-[b]TIP[/b]
-in the panel on the bottom right. Keep
-in mind, some ammos requiere energy to
-[b]TIP[/b]
-be used. The more energy they require,
-the more powerful they are.
-[b]TIP[/b]
-In order to obtain more weapon upgrades,
-help the vagrant droids you'll find along
-[b]TIP[/b]
-the way. But keep in mind, your main
+Despite everything, keep in mind, your main
 objective is [b] to make it to the top of[/b]
 [b]TIP[/b]
 [b]the tower in time[/b]. In order to
@@ -495,7 +486,7 @@ Good luck!`;
   finishedDialog() {
     this.isTalking = false;
     this.goTo(2);
-    if(this.currentDialog >= (this.dialogArray.length-2)){
+    if(this.currentDialog >= (this.dialogArray.length-3)){
       if(this.scene.game.player.nextButton <= 1){
         this.scene.game.obtainedWeapons.push(4);
         this.scene.game.player.recieveWeapon(4);
