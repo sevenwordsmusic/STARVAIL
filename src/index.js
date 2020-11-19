@@ -188,8 +188,8 @@ game.transitionToScene = function(scene, keyNext, sceneNext){   //ENTRE NIVELES
 game.changeScene = function(scene, nextId, optionalStopPause = false, optionalFinalEffectScene = false){   //MUERTE Y RANKINGS
   scene.cameras.main.once('camerafadeoutcomplete', function (camera) {
     if(optionalFinalEffectScene){
-    this.scene.scene.run("SceneEffectBackground");
-    this.scene.scene.bringToTop("SceneEffectBackground");
+    scene.scene.run("SceneEffectBackground");
+    scene.scene.bringToTop("SceneEffectBackground");
     }
 
     game.destroyScene(scene);

@@ -262,6 +262,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -283,6 +288,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -308,6 +318,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -329,6 +344,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -354,6 +374,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -375,6 +400,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -400,6 +430,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -423,6 +458,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":true
                         }],
                  "rotation":0,
                  "type":"",
@@ -444,6 +484,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -469,6 +514,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -490,6 +540,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -515,6 +570,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -536,6 +596,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -561,6 +626,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -582,6 +652,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -607,6 +682,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -630,6 +710,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -653,6 +738,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -676,6 +766,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -699,6 +794,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -722,6 +822,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -743,6 +848,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":true
                         }],
@@ -768,6 +878,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -791,6 +906,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -814,6 +934,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -837,6 +962,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -860,6 +990,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -883,6 +1018,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -906,6 +1046,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -929,6 +1074,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -952,6 +1102,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -975,6 +1130,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -996,6 +1156,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":true
                         }],
@@ -1021,6 +1186,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -1044,6 +1214,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -1067,6 +1242,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -1090,6 +1270,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -1111,6 +1296,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -1136,6 +1326,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -1157,6 +1352,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -1182,6 +1382,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -1205,6 +1410,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":true
                         }],
                  "rotation":0,
                  "type":"",
@@ -1226,6 +1436,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -1251,6 +1466,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -1272,6 +1492,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -1297,6 +1522,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -1318,6 +1548,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -1343,6 +1578,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -1364,6 +1604,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],
@@ -1389,6 +1634,11 @@
                          "name":"left",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"zSound",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
                  "type":"",
@@ -1410,6 +1660,11 @@
                         }, 
                         {
                          "name":"left",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"zSound",
                          "type":"bool",
                          "value":false
                         }],

@@ -64,15 +64,15 @@ export default class LevelBoss extends Phaser.Scene {
       }
     //
     var clockTimer = new Date();
-    this.game.time = (clockTimer.getTime() - this.game.timeStart) + this.game.acumulatedPauseTime;
+    console.log("TIEMPO AHORA: " + clockTimer.getTime());
+    console.log("TIEMPO AL EMPEZAR: " + this.game.timeStart);
+    this.game.time = (clockTimer.getTime() - this.game.timeStart) - this.game.acumulatedPauseTime;
     if(this.game.time >= this.game.maxTime){
       this.game.timeExpired = true;
     }
 
     //INTERFAZ
 
-    //Options field
-    //var ebi=this.add.image(0,0,'ebi').setOrigin(0,0).setScale(0.25);
 
     //Boton pause
     this.botonPause = this.add.image(915,45,'btnPause').setScale(0.25).setAlpha(0.8).setScrollFactor(0).setDepth(100);
