@@ -18,8 +18,8 @@ export default class SceneLoading extends Phaser.Scene {
     //Score menu
     this.load.image('ScoreScreen', 'assets/Score screen menu/Botones Score.png'); //field
     //this.load.image('ScoreScreenReview', 'assets/Score screen menu/Botones Score Review.png'); //field + review
-    //this.load.image('btnExitScore', 'assets/Score screen menu/btnExitScoreMenu.png'); //btn exit
-    //this.load.image('btnCreditsScore', 'assets/Score screen menu/btnCreditsScoreMenu.png'); //btn credits
+    this.load.image('btnExitScore', 'assets/Score screen menu/btnExitScoreMenu.png'); //btn exit
+    this.load.image('btnCreditsScore', 'assets/Score screen menu/btnCreditsScoreMenu.png'); //btn credits
     this.load.image('btnRankingScore', 'assets/Score screen menu/btnRankingScoreMenu.png'); //btn ranking
     //this.load.image('btnReviewScore', 'assets/Score screen menu/btnReviewScoreMenu.png'); //btn review
 
@@ -37,8 +37,8 @@ export default class SceneLoading extends Phaser.Scene {
 
     //Pause menu
     this.load.image('btnResumeGamePause', 'assets/Pause menu/btnResumePauseMenu.png'); //btn resume
-    //this.load.image('btnOptionsGame', 'assets/Pause menu/btnOptionsPauseMenu.png'); //btn options
-    //this.load.image('btnExitPause', 'assets/Pause menu/btnExitPauseMenu.png'); //btn exit
+    this.load.image('btnOptionsGame', 'assets/Pause menu/btnOptionsPauseMenu.png'); //btn options
+    this.load.image('btnExitPause', 'assets/Pause menu/btnExitPauseMenu.png'); //btn exit
 
     //Options menu
     //this.load.image('btnExitOptionsMM', 'assets/Options menu/btnExitOptionsMenu.png'); //btn exit
@@ -53,17 +53,17 @@ export default class SceneLoading extends Phaser.Scene {
 
     //Credits menu
     this.load.image('CreditsScreen', 'assets/Credits menu/CMScreen.png'); //field
-    this.load.image('btnExitCredits', 'assets/Credits menu/btnExitCredits.png'); //btn exit
+    //this.load.image('btnExitCredits', 'assets/Credits menu/btnExitCredits.png'); //btn exit
     this.load.image('btnContacto', 'assets/Credits menu/Boton contacto.png'); //btn linkedin
 
     //Credits menu
     this.load.image('CreditsScoreScreen', 'assets/Credits menu/CMScreen.png'); //field
-    this.load.image('btnExitCreditsScore', 'assets/Credits menu/btnExitCredits.png'); //btn exit
+    //this.load.image('btnExitCreditsScore', 'assets/Credits menu/btnExitCredits.png'); //btn exit
     this.load.image('btnContactoScore', 'assets/Credits menu/Boton contacto.png'); //btn linkedin
 
     //Game over menu
     this.load.image('GOScreen', 'assets/Game over menu/GOScreen.png');
-    this.load.image('btnExitGameOver', 'assets/Game over menu/btnExitGameOver.png'); //btn exit
+    //this.load.image('btnExitGameOver', 'assets/Game over menu/btnExitGameOver.png'); //btn exit
     this.load.image('btnPlayAgainGameOver','assets/Game over menu/btnPlayAgainGameOver.png'); //btn play again
 
     this.load.image('btnPause', 'assets/BtnPauseGame.png'); //btn pause

@@ -20,7 +20,7 @@ export default class SceneScore extends Phaser.Scene {
     var ScoreScreen=this.add.image(0,0,'ScoreScreen').setOrigin(0,0);
 
     //Boton credits
-    this.btnViewCreditsScore = this.add.image(214,459,'btnCredits').setAlpha(0.8);
+    this.btnViewCreditsScore = this.add.image(214,459,'btnCreditsScore').setAlpha(0.8);
 		this.btnViewCreditsScore.setInteractive()
     .on('pointerdown', () => this.viewCreditsScore());
 
@@ -33,7 +33,7 @@ export default class SceneScore extends Phaser.Scene {
     });
 
     //Boton exit
-    this.btnExitScore = this.add.image(746.8,457.5,'btnExit').setAlpha(0.8);
+    this.btnExitScore = this.add.image(746.8,457.5,'btnExitScore').setAlpha(0.8);
 		this.btnExitScore.setInteractive()
     .on('pointerdown', () => this.exitScore());
 
@@ -60,16 +60,16 @@ export default class SceneScore extends Phaser.Scene {
 
     //Boton review
     //this.btnReview = this.add.image(711,353.5,'btnReviewScore').setAlpha(0.8);
-		this.btnReview.setInteractive()
-    .on('pointerdown', () => this.irAlLink("https://forms.gle/Eh7LPkvHq3Zvgw2TA"));
+		// this.btnReview.setInteractive()
+    // .on('pointerdown', () => this.irAlLink("https://forms.gle/Eh7LPkvHq3Zvgw2TA"));
 
-    this.btnReview.on('pointerover', function(pointer){
-      this.alpha=1;
-    });
+    // this.btnReview.on('pointerover', function(pointer){
+    //   this.alpha=1;
+    // });
 
-    this.btnReview.on('pointerout', function(pointer){
-      this.alpha=0.8;
-    });
+    // this.btnReview.on('pointerout', function(pointer){
+    //   this.alpha=0.8;
+    // });
 
     //Calcular puntuacion
     //En funcion del tiempo, kills, eventos especiales y tipo de final

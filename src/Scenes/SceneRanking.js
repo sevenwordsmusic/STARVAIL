@@ -21,7 +21,7 @@ export default class SceneRanking extends Phaser.Scene {
     var creditsScreen=this.add.image(0,0,'RankingScreen').setOrigin(0,0);
 
     //Boton exit
-    this.btnExitRanking = this.add.image(482,455,'btnExit').setAlpha(0.8);
+    this.btnExitRanking = this.add.image(479,455,'btnExit').setAlpha(0.8);
 		this.btnExitRanking.setInteractive()
     .on('pointerdown', () => this.exitRanking());
 
