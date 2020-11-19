@@ -259,7 +259,7 @@ function mobileTabletChek() {
     check = true;
   return check;
 };
-
+game.onPC=!mobileTabletChek();
 console.log("onPC:  " +game.onPC);
 
 game.prepareScreen = function(){

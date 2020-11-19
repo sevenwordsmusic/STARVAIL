@@ -28,16 +28,20 @@ export default class Chatter extends Phaser.Scene {
         var rnd=Math.floor(Math.random()*Chatter.male.length);
         switch(genre){
           case 0:
-                Chatter.male[rnd].volume=Audio.volumeSFX;
-                Chatter.male[rnd].setRate(1.5-size);
-                Chatter.male[rnd].setDetune(1200-(weight*2400));
-                Chatter.male[rnd].play();
+                if(!Chatter.male[rnd].isPlaying){
+                    Chatter.male[rnd].volume=Audio.volumeSFX;
+                    Chatter.male[rnd].setRate(1.5-size);
+                    Chatter.male[rnd].setDetune(1200-(weight*2400));
+                    Chatter.male[rnd].play();
+                }
             break;
           case 1:
-                Chatter.female[rnd].volume=Audio.volumeSFX;
-                Chatter.female[rnd].setRate(1.5-size);
-                Chatter.female[rnd].setDetune(1200-(weight*2400));
-                Chatter.female[rnd].play();
+                if(!Chatter.female[rnd].isPlaying){
+                    Chatter.female[rnd].volume=Audio.volumeSFX;
+                    Chatter.female[rnd].setRate(1.5-size);
+                    Chatter.female[rnd].setDetune(1200-(weight*2400));
+                    Chatter.female[rnd].play();
+                }
             break
     	}
     	Chatter.counter++;

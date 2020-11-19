@@ -82,6 +82,9 @@ export default class NPC_Droid_8 extends FiniteStateMachine{
 
   enemyKilled(){
     this.enemiesLeft --;
+    if(this.enemiesLeft<=0){
+      Audio.clearNPC(this.scene);
+    }
     if(this.enemiesLeft<=0 && !this.isTalking)
       this.goTo(1);
   }

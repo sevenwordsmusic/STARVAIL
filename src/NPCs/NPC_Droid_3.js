@@ -153,6 +153,9 @@ be with you, even if it's not really me...`;
 
   enemyKilled(){
     this.enemiesLeft --;
+    if(this.enemiesLeft<=0){
+      Audio.clearNPC(this.scene);
+    }
     if(this.enemiesLeft<=0 && !this.isTalking)
       this.goTo(1);
   }
