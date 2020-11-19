@@ -35,6 +35,13 @@ import SceneGameOver from "./Scenes/SceneGameOver.js"
 import SceneRanking from "./Scenes/SceneRanking.js"
 import SceneSplashScreen from "./Scenes/SceneSplashScreen.js"
 
+//FPS MOBILE LIMIT
+if(!mobileTabletChek()){
+  var maxFpsSelection=60;
+}else{
+  var maxFpsSelection=30;
+}
+
 //Configuración de Phaser 3
 var config = {
   type: Phaser.WEBGL,
@@ -46,7 +53,7 @@ var config = {
           autoCenter: Phaser.Scale.CENTER_BOTH
       },
   fps: {
-    target: 60,
+    target: maxFpsSelection,
   },
   parent: 'phaserDOM',
   pixelArt: true,
@@ -246,7 +253,7 @@ function mobileTabletChek() {
     check = true;
   return check;
 };
-game.onPC = !mobileTabletChek();
+
 console.log("onPC:  " +game.onPC);
 
 game.prepareScreen = function(){
