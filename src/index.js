@@ -262,10 +262,13 @@ function mobileTabletChek() {
 
 game.onPC=!mobileTabletChek();
 
+<<<<<<< Updated upstream
 if (game.onPC == undefined) {
   game.onPC = true;
 }
 
+=======
+>>>>>>> Stashed changes
 console.log("onPC:  " +game.onPC);
 
 game.prepareScreen = function(){

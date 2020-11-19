@@ -968,8 +968,9 @@ export default class Player {
 
   inRoom(){
     if(this.scene.encounterNPC == undefined || this.scene.encounterNPC.sprite == undefined || this.scene.encounterNPC.sprite.body == undefined || this.sprite == undefined || this.sprite.body == undefined) return false;
-    if(Math.sqrt(Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2) + Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2)) < 500) //ajustate la distancia si quieres
+    if(Math.sqrt(Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2) + Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2)) < Audio.vanishingPoint){
       return true;
+    } //ajustate la distancia si quieres [gracias Nikola :)]
     else
       return false;
   }

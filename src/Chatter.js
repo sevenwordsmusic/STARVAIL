@@ -11,7 +11,7 @@ export default class Chatter extends Phaser.Scene {
 
     static letsTalk(words, scene, genre, size, weight){
     	Chatter.counter=0;
-    	for(var i=0; i<words; i++){
+    	for(var i=0; i<words+2; i++){
     		scene.time.addEvent({
                 delay: (Audio.barRateDiv[3]*i)/(1.5-size),
                 callback: () => {
@@ -25,6 +25,7 @@ export default class Chatter extends Phaser.Scene {
 
 
     static speakWord(genre, size, weight){
+<<<<<<< Updated upstream
         // var rnd=Math.floor(Math.random()*Chatter.male.length);
         // switch(genre){
         //   case 0:
@@ -45,6 +46,28 @@ export default class Chatter extends Phaser.Scene {
         //     break
     	// }
     	// Chatter.counter++;
+=======
+        var rnd=Math.floor(Math.random()*Chatter.male.length);
+        switch(genre){
+          case 0:
+                if(!Chatter.male[rnd].isPlaying){
+                    Chatter.male[rnd].volume=Audio.volumeSFX;
+                    Chatter.male[rnd].setRate(1.5-size);
+                    Chatter.male[rnd].setDetune(1200-(weight*2400));
+                    Chatter.male[rnd].play();
+                }
+            break;
+          case 1:
+                if(!Chatter.female[rnd].isPlaying){
+                    Chatter.female[rnd].volume=Audio.volumeSFX;
+                    Chatter.female[rnd].setRate(1.5-size);
+                    Chatter.female[rnd].setDetune(1200-(weight*2400));
+                    Chatter.female[rnd].play();
+                }
+            break
+    	}
+    	Chatter.counter++;
+>>>>>>> Stashed changes
     }
 
     preload() {

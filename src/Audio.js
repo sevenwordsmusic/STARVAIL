@@ -11,7 +11,7 @@ export default class Audio extends Phaser.Scene {
     static barRateDiv = [this.barRate / 2, this.barRate / 4, this.barRate / 8, this.barRate / 64, this.barRate / 128];
     static barCounter = 0;
     static paused = false;
-    static awayNPC= true;
+    static awayNPC= false;
     static musicLayerBarEvent;
     static musicLayerJetEvent;
     static musicTweens = [];
@@ -54,7 +54,6 @@ export default class Audio extends Phaser.Scene {
     static stingerJet = false;
     static stingerMovement = false;
     static stingerSurface = false;
-    static stingerChill = false;
     //
     static ctf = "background-color: #FF8000; color: #000000; font-weight: bold; font-family: Arial Black;";
     //letsTalk caller:
@@ -229,7 +228,7 @@ export default class Audio extends Phaser.Scene {
         Audio.paused = false;
     }
     static clearNPC(scene) {
-        Audio.awayNPC=false;
+        Audio.awayNPC=true;
         if (Audio.currentLevel == 3) {
             scene.tweens.add({
                 targets: Audio.musicLoop0001,
@@ -271,7 +270,19 @@ export default class Audio extends Phaser.Scene {
                 duration: Audio.barRateDiv[2],
             });
         }
-
+    }
+    static leaveNPC(scene){
+        console.log("LEFT BEHIND");
+        Audio.awayNPC=false;
+        if (Audio.currentLevel == 3) {
+            scene.tweens.add({
+                targets: Audio.musicLoop0001,
+                volume: Audio.volumeBGM,
+                duration: Audio.barRateDiv[2],
+            });
+        } else if (Audio.currentLevel == 1 || Audio.currentLevel == 2) {
+            Audio.musicLayerResume(scene);
+        }
     }
     static musicLayerResume(scene) {
         if (Audio.musicTweens[0] != undefined) {
@@ -466,7 +477,7 @@ export default class Audio extends Phaser.Scene {
     static musicLayerBar(scene) {
         //console.log("BAR #" + Audio.barCounter);
         Audio.barCounter++;
-        if (!Audio.paused && Audio.volumeBGM > 0.0 && Audio.awayNPC) {
+        if (!Audio.paused && Audio.volumeBGM > 0.0 && !Audio.awayNPC) {
             Audio.musicLayerHeight(scene);
             Audio.musicLayerMovement(scene);
         }
@@ -503,7 +514,7 @@ export default class Audio extends Phaser.Scene {
         }
     }
     static musicLayerJet(scene) {
-        if (!Audio.paused && Audio.volumeBGM > 0.0 && Audio.awayNPC) {
+        if (!Audio.paused && Audio.volumeBGM > 0.0 && !Audio.awayNPC) {
             if (Audio.stingerJet) {
                 Audio.stingerJet = false;
                 Audio.musicTweens[2] = scene.tweens.add({
@@ -527,7 +538,7 @@ export default class Audio extends Phaser.Scene {
         Audio.soundInstance[type][Audio.SFXinstance].setDetune(-50 + (Math.random() * 100));
         Audio.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
         Audio.soundInstance[type][Audio.SFXinstance].play();
-        if (Audio.SFXinstance == Audio.SFXinstance && Audio.SFXinstance < Audio.maxSFXinstances - 1) {
+        if (Audio.SFXinstance < Audio.maxSFXinstances - 1) {
             Audio.SFXinstance++;
         } else {
             Audio.SFXinstance = 0;
@@ -540,7 +551,7 @@ export default class Audio extends Phaser.Scene {
         Audio.soundInstance[type][Audio.SFXinstance].volume = Audio.volumeSFX;
         Audio.soundInstance[type][Audio.SFXinstance].play();
         var instance = Audio.soundInstance[type][Audio.SFXinstance];
-        if (Audio.SFXinstance == Audio.SFXinstance && Audio.SFXinstance < Audio.maxSFXinstances - 1) {
+        if (Audio.SFXinstance < Audio.maxSFXinstances - 1) {
             Audio.SFXinstance++;
         } else {
             Audio.SFXinstance = 0;
@@ -655,12 +666,12 @@ export default class Audio extends Phaser.Scene {
     //Frame update:
     static update(scene) {
         if (!Audio.waitForUpdate()) {
+            if(scene.game.player.inRoom() && Audio.awayNPC){
+                Audio.leaveNPC(scene);
+            }
             Audio.propellerFliying(scene);
             if (scene.game.isFiring && scene.game.player.energy == 0.0) {
                 Audio.play2DinstanceRate(10, 0.8 + scene.game.player.weaponCounter * 0.05);
-            }
-            if (scene.game.player.inRoom() && !Audio.stingerChill) {
-                Audio.stingerChill = true;
             }
             if (scene.game.player.activatedJet && !Audio.stingerJet) {
                 Audio.stingerJet = true;
@@ -766,12 +777,22 @@ export default class Audio extends Phaser.Scene {
     }
     //Looped instances:
     static createSFXloopInstance(name, num, load) {
-        Audio.soundInstance[num] = [];
-        for (var i = 0; i < Audio.maxSFXinstances; i++) {
-            Audio.soundInstance[num][i] = load.sound.add(name, {
-                volume: 0.0,
-                loop: true
-            })
+        if('lasserTrapLoop'==name){
+            Audio.soundInstance[num] = [];
+            for (var i = 0; i < 32; i++) {
+                Audio.soundInstance[num][i] = load.sound.add(name, {
+                    volume: 0.0,
+                    loop: true
+                })
+            }
+        }else{
+            Audio.soundInstance[num] = [];
+            for (var i = 0; i < Audio.maxSFXinstances; i++) {
+                Audio.soundInstance[num][i] = load.sound.add(name, {
+                    volume: 0.0,
+                    loop: true
+                })
+            } 
         }
     }
     //LOAD:
