@@ -14,7 +14,7 @@ export default class SceneSplashScreen extends Phaser.Scene {
     //
     //Splash menu
     this.load.image('btnTitle', 'assets/lowResLogo.png');
-    this.load.image('corners', 'assets/Menu corners.png');
+    this.load.image('corners', 'assets/HUD/Menu corners.png');
   }
 
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
@@ -48,7 +48,7 @@ export default class SceneSplashScreen extends Phaser.Scene {
       alpha:{ from: 0, to: 1 }
     })
 
-    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
+    this.input.setDefaultCursor('url(assets/HUD/cursor.png), pointer');
   }
 
   //Método que se ejecuta una vez por frame.

@@ -107,7 +107,7 @@ export default class SceneCredits extends Phaser.Scene {
        this.alpha=0.8;
      });
 
-    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
+    this.input.setDefaultCursor('url(assets/HUD/cursor.png), pointer');
   }
 
   //Método que se ejecuta una vez por frame.

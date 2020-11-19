@@ -149,7 +149,7 @@ export default class SceneScore extends Phaser.Scene {
     txt5.style.update(true);
 
 
-    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
+    this.input.setDefaultCursor('url(assets/HUD/cursor.png), pointer');
   }
 
   viewCreditsScore(){

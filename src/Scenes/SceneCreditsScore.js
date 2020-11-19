@@ -98,7 +98,7 @@ export default class SceneCreditsScore extends Phaser.Scene {
     });
 
 
-    this.input.setDefaultCursor('url(assets/cursor.png), pointer');
+    this.input.setDefaultCursor('url(assets/HUD/cursor.png), pointer');
   }
 
   exitCreditsScore(){
