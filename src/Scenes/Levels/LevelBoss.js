@@ -117,17 +117,13 @@ export default class LevelBoss extends Phaser.Scene {
     }
     this.timeBg = this.add.sprite(480, 270, 'animatedBg').setScrollFactor(0).setDepth(-500).anims.play('bgAnimation',true, this.game.currentBgAnimation);
 
-    console.log("A Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     //Inicializacion y creacion de mapa de tiles.
     this.map = this.make.tilemap({ key: "map4", insertNull: true });
-    console.log("A2 Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
     const tileset1 = this.map.addTilesetImage("background_layer", "tilesBackgorund3", 32, 32, 1, 2);
     const tileset2 = this.map.addTilesetImage("front_layer", "tilesFront3", 32, 32, 1, 2);
     const tileset3 = this.map.addTilesetImage("main_layer", "tilesMain3", 32, 32, 1, 2);
     const tileset4 = this.map.addTilesetImage("second_layer", "tilesSecond3", 32, 32, 1, 2);
     const tileset5 = this.map.addTilesetImage("animated_layer", "animatedLayer3", 32, 32, 1, 2);
-
-    console.log("B Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
 
     //Capas de tiles.
     const mainlayer = this.map.createDynamicLayer("Main_Layer", [tileset1, tileset2, tileset3, tileset4, tileset5], 0, 0);
@@ -143,12 +139,7 @@ export default class LevelBoss extends Phaser.Scene {
 
     //Colisiones de las capas.
     mainlayer.setCollisionByProperty({ Collides: true });
-
-    console.log("C Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
-
     this.matter.world.convertTilemapLayer(mainlayer);
-
-    console.log("D Used Memory: " + (Math.round((performance.memory.usedJSHeapSize/1024/1024))) + " Mb");
 
     lethallayer.setCollisionByProperty({ Collides: true });
     this.matter.world.convertTilemapLayer(lethallayer);
