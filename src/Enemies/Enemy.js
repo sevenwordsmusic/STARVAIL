@@ -13,6 +13,9 @@ export default class Enemy extends FiniteStateMachine{
     this.hp = hp;
     this.dead = false;
 
+    this.scrapArray = [];
+    this.canDeathSpawn = true;
+
     this.encounterNPC = undefined;
 
     this.sprite.body.collisionFilter.group = -1;
@@ -99,7 +102,10 @@ export default class Enemy extends FiniteStateMachine{
     return (SuperiorQuery.superiorBoundBodyOverlap(x1, y1, x2, y2, this.scene.game.player.mainBody));
   }
 
-  enemyDead(){
+  enemyDead(deathSpawn = true){
+    if(this.scene.game.onPC && deathSpawn){
+        this.deathSpawn(this.sprite.x,this.sprite.y, this.sprite.scale);
+    }
     this.dead = true;
     Audio.stingerKilling=true;
     this.scene.events.emit('noEnemy' + this.currentBodyIndex);
@@ -129,6 +135,33 @@ export default class Enemy extends FiniteStateMachine{
     }
   }
   //
+  deathSpawn(x,y,scaleDeb) {
+    if (this.canDeathSpawn) {
+      this.canDeathSpawn = false;
+      var remainVelocity = Phaser.Math.FloatBetween(4, 8);
+      var randomAng;
+      var randomVec;
+      for (var i = 0; i < this.scrapArray.length; i++) {
+        var debree = this.scene.matter.add.image(x, y, this.scrapArray[i], 0, { isSensor: true });
+        debree.body.collisionFilter.mask = 0;
+        debree.body.collisionFilter.group = -4;
+        debree.setDepth(8).setScale(scaleDeb);
+        randomAng = Phaser.Math.FloatBetween(Math.PI/4, (7*Math.PI)/4) + Math.PI/2;
+        randomVec = new Phaser.Math.Vector2(Math.cos(randomAng), Math.sin(randomAng));
+        randomVec.normalize();
+        randomVec.scale(remainVelocity);
+        debree.setVelocity(randomVec.x, randomVec.y);
+        debree.setAngularVelocity(0.04 * randomVec.x);
+        //debree.setAngularVelocity(Math.random()/10-0.05);
+        this.scene.time.addEvent({
+          delay: 2000,
+          callback: (destroyDebree),
+          args: [debree]
+        });
+      }
+    }
+    function destroyDebree(debree) { debree.destroy() }
+  }
 
   distanceToPlayer(){
     if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined  || this.scene.game.player.sprite.body == undefined)

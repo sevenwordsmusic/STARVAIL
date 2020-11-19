@@ -10,6 +10,11 @@ export default class BombAir extends Enemy {
     super(scene, x, y, 'bomb', 50);
     this.sprite.setScale(1.65);
 
+    if(this.scene.game.onPC){
+      this.scrapArray[0] = 'bombScrap1';
+      this.scrapArray[1] = 'bombScrap2';
+    }
+
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 25, 25, {chamfer: { radius: 8 } });
     /*this.sensors = {
@@ -229,7 +234,7 @@ export default class BombAir extends Enemy {
       });
       //animacion de explosion
       explosion.anims.play('enemyExplosion', true);
-      super.enemyDead();
+      super.enemyDead(!kamikaze);
       if(drop) {
         if(Math.random() < 0.3){
           new DropableAirHealth(this.scene, this.sprite.x, this.sprite.y, (this.scene.game.player.sprite.x - this.sprite.x), (this.scene.game.player.sprite.y - this.sprite.y), this.healthDrop);

@@ -10,6 +10,12 @@ export default class SwordGround extends Enemy {
     super(scene, x, y, 'hero', 120);
     this.sprite.setScale(2);
 
+    if(this.scene.game.onPC){
+      this.scrapArray[0] = 'swordScrap1';
+      this.scrapArray[1] = 'swordScrap2';
+      this.scrapArray[2] = 'swordScrap3';
+    }
+
     //this.sprite.setBounce(1.01735).setFixedRotation().setFriction(0).setFrictionAir(0).setFrictionStatic(0);
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const body = Bodies.rectangle(0, 0, 30, 50);

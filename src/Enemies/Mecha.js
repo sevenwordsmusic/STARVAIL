@@ -11,6 +11,14 @@ export default class Mecha extends Enemy {
     super(scene, x, y, 'mecha', 300);
     this.sprite.setScale(2.5);
 
+    if(this.scene.game.onPC){
+      this.scrapArray[0] = 'mechScrap1';
+      this.scrapArray[1] = 'mechScrap2';
+      this.scrapArray[2] = 'mechScrap3';
+      this.scrapArray[3] = 'mechScrap4';
+      this.scrapArray[4] = 'mechScrap5';
+    }
+
     //this.sprite.setBounce(1.01735).setFixedRotation().setFriction(0).setFrictionAir(0).setFrictionStatic(0);
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const body = Bodies.rectangle(0, 0, 45, 100, {chamfer: { radius: 10 } });

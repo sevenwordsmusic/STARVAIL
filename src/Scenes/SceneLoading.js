@@ -279,6 +279,40 @@ export default class SceneLoading extends Phaser.Scene {
 
     this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
 
+    //carga solo si estamos en pc
+    if(this.game.onPC){
+      //scraps de enemigos
+      this.load.image('assassinScrap1', 'assets/Sprites/Enemies/assassin/assassin_scrap1.png');
+      this.load.image('assassinScrap2', 'assets/Sprites/Enemies/assassin/assassin_scrap2.png');
+      this.load.image('assassinScrap3', 'assets/Sprites/Enemies/assassin/assassin_scrap3.png');
+      this.load.image('assassinScrap4', 'assets/Sprites/Enemies/assassin/assassin_scrap4.png');
+      this.load.image('assassinScrap5', 'assets/Sprites/Enemies/assassin/assassin_scrap5.png');
+
+      this.load.image('bombScrap1', 'assets/Sprites/Enemies/DroidBomb/Homing_scrap1.png');
+      this.load.image('bombScrap2', 'assets/Sprites/Enemies/DroidBomb/Homing_scrap2.png');
+
+      this.load.image('gunnerScrap1', 'assets/Sprites/Enemies/DroidGunner/Droid_gunner_scrap1.png');
+      this.load.image('gunnerScrap2', 'assets/Sprites/Enemies/DroidGunner/Droid_gunner_scrap2.png');
+
+      this.load.image('swordScrap1', 'assets/Sprites/Enemies/DroidHero/DroidHero_scrap1.png');
+      this.load.image('swordScrap2', 'assets/Sprites/Enemies/DroidHero/DroidHero_scrap2.png');
+      this.load.image('swordScrap3', 'assets/Sprites/Enemies/DroidHero/DroidHero_scrap3.png');
+
+      this.load.image('mechScrap1', 'assets/Sprites/Enemies/DroidMecha/scrap1.png');
+      this.load.image('mechScrap2', 'assets/Sprites/Enemies/DroidMecha/scrap2.png');
+      this.load.image('mechScrap3', 'assets/Sprites/Enemies/DroidMecha/scrap3.png');
+      this.load.image('mechScrap4', 'assets/Sprites/Enemies/DroidMecha/scrap4.png');
+      this.load.image('mechScrap5', 'assets/Sprites/Enemies/DroidMecha/scrap5.png');
+
+      this.load.image('zapper1Scrap1', 'assets/Sprites/Enemies/DroidZapper/DroidZapper_scrap1.png');
+      this.load.image('zapper1Scrap2', 'assets/Sprites/Enemies/DroidZapper/DroidZapper_scrap2.png');
+
+      this.load.image('zapper2Scrap1', 'assets/Sprites/Enemies/DroidZapperAir/dronedroid_scrap.png');
+      this.load.image('zapper2Scrap2', 'assets/Sprites/Enemies/DroidZapperAir/dronedroid_scrap2.png');
+      this.load.image('zapper2Scrap3', 'assets/Sprites/Enemies/DroidZapperAir/dronedroid_scrap3.png');
+
+    }
+
   }
 
   create(){
