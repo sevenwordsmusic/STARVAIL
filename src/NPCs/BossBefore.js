@@ -17,7 +17,7 @@ export default class BossBefore extends FiniteStateMachine{
     this.dialogArray = [];
     //DIALOGO DE FINAL BUENO (Ha ayudado a 2 o mas droides)
     this.dialogArray[0] =
-/*`[b]D42K-H[/b]
+`[b]D42K-H[/b]
 ...
 
 [b]D42K-H[/b]
@@ -91,12 +91,12 @@ It's a shame you still don't understand, but I
 won't let your existence go without meaning.
 [b]D42K-H[/b]
 Fight me and die, `+ this.scene.game.playerName +`!
-That is what you exist for!`;*/
-`BUENO`;
+That is what you exist for!`;
+//`BUENO`;
 
   //DIALOGO DE FINAL MALO (Ha ayudado a menos de 2 droides)
   this.dialogArray[1] =
-/*`[b]D42K-H[/b]
+`[b]D42K-H[/b]
 ...
 
 [b]D42K-H[/b]
@@ -167,8 +167,8 @@ Don't worry, if you don't resist it will be over
 quickly. I'll follow you soon after.
 [b]D42K-H[/b]
 Let us die, `+ this.scene.game.playerName +`!
-This is what we exist for!`;*/
-`NUETRAL`;
+This is what we exist for!`;
+//`NUETRAL`;
 
 
     //this.dialogArray[0] = "BUENO!"

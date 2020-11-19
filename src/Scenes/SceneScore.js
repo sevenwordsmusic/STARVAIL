@@ -7,7 +7,7 @@ export default class SceneScore extends Phaser.Scene {
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
     //AUDIO
-      
+
       //
 
     //Corners
@@ -159,7 +159,8 @@ export default class SceneScore extends Phaser.Scene {
 
     this.scene.run("SceneCreditsScore");
     this.scene.bringToTop("SceneCreditsScore");
-    this.scene.stop('SceneScore');
+    this.scene.pause('SceneScore');
+    this.scene.sendToBack("SceneScore");
 
   }
 
@@ -189,7 +190,7 @@ export default class SceneScore extends Phaser.Scene {
 
     this.scene.run("SceneRanking");
     this.scene.bringToTop("SceneRanking");
-    this.scene.stop('SceneScore');
+    this.scene.pause('SceneScore');
     this.scene.sendToBack("SceneScore");
 
   }

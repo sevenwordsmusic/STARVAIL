@@ -381,11 +381,9 @@ export default class Level1 extends Phaser.Scene {
     for(var i=0; i<40; i++){
       this.randomLaser[i] = Math.random();
     }
-      console.log(this.randomLaser[0]);
     if(this.map.getObjectLayer("Laser_Layer") != null)
       this.map.getObjectLayer("Laser_Layer").objects.forEach(point => {
-        if(this.randomLaser[parseInt(point.properties[0].value)] < 0.5){
-          console.log(point.properties[1].value);
+        if(this.randomLaser[parseInt(point.properties[0].value)] < 0.25){
           if(point.properties[1].value){
             var laserAux = this.matter.add.sprite(point.x, point.y-16, 'laserAux', 0);
             laserAux.setDepth(-11);
@@ -396,12 +394,11 @@ export default class Level1 extends Phaser.Scene {
             laserAux.lethalLaser = true;
             laserAux.anims.play('laserAux', true);
             if(point.properties[2].value){
-              console.log("a");
               this.laserTrapArray.push(new LaserTrap(this, point.x, point.y));
             }
           }
         }
-        else if(this.randomLaser[parseInt(point.properties[0].value)] < 1){
+        else if(this.randomLaser[parseInt(point.properties[0].value)] < 0.5){
           console.log(point.properties[1].value);
           if(!point.properties[1].value){
             var laserAux = this.matter.add.sprite(point.x, point.y-16, 'laserAux', 0);
@@ -413,7 +410,6 @@ export default class Level1 extends Phaser.Scene {
             laserAux.lethalLaser = true;
             laserAux.anims.play('laserAux', true);
             if(point.properties[2].value){
-              console.log("b");
               this.laserTrapArray.push(new LaserTrap(this, point.x, point.y));
             }
           }

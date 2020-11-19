@@ -167,8 +167,12 @@ export default class Sith extends Enemy {
       //this.sprite.body.collisionFilter.group = -1;
       this.scene.time.addEvent({
         delay: 200,
-        callback: () => (this.sprite.x = this.scene.game.player.sprite.x, this.sprite.y = this.scene.game.player.sprite.y, this.sprite.setVelocityY(0))
+        callback: () => (teleportAux(this.sprite, this.scene.game.player.sprite))
       },this);
+      function teleportAux(spr, plSpr){
+        if(spr == undefined || spr.body == undefined || plSpr == undefined || plSpr.body == undefined)return;
+        spr.x = plSpr.x, spr.y = plSpr.y, spr.setVelocityY(0)
+      }
       this.sprite.anims.play('sithTeleport', true)
       /*this.sprite.once('animationcomplete', function(){
         this.goTo(2);
@@ -230,7 +234,7 @@ export default class Sith extends Enemy {
     }
   }
   inflictDamagePlayerArea2(){
-    if(this.sprite == undefined || this.sprite.body == undefined)return;
+    if(this.sprite == undefined || this.sprite.body == undefined || this.scene.game.player == undefined || this.scene.game.player.sprite == undefined || this.scene.game.player.sprite.body == undefined)return;
     if(super.playerHit(this.sprite.x-55, this.sprite.y-65, this.sprite.x+55, this.sprite.y+55))
       this.scene.game.player.playerDamage(this.teleportHitDamage, true);
     //Nota para Seven con carinyo de Seven.

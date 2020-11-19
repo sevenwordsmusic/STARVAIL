@@ -301,10 +301,6 @@ export default class Player {
     })
 
     this.recieveWeapon(0, false);
-    this.recieveWeapon(3, false);
-    this.recieveWeapon(5, false);
-    this.recieveWeapon(6, false);
-    this.recieveWeapon(7, false);
     for(var i=0; i<this.scene.game.obtainedWeapons.length; i++){
       this.recieveWeapon(this.scene.game.obtainedWeapons[i], false);
     }
@@ -674,6 +670,8 @@ export default class Player {
     if(this.weaponChange != undefined) {this.weaponChange.destroy(); this.weaponChange = undefined;}
     if(this.skipLevel != undefined) {this.skipLevel.destroy(); this.skipLevel = undefined;}
     if(this.testMemory != undefined) {this.testMemory.destroy(); this.testMemory = undefined;}
+    if(this.InfinitHP != undefined) {this.InfinitHP.destroy(); this.InfinitHP = undefined;}
+    if(this.InfinitEnergy != undefined) {this.InfinitEnergy.destroy(); this.InfinitEnergy = undefined;}
     if(this.fireArm != undefined) {this.fireArm.destroyFireArm(); this.fireArm = undefined;}
     if(this.movingArm != undefined) {this.movingArm.destroy(); this.movingArm = undefined;}
 
