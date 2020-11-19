@@ -968,8 +968,10 @@ export default class Player {
     if(this.scene.encounterNPC == undefined || this.scene.encounterNPC.sprite == undefined || this.sprite == undefined || this.sprite.body == undefined) return false;
     if(Math.sqrt(Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2) + Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2)) < Audio.vanishingPoint){
       return true;
-    else
+    }
+    else{
       return false;
+    }
   }
 
   initPosibleClosestEnemy(){

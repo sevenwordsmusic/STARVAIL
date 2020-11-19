@@ -20,6 +20,43 @@ export default class SceneRanking extends Phaser.Scene {
     //Ranking field
     var creditsScreen=this.add.image(0,0,'RankingScreen').setOrigin(0,0);
 
+    var myStorage = window.localStorage;
+
+    var localNamesArray = [10];
+    var localScoresArray = [10];
+
+    for(var i=0; i<10; i++){
+      localNamesArray[i] = myStorage.getItem('player'+i);
+      if(localNamesArray[i] == null){
+        localNamesArray[i] = "---"
+      }
+      localScoresArray[i] = myStorage.getItem('score'+i);
+      if(localScoresArray[i] == null){
+        localScoresArray[i] = 0;
+      }
+    }
+    localStorage.clear();
+
+    var nuevaPosicion = -1;
+    for(var i=0; i<10; i++){
+      if(this.game.points >= localScoresArray[i]){
+        nuevaPosicion = i;
+        break;
+      }
+    }
+    if(nuevaPosicion != -1){
+      localScoresArray.splice(nuevaPosicion, 0, this.game.points);
+      localNamesArray.splice(nuevaPosicion, 0, this.game.playerName);
+
+      localScoresArray.length = 10;
+      localNamesArray.length = 10;
+
+      for(var i=0; i<10; i++){
+        localStorage.setItem('player'+i, localNamesArray[i]);
+        localStorage.setItem('score'+i, localScoresArray[i]);
+      }
+    }
+
     //No se porque no sale la fuente bien
     const initSpace = 80;
     const betweenSpacing = 34;
@@ -36,8 +73,8 @@ export default class SceneRanking extends Phaser.Scene {
         leftTextArray[i].style.fontSize = "36px";
         rightTextArray[i].style.fontSize = "36px";
       }else{
-        leftTextArray[i] = this.add.text(leftTextX, (i)*betweenSpacing + initSpace,"ASD");
-        rightTextArray[i] = this.add.text(rightTextX, (i)*betweenSpacing + initSpace,"123 pt");
+        leftTextArray[i] = this.add.text(leftTextX, (i)*betweenSpacing + initSpace, localNamesArray[i-1]);
+        rightTextArray[i] = this.add.text(rightTextX, (i)*betweenSpacing + initSpace, localScoresArray[i-1] + " pt");
         leftTextArray[i].style.fontSize = "32px";
         rightTextArray[i].style.fontSize = "32px";
       }
@@ -57,8 +94,14 @@ export default class SceneRanking extends Phaser.Scene {
       rightTextArray[i].style.fill = '#43d637';
       rightTextArray[i].originX = 0.5;
       rightTextArray[i].style.update(true);
+    }
 
-      console.log(leftTextArray[i]);
+    if(nuevaPosicion != -1){
+      console.log(nuevaPosicion);
+      leftTextArray[nuevaPosicion+1].style.stroke = '#ff0000';
+      rightTextArray[nuevaPosicion+1].style.stroke = '#ff0000';
+      leftTextArray[nuevaPosicion+1].style.update(true);
+      rightTextArray[nuevaPosicion+1].style.update(true);
     }
 
     //Boton exit
