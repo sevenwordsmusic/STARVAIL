@@ -45,7 +45,7 @@ export default class BossLaser {
     },this);
 
 
-      Audio.play3Dinstance(this.scene, 98);
+      Audio.play2Dinstance(98);
 
 
   }
