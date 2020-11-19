@@ -154,7 +154,8 @@ export default class SceneScore extends Phaser.Scene {
 
   viewCreditsScore(){
     console.log("Se ha pulsado credits");
-
+        Audio.play2DinstanceRate(81, 1.0);
+      //
     this.btnViewCreditsScore.alpha=0.8;
 
     this.scene.run("SceneCreditsScore");
@@ -166,7 +167,8 @@ export default class SceneScore extends Phaser.Scene {
 
   exitScore(){
     console.log("Se ha pulsado exit");
-
+        Audio.play2DinstanceRate(81, 1.0);
+      //
     this.btnExitScore.alpha=0.8;
 
     this.scene.stop("SceneEffectBackground");
@@ -185,7 +187,8 @@ export default class SceneScore extends Phaser.Scene {
 
   viewRankingScore(){
     console.log("Se ha pulsado Ranking");
-
+        Audio.play2DinstanceRate(81, 1.0);
+      //
     this.btnRankingScore.alpha=0.8;
 
     this.scene.run("SceneRanking");
@@ -197,7 +200,8 @@ export default class SceneScore extends Phaser.Scene {
 
   irAlLink(urllink){
     //window.location.href = 'https://www.youtube.com/watch?v=5XjcUvaDTK4&t=408s&ab_channel=gammafp';
-
+        Audio.play2DinstanceRate(81, 1.0);
+      //
     this.url = urllink;
     window.open(this.url);
   }
