@@ -60,20 +60,19 @@ export default class SceneScore extends Phaser.Scene {
 
     //Boton review
     //this.btnReview = this.add.image(711,353.5,'btnReviewScore').setAlpha(0.8);
-		// this.btnReview.setInteractive()
-    // .on('pointerdown', () => this.irAlLink("https://forms.gle/Eh7LPkvHq3Zvgw2TA"));
+		/*this.btnReview.setInteractive()
+    .on('pointerdown', () => this.irAlLink("https://forms.gle/Eh7LPkvHq3Zvgw2TA"));
 
     // this.btnReview.on('pointerover', function(pointer){
     //   this.alpha=1;
     // });
 
-    // this.btnReview.on('pointerout', function(pointer){
-    //   this.alpha=0.8;
-    // });
+    this.btnReview.on('pointerout', function(pointer){
+      this.alpha=0.8;
+    });*/
 
     //Calcular puntuacion
     //En funcion del tiempo, kills, eventos especiales y tipo de final
-    var finalScore = this.game.points;
 
     const totalTime = this.game.time/1000/60; //considerado en minutos
     const maxTime = this.game.maxTime/1000/60;
@@ -88,19 +87,17 @@ export default class SceneScore extends Phaser.Scene {
     //puntuacion por tiempo
     if(this.game.timeExpired){
       tipoFinal="Bad Ending"
-      finalScore -= 1000;
+      this.game.points -= 1000;
       timeScore = 0;
     }else{
       if(this.game.npcHelped >= 2){
         tipoFinal="Good Ending"
-        finalScore += 5000;
+        this.game.points += 5000;
       }else{
         tipoFinal="Neutral Ending"
-        finalScore += 1000;
+        this.game.points += 1000;
       }
     }
-
-    finalScore += timeScore;
 
     //this.add.bitmapText(480,270,'font','0',100);
 
@@ -109,7 +106,7 @@ export default class SceneScore extends Phaser.Scene {
     var txt2 = this.add.text(163, 94,totalKills);
     var txt3 = this.add.text(533, 166,specialEvents);
     var txt4 = this.add.text(342, 238,tipoFinal);
-    var txt5 = this.add.text(363, 316,finalScore + " pt");
+    var txt5 = this.add.text(363, 316,this.game.points + " pt");
 
     txt1.style.font = 'LeahFat';
     txt1.style.fontFamily = 'LeahFat';

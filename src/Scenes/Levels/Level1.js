@@ -66,9 +66,8 @@ export default class Level1 extends Phaser.Scene {
       }
     //
 
-
-    this.game.timeStart = this.game.clock.getTime();
-
+    var clockTimer = new Date();
+    this.game.timeStart = clockTimer.getTime();
     //INTERFAZ
 
     //Options field
@@ -440,7 +439,8 @@ export default class Level1 extends Phaser.Scene {
     this.game.pauseInfo = 'levelFirst' + (Level1.getNumber());
     this.game.pauseScene = this;
 
-    this.game.pauseClock = this.game.clock.getTime();
+    var clockTimer = new Date();
+    this.game.pauseClock = clockTimer.getTime();
 
     this.botonPause.alpha=0.8;
     this.scene.run("ScenePause");

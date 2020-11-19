@@ -63,10 +63,9 @@ export default class LevelBoss extends Phaser.Scene {
           this.matter.world.update30Hz();
       }
     //
-
-    const currentTime = this.game.clock.getTime();
-    this.game.time = this.game.clock.getTime() - this.game.timeStart + this.acumulatedPauseTime;
-    if(this.game.time < this.game.maxTime){
+    var clockTimer = new Date();
+    this.game.time = (clockTimer.getTime() - this.game.timeStart) + this.game.acumulatedPauseTime;
+    if(this.game.time >= this.game.maxTime){
       this.game.timeExpired = true;
     }
 

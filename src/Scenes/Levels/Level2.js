@@ -433,7 +433,8 @@ export default class Level2 extends Phaser.Scene {
     this.game.pauseInfo = 'levelSecond' + (Level2.getNumber());
     this.game.pauseScene = this;
 
-    this.game.pauseClock = this.game.clock.getTime();
+    var clockTimer = new Date();
+    this.game.pauseClock = clockTimer.getTime();
 
     this.botonPause.alpha=0.8;
     this.scene.run("ScenePause");
