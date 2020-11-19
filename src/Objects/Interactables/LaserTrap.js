@@ -1,6 +1,7 @@
 import Audio from "../../Audio.js";
 
 export default class LaserTrap {
+  static lasserTrapCount=0;
   constructor(scene, x, y ){
     this.scene= scene;
     this.x= x;
@@ -8,7 +9,12 @@ export default class LaserTrap {
     this.exists = true;
 
     //AUDIO
-      this.sfx=Audio.play3DinstanceNoRate(this, 89);
+      this.sfx=Audio.soundInstance[89][LaserTrap.lasserTrapCount];
+      this.sfx.play();
+      LaserTrap.lasserTrapCount++;
+      if(LaserTrap.lasserTrapCount==Audio.soundInstance[89].length){
+        LaserTrap.lasserTrapCount=0;
+      }
     //
     this.scene.events.on("update", this.update, this);
   }

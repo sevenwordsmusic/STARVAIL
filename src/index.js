@@ -260,13 +260,9 @@ function mobileTabletChek() {
   return check;
 };
 
-game.onPC=!mobileTabletChek();
 
-if (game.onPC == undefined) {
-  game.onPC = true;
-}
+game.onPC =!mobileTabletChek();
 
-console.log("onPC:  " +game.onPC);
 
 game.prepareScreen = function(){
   if(!game.onPC){
