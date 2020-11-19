@@ -50,10 +50,12 @@ export default class Audio extends Phaser.Scene {
         static musicLoop0000flying;
         static musicLoop0000chill;
         static musicLoop0001;
+        static musicLoop0002;
     //STINGERS
     static stingerJet = false;
     static stingerMovement = false;
     static stingerSurface = false;
+    static bossMusic=false;
     //
     static ctf = "background-color: #FF8000; color: #000000; font-weight: bold; font-family: Arial Black;";
     //letsTalk caller:
@@ -115,10 +117,10 @@ export default class Audio extends Phaser.Scene {
         }
     }
     static gameOver() {
-        //Audio.musicLoop0000chill.resume();
+        
 
-        if (Audio.currentLevel == 4) {
-            //Audio.musicLoop0002.stop();
+        if (Audio.currentLevel == 4 && Audio.bossMusic) {
+            Audio.musicLoop0002.stop();
         } else if (Audio.currentLevel == 3) {
             Audio.musicLoop0001.stop();
         } else if (Audio.currentLevel == 1 || Audio.currentLevel == 2) {
@@ -168,6 +170,11 @@ export default class Audio extends Phaser.Scene {
     static postGameOver(){
         Audio.musicLoop0000chill.play();
     }
+    static bossFightStart(){
+        Audio.bossMusic=true;
+        Audio.musicLoop0002.volume=Audio.volumeBGM;
+        Audio.musicLoop0002.play();
+    }
     static musicLayerStop(scene) {
         if (Audio.musicTweens[0] != undefined) {
             if (Audio.musicTweens[0].isPlaying()) {
@@ -200,7 +207,9 @@ export default class Audio extends Phaser.Scene {
         Audio.musicLoop0000chill.volume = Audio.volumeBGM;
         Audio.musicLoop0000chill.resume();
         //
-        if (Audio.currentLevel == 3) {
+        if (Audio.currentLevel == 4 && Audio.bossMusic) {
+            Audio.musicLoop0002.pause();
+        }else if (Audio.currentLevel == 3) {
             Audio.musicLoop0001.pause();
         } else if (Audio.currentLevel == 1 || Audio.currentLevel == 2) {
             if (Audio.musicTweens[0] != undefined) {
@@ -258,7 +267,10 @@ export default class Audio extends Phaser.Scene {
         Audio.beamLoop.volume = Audio.volumeSFX;
         Audio.lasserSufferingLoop.volume = 0.0;
         //
-        if (Audio.currentLevel == 3) {
+        if (Audio.currentLevel == 4 && Audio.bossMusic) {
+            Audio.musicLoop0002.volume = Audio.volumeBGM;
+            Audio.musicLoop0002.resume();
+        }else if (Audio.currentLevel == 3) {
             if (!Audio.visitingNPC) {
                 Audio.musicLoop0001.volume = Audio.volumeBGM;
             }else{
@@ -908,6 +920,7 @@ export default class Audio extends Phaser.Scene {
                 this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving.ogg');
                 this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying.ogg');
                 this.load.audio('musicLoop0001', 'assets/audio/BGM/musicLoop0001.ogg')
+                this.load.audio('musicLoop0002', 'assets/audio/BGM/musicLoop0002.ogg')
          } else {
             Audio.maxSFXinstances = 2;
             //MUSIC LOOPS MOBILE
@@ -915,6 +928,7 @@ export default class Audio extends Phaser.Scene {
                 this.load.audio('musicLoop0000moving', 'assets/audio/BGM/musicLoop0000moving_mobile.ogg');
                 this.load.audio('musicLoop0000flying', 'assets/audio/BGM/musicLoop0000flying_mobile.ogg');
                 this.load.audio('musicLoop0001', 'assets/audio/BGM/musicLoop0001_mobile.ogg')
+                this.load.audio('musicLoop0002', 'assets/audio/BGM/musicLoop0002_mobile.ogg')
         }
         //AMBIENT
         this.load.audio('ambientLoop_00', 'assets/audio/SFX/ambientLoop_00.ogg');
@@ -1549,6 +1563,10 @@ export default class Audio extends Phaser.Scene {
             loop: true
         })
         Audio.musicLoop0001 = this.sound.add('musicLoop0001', {
+            volume: 0.0,
+            loop: true
+        })
+        Audio.musicLoop0002 = this.sound.add('musicLoop0002', {
             volume: 0.0,
             loop: true
         })

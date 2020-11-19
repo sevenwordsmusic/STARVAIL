@@ -286,6 +286,15 @@ export default class Boss extends Enemy {
       this.scene.cameras.main.shake(effectDuration, 0.02, true);
       this.scene.cameras.main.flash(effectDuration*2, 255,255,255, true);
       this.scene.cameras.main.pan(2975, 1000, 2000, 'Linear', true); //182
+
+          
+        //AUDIO
+          Audio.gameOver();
+
+          Audio.play3DinstanceRnd(this, 59);
+          Audio.play3DinstanceRnd(this, 65);
+          //
+      
       this.scene.time.addEvent({
         delay: 250,
         callback: () => (this.checkEnding())
@@ -476,13 +485,7 @@ export default class Boss extends Enemy {
         this.laserDelayTimer.destroy();
       if(this.laserDelayTimer2 != undefined)
         this.laserDelayTimer2.destroy();
-          
-        //AUDIO
-          Audio.gameOver();
 
-          Audio.play3DinstanceRnd(this, 59);
-          Audio.play3DinstanceRnd(this, 65);
-          //
       this.dead = true;
     }
   }
