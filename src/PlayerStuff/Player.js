@@ -967,7 +967,11 @@ export default class Player {
 
   inRoom(){
     if(this.scene.encounterNPC == undefined || this.scene.encounterNPC.sprite == undefined || this.sprite == undefined || this.sprite.body == undefined) return false;
+<<<<<<< Updated upstream
     if(Math.sqrt(Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2) + Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2)) < Audio.vanishingPoint){
+=======
+    if(Math.sqrt(Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2) + Math.pow(this.scene.encounterNPC.sprite.x - this.sprite.x,2)) < Audio.vanishingPoint)
+>>>>>>> Stashed changes
       return true;
     }
     else{

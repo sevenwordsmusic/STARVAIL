@@ -7,6 +7,7 @@ export default class SceneGameOver extends Phaser.Scene {
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
     //AUDIO
+      Audio.gameOver();
       Audio.fullscreenMode(this);
       //
     //Color de fondo prueba
