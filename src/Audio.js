@@ -418,6 +418,9 @@ export default class Audio extends Phaser.Scene {
         return distance * Audio.volumeSFX;
     }
     static volume3D(scene) {
+        if(scene == undefined) {
+            return 0;
+        }
         if (scene.distanceToPlayer() > this.vanishingPoint) {
             var distance = 0.0;
         } else if (scene.distanceToPlayer() < 0.0) {
