@@ -13,8 +13,8 @@ export default class BossAfter extends FiniteStateMachine{
         //AUDIO
 
 
-          Audio.play3DinstanceRnd(this.scene, 59);
-          Audio.play3DinstanceRnd(this.scene, 65);
+          Audio.play2DinstanceRnd(59);
+          Audio.play2DinstanceRnd(65);
           //
 
 
