@@ -149,15 +149,15 @@ export default class Player {
           this.scene.game.nextLevel();
         }, this);
 
-        this.skipLevel = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
-        this.skipLevel.on('down', function(event){
+        this.InfinitHP = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
+        this.InfinitHP.on('down', function(event){
           this.scene.game.totalPlayerHp = 999999999999999;
           this.hp = 999999999999999;
           console.log("INFINITE LIFE CHEAT ENABLED.");
         }, this);
 
-        this.skipLevel = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        this.skipLevel.on('down', function(event){
+        this.InfinitEnergy = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        this.InfinitEnergy.on('down', function(event){
           this.scene.game.totalPlayerEnergy = 99999999999999999;
           this.scene.game.energyRecoveryRate = 99999999999999;
           console.log("INFINITE ENERGY CHEAT ENABLED.");
