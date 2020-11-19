@@ -698,7 +698,7 @@ export default class Player {
       if(this.joyStick != undefined) {this.joyStick = undefined;}
     }
     this.cursors = undefined;
-    this.scene.input.keyboard.removeCapture('W,S,A,D,N,M,F,SPACE');
+    this.scene.input.keyboard.removeCapture('W,S,A,D,N,M,O,P,F,SPACE');
 
     if(fullDestroy){
       this.scene.cameras.main.stopFollow();

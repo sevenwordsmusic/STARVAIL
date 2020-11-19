@@ -11,6 +11,11 @@ export default class ZapperAir extends Enemy {
     super(scene, x, y, 'gunner', 150);
     this.sprite.setScale(1.1);
 
+    if(this.scene.game.onPC){
+      this.scrapArray[0] = 'gunnerScrap1';
+      this.scrapArray[1] = 'gunnerScrap1';
+    }
+
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const body = Phaser.Physics.Matter.Matter.Bodies.rectangle(0, 0, 40, 30, {chamfer: { radius: 8 } });
     /*this.sensors = {

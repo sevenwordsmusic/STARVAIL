@@ -9,6 +9,11 @@ export default class ZapperGroundTutorial extends Enemy {
   constructor(scene, x, y){
     super(scene, x, y, 'zapperGround', 75);
     this.sprite.setScale(2);
+    
+    if(this.scene.game.onPC){
+      this.scrapArray[0] = 'zapper1Scrap1';
+      this.scrapArray[1] = 'zapper1Scrap2';
+    }
 
     //this.sprite.setBounce(1.01735).setFixedRotation().setFriction(0).setFrictionAir(0).setFrictionStatic(0);
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;

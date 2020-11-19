@@ -10,7 +10,7 @@ export default class SceneOptionsGame extends Phaser.Scene {
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
     //AUDIO
-      Audio.fullscreenMode(this);
+      
       //
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0);

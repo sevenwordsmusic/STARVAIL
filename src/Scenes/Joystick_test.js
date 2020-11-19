@@ -22,7 +22,7 @@ export default class Joystick_test extends Phaser.Scene {
 
   create() {
     //AUDIO
-      Audio.fullscreenMode(this);
+      
       //
     this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
       x: 400,
