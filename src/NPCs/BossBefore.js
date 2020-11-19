@@ -14,6 +14,8 @@ export default class BossBefore extends FiniteStateMachine{
     this.isFiring = false;
 
     this.isTalking = false;
+
+    //aray de dialogos
     this.dialogArray = [];
     //DIALOGO DE FINAL BUENO (Ha ayudado a 2 o mas droides)
     this.dialogArray[0] =
@@ -181,6 +183,7 @@ This is what we exist for!`;
     this.sprite.anims.play("idleMentor",true);
 
     //IA
+    //se preparan el nº de estados que tiene la FSM, que hace cuando empieza, acaba y update de cada estado
     //this.initializeAI(4);
     this.initializeAI(2);
     this.stateOnStart(0, function(){
@@ -191,6 +194,7 @@ This is what we exist for!`;
         this.currentDialog = 1;
       }
     });
+    //si se detecta al jugador comienza el diálogo
     this.stateUpdate(0, function(){
       if(Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2)) < this.dialogDistance){
         this.sprite.setFlipX(this.scene.game.player.sprite.x < this.sprite.x);
@@ -209,6 +213,7 @@ This is what we exist for!`;
     if(this.sprite != undefined)
       this.updateAI();
   }
+  //termina de hablar y comienza el boss fight
   finishedDialog(){
     this.scene.boss = new Boss(this.scene, this.initX, this.initY);
     this.scene.events.off("update", this.update);

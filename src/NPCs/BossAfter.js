@@ -19,6 +19,7 @@ export default class BossAfter extends FiniteStateMachine{
     this.initY = y;
 
     this.isTalking = false;
+    //array de dialogo
     this.dialogArray = [];
     //DIALOGO DE FINAL BUENO (Ha ayudado a 2 o mas droides)
     this.dialogArray[0] =
@@ -110,6 +111,7 @@ Even if I'm lonely now.`;
     this.currentDialog = -1;
     this.dialogDistance = 300;
 
+    //al clickear el sprite empieza el dialogo
     this.sprite.on('pointerdown', function() {
       if(!this.isTalking){
         //AUDIO (número de palabras, escena, personaje);
@@ -123,6 +125,7 @@ Even if I'm lonely now.`;
     }, this);
 
     //IA
+    //se preparan el nº de estados que tiene la FSM, que hace cuando empieza, acaba y update de cada estado
     //this.initializeAI(4);
     this.initializeAI(1);
     this.stateOnStart(0, function(){
@@ -137,6 +140,7 @@ Even if I'm lonely now.`;
     this.scene.events.on("update", this.update, this);  //para que el update funcione
   }
 
+  //se "simula" gravedad al carse cuando muere en el aire
   update(){
     if(this.sprite != undefined && this.sprite.body != undefined){
       if(this.sprite.y>this.initY+321){
@@ -147,6 +151,7 @@ Even if I'm lonely now.`;
     }
   }
 
+  //termina de hablar y se cambia la escena a la de puntuación
   finishedDialog(){
     this.isTalking = false;
     this.scene.events.off("update", this.update);

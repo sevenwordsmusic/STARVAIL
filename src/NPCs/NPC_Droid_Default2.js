@@ -16,6 +16,7 @@ export default class NPC_Droid_Default2 extends FiniteStateMachine{
     this.sprite.setOrigin(0.5,0.75);
     this.sprite.anims.play('npc5',true);
 
+    //aray de dialogos
     this.dialogArray = [];
     this.dialogArray[0] =
 `[b]Vagrant Droid #0[/b]
@@ -33,6 +34,7 @@ Anyway... good luck!`;
 
     this.currentDialog = -1;
 
+    //al presionar el sprite se activa el dialogo
     this.sprite.on('pointerdown', function() {
       if(!this.isTalking){
         this.isTalking = true;
@@ -44,6 +46,7 @@ Anyway... good luck!`;
     }, this);
 
     //IA
+    //se preparan el nº de estados que tiene la FSM, que hace cuando empieza, acaba y update de cada estado
     //this.initializeAI(4);
     this.initializeAI(1);
     this.stateOnStart(0, function(){
@@ -54,6 +57,7 @@ Anyway... good luck!`;
 
 
   }
+  //termina de hablar
   finishedDialog(){
     this.isTalking = false;
   }

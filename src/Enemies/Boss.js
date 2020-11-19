@@ -9,7 +9,9 @@ import TileController from "../TileController.js"
 export default class Boss extends Enemy {
   constructor(scene, x, y){
     super(scene, x, y, 'bossIdle', 2000);   //5º parametro del contructor == vida
+    //inicialización de variables
 
+    //cuerpo de del enemigo que se añade al sprite y a los arrays de enemigos correspondientes
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this.sprite
     const body = Bodies.rectangle(0, 6, w * 0.45, h * 0.85, { chamfer: { radius: 5 } })
@@ -30,13 +32,13 @@ export default class Boss extends Enemy {
     this.sprite.body.collisionFilter.group = -3;
     this.sprite.body.collisionFilter.category = 4;
 
+    //variables de físicas
     this.sprite.body.frictionAir = 0.06;
     this.sprite.body.friction = 0;
 
     this.adjustedFriction = this.sprite.body.frictionAir / this.scene.matter.world.getDelta();
 
     //Variables de IA
-    //No Tocar
     this.patrolDir = new Phaser.Math.Vector2(0,0);
     this.initDir = new Phaser.Math.Vector2(0,0);
     this.patrolDistance = 650;
@@ -49,7 +51,6 @@ export default class Boss extends Enemy {
     this.randPatrolSpeed = 0;
     this.currentWeapon = Math.floor(Math.random()*3);
     this.lethalLaser = false;
-    //No Tocar
 
     //Ajustar estas
     this.patrolSpeed = 3.5;                                           //velocidad al patrullar
@@ -81,8 +82,10 @@ export default class Boss extends Enemy {
     //Ajustar estas
     //Variables de IA
 
+    //arma del boss, clase separada con sus propios metodos
     this.gun = new BossGun(scene, this.sprite.x, this.sprite.y, this.fireDamage[0], this.fireDamage[1], this.fireDamage[2]);
     this.hpBoundry = this.nextEnergy;
+    //timer de cambiar de arma durante el combate
     this.weasponSwitchTimer = this.scene.time.addEvent({
       delay: Phaser.Math.Between(this.weaponSwitch - this.weaponSwitchRand, this.weaponSwitch + this.weaponSwitchRand),
       callback: () => (this.cycleWeapon()),
@@ -95,11 +98,12 @@ export default class Boss extends Enemy {
       context: this
     });*/
 
+    //efectos de fuego iguales al jugador
     this.flyFire = this.scene.add.sprite(x, y, 'fire_fly', 0);
     this.flyFire.setScale(this.sprite.scale).setOrigin(0.5, 0.5);
     this.flyFire.setVisible(false);
 
-
+    //timer para disparar el laser
     this.laserTimer = this.scene.time.addEvent({
       delay: this.laserFire,
       callback: () => (this.initializeLaser()),
@@ -107,7 +111,9 @@ export default class Boss extends Enemy {
     },this);
 
     //IA
+    //se preparan el nº de estados que tiene la FSM, que hace cuando empieza, acaba y update de cada estado
     this.initializeAI(6);
+    //estado por defeto, ataca al jugador y cambia de arma
     this.stateOnStart(0, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
 
@@ -178,7 +184,6 @@ export default class Boss extends Enemy {
       this.fireTimer.remove();
     });
 
-    //ADUIO
     //empieza a irse hacia el suelo
     this.stateOnStart(1, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
@@ -204,7 +209,6 @@ export default class Boss extends Enemy {
     })
 
 
-    //AUDIO
     //Aterriza y se pone a cargar el laser
     this.stateOnStart(2, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
@@ -213,8 +217,7 @@ export default class Boss extends Enemy {
       this.sprite.y = this.initPos.y + 100;
       this.sprite.setVelocityX(0);
       this.sprite.setVelocityY(0);
-      //AUDIO
-      //dispara laser (metete en BossGun.js para modificar cosas de fireLaser())
+      //dispara laser
       this.laserDelayTimer = this.scene.time.addEvent({
         delay: 350,
         callback: () => (this.gun.fireLaser()),
@@ -241,7 +244,6 @@ export default class Boss extends Enemy {
       this.laserTimer.paused = false;
     });
 
-    //AUDIO
     //Se le ha acabado la vida, se va hacia el centro de la arena
     this.stateUpdate(3, function(time, delta){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
@@ -260,7 +262,6 @@ export default class Boss extends Enemy {
       }
     })
 
-    //AUDIO
     //se prepara para disparar 3 laseres en todas direcciones (metete en BossGun.js para cambiar fireMegaLaser())
     this.stateOnStart(4, function(){
       if(this.sprite == undefined || this.sprite.body == undefined)return;
@@ -276,8 +277,7 @@ export default class Boss extends Enemy {
       this.playAnimation1();
     })
 
-    //AUDIO
-    //Se muere
+    //Se muere, terminando todos sus procesos, y creando la clase que habla con el jugador
     this.stateOnStart(5, function(){
       this.flyFire.setVisible(false);
 
@@ -309,6 +309,7 @@ export default class Boss extends Enemy {
     //
   }
 
+  //comprueba el final conseguido por el jugador para enseñar el efcto correpsondiente
   checkEnding(){
     if(this.scene.game.npcHelped >= 2){
       this.scene.moon.setScale(1.1).setAlpha(0.7).anims.play('pulsar',true);
@@ -317,6 +318,7 @@ export default class Boss extends Enemy {
     }
   }
 
+  //se perapara para disparar el laser
   initializeLaser(){
     if(this.currentStateId() == 0){
       this.goTo(1);
@@ -327,11 +329,13 @@ export default class Boss extends Enemy {
       super.update(time, delta);
   }
 
+  //método para filtrado de collisiones con el tileado del mapa
   updateTouchBoundry(){
     if(this.sprite != undefined)
       TileController.playerTouchBoundry(this.scene, this.sprite);
   }
 
+  //metodo para inicial la animación correspondiente mientras vuela
   playAnimation1(){
     const dir = this.scene.game.player.sprite.x < this.sprite.x;
     this.flyFire.setVisible(true);
@@ -361,6 +365,7 @@ export default class Boss extends Enemy {
     this.flyFire.setFlipX(dir);
   }
 
+  //método para animaciones mientras esta en el suelo
   playAnimation2(){
     const dir = this.scene.game.player.sprite.x < this.sprite.x;
     this.flyFire.setVisible(false);
@@ -373,6 +378,7 @@ export default class Boss extends Enemy {
     this.flyFire.setFlipX(dir);
   }
 
+  //cambia de arma
   cycleWeapon(){
     const nextWeapon = Math.floor(Math.random()*3);
     this.currentWeapon = (this.currentWeapon+nextWeapon)%3;
@@ -385,6 +391,8 @@ export default class Boss extends Enemy {
     console.log("Boss ha cambiado de arma: " + this.currentWeapon);
   }
 
+
+  //método que se invoca al recibir daño
   damage(dmg, v){
     //AUDIO
     if(Math.random()>0.3){
@@ -394,6 +402,7 @@ export default class Boss extends Enemy {
     }
     auxSfx.setDetune(auxSfx.detune+100);
 
+    //si se le ha infligido cierta cantidad de daño suelta energia
     if(this.sprite != undefined && this.sprite.body != undefined){
       const hpDiff = this.hpBoundry - dmg;
       if(hpDiff <= 0){
@@ -410,6 +419,8 @@ export default class Boss extends Enemy {
 
     super.damage(dmg, v);
   }
+
+  //método que se invoca al recibir daño con el laser
   damageLaser(dmg, v){
     //AUDIO
       Audio.lasserSufferingLoop.setDetune(-100);
@@ -429,6 +440,7 @@ export default class Boss extends Enemy {
 
     super.damageLaser(dmg, v);
   }
+  //método que se invoca al dañar y empujar al boss
   damageAndKnock(dmg, knockback, v){
     if(this.sprite != undefined){
       const hpDiff = this.hpBoundry - dmg;
@@ -446,6 +458,7 @@ export default class Boss extends Enemy {
     super.damageAndKnock(dmg, knockback, v);
   }
 
+  //método que se invoca al morir el enemigo
   enemyDead(vXDmg, vYDmg, drop = true){
     if(!this.dead){
       this.goTo(3);
@@ -473,16 +486,18 @@ export default class Boss extends Enemy {
       this.dead = true;
     }
   }
+  //método llamado desde Blackboard.js para ajustar la distancia con el jugador
   updatePlayerPosition(dist){
     //AUDIO
       this.sfx.volume=Audio.volume2D(dist);
     //
   }
+  //calcula la distanca al jugador
   distanceToPlayer(){
     if(this.sprite.body != undefined)
       return Math.sqrt(Math.pow(this.sprite.x - this.scene.game.player.sprite.x,2) + Math.pow(this.sprite.y - this.scene.game.player.sprite.y,2));
     else
-      return 5000;    //ARREGLAR ESTO
+      return 5000;   
   }
 
   //AUDIO

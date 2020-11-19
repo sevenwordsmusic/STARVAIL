@@ -5,6 +5,7 @@ import BossLaser from "../Objects/Projectiles/EnemyProjectiles/BossLaser.js"
 
 export default class BossGun {
   constructor(scene, x, y, dmg0, dmg1, dmg2){
+    //variables
     this.scene = scene;
     this.sprite = scene.add.image(x,y,'bossFireArm')
     this.sprite.angle = Phaser.Math.Between(-180,0);
@@ -22,12 +23,14 @@ export default class BossGun {
     this.laser = undefined;
     this.autoAim = 0.6 / this.scene.matter.world.getDelta();
   }
+  //actualizar posicion
   followPosition(xPos, yPos){
     if(this.exists){
       this.sprite.x = xPos + this.shoulderOffsetX;
       this.sprite.y = yPos + this.shoulderOffsetY;
     }
   }
+  //actualizar angulo
   aimGun(ang){
     if(this.exists){
       this.aimVector.x = Math.cos(ang);
@@ -35,6 +38,7 @@ export default class BossGun {
       this.sprite.angle = ang * 180/Math.PI;
     }
   }
+  //disparar (puede disparar distintos tipos de armas)
   shoot(weaponId){
     if(this.exists){
       switch (weaponId) {
@@ -53,11 +57,12 @@ export default class BossGun {
       }
     }
   }
+  //dispara laser
   fireLaser(){
     if(this.laser == undefined)
       this.laser = new BossLaser(this.scene, this.sprite.x, this.sprite.y, this.aimVector, this);
   }
-
+  //disparar laseres finales
   fireMegaLaser(){
     new BossLaser(this.scene, this.sprite.x, this.sprite.y-30, new Phaser.Math.Vector2(1,0));
     new BossLaser(this.scene, this.sprite.x, this.sprite.y-30, new Phaser.Math.Vector2(3,1));
@@ -65,17 +70,17 @@ export default class BossGun {
     new BossLaser(this.scene, this.sprite.x, this.sprite.y-30, new Phaser.Math.Vector2(1,3));
     new BossLaser(this.scene, this.sprite.x, this.sprite.y-30, new Phaser.Math.Vector2(-1,3));
   }
-
+  //destruir arma
   destroy(){
     this.exists = false;
     this.sprite.destroy();
   }
-
+  //ajustar offset segun la animacion del jugador
   adjustOffset(xOff, yOff){
     this.shoulderOffsetX = xOff;
     this.shoulderOffsetY = yOff;
   }
-
+  //ajustar angulo del laser mientras se prepara para dispararlo
   adjustLaser(ang, delta){
     if(this.laser != undefined){
       this.aimVector.x = Math.cos(ang);
@@ -97,6 +102,7 @@ export default class BossGun {
       //this.laser.sprite.angle = this.sprite.angle;
     }
   }
+  //ajustar posicion del laser
   followLaser(){
     if(this.laser != undefined){
       this.laser.sprite.x = this.sprite.x;
