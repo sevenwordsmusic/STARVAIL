@@ -176,7 +176,7 @@ export default class Audio extends Phaser.Scene {
         Audio.musicLoop0002.play();
         scene.tweens.add({
             targets: Audio.musicLoop0002,
-            volume: Audio.volumeBGM;
+            volume: Audio.volumeBGM,
             duration: Audio.barRateDiv[2],
         });
     }
