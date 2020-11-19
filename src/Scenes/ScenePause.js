@@ -124,8 +124,8 @@ export default class ScenePause extends Phaser.Scene {
 
     this.scene.run("SceneMM");
     this.scene.bringToTop("SceneMM");
-		this.game.destroyScene(this.game.pauseScene)
-		this.scene.stop('tutorial1');
+		this.game.destroyScene(this.game.pauseScene);
+		//this.scene.stop('tutorial1');
     //this.game.changeScene(this.game.pauseScene, "SceneMM", true);
   }
 }

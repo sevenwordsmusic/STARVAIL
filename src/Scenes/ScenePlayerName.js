@@ -10,6 +10,7 @@ export default class ScenePlayerName extends Phaser.Scene {
 
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
+    this.game.inPlayerName = true;
     //AUDIO
       Audio.fullscreenMode(this);
     //
@@ -75,6 +76,8 @@ export default class ScenePlayerName extends Phaser.Scene {
       //
     this.hideInput();
 
+    this.game.inPlayerName = false;
+
     this.btnExitOptionsMM.alpha=0.8;
 
     this.scene.sendToBack('ScenePlayerName');
@@ -94,12 +97,15 @@ export default class ScenePlayerName extends Phaser.Scene {
     }
     this.hideInput();
 
+    this.game.inPlayerName = false;
+
     this.game.prepareScreen();
 
     this.botonStart.alpha=0.8;
 
     this.scene.sendToBack('ScenePlayerName');
 		this.scene.stop('ScenePlayerName');
+    //this.scene.run('tutorial1');
     this.game.scene.add('', new Tutorial('tutorial' + ((Tutorial.getNumber()+ 1))) , true);
   }
 

@@ -157,6 +157,8 @@ game.initializeVariables = function(newGame = true){
   game.pauseInfo = '';
   game.pauseScene;
 
+  game.inPlayerName = false;
+
   game.newGame = newGame;
 }
 
@@ -226,7 +228,7 @@ game.destroyScene = function(scene){
   scene.make.displayList.list = [];
 
   game.player.destroy();
-  this.input.keyboard.removeAllKeys(true);
+  scene.input.keyboard.removeCapture('W,S,A,D,N,M,F,SPACE');
 
   scene.scene.remove(scene.scene.key+ SceneCurrentClass.getNumber());
 }
@@ -265,5 +267,3 @@ game.initializeVariables(true);
 
 console.log(game);
 window.gameDebug = game;
-
-

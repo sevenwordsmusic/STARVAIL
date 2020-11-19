@@ -192,6 +192,8 @@ export default class Player {
       this.joyStick.thumb.setDepth(100);
       this.joyStick.thumb.playerInteractable = true;
       this.cursors = this.joyStick.createCursorKeys();
+      console.log(this.cursors);
+      console.log(this.joyStick);
 
       this.fireArm = new PlayerFireArmMobile(this.scene, x, y);
       this.firingPointer = undefined;
@@ -624,10 +626,35 @@ export default class Player {
     if(this.weaponChange != undefined) {this.weaponChange.destroy(); this.weaponChange = undefined;}
     if(this.skipLevel != undefined) {this.skipLevel.destroy(); this.skipLevel = undefined;}
     if(this.testMemory != undefined) {this.testMemory.destroy(); this.testMemory = undefined;}
-    if(this.joyStick != undefined) {this.joyStick.destroy(); this.joyStick = undefined;}
-    if(this.cursors != undefined) {this.cursors.destroy(); this.cursors = undefined;}
     if(this.fireArm != undefined) {this.fireArm.destroyFireArm(); this.fireArm = undefined;}
     if(this.movingArm != undefined) {this.movingArm.destroy(); this.movingArm = undefined;}
+
+    if(this.scene.game.onPC){
+      if(this.cursors != undefined) {
+        this.cursors.up.destroy();
+        this.cursors.up = undefined;
+        this.cursors.down.destroy();
+        this.cursors.down = undefined;
+        this.cursors.left.destroy();
+        this.cursors.left = undefined;
+        this.cursors.right.destroy();
+        this.cursors.right = undefined;
+      }
+    }else{
+      if(this.cursors != undefined) {
+        this.cursors.up.destroy();
+        this.cursors.up = undefined;
+        this.cursors.down.destroy();
+        this.cursors.down = undefined;
+        this.cursors.left.destroy();
+        this.cursors.left = undefined;
+        this.cursors.right.destroy();
+        this.cursors.right = undefined;
+      }
+      if(this.joyStick != undefined) {this.joyStick = undefined;}
+    }
+    this.cursors = undefined;
+    this.scene.input.keyboard.removeCapture('W,S,A,D,N,M,F,SPACE');
 
     if(fullDestroy){
       this.scene.cameras.main.stopFollow();

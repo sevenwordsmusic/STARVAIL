@@ -110,19 +110,22 @@ export default class Audio extends Phaser.Scene {
 static fullscreenMode(thisArg){
         var FKey = thisArg.input.keyboard.addKey('F');
         FKey.on('down', function () {
-
-            if (thisArg.scale.isFullscreen)
-            {
-                thisArg.scale.stopFullscreen();
-            }
-            else
-            {
-                thisArg.scale.startFullscreen();
+            if(!thisArg.game.inPlayerName){
+              if (thisArg.scale.isFullscreen)
+              {
+                  thisArg.scale.stopFullscreen();
+              }
+              else
+              {
+                  thisArg.scale.startFullscreen();
+              }
+            }else{
+              document.getElementById("playerName").value += 'F';
             }
 
         }, thisArg);
 }
-    
+
     static pause() {
         Audio.musicLoop0000levitating.volume = 0.0;
         Audio.musicLoop0000moving.volume = 0.0;
@@ -578,19 +581,21 @@ static fullscreenMode(thisArg){
                 Audio.play2DinstanceRate(8, 0.8 + scene.game.player.weaponCounter * 0.05);
                 Audio.play2DinstanceRate(9, 0.8 + scene.game.player.weaponCounter * 0.05);
             }
-            if (!Audio.stingerSurface && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
-                Audio.stingerSurface = true;
-                Audio.surfaceLoop.volume = Audio.volumeSFX;
-                Audio.surfaceLoop.setDetune(-25 + (Math.random() * 50));
-                Audio.surfaceLoop.play();
-                Audio.walkLoop.volume = Audio.volumeSFX;
-                Audio.walkLoop.setDetune(-25 + (Math.random() * 50));
-                Audio.walkLoop.play();
-            } else if (Audio.stingerSurface && ((scene.game.player.activatedJet || !scene.game.player.isTouching.ground) || (!scene.game.player.cursors.right.isDown && !scene.game.player.cursors.left.isDown))) {
-                Audio.stingerSurface = false;
-                Audio.surfaceLoop.stop();
-                Audio.walkLoop.stop();
-                Audio.play2DinstanceRate(28, 1.0);
+            if(scene.game.player.cursors != undefined){
+                if (!Audio.stingerSurface && !scene.game.player.activatedJet && scene.game.player.isTouching.ground && (scene.game.player.cursors.right.isDown || scene.game.player.cursors.left.isDown)) {
+                    Audio.stingerSurface = true;
+                    Audio.surfaceLoop.volume = Audio.volumeSFX;
+                    Audio.surfaceLoop.setDetune(-25 + (Math.random() * 50));
+                    Audio.surfaceLoop.play();
+                    Audio.walkLoop.volume = Audio.volumeSFX;
+                    Audio.walkLoop.setDetune(-25 + (Math.random() * 50));
+                    Audio.walkLoop.play();
+                } else if (Audio.stingerSurface && ((scene.game.player.activatedJet || !scene.game.player.isTouching.ground) || (!scene.game.player.cursors.right.isDown && !scene.game.player.cursors.left.isDown))) {
+                    Audio.stingerSurface = false;
+                    Audio.surfaceLoop.stop();
+                    Audio.walkLoop.stop();
+                    Audio.play2DinstanceRate(28, 1.0);
+                }
             }
             if (!Audio.stingerMovement && ((Math.floor(scene.game.player.earlyPos.x) != Audio.earlyPos))) {
                 Audio.earlyPos = Math.floor(scene.game.player.earlyPos.x);
