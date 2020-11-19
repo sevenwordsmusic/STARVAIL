@@ -8,9 +8,9 @@ export default class SceneRanking extends Phaser.Scene {
   //Creación de todo el contenido de la escena. Aquí es donde se distribuyen todos los elementos.
   create(){
     //AUDIO
-
+      Audio.gameOver();
+      
       //
-
     //Corners
     var corners =this.add.image(0,0,'corners').setOrigin(0);
 
@@ -127,7 +127,10 @@ export default class SceneRanking extends Phaser.Scene {
 
   exitRanking(){
     console.log("Se ha pulsado exit");
-
+      //AUDIO
+        Audio.postGameOver();
+        Audio.play2DinstanceRate(81, 1.0);
+      //
     this.btnExitRanking.alpha=0.8;
 
     this.scene.sendToBack('SceneRanking');

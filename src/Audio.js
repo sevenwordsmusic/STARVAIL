@@ -35,6 +35,7 @@ export default class Audio extends Phaser.Scene {
     //SLOTS
         //AMBIENT
         static ambientLoop;
+        static theTop;
         //UI LOOPS
         static walkLoop;
         static surfaceLoop;
@@ -106,7 +107,6 @@ export default class Audio extends Phaser.Scene {
                 break;
         }
     }
-
     static exit(scene) { //EXIT FROM PAUSE
         if (Audio.currentLevel == 3) {
             Audio.musicLoop0001.stop();
@@ -164,6 +164,9 @@ export default class Audio extends Phaser.Scene {
         Audio.lasserSufferingLoop.volume = 0.0;
         //Audio.play2DinstanceRate(81, 1.0);
         //Audio.paused = true;
+    }
+    static postGameOver(){
+        Audio.musicLoop0000chill.play();
     }
     static musicLayerStop(scene) {
         if (Audio.musicTweens[0] != undefined) {
@@ -382,6 +385,7 @@ export default class Audio extends Phaser.Scene {
             Audio.engineLoop.volume = Audio.volumeSFX;
             Audio.lasserLoop.volume = Audio.volumeSFX;
             Audio.beamLoop.volume = Audio.volumeSFX;
+            Audio.theTop.volume = Audio.volumeSFX;
             var click = Audio.play2DinstanceRate(88, 1.0);
             click.volume = document.getElementById("sfxSlider").value / 10;
         }
@@ -513,8 +517,11 @@ export default class Audio extends Phaser.Scene {
         Audio.currentLevel = 4;
         Audio.musicLoop0000chill.volume = 0.0;
         Audio.musicLoop0001.stop();
+        Audio.theTop.play();
+        Audio.theTop.volume = Audio.volumeSFX;
         console.log("%c | AUDIO ENGINE | %c > INTERACTIVE MUSIC : level #4.", Audio.ctf, "");
         Audio.play2DinstanceRate(83, 1.0);
+
     }
     static musicLayerBar(scene) {
         //console.log("BAR #" + Audio.barCounter);
@@ -1054,6 +1061,7 @@ export default class Audio extends Phaser.Scene {
         this.load.audio('mentorMovingPart', 'assets/audio/SFX/mentor/movingPart_00.ogg');
         this.load.audio('mentorPropellerStop', 'assets/audio/SFX/mentor/propellerStop_00.ogg');
         this.load.audio('blasser', 'assets/audio/SFX/mentor/blasser.ogg');
+        this.load.audio('windLoop', 'assets/audio/SFX/windLoop.ogg');
     }
     //CREATION:
     create() {
@@ -1491,8 +1499,12 @@ export default class Audio extends Phaser.Scene {
         //FIN TESTEO
         //AMBIENT
         Audio.ambientLoop = this.sound.add('ambientLoop_00', {
-            volume: 0.0,
+            volume: Audio.volumeSFX,
             loop: true
+        })
+        Audio.theTop = this.sound.add('windLoop', {
+            volume: Audio.volumeSFX,
+            loop: false
         })
         //UI LOOPS
         Audio.walkLoop = this.sound.add('walkLoop_00', {

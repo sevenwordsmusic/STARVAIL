@@ -463,8 +463,13 @@ export default class Boss extends Enemy {
         this.laserDelayTimer.destroy();
       if(this.laserDelayTimer2 != undefined)
         this.laserDelayTimer2.destroy();
+          
+        //AUDIO
+          Audio.gameOver();
 
-
+          Audio.play3DinstanceRnd(this, 59);
+          Audio.play3DinstanceRnd(this, 65);
+          //
       this.dead = true;
     }
   }

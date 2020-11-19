@@ -56,8 +56,9 @@ export default class SceneGameOver extends Phaser.Scene {
 
   exitGameOver(){
     console.log("Se ha pulsado exit");
-    Audio.postGameOver();
+
       //AUDIO
+      Audio.postGameOver();
         Audio.play2DinstanceRate(80, 1.0);
       //
     this.btnExitGameOver.alpha=0.8;
@@ -70,7 +71,9 @@ export default class SceneGameOver extends Phaser.Scene {
   playAgainGameOver(){
 
     console.log("Se ha pulsado play again");
+
       //AUDIO
+        Audio.postGameOver();
         Audio.play2DinstanceRate(81, 1.0);
       //
     this.btnPlayAgainGameOver.alpha=0.8;
